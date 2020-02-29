@@ -2,4 +2,5 @@ void-beaglebone-musl-*.img.xz
 void-beaglebone-musl-PLATFORMFS-*.tar.xz
 
 /u-boot/
-*.pdf
+
+# *.pdf
