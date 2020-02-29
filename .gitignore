@@ -1,2 +1,5 @@
-void-beaglebone-musl-20191109.img.xz
-void-beaglebone-musl-PLATFORMFS-20191109.tar.xz
+void-beaglebone-musl-*.img.xz
+void-beaglebone-musl-PLATFORMFS-*.tar.xz
+
+/u-boot/
+*.pdf
