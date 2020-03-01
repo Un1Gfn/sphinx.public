@@ -5,24 +5,27 @@
 
 Future
 ```
-Buildroot on Lattice ECP5 via yosys+prjtrellis+nextpnr
+Buildroot Linux on Lattice ECP5 via yosys+prjtrellis+nextpnr
+
+ReFirmLabs/binwalk firmware analysis tool
+
+U-boot on x86
+https://www.denx.de/wiki/U-Boot/X86
+
+https://elinux.org/BeagleBoardAngstrom
 ```
 
 misc
 ```
 txt -> md
 pacman -Qttq | grep python | sudo pacman -Rc -
-https://pip.pypa.io/en/stable/installing/
-https://pypi.org/project/PySocks/#history
-https://github.com/joeyespo/grip
-https://github.com/github/cmark-gfm
 
-f='readme.md'
-cat "$f" | cmark-gfm -t html >readme.html
+Render README with tools & stylesheets from GitHub 
+https://github.com/sindresorhus/generate-github-markdown-css
+https://github.com/github/markup
+echo "readme.md" | entr -cnp "..."
 
-echo "$f" | entr -cnp ""
-
-tail--follow
+tail --follow
 
 Libreboot
 ‌‌‎sop8 clip 燒錄夾 (+ch341a)
@@ -51,42 +54,36 @@ grab telegram saved messages
 
 ---
 
-###### Communication
+###### Communications
 <!-- Guide RNDIS TFTP BOOTP Serial Mass bootloader kernel userspace NFS SSH-->
-|Guide|[RNDIS](https://en.wikipedia.org/wiki/RNDIS)[<sup>O</sup>](https://en.wikipedia.org/wiki/Ethernet_over_USB)<br>network|[TFTP](https://en.wikipedia.org/wiki/Trivial_File_Transfer_Protocol)|[BOOTP](https://en.wikipedia.org/wiki/Bootstrap_Protocol)|Serial|Mass<br>Storage|bootloader<br>build|kernel<br>build|userspace<br>build|NFS|SSH|
-|-|-|-|-|-|-|-|-|-|-|-|
+|Guide|[RNDIS](https://en.wikipedia.org/wiki/RNDIS)<br>[<sup>O</sup>](https://en.wikipedia.org/wiki/Ethernet_over_USB)|[TFTP](https://en.wikipedia.org/wiki/Trivial_File_Transfer_Protocol)|[BOOTP](https://en.wikipedia.org/wiki/Bootstrap_Protocol)|Serial|Mass<br>Storage|boot-<br>loader<br>build|kernel<br>build|user-<br>space<br>build|NFS|SSH|
+|:-|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
 |[techniq](https://github.com/techniq/wiki/wiki/Linux-USB-Gadget-API)|O|||O|O||||||
 |[BBBlfs](https://github.com/ungureanuvladvictor/BBBlfs)|O|||||O|O|O|||
-|[eLinux recovery guide](https://elinux.org/AM335x_recovery) w/ [barebox](https://www.barebox.org/) [<sup>O</sup>](https://www.pengutronix.de/en/software/barebox.html)|O|O|O|||O|||||
+|[recovery guide](https://elinux.org/AM335x_recovery)<br>[<sup>O</sup>](https://www.barebox.org/) [<sup>O</sup>](https://www.pengutronix.de/en/software/barebox.html)|O|O|O|||O|||||
 |[U-boot on AM335x](https://processors.wiki.ti.com/index.php/AM335x_U-Boot_User's_Guide)|O|O||O||O|||O||
-|[eLinux terminal shells](https://elinux.org/Beagleboard:Terminal_Shells)||||O||||||O|
+|[terminal shells](https://elinux.org/Beagleboard:Terminal_Shells)||||O||||||O|
 |[Android USB SSH](https://stackoverflow.com/questions/44926644/control-beaglebone-black-linux-with-android-smartphone-through-usb-cable)|O|||||||||O|
-|[deleted superuser question](https://superuser.com/questions/1529130/linux-tethering-ethernet-over-usb-network-device-usb0-not-exposed-after-loading) [<sup>O</sup>](https://github.com/techniq/wiki/wiki/Linux-USB-Gadget-API#network-g_ether)|O||||||||||
+|[deleted superuser question](https://superuser.com/questions/1529130/linux-tethering-ethernet-over-usb-network-device-usb0-not-exposed-after-loading)[<sup>O</sup>](https://github.com/techniq/wiki/wiki/Linux-USB-Gadget-API#network-g_ether)|O||||||||||
 |[RidgeRun](https://developer.ridgerun.com/wiki/index.php/How_to_use_USB_device_networking)|O||||||||O||
 |[eLinux build image](https://elinux.org/Beagleboard:BeagleBoneBlack_Rebuilding_Software_Image) (obselete)||||||O|O|O|||
+|eLinux<br>[Beagle**board**](https://elinux.org/BeagleBoard_Community)||||O||O|O||||
+||||||||||||
+|[nfs-kernel-server](https://bootlin.com/blog/tftp-nfs-booting-beagle-bone-black-wireless-pocket-beagle)|||||||||||
 <!-- |||||||||||| -->
-[nfs-kernel-server](https://bootlin.com/blog/tftp-nfs-booting-beagle-bone-black-wireless-pocket-beagle)  
+
 
 ---
 
-###### Hareware
-* eLinux
-  * [BB generations](https://elinux.org/BeagleBone_Community)
+###### Device
+* eLinux wiki
+  * [BB generations brief](https://elinux.org/BeagleBone_Community)
+  * [BB](https://elinux.org/BeagleBoard_Community)
   * [BBB](https://elinux.org/Beagleboard:BeagleBoneBlack)
   * [BBBW](https://elinux.org/Beagleboard:BeagleBoneBlackWireless)
-* Official
-  * [BBB Reference Manual](https://github.com/beagleboard/beaglebone-black/wiki/System-Reference-Manual)
-  * [BBGW Wiki](http://wiki.seeedstudio.com/BeagleBone_Green_Wireless/#specification)
-* [Texus Instruments Sitara AM3358](http://www.ti.com/product/AM3358) ~ [Arm Cortex-A8](https://en.wikipedia.org/wiki/ARM_Cortex-A8) 32-bit [armhf](https://wiki.debian.org/ArmHardFloatPort#Supported_devices) [<sup>O</sup>](https://wiki.debian.org/ArmEabiPort)
-  * [Functional Block Diagram](http://www.ti.com/data-sheets/diagram.tsp?genericPartNumber=AM3358&diagramId=SPRS717K)
-  * [docs](http://www.ti.com/product/AM3358/technicaldocuments)
-    * Datasheet ~ [AM335x Sitara™ Processors datasheet](http://www.ti.com/lit/gpn/am3358)
-      * "Functional Block Diagram" ~ Page 5 (1.4)
-    * User guides ~ [AM335x and AMIC110 Sitara™ Processors Technical Reference Manual](http://www.ti.com/lit/pdf/spruh73)
-      * "Memery Map" ~ Page 117 (2.1)
-      * "Public ROM Code Architecture" ~ Page 5019 (26.1.2) (Figure 26-1)
-  * [Boot process](https://processors.wiki.ti.com/index.php/AM335x_board_bringup_tips)
-  * [U-boot on AM3358](https://processors.wiki.ti.com/index.php/AM335x_U-Boot_User's_Guide)
+* Official wiki
+  * [BBB](https://github.com/beagleboard/beaglebone-black/wiki/System-Reference-Manual)
+  * [BBGW](http://wiki.seeedstudio.com/BeagleBone_Green_Wireless/#specification)
 * Serial port
   * eLinux [<sup>O</sup>](https://elinux.org/Beagleboard:BeagleBone_Black_Serial) [<sup>O</sup>](https://elinux.org/Beagleboard:Terminal_Shells#Serial_Connect)
   * [unix stackexchange](https://unix.stackexchange.com/questions/22545/how-to-connect-to-a-serial-port-as-simple-as-using-ssh)
@@ -98,13 +95,35 @@ grab telegram saved messages
 
 ---
 
+###### [Sitara AM3358](http://www.ti.com/product/AM3358) ~ [Arm Cortex-A8](https://en.wikipedia.org/wiki/ARM_Cortex-A8) ~ 32-bit [armhf](https://wiki.debian.org/ArmHardFloatPort#Supported_devices) [<sup>O</sup>](https://wiki.debian.org/ArmEabiPort) [arm-linux-gnueabihf-](https://wiki.debian.org/ArmHardFloatPort#Rationale) [<sup>O</sup>](https://processors.wiki.ti.com/index.php/AM335x_U-Boot_User's_Guide#Prerequisite)
+* [Functional Block Diagram](http://www.ti.com/data-sheets/diagram.tsp?genericPartNumber=AM3358&diagramId=SPRS717K)
+* Docs [latest rev](http://www.ti.com/product/AM3358/technicaldocuments)
+  * Datasheet ~ AM335x Sitara™ Processors datasheet [trunc rev](http://www.ti.com/lit/gpn/am3358)
+    * "Functional Block Diagram" ~ Page 5 (1.4)
+  * User guides ~ AM335x and AMIC110 Sitara™ Processors Technical Reference Manual [trunc rev](http://www.ti.com/lit/pdf/spruh73)
+    * "Memery Map" ~ Page 117 (2.1)
+    * "Public ROM Code Architecture" ~ Page 5019 (26.1.2) (Figure 26-1)
+* [Boot process](https://processors.wiki.ti.com/index.php/AM335x_board_bringup_tips)
+* [U-boot on AM3358](https://processors.wiki.ti.com/index.php/AM335x_U-Boot_User's_Guide)
+
+---
+
 ###### [U-boot](https://www.denx.de/wiki/U-Boot)
-* [GitLab repo](https://gitlab.denx.de/u-boot) ~ [AM335X](https://gitlab.denx.de/u-boot/u-boot/tree/master/board/ti/am335x) ~ readme
+* [Pentester Academy - Embedded Linux Booting Process](https://www.youtube.com/watch?v=DV5S_ZSdK0s)
+* [FIT image](https://elinux.org/images/f/f4/Elc2013_Fernandes.pdf)
+* [GitLab repo README](https://gitlab.denx.de/u-boot)
+  * "Building the Software:"
+  * [AM335X README](https://gitlab.denx.de/u-boot/u-boot/tree/master/board/ti/am335x) ~ readme
 * [DULG Introduction](https://www.denx.de/wiki/view/DULG/Introduction) ~ 2.3. Availability ~ [manual in PDF](http://www.denx.de/wiki/publish/DULG/DULG-canyonlands.pdf)
 * [U-boot on AM3358](https://processors.wiki.ti.com/index.php/AM335x_U-Boot_User's_Guide)
-* build
-  * [guide from beagleboard.org](http://beagleboard.org/project/U-Boot+%28V1%29/)
-  * [u-boot for other SoC on AUR](https://aur.archlinux.org/packages/?O=0&SeB=nd&K=u-boot&outdated=&SB=n&SO=a&PP=50&do_Search=Go)
+* guides on building u-boot
+  * [Texus Instruments](https://processors.wiki.ti.com/index.php/AM335x_U-Boot_User's_Guide)
+  * [PKGBUILD for other SoC](https://aur.archlinux.org/packages/?O=0&SeB=nd&K=u-boot&outdated=&SB=n&SO=a&PP=50&do_Search=Go)
+  * [Buildroot](https://git.busybox.net/buildroot/tree/board/beaglebone/readme.txt)
+
+###### Toolchain
+* [Arago TI-SDK](http://arago-project.org/wiki/index.php/Setting_Up_Build_Environment) [<sup>O</sup>](https://processors.wiki.ti.com/index.php/AM335x_U-Boot_User's_Guide#Prerequisite)
+* arm-linux-gnueabi**hf**-gcc [<sup>AUR</sup>](https://aur.archlinux.org/packages/arm-linux-gnueabihf-gcc/) [<sup>ArchLinuxCN</sup>](https://github.com/archlinuxcn/repo/tree/master/archlinuxcn/arm-linux-gnueabihf-gcc)
 
 ---
 
