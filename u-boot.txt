@@ -4,41 +4,49 @@ Building the Software:
 
 
 
-gitclear
-
+configs/vexpress_ca9x4_defconfig
+configs/am335x_evm_defconfig
+configs/am335x_boneblack_vboot_defconfig
 ./tools/genboardscfg.py -j 3
 
-export CROSS_COMPILE='arm-linux-gnueabihf-'
+gitclear
 
-configs/vexpress_ca9x4_defconfig
-configs/am335x_boneblack_vboot_defconfig
-configs/am335x_evm_defconfig
+export CROSS_COMPILE='arm-linux-gnueabihf-'
+export KBUILD_OUTPUT='O'
 
 make -j3 vexpress_ca9x4_defconfig
-make -j3 all
-
 make -j3 am335x_boneblack_vboot_defconfig
 make -j3 all
 
-
-
-
 git check-ignore * | xargs file
+file * spl/* | grep -v -F -e ASCII -e directory | less -S
 
-file * spl/* | grep -iv -e ascii -e directory | less -S
+find .                    \
+-iname \*dtb           -o \
+-iname \*bin           -o \
+-iname \*img           -o \
+-iname \*spl           -o \
+-iname \*spl\*bin\*    -o \
+-iname \*spl\*dtb\*    -o \
+-iname \*spl\*img\*    -o \
+-iname \*u-boot        -o \
+-iname \*u-boot\*bin\* -o \
+-iname \*u-boot\*dtb\* -o \
+-iname \*u-boot\*img\* -o \
+-iname mlo\*
 
-k=MLO
-k=u-boot
-k=u-boot.bin
-k=u-boot.img
-k=spl/u-boot-spl
-k=spl/u-boot-spl.bin
-
+https://dev.to/rulyrudel/how-to-execute-u-boot-on-qemu-system-arm-2b22
 qemu-system-arm \
   -machine vexpress-a9 \
   -nographic \
   -no-reboot \
   -kernel "$k"
+
+=> help
+=> reset
+
+https://www.qemu.org/docs/master/qemu-doc.html#index-Ctrl_002da-x
+Ctrl-a x
 
 
 
