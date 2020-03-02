@@ -105,7 +105,7 @@ TRM=TechnicalReferenceManual
     * "Functional Block Diagram" ~ Page 5 (1.4)
   * User guides ~ AM335x and AMIC110 Sitara™ Processors Technical Reference Manual [trunc rev](http://www.ti.com/lit/pdf/spruh73)
     * "Memery Map" ~ Page 117 (2.1)
-    * "Public ROM Code Architecture" ~ Page 5019 (26.1.2) (Figure 26-1)
+    * "Public ROM Code Architecture" (xmodem) ~ Page 5019 (26.1.2) (Figure 26-1)
 * [Boot process](https://processors.wiki.ti.com/index.php/AM335x_board_bringup_tips)
 * [U-boot on AM3358](https://processors.wiki.ti.com/index.php/AM335x_U-Boot_User's_Guide)
 
