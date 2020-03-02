@@ -39,6 +39,7 @@ grab telegram saved messages
 
 [Render md on GitHub Wiki](https://github.com/Un1Gfn/empty/wiki/_new)  
 [HTML entities](http://www.amp-what.com/)  
+TRM=TechnicalReferenceManual
 
 ---
 
@@ -91,7 +92,9 @@ grab telegram saved messages
   * [dummies](https://www.dummies.com/computers/beaglebone/how-to-connect-the-beaglebone-black-via-serial-over-usb/)
   * [rpi stackexchange](https://raspberrypi.stackexchange.com/a/15825/71791)
   * [askubuntu](https://askubuntu.com/a/474560/634976)
+* UART
   * [YouTube](https://www.youtube.com/watch?v=3y1LMNPoaJI)
+  * [TI](https://processors.wiki.ti.com/index.php/AM335x_U-Boot_User's_Guide#Boot_Over_UART)
 
 ---
 
@@ -123,9 +126,15 @@ grab telegram saved messages
 
 ###### Toolchain
 * [Arago TI-SDK](http://arago-project.org/wiki/index.php/Setting_Up_Build_Environment) [<sup>O</sup>](https://processors.wiki.ti.com/index.php/AM335x_U-Boot_User's_Guide#Prerequisite)
-* arm-linux-gnueabi**hf**-gcc [<sup>AUR</sup>](https://aur.archlinux.org/packages/arm-linux-gnueabihf-gcc/) [<sup>ArchLinuxCN</sup>](https://github.com/archlinuxcn/repo/tree/master/archlinuxcn/arm-linux-gnueabihf-gcc)
+* arm-linux-gnueabi**hf**-gcc [AUR](https://aur.archlinux.org/packages/arm-linux-gnueabihf-gcc/) [ArchLinuxCN](https://github.com/archlinuxcn/repo/tree/master/archlinuxcn/arm-linux-gnueabihf-gcc)
 
 ---
 
 ###### [BusyBox](https://www.busybox.net/)
 * [udhcpc](https://en.wikipedia.org/wiki/Udhcpc)
+
+
+ip & mask
+* [NexGenT](https://www.youtube.com/watch?v=ddM9AcreVqY&list=PLl9NdZbdtA0wK8OIgttkScKRxcMkvoev_)
+* [Eli the Computer Guy](https://www.youtube.com/watch?v=EkNq4TrHP_U)
+
