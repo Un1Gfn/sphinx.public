@@ -1,0 +1,99 @@
+https://gitlab.denx.de/u-boot/u-boot
+Building the Software:
+======================
+
+./tools/genboardscfg.py -j 3
+
+https://gitlab.denx.de/u-boot/u-boot/tree/master/configs/am335x_boneblack_vboot_defconfig
+
+gitclear
+
+export CROSS_COMPILE='arm-linux-gnueabihf-'
+[ -d ./am335x ] && rm -rf ./am335x
+
+make -j3 am335x_boneblack_vboot_defconfig
+date; make -j3 all; date
+
+git check-ignore * | xargs file
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ckermit(1)
+
+https://stackoverflow.com/questions/38279621/how-to-send-boot-files-over-uart
+
+http://www.denx.de/wiki/view/DULG/SystemSetup#Section_4.3
+
+http://www.kermitproject.org/onlinebooks/usingckermit3e.pdf
+Page 64(74)
+8 data bits, No parity, 1 stop bit (8N1)
+"SET SERIAL 8N1" == "SET PARITY NONE, SET STOP-BITS 1, SET TERM BYTE 8"
+
+set port /dev/ttyUSB0
+
+set line /dev/ttyUSB0
+set speed 115200
+set carrier-watch off
+set handshake none
+set flow-control none
+set serial 8n1
+robust
+set file type bin
+set file name lit
+set rec pack 1000
+set send pack 1000
+set window 5
+
+connect
+
+set send timeout 0 fixed
+set retry 0
+
+send /home/darren/beaglebone/u-boot/spl/u-boot-spl.bin
+send /home/darren/beaglebone/u-boot/MLO
+
+*************************
+SEND-class command failed.
+ Packets sent: 2
+ Retransmissions: 11
+ Timeouts: 12
+ Damaged packets: 0
+ Fatal Kermit Protocol Error: Too many retries
+
+HINTS... If the preceding error message does not explain the failure:
+ . Did you start a Kermit receiver on the far end?
+ . Adjust the timeout method (see HELP SET SEND).
+ . Increase the retry limit (see HELP SET RETRY).
+ . Try it again with: SET STREAMING OFF
+ . Try it again with: SET PARITY SPACE
+ . As a last resort, give a ROBUST command and try again.
+Also:
+ . Be sure the source file has read permission.
+ . Be sure the target directory has write permission.
+ . Be sure the target disk has sufficient space.
+(Use SET HINTS OFF to suppress hints.)
+*************************
+
+
+
+
+
+
+
