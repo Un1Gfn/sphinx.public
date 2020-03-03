@@ -2,7 +2,6 @@ https://gitlab.denx.de/u-boot/u-boot
 Building the Software:
 ======================
 
-
 http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.set.boards/index.html
 configs/vexpress_ca9x4_defconfig
 configs/am335x_evm_defconfig
@@ -38,7 +37,6 @@ find .                      \
   -iname mlo\*              \
 \)
 
-
 https://dev.to/rulyrudel/how-to-execute-u-boot-on-qemu-system-arm-2b22
 k=./O/u-boot
 qemu-system-arm \
@@ -54,27 +52,8 @@ Monitor Commands - Overview:
 => reset
 =>
 
-
 https://www.qemu.org/docs/master/qemu-doc.html#index-Ctrl_002da-x
 Ctrl-a x
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ckermit(1)
 
@@ -162,6 +141,13 @@ Also:
 
 
 
+
+
+
+RNDIS
+
+IP & mask
+https://www.youtube.com/watch?v=EkNq4TrHP_U
 
 
 
