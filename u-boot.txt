@@ -133,8 +133,9 @@ cu \
   --debug all \
 
 
-Access as super user
 
+============== This works! =============
+su -
 stty \
   --file=/dev/ttyUSB0 \
   115200 \
@@ -147,6 +148,8 @@ stty \
   -parenb \
   -isig -icanon -iexten -echo
 cat /dev/ttyUSB0
+=========================================
+
 
 
 ============== This works! =============
