@@ -55,6 +55,9 @@ Monitor Commands - Overview:
 https://www.qemu.org/docs/master/qemu-doc.html#index-Ctrl_002da-x
 Ctrl-a x
 
+
+https://wiki.archlinux.org/index.php/Working_with_the_serial_console
+
 ckermit(1)
 
 https://stackoverflow.com/questions/38279621/how-to-send-boot-files-over-uart
@@ -65,7 +68,6 @@ http://www.kermitproject.org/onlinebooks/usingckermit3e.pdf
 Page 64(74)
 8 data bits, No parity, 1 stop bit (8N1)
 "SET SERIAL 8N1" == "SET PARITY NONE, SET STOP-BITS 1, SET TERM BYTE 8"
-
 
 
 ============== This works! =============
@@ -113,41 +115,44 @@ connect
 
 set protocol xmodem
 send /tmp/garbage
-send /home/darren/beaglebone/u-boot/spl/u-boot-spl.bin
 send /home/darren/beaglebone/u-boot/MLO
-
-*************************
-SEND-class command failed.
- Packets sent: 2
- Retransmissions: 11
- Timeouts: 12
- Damaged packets: 0
- Fatal Kermit Protocol Error: Too many retries
-
-HINTS... If the preceding error message does not explain the failure:
- . Did you start a Kermit receiver on the far end?
- . Adjust the timeout method (see HELP SET SEND).
- . Increase the retry limit (see HELP SET RETRY).
- . Try it again with: SET STREAMING OFF
- . Try it again with: SET PARITY SPACE
- . As a last resort, give a ROBUST command and try again.
-Also:
- . Be sure the source file has read permission.
- . Be sure the target directory has write permission.
- . Be sure the target disk has sufficient space.
-(Use SET HINTS OFF to suppress hints.)
-*************************
-
-
-
-
-
+send /home/darren/beaglebone/u-boot/spl/u-boot-spl.bin
 
 
 RNDIS
 
 IP & mask
-https://www.youtube.com/watch?v=EkNq4TrHP_U
 
 
+sudo cat /proc/tty/driver/serial
 
+cu \
+  --line /dev/ttyUSB0 \
+  --parity=none \
+  --speed=115200 \
+  --debug all \
+
+stty -a
+stty \
+  --file=/dev/ttyUSB0 \
+  115200 \
+  -crtscts \
+  cs8 \
+  -cstopb \
+  -parenb \
+  -ixon \
+
+stty -F /dev/ttyUSB0 115200 cs8 -parenb -cstopb -ixon
+
+Access as super user
+
+============== This works! =============
+# stty -aF /dev/ttyUSB0
+speed 115200 baud; rows 0; columns 0; line = 0;
+intr = ^C; quit = ^\; erase = ^?; kill = ^U; eof = ^D; eol = <undef>; eol2 = <undef>; swtch = <undef>; start = ^Q; stop = ^S;
+susp = ^Z; rprnt = ^R; werase = ^W; lnext = ^V; discard = ^O; min = 1; time = 0;
+-parenb -parodd -cmspar cs8 hupcl -cstopb cread -clocal -crtscts
+ignbrk -brkint ignpar -parmrk -inpck -istrip -inlcr -igncr -icrnl -ixon -ixoff -iuclc -ixany -imaxbel -iutf8
+-opost -olcuc -ocrnl onlcr -onocr -onlret -ofill -ofdel nl0 cr0 tab0 bs0 vt0 ff0
+-isig -icanon -iexten -echo echoe echok -echonl -noflsh -xcase -tostop -echoprt echoctl echoke -flusho -extproc
+=========================================

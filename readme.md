@@ -138,3 +138,6 @@ ip & mask
 * [NexGenT](https://www.youtube.com/watch?v=ddM9AcreVqY&list=PLl9NdZbdtA0wK8OIgttkScKRxcMkvoev_)
 * [Eli the Computer Guy](https://www.youtube.com/watch?v=EkNq4TrHP_U)
 
+C Standard Library Implementation
+[musl/uClibc/dietlibc/glibc](http://www.etalabs.net/compare_libcs.html)
+[uClibc->musl](https://elinux.org/images/e/eb/Transitioning_From_uclibc_to_musl_for_Embedded_Development.pdf)
