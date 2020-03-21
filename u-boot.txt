@@ -132,19 +132,22 @@ cu \
   --speed=115200 \
   --debug all \
 
-stty -a
+
+Access as super user
+
 stty \
   --file=/dev/ttyUSB0 \
   115200 \
+  -clocal \
+  -icrnl -ixon \
+  -opost \
   -crtscts \
   cs8 \
   -cstopb \
   -parenb \
-  -ixon \
+  -isig -icanon -iexten -echo
+cat /dev/ttyUSB0
 
-stty -F /dev/ttyUSB0 115200 cs8 -parenb -cstopb -ixon
-
-Access as super user
 
 ============== This works! =============
 # stty -aF /dev/ttyUSB0
@@ -155,4 +158,8 @@ susp = ^Z; rprnt = ^R; werase = ^W; lnext = ^V; discard = ^O; min = 1; time = 0;
 ignbrk -brkint ignpar -parmrk -inpck -istrip -inlcr -igncr -icrnl -ixon -ixoff -iuclc -ixany -imaxbel -iutf8
 -opost -olcuc -ocrnl onlcr -onocr -onlret -ofill -ofdel nl0 cr0 tab0 bs0 vt0 ff0
 -isig -icanon -iexten -echo echoe echok -echonl -noflsh -xcase -tostop -echoprt echoctl echoke -flusho -extproc
+
+# stty -gF /dev/ttyUSB0
+5:4:14b2:a30:3:1c:7f:15:4:0:1:0:11:13:1a:0:12:f:17:16:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0
 =========================================
+
