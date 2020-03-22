@@ -1,3 +1,60 @@
+###### Build u-boot for BeagleBone
+
+###### Run u-boot on BeagleBone
+
+* Connect `BeagleBone ~ PL2303 ~ PC`
+* Hold BeagleBone USER button
+* Supply power to BeagleBone
+* Wait for 5 seconds
+* Release BeagleBone USER button
+* Check `lsusb | grep -i prolific`
+* Launch ckermit
+```
+$ su -
+# ckermit
+C-Kermit>set port /dev/ttyUSB0
+C-Kermit>set speed 115200
+C-Kermit>set handshake none
+C-Kermit>set flow-control none
+C-Kermit>set serial 8n1
+C-Kermit>connect
+[Wait for CCC]
+<Ctrl-\> <C>
+```
+* Send `u-boot-spl.bin` and `u-boot.img`
+```
+C-Kermit>set protocol xmodem
+C-Kermit>set send timeout 90 fixed
+C-Kermit>set retry 0
+C-Kermit>send /home/darren/beaglebone/u-boot-v2020.01/O/spl/u-boot-spl.bin
+C-Kermit>send /home/darren/beaglebone/u-boot-v2020.01/O/u-boot.img
+C-Kermit>connect
+```
+* Try out u-boot
+```
+=> ?
+=> help
+=> version
+=> bdinfo
+=> mmcinfo
+=> usb info
+=> reset
+<Ctrl-\> <C>
+C-Kermit>exit
+```
+* Unplug PL2303 from PC
+* Hold BeagleBone POWER button till it's off
+* Clean up
+```
+# lsusb | grep -i prolific
+# ./usbreset /dev/bus/usb/...
+```
+
+###### Hidden
+
+<details><summary>&nbsp;</summary>
+
+```
 https://gitlab.denx.de/u-boot/u-boot
 Building the Software:
 ======================
@@ -69,33 +126,6 @@ Page 64(74)
 8 data bits, No parity, 1 stop bit (8N1)
 "SET SERIAL 8N1" == "SET PARITY NONE, SET STOP-BITS 1, SET TERM BYTE 8"
 
-
-============== This works! =============
-
-# dumb MLO to **64KiB** RAM
-dd if=/dev/zero of=/tmp/garbage count=96
-
-lsusb
-sudo ckermit
-
-set port /dev/ttyUSB0
-set speed 115200
-set handshake none
-set flow-control none
-set serial 8n1
-connect
-set protocol xmodem
-set send timeout 90 fixed
-set retry 0
-send /home/darren/beaglebone/u-boot-v2020.01/O/spl/u-boot-spl.bin
-send /home/darren/beaglebone/u-boot-v2020.01/O/u-boot.img
-connect
-[space skip auto boot]
-
-lsusb | grep -i prolific
-sudo ./usbreset /dev/bus/usb/...
-
-=========================================
 
 
 set port /dev/ttyUSB0
@@ -176,3 +206,6 @@ ignbrk -brkint ignpar -parmrk -inpck -istrip -inlcr -igncr -icrnl -ixon -ixoff -
 # stty -gF /dev/ttyUSB0
 5:4:14b2:a30:3:1c:7f:15:4:0:1:0:11:13:1a:0:12:f:17:16:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0
 =========================================
+```
+
+</details>
