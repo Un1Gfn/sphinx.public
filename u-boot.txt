@@ -87,7 +87,10 @@ connect
 set protocol xmodem
 set send timeout 90 fixed
 set retry 0
-send /tmp/garbage
+send /home/darren/beaglebone/u-boot-v2020.01/O/spl/u-boot-spl.bin
+send /home/darren/beaglebone/u-boot-v2020.01/O/u-boot.img
+connect
+[space skip auto boot]
 
 lsusb | grep -i prolific
 sudo ./usbreset /dev/bus/usb/...
@@ -150,6 +153,14 @@ stty \
 cat /dev/ttyUSB0
 =========================================
 
+sx \
+  --start-8k \
+  --binary \
+  --verbose \
+  --xmodem \
+  --binary /home/darren/beaglebone/u-boot-v2020.01/O/MLO \
+  </dev/ttyUSB0 \
+  >/dev/ttyUSB0 
 
 
 ============== This works! =============
@@ -165,4 +176,3 @@ ignbrk -brkint ignpar -parmrk -inpck -istrip -inlcr -igncr -icrnl -ixon -ixoff -
 # stty -gF /dev/ttyUSB0
 5:4:14b2:a30:3:1c:7f:15:4:0:1:0:11:13:1a:0:12:f:17:16:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0
 =========================================
-
