@@ -15,6 +15,17 @@ $ make -j3 all
 
 ###### Run u-boot on BeagleBone (stty)
 
+Serial port should be
+```
+speed 115200 baud; rows 0; columns 0; line = 0;
+intr = ^C; quit = ^\; erase = ^?; kill = ^U; eof = ^D; eol = <undef>; eol2 = <undef>; swtch = <undef>; start = ^Q; stop = ^S;
+susp = ^Z; rprnt = ^R; werase = ^W; lnext = ^V; discard = ^O; min = 1; time = 0;
+-parenb -parodd -cmspar cs8 hupcl -cstopb cread -clocal -crtscts
+ignbrk -brkint ignpar -parmrk -inpck -istrip -inlcr -igncr -icrnl -ixon -ixoff -iuclc -ixany -imaxbel -iutf8
+-opost -olcuc -ocrnl onlcr -onocr -onlret -ofill -ofdel nl0 cr0 tab0 bs0 vt0 ff0
+-isig -icanon -iexten -echo echoe echok -echonl -noflsh -xcase -tostop -echoprt echoctl echoke -flusho -extproc
+```
+
 stty
 ```bash
 echo '
@@ -26,22 +37,18 @@ ignbrk ignpar
 ```
 
 [XMODEM](http://e2e.ti.com/support/processors/f/791/t/803163?Linux-AM3358-Serial-transfer-of-files)
-```
+```bash
 sx --xmodem -k -vv /home/darren/beaglebone/u-boot-v2020.01/O/spl/u-boot-spl.bin < /dev/ttyUSB0 > /dev/ttyUSB0
 sx --xmodem -k -vv /home/darren/beaglebone/u-boot-v2020.01/O/u-boot.img < /dev/ttyUSB0 > /dev/ttyUSB0
 ```
 
 cu
-```bash
-
+```
 cu -l /dev/ttyUSB0 -s 115200
 [run stty again]
-
-echo '
---parity=none
---speed 115200
---debug all
-' | xargs cu -l /dev/ttyUSB0
+=>
+[u-boot commands]
+=> ~.
 
 ```
 <!-- 
@@ -54,16 +61,6 @@ echo '
 >/dev/ttyUSB1
 ' | xargs sx
  -->
-
-```
-speed 115200 baud; rows 0; columns 0; line = 0;
-intr = ^C; quit = ^\; erase = ^?; kill = ^U; eof = ^D; eol = <undef>; eol2 = <undef>; swtch = <undef>; start = ^Q; stop = ^S;
-susp = ^Z; rprnt = ^R; werase = ^W; lnext = ^V; discard = ^O; min = 1; time = 0;
--parenb -parodd -cmspar cs8 hupcl -cstopb cread -clocal -crtscts
-ignbrk -brkint ignpar -parmrk -inpck -istrip -inlcr -igncr -icrnl -ixon -ixoff -iuclc -ixany -imaxbel -iutf8
--opost -olcuc -ocrnl onlcr -onocr -onlret -ofill -ofdel nl0 cr0 tab0 bs0 vt0 ff0
--isig -icanon -iexten -echo echoe echok -echonl -noflsh -xcase -tostop -echoprt echoctl echoke -flusho -extproc
-```
 
 ###### Run u-boot on BeagleBone
 
