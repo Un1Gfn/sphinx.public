@@ -15,6 +15,7 @@ $ make -j3 all
 
 ###### Run u-boot on BeagleBone (stty)
 
+stty
 ```bash
 echo '
 115200
@@ -24,13 +25,25 @@ ignbrk ignpar
 ' | xargs stty -F /dev/ttyUSB0
 ```
 
-http://e2e.ti.com/support/processors/f/791/t/803163?Linux-AM3358-Serial-transfer-of-files
+[XMODEM](http://e2e.ti.com/support/processors/f/791/t/803163?Linux-AM3358-Serial-transfer-of-files)
 ```
 sx --xmodem -k -vv /home/darren/beaglebone/u-boot-v2020.01/O/spl/u-boot-spl.bin < /dev/ttyUSB0 > /dev/ttyUSB0
 sx --xmodem -k -vv /home/darren/beaglebone/u-boot-v2020.01/O/u-boot.img < /dev/ttyUSB0 > /dev/ttyUSB0
-cu -l /dev/ttyUSB0
 ```
 
+cu
+```bash
+
+cu -l /dev/ttyUSB0 -s 115200
+[run stty again]
+
+echo '
+--parity=none
+--speed 115200
+--debug all
+' | xargs cu -l /dev/ttyUSB0
+
+```
 <!-- 
 echo '
 --binary
@@ -99,6 +112,7 @@ C-Kermit>connect
 => usb info
 => reset
 <Ctrl-\> <C>
+C-Kermit>close
 C-Kermit>exit
 ```
 * Unplug PL2303 from PC
