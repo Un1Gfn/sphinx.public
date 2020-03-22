@@ -38,8 +38,8 @@ ignbrk ignpar
 
 [XMODEM](http://e2e.ti.com/support/processors/f/791/t/803163?Linux-AM3358-Serial-transfer-of-files)
 ```bash
-sx --xmodem -k -vv /home/darren/beaglebone/u-boot-v2020.01/O/spl/u-boot-spl.bin < /dev/ttyUSB0 > /dev/ttyUSB0
-sx --xmodem -k -vv /home/darren/beaglebone/u-boot-v2020.01/O/u-boot.img < /dev/ttyUSB0 > /dev/ttyUSB0
+sx --xmodem -k -vv </dev/ttyUSB0 >/dev/ttyUSB0 /home/darren/beaglebone/u-boot-v2020.01/O/spl/u-boot-spl.bin
+sx --xmodem -k -vv </dev/ttyUSB0 >/dev/ttyUSB0 /home/darren/beaglebone/u-boot-v2020.01/O/u-boot.img
 ```
 
 cu
@@ -51,16 +51,6 @@ cu -l /dev/ttyUSB0 -s 115200
 => ~.
 
 ```
-<!-- 
-echo '
---binary
---verbose
---xmodem
-/home/darren/beaglebone/u-boot-v2020.01/O/spl/u-boot-spl.bin
-</dev/ttyUSB1
->/dev/ttyUSB1
-' | xargs sx
- -->
 
 ###### Run u-boot on BeagleBone
 
