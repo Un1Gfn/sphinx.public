@@ -13,6 +13,18 @@ $ make -j3 all
 ```
 * Binaries in `u-boot-v2020.01/O/`
 
+###### Run u-boot on BeagleBone (stty)
+
+```
+speed 115200 baud; rows 0; columns 0; line = 0;
+intr = ^C; quit = ^\; erase = ^?; kill = ^U; eof = ^D; eol = <undef>; eol2 = <undef>; swtch = <undef>; start = ^Q; stop = ^S;
+susp = ^Z; rprnt = ^R; werase = ^W; lnext = ^V; discard = ^O; min = 1; time = 0;
+-parenb -parodd -cmspar cs8 hupcl -cstopb cread -clocal -crtscts
+ignbrk -brkint ignpar -parmrk -inpck -istrip -inlcr -igncr -icrnl -ixon -ixoff -iuclc -ixany -imaxbel -iutf8
+-opost -olcuc -ocrnl onlcr -onocr -onlret -ofill -ofdel nl0 cr0 tab0 bs0 vt0 ff0
+-isig -icanon -iexten -echo echoe echok -echonl -noflsh -xcase -tostop -echoprt echoctl echoke -flusho -extproc
+```
+
 ###### Run u-boot on BeagleBone
 
 * Connect `BeagleBone ~ PL2303 ~ PC`
@@ -80,15 +92,9 @@ Building the Software:
 ======================
 
 http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.set.boards/index.html
-configs/vexpress_ca9x4_defconfig
-configs/am335x_evm_defconfig
-configs/am335x_boneblack_vboot_defconfig
 ./tools/genboardscfg.py -j 3
 
 gitclear
-
-
-
 
 make -j3 vexpress_ca9x4_defconfig
 
@@ -130,8 +136,6 @@ Ctrl-a x
 
 https://wiki.archlinux.org/index.php/Working_with_the_serial_console
 
-ckermit(1)
-
 https://stackoverflow.com/questions/38279621/how-to-send-boot-files-over-uart
 
 http://www.denx.de/wiki/view/DULG/SystemSetup#Section_4.3
@@ -142,16 +146,10 @@ Page 64(74)
 "SET SERIAL 8N1" == "SET PARITY NONE, SET STOP-BITS 1, SET TERM BYTE 8"
 
 
-
-set port /dev/ttyUSB0
-set send timeout 0 fixed
-set retry 0
-
 set line /dev/ttyUSB0
 set carrier-watch off
-set handshake none
-set flow-control none
-set serial 8n1
+
+
 robust
 set file type bin
 set file name lit
@@ -159,18 +157,10 @@ set rec pack 1000
 set send pack 1000
 set window 5
 
-connect
-
-set protocol xmodem
-send /tmp/garbage
-send /home/darren/beaglebone/u-boot/MLO
-send /home/darren/beaglebone/u-boot/spl/u-boot-spl.bin
-
 
 RNDIS
 
 IP & mask
-
 
 sudo cat /proc/tty/driver/serial
 
@@ -182,45 +172,6 @@ cu \
 
 
 
-============== This works! =============
-su -
-stty \
-  --file=/dev/ttyUSB0 \
-  115200 \
-  -clocal \
-  -icrnl -ixon \
-  -opost \
-  -crtscts \
-  cs8 \
-  -cstopb \
-  -parenb \
-  -isig -icanon -iexten -echo
-cat /dev/ttyUSB0
-=========================================
-
-sx \
-  --start-8k \
-  --binary \
-  --verbose \
-  --xmodem \
-  --binary /home/darren/beaglebone/u-boot-v2020.01/O/MLO \
-  </dev/ttyUSB0 \
-  >/dev/ttyUSB0 
-
-
-============== This works! =============
-# stty -aF /dev/ttyUSB0
-speed 115200 baud; rows 0; columns 0; line = 0;
-intr = ^C; quit = ^\; erase = ^?; kill = ^U; eof = ^D; eol = <undef>; eol2 = <undef>; swtch = <undef>; start = ^Q; stop = ^S;
-susp = ^Z; rprnt = ^R; werase = ^W; lnext = ^V; discard = ^O; min = 1; time = 0;
--parenb -parodd -cmspar cs8 hupcl -cstopb cread -clocal -crtscts
-ignbrk -brkint ignpar -parmrk -inpck -istrip -inlcr -igncr -icrnl -ixon -ixoff -iuclc -ixany -imaxbel -iutf8
--opost -olcuc -ocrnl onlcr -onocr -onlret -ofill -ofdel nl0 cr0 tab0 bs0 vt0 ff0
--isig -icanon -iexten -echo echoe echok -echonl -noflsh -xcase -tostop -echoprt echoctl echoke -flusho -extproc
-
-# stty -gF /dev/ttyUSB0
-5:4:14b2:a30:3:1c:7f:15:4:0:1:0:11:13:1a:0:12:f:17:16:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0
-=========================================
 ```
 
 </details>
