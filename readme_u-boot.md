@@ -21,8 +21,26 @@ echo '
 -clocal
 ignbrk ignpar
 -icrnl -ixon -opost -isig -icanon -iexten -echo
-' | xargs stty -F /dev/ttyUSB1
+' | xargs stty -F /dev/ttyUSB0
 ```
+
+http://e2e.ti.com/support/processors/f/791/t/803163?Linux-AM3358-Serial-transfer-of-files
+```
+sx --xmodem -k -vv /home/darren/beaglebone/u-boot-v2020.01/O/spl/u-boot-spl.bin < /dev/ttyUSB0 > /dev/ttyUSB0
+sx --xmodem -k -vv /home/darren/beaglebone/u-boot-v2020.01/O/u-boot.img < /dev/ttyUSB0 > /dev/ttyUSB0
+cu -l /dev/ttyUSB0
+```
+
+<!-- 
+echo '
+--binary
+--verbose
+--xmodem
+/home/darren/beaglebone/u-boot-v2020.01/O/spl/u-boot-spl.bin
+</dev/ttyUSB1
+>/dev/ttyUSB1
+' | xargs sx
+ -->
 
 ```
 speed 115200 baud; rows 0; columns 0; line = 0;
