@@ -15,6 +15,15 @@ $ make -j3 all
 
 ###### Run u-boot on BeagleBone (stty)
 
+```bash
+echo '
+115200
+-clocal
+ignbrk ignpar
+-icrnl -ixon -opost -isig -icanon -iexten -echo
+' | xargs stty -F /dev/ttyUSB1
+```
+
 ```
 speed 115200 baud; rows 0; columns 0; line = 0;
 intr = ^C; quit = ^\; erase = ^?; kill = ^U; eof = ^D; eol = <undef>; eol2 = <undef>; swtch = <undef>; start = ^Q; stop = ^S;
