@@ -1,8 +1,28 @@
 ###### Build u-boot for BeagleBone
 
+* Toolchain: [arm-linux-gnueabihf-gcc](https://aur.archlinux.org/packages/arm-linux-gnueabihf-gcc/)
+* Download [u-boot-v2020.01.tar.bz2](https://gitlab.denx.de/u-boot/u-boot/-/archive/v2020.01/u-boot-v2020.01.tar.bz2) from [releases](https://gitlab.denx.de/u-boot/u-boot/-/tags)
+* Extract to `u-boot-v2020.01/`
+* Build
+```
+$ cd u-boot-v2020.01/
+$ export CROSS_COMPILE='arm-linux-gnueabihf-'
+$ export KBUILD_OUTPUT='O'
+$ make -j3 am335x_boneblack_vboot_defconfig
+$ make -j3 all
+```
+* Binaries in `u-boot-v2020.01/O/`
+
 ###### Run u-boot on BeagleBone
 
 * Connect `BeagleBone ~ PL2303 ~ PC`
+```
+BeagleBone  PL2303
+------------------
+  Black      GND
+  Green      RX
+  White      TX
+```
 * Hold BeagleBone USER button
 * Supply power to BeagleBone
 * Wait for 5 seconds
@@ -67,12 +87,10 @@ configs/am335x_boneblack_vboot_defconfig
 
 gitclear
 
-export CROSS_COMPILE='arm-linux-gnueabihf-'
-export KBUILD_OUTPUT='O'
+
+
 
 make -j3 vexpress_ca9x4_defconfig
-make -j3 am335x_boneblack_vboot_defconfig
-make -j3 all
 
 git check-ignore * | xargs file
 file * spl/* | grep -v -F -e ASCII -e directory | less -S
@@ -105,9 +123,6 @@ qemu-system-arm \
 Monitor Commands - Overview:
 ============================
 
-=> help
-=> reset
-=>
 
 https://www.qemu.org/docs/master/qemu-doc.html#index-Ctrl_002da-x
 Ctrl-a x
