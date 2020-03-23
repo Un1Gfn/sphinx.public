@@ -1,3 +1,14 @@
+```
+chromium https://unix.stackexchange.com/questions/242778/what-is-the-easiest-way-to-configure-serial-port-on-linux
+chromium https://github.com/techniq/wiki/wiki/Beaglebone-Serial
+chromium https://elinux.org/Userspace_Arduino:To_Do
+chromium https://www.youtube.com/watch?v=3y1LMNPoaJI&t=0s
+chromium https://github.com/u-boot/u-boot/blob/master/doc/README.autoboot
+chromium https://wiki.beyondlogic.org/index.php?title=BeagleBoneBlack_Upgrading_uBoot
+chromium https://andicelabs.com/2014/07/beaglebone-black-boot-issues/
+chromium https://www.denx.de/wiki/view/DULG/SystemSetup#Section_4.3.
+```
+
 ###### Build u-boot for BeagleBone
 
 * Toolchain: [arm-linux-gnueabihf-gcc](https://aur.archlinux.org/packages/arm-linux-gnueabihf-gcc/)
@@ -13,46 +24,7 @@ $ make -j3 all
 ```
 * Binaries in `u-boot-v2020.01/O/`
 
-###### Run u-boot on BeagleBone (stty)
-
-Serial port should be
-```
-speed 115200 baud; rows 0; columns 0; line = 0;
-intr = ^C; quit = ^\; erase = ^?; kill = ^U; eof = ^D; eol = <undef>; eol2 = <undef>; swtch = <undef>; start = ^Q; stop = ^S;
-susp = ^Z; rprnt = ^R; werase = ^W; lnext = ^V; discard = ^O; min = 1; time = 0;
--parenb -parodd -cmspar cs8 hupcl -cstopb cread -clocal -crtscts
-ignbrk -brkint ignpar -parmrk -inpck -istrip -inlcr -igncr -icrnl -ixon -ixoff -iuclc -ixany -imaxbel -iutf8
--opost -olcuc -ocrnl onlcr -onocr -onlret -ofill -ofdel nl0 cr0 tab0 bs0 vt0 ff0
--isig -icanon -iexten -echo echoe echok -echonl -noflsh -xcase -tostop -echoprt echoctl echoke -flusho -extproc
-```
-
-stty
-```bash
-echo '
-115200
--clocal
-ignbrk ignpar
--icrnl -ixon -opost -isig -icanon -iexten -echo
-' | xargs stty -F /dev/ttyUSB0
-```
-
-[XMODEM](http://e2e.ti.com/support/processors/f/791/t/803163?Linux-AM3358-Serial-transfer-of-files)
-```bash
-sx --xmodem -k -vv </dev/ttyUSB0 >/dev/ttyUSB0 /home/darren/beaglebone/u-boot-v2020.01/O/spl/u-boot-spl.bin
-sx --xmodem -k -vv </dev/ttyUSB0 >/dev/ttyUSB0 /home/darren/beaglebone/u-boot-v2020.01/O/u-boot.img
-```
-
-cu
-```
-cu -l /dev/ttyUSB0 -s 115200
-[run stty again]
-=>
-[u-boot commands]
-=> ~.
-
-```
-
-###### Run u-boot on BeagleBone
+###### Run u-boot on BeagleBone (stty) [<sup>O</sup>](https://www.denx.de/wiki/view/DULG/SystemSetup#Section_4.2.)
 
 * Connect `BeagleBone ~ PL2303 ~ PC`
 ```
@@ -67,6 +39,79 @@ BeagleBone  PL2303
 * Wait for 5 seconds
 * Release BeagleBone USER button
 * Check `lsusb | grep -i prolific`
+* **Escalate**
+```
+$ su -
+# 
+```
+* stty
+```bash
+echo '
+115200
+-clocal
+ignbrk ignpar
+-icrnl -ixon -opost -isig -icanon -iexten -echo
+' | xargs stty -F /dev/ttyUSB0
+```
+* Verify
+```
+cat /dev/ttyUSB0
+[WAIT FOR 25 SECONDS]
+SSS...
+```
+* [XMODEM](http://e2e.ti.com/support/processors/f/791/t/803163?Linux-AM3358-Serial-transfer-of-files)
+```bash
+sx --xmodem -k -vv </dev/ttyUSB0 >/dev/ttyUSB0 /home/darren/beaglebone/u-boot-v2020.01/O/spl/u-boot-spl.bin
+sx --xmodem -k -vv </dev/ttyUSB0 >/dev/ttyUSB0 /home/darren/beaglebone/u-boot-v2020.01/O/u-boot.img
+```
+* cu [<sup>O</sup>](https://access.redhat.com/solutions/209663) [(resize)](https://wiki.archlinux.org/index.php/Working_with_the_serial_console#Troubleshooting)
+```
+cu -l /dev/ttyUSB0 -s 115200
+[RUN STTY AGAIN]
+
+=> 
+```
+* u-boot
+```?
+=> help
+=> version
+=> bdinfo
+=> mmcinfo
+=> usb info
+=> reset
+```
+* exit cu
+```
+=> ~.
+
+```
+* Unplug PL2303 from PC
+* Hold BeagleBone POWER button till it's off
+* Clean up
+``` bash
+lsusb | grep -i prolific
+./usbreset /dev/bus/usb/...
+```
+
+###### Hidden
+
+<details><summary>&nbsp;</summary>
+
+Example serial port setup that works
+
+stty -aF /dev/ttyUSB0
+```
+speed 115200 baud; rows 0; columns 0; line = 0;
+intr = ^C; quit = ^\; erase = ^?; kill = ^U; eof = ^D; eol = <undef>; eol2 = <undef>; swtch = <undef>; start = ^Q; stop = ^S;
+susp = ^Z; rprnt = ^R; werase = ^W; lnext = ^V; discard = ^O; min = 1; time = 0;
+-parenb -parodd -cmspar cs8 hupcl -cstopb cread -clocal -crtscts
+ignbrk -brkint ignpar -parmrk -inpck -istrip -inlcr -igncr -icrnl -ixon -ixoff -iuclc -ixany -imaxbel -iutf8
+-opost -olcuc -ocrnl onlcr -onocr -onlret -ofill -ofdel nl0 cr0 tab0 bs0 vt0 ff0
+-isig -icanon -iexten -echo echoe echok -echonl -noflsh -xcase -tostop -echoprt echoctl echoke -flusho -extproc
+```
+
+Run u-boot on BeagleBone [(kermit)](http://www.kermitproject.org/) [<sup>O</sup>](https://www.denx.de/wiki/view/DULG/SystemSetup#Section_4.3.)
+
 * Launch ckermit
 ```
 $ su -
@@ -88,31 +133,11 @@ C-Kermit>set retry 0
 C-Kermit>send /home/darren/beaglebone/u-boot-v2020.01/O/spl/u-boot-spl.bin
 C-Kermit>send /home/darren/beaglebone/u-boot-v2020.01/O/u-boot.img
 C-Kermit>connect
-```
-* Try out u-boot
-```
-=> ?
-=> help
-=> version
-=> bdinfo
-=> mmcinfo
-=> usb info
-=> reset
-<Ctrl-\> <C>
-C-Kermit>close
-C-Kermit>exit
-```
-* Unplug PL2303 from PC
-* Hold BeagleBone POWER button till it's off
-* Clean up
-```
-# lsusb | grep -i prolific
-# ./usbreset /dev/bus/usb/...
+
+=> 
 ```
 
-###### Hidden
-
-<details><summary>&nbsp;</summary>
+Misc
 
 ```
 https://gitlab.denx.de/u-boot/u-boot

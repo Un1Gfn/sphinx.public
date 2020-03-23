@@ -7,3 +7,7 @@
 /*.out
 
 # /*.pdf
+
+/u-boot-v2020.01.tar.bz2
+/u-boot-v2020.01/
+/u-boot.git/
