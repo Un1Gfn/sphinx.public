@@ -84,6 +84,7 @@ sha256sum -c emmc.img.sha256
 * Run Run u-boot on BeagleBone (stty)
 ```
 loadx 0x100000 115200
+loadx 0xB00000 115200
 ~.
 ```
 ```
@@ -91,7 +92,8 @@ sx --xmodem -k -vv </dev/ttyUSB0 >/dev/ttyUSB0 /home/darren/beaglebone/emmc.img
 ```
 > 0x100000=1024\*1024
 ```
-md 0x100000 0x100000
+md.b 0xB00000 0xB00000
+cmp.b 0x100000 0xB00000 0x100000
 ```
 ```
 
