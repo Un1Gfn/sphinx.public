@@ -11,3 +11,5 @@
 /u-boot-v2020.01.tar.bz2
 /u-boot-v2020.01/
 /u-boot.git/
+
+/bone-debian-9.9-iot-armhf-*.img*

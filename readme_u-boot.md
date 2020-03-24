@@ -15,12 +15,12 @@ https://www.denx.de/wiki/view/DULG/SystemSetup#Section_4.3.
 * Download [u-boot-v2020.01.tar.bz2](https://gitlab.denx.de/u-boot/u-boot/-/archive/v2020.01/u-boot-v2020.01.tar.bz2) from [releases](https://gitlab.denx.de/u-boot/u-boot/-/tags)
 * Extract to `u-boot-v2020.01/`
 * Build
-```
-$ cd u-boot-v2020.01/
-$ export CROSS_COMPILE='arm-linux-gnueabihf-'
-$ export KBUILD_OUTPUT='O'
-$ make -j3 am335x_boneblack_vboot_defconfig
-$ make -j3 all
+```bash
+cd u-boot-v2020.01/
+export CROSS_COMPILE='arm-linux-gnueabihf-'
+export KBUILD_OUTPUT='O'
+make -j3 am335x_evm_defconfig
+make -j3 all
 ```
 * Binaries in `u-boot-v2020.01/O/`
 
@@ -31,20 +31,20 @@ $ su -
 #
 ```
 * Fill
-```
+```bash
 cd /tmp
 dd if=/dev/zero of=emmc.img bs=1 count=$((1024*1024))
 fdisk -l emmc.img
 ```
 * Loop
-```
+```bash
 losetup -l -a
 losetup -f --show -L -P -v emmc.img
 losetup -l -a
 fdisk -l /dev/loop0
 ```
 * Format
-```
+```bash
 fdisk /dev/loop0
 o
 n
@@ -59,7 +59,7 @@ lsblk
 mkfs.fat -v /dev/loop0p1
 ```
 * Write
-```
+```bash
 mkdir /tmp/mnt
 mount -v /dev/loop0p1 /tmp/mnt
 cp -v /home/darren/beaglebone/u-boot-v2020.01/O/spl/u-boot-spl.bin /tmp/mnt
@@ -68,13 +68,13 @@ sync
 umount /tmp/mnt
 ```
 * Cleanup
-```
+```bash
 losetup -l -a
 losetup -D
 losetup -l -a
 ```
 * Save
-```
+```bash
 install -v -gdarren -odarren emmc.img /home/darren/beaglebone/
 rm -v emmc.img
 [revert to darren]
@@ -87,7 +87,7 @@ loadx 0x100000 115200
 loadx 0xB00000 115200
 ~.
 ```
-```
+```bash
 sx --xmodem -k -vv </dev/ttyUSB0 >/dev/ttyUSB0 /home/darren/beaglebone/emmc.img
 ```
 > 0x100000=1024\*1024
