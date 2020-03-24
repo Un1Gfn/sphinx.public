@@ -1,12 +1,12 @@
 ```
-chromium https://unix.stackexchange.com/questions/242778/what-is-the-easiest-way-to-configure-serial-port-on-linux
-chromium https://github.com/techniq/wiki/wiki/Beaglebone-Serial
-chromium https://elinux.org/Userspace_Arduino:To_Do
-chromium https://www.youtube.com/watch?v=3y1LMNPoaJI&t=0s
-chromium https://github.com/u-boot/u-boot/blob/master/doc/README.autoboot
-chromium https://wiki.beyondlogic.org/index.php?title=BeagleBoneBlack_Upgrading_uBoot
-chromium https://andicelabs.com/2014/07/beaglebone-black-boot-issues/
-chromium https://www.denx.de/wiki/view/DULG/SystemSetup#Section_4.3.
+https://unix.stackexchange.com/questions/242778/what-is-the-easiest-way-to-configure-serial-port-on-linux
+https://github.com/techniq/wiki/wiki/Beaglebone-Serial
+https://elinux.org/Userspace_Arduino:To_Do
+https://www.youtube.com/watch?v=3y1LMNPoaJI&t=0s
+https://github.com/u-boot/u-boot/blob/master/doc/README.autoboot
+https://wiki.beyondlogic.org/index.php?title=BeagleBoneBlack_Upgrading_uBoot
+https://andicelabs.com/2014/07/beaglebone-black-boot-issues/
+https://www.denx.de/wiki/view/DULG/SystemSetup#Section_4.3.
 ```
 
 ###### Build u-boot for BeagleBone
@@ -23,6 +23,87 @@ $ make -j3 am335x_boneblack_vboot_defconfig
 $ make -j3 all
 ```
 * Binaries in `u-boot-v2020.01/O/`
+
+###### Write u-boot to eMMC
+* Escalate
+```
+$ su -
+#
+```
+* Fill
+```
+cd /tmp
+dd if=/dev/zero of=emmc.img bs=1 count=$((1024*1024))
+fdisk -l emmc.img
+```
+* Loop
+```
+losetup -l -a
+losetup -f --show -L -P -v emmc.img
+losetup -l -a
+fdisk -l /dev/loop0
+```
+* Format
+```
+fdisk /dev/loop0
+o
+n
+p
+1
+1
+2047
+t
+1
+w
+lsblk
+mkfs.fat -v /dev/loop0p1
+```
+* Write
+```
+mkdir /tmp/mnt
+mount -v /dev/loop0p1 /tmp/mnt
+cp -v /home/darren/beaglebone/u-boot-v2020.01/O/spl/u-boot-spl.bin /tmp/mnt
+cp -v /home/darren/beaglebone/u-boot-v2020.01/O/u-boot.img /tmp/mnt
+sync
+umount /tmp/mnt
+```
+* Cleanup
+```
+losetup -l -a
+losetup -D
+losetup -l -a
+```
+* Save
+```
+install -v -gdarren -odarren emmc.img /home/darren/beaglebone/
+rm -v emmc.img
+[revert to darren]
+sha256sum emmc.img >>emmc.img.sha256
+sha256sum -c emmc.img.sha256
+```
+* Run Run u-boot on BeagleBone (stty)
+```
+loadx 0x100000 115200
+~.
+```
+```
+sx --xmodem -k -vv </dev/ttyUSB0 >/dev/ttyUSB0 /home/darren/beaglebone/emmc.img
+```
+```
+md 0x100000
+```
+```
+
+mmc list
+mmc dev 1
+mmc info
+mmc part
+
+mmc write 0x100000 0 0x800
+
+mmc rescan
+mmc part
+```
 
 ###### Run u-boot on BeagleBone (stty) [<sup>O</sup>](https://www.denx.de/wiki/view/DULG/SystemSetup#Section_4.2.)
 
