@@ -89,8 +89,9 @@ loadx 0x100000 115200
 ```
 sx --xmodem -k -vv </dev/ttyUSB0 >/dev/ttyUSB0 /home/darren/beaglebone/emmc.img
 ```
+> 0x100000=1024\*1024
 ```
-md 0x100000
+md 0x100000 0x100000
 ```
 ```
 
