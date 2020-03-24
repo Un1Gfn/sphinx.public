@@ -60,12 +60,14 @@ mkfs.fat -v /dev/loop0p1
 ```
 * Write
 ```bash
-mkdir /tmp/mnt
+mkdir  /tmp/mnt
 mount -v /dev/loop0p1 /tmp/mnt
 cp -v /home/darren/beaglebone/u-boot-v2020.01/O/spl/u-boot-spl.bin /tmp/mnt
+sync
 cp -v /home/darren/beaglebone/u-boot-v2020.01/O/u-boot.img /tmp/mnt
 sync
-umount /tmp/mnt
+umount -v /tmp/mnt
+rmdir -v /tmp/mnt
 ```
 * Cleanup
 ```bash
@@ -78,6 +80,7 @@ losetup -l -a
 install -v -gdarren -odarren emmc.img /home/darren/beaglebone/
 rm -v emmc.img
 [revert to darren]
+cd /home/darren/beaglebone/
 sha256sum emmc.img >>emmc.img.sha256
 sha256sum -c emmc.img.sha256
 ```
