@@ -1,12 +1,21 @@
 ```
-https://unix.stackexchange.com/questions/242778/what-is-the-easiest-way-to-configure-serial-port-on-linux
-https://github.com/techniq/wiki/wiki/Beaglebone-Serial
-https://elinux.org/Userspace_Arduino:To_Do
-https://www.youtube.com/watch?v=3y1LMNPoaJI&t=0s
-https://github.com/u-boot/u-boot/blob/master/doc/README.autoboot
-https://wiki.beyondlogic.org/index.php?title=BeagleBoneBlack_Upgrading_uBoot
-https://andicelabs.com/2014/07/beaglebone-black-boot-issues/
-https://www.denx.de/wiki/view/DULG/SystemSetup#Section_4.3.
+https://elinux.org/Building_for_BeagleBone
+https://git.busybox.net/buildroot/tree/board/beaglebone
+https://elinux.org/BeagleBone/Serial_Port
+https://processors.wiki.ti.com/index.php/AM335x_U-Boot_User's_Guide
+https://www.digikey.com/eewiki/display/linuxonarm/BeagleBone+Black
+https://www.linux4sam.org/bin/view/Linux4SAM/U-Boot
+http://www.armadeus.org/wiki/index.php?title=Serial_Transfer
+https://lists.denx.de/pipermail/u-boot/2003-June/001527.html
+https://processors.wiki.ti.com/index.php/Sitara_Linux_Program_the_eMMC_on_Beaglebone_Black
+https://wiki.debian.org/FreedomBox/Hardware/BeagleBone
+https://wiki.debian.org/InstallingDebianOn/TI/BeagleBone
+https://elinux.org/Beagleboard:Updating_The_Software
+https://beagleboard.org/latest-images
+http://lists.busybox.net/pipermail/buildroot/2016-April/160030.html
+https://www.busybox.net/use_less_ram.html
+https://github.com/pengutronix/genimage
+https://github.com/Un1Gfn/beaglebone/blob/master/readme_u-boot.md
 ```
 
 ###### Build u-boot for BeagleBone
