@@ -55,6 +55,7 @@ p
 2047
 t
 1
+a
 w
 lsblk
 mkfs.fat -v /dev/loop0p1
