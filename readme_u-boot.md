@@ -111,6 +111,35 @@ mmc rescan
 mmc part
 ```
 
+###### Run u-boot on BeagleBone (minicom)
+
+[eewiki](https://www.digikey.com/eewiki/display/linuxonarm/BeagleBone+Black#BeagleBoneBlack-Bootloader:U-Boot)
+
+```bash
+wget https://gitlab.denx.de/u-boot/u-boot/-/archive/v2019.04/u-boot-v2019.04.tar.bz2
+md5 10218bf500cd36894722df95aeb15c91
+
+patch --verbose -p1 < ../0001-am335x_evm-uEnv.txt-bootz-n-fixes.patch
+patch --verbose -p1 < ../0002-U-Boot-BeagleBone-Cape-Manager.patch
+export CROSS_COMPILE='arm-linux-gnueabihf-'
+export KBUILD_OUTPUT='O'
+make -j3 am335x_evm_defconfig
+make -j3 all
+
+```
+
+```bash
+# --metakey
+
+minicom                 \
+  --color=off           \
+  --baudrate 115200     \
+  --device /dev/ttyUSB0
+
+sudo cp -v u-boot.img spl/u-boot-spl.bin ~root/
+```
+
+
 ###### Run u-boot on BeagleBone (stty) [<sup>O</sup>](https://www.denx.de/wiki/view/DULG/SystemSetup#Section_4.2.)
 
 * Connect `BeagleBone ~ PL2303 ~ PC`
