@@ -19,8 +19,9 @@ https://www.denx.de/wiki/view/DULG/SystemSetup#Section_4.3.
 cd u-boot-v2020.01/
 export CROSS_COMPILE='arm-linux-gnueabihf-'
 export KBUILD_OUTPUT='O'
-make -j3 am335x_evm_defconfig
+make -j3 am335x_boneblack_vboot_defconfig
 make -j3 all
+sudo cp -v O/MLO O/u-boot.img O/spl/u-boot-spl.bin ~root/
 ```
 * Binaries in `u-boot-v2020.01/O/`
 
@@ -62,9 +63,9 @@ mkfs.fat -v /dev/loop0p1
 ```bash
 mkdir  /tmp/mnt
 mount -v /dev/loop0p1 /tmp/mnt
-cp -v /home/darren/beaglebone/u-boot-v2020.01/O/spl/u-boot-spl.bin /tmp/mnt
+cp -v ~/MLO /tmp/mnt
 sync
-cp -v /home/darren/beaglebone/u-boot-v2020.01/O/u-boot.img /tmp/mnt
+cp -v ~/u-boot.img /tmp/mnt
 sync
 umount -v /tmp/mnt
 rmdir -v /tmp/mnt
@@ -74,29 +75,16 @@ rmdir -v /tmp/mnt
 losetup -l -a
 losetup -D
 losetup -l -a
-```
-* Save
-```bash
-install -v -gdarren -odarren emmc.img /home/darren/beaglebone/
-rm -v emmc.img
-[revert to darren]
-cd /home/darren/beaglebone/
-sha256sum emmc.img >>emmc.img.sha256
-sha256sum -c emmc.img.sha256
+mv -v emmc.img ~/
 ```
 * Run Run u-boot on BeagleBone (stty)
-```
-loadx 0x82000000 115200
-~.
-```
-```bash
-sx --xmodem -k -vv </dev/ttyUSB0 >/dev/ttyUSB0 /home/darren/beaglebone/emmc.img
-```
 > Mi=1024\*1024=1048576
 > Mi=2048\*512=0x800\*512
 ```
 md.b 0x82000000 0x100000
 cmp.b 0x100000 0x82000000 0x100000
+mw.b 0x82000000 0 0x100000
+loadx 0x82000000 115200
 ```
 ```
 
@@ -105,7 +93,16 @@ mmc dev 1
 mmc info
 mmc part
 
-mmc write 0x100000 0 0x800
+mmc write 0x82000000 0 0x800
+
+MMC write: dev # 1, block # 0, count 2048 ... 2048 blocks written: OK
+
+mmc part
+
+Partition Map for MMC device 1  --   Partition Type: DOS
+
+Part    Start Sector    Num Sectors     UUID            Type
+  1     1               2047            01d0a302-01     01
 
 mmc rescan
 mmc part
@@ -130,15 +127,11 @@ make -j3 all
 
 ```bash
 # --metakey
-
 minicom                 \
   --color=off           \
   --baudrate 115200     \
   --device /dev/ttyUSB0
-
-sudo cp -v u-boot.img spl/u-boot-spl.bin ~root/
 ```
-
 
 ###### Run u-boot on BeagleBone (stty) [<sup>O</sup>](https://www.denx.de/wiki/view/DULG/SystemSetup#Section_4.2.)
 
