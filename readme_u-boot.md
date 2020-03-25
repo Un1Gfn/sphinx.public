@@ -82,10 +82,19 @@ mv -v emmc.img ~/
 > Mi=1024\*1024=1048576
 > Mi=2048\*512=0x800\*512
 ```
-md.b 0x82000000 0x100000
+mmc dev 1
+mmc part
+mmc erase 0 0x800
+mmc rescan
+mmc part
+
 cmp.b 0x100000 0x82000000 0x100000
 mw.b 0x82000000 0 0x100000
+cmp.b 0x100000 0x82000000 0x100000
+
 loadx 0x82000000 115200
+md.b 0x82000000 0x4
+
 ```
 ```
 
@@ -104,6 +113,8 @@ Partition Map for MMC device 1  --   Partition Type: DOS
 
 Part    Start Sector    Num Sectors     UUID            Type
   1     1               2047            01d0a302-01     01
+
+fatls mmc 1
 
 mmc rescan
 mmc part
