@@ -1,0 +1,5 @@
+* [LVDS](https://en.wikipedia.org/wiki/Low-voltage_differential_signaling)
+  * [FPD-Link](https://en.wikipedia.org/wiki/FPD-Link)
+* [Miracast](https://en.wikipedia.org/wiki/Miracast)
+* [DisplayPort](https://en.wikipedia.org/wiki/DisplayPort)
+  * [royalty-free](https://en.wikipedia.org/wiki/DisplayPort#Cost)
