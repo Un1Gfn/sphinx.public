@@ -141,3 +141,11 @@ ip & mask
 C Standard Library Implementation
 [musl/uClibc/dietlibc/glibc](http://www.etalabs.net/compare_libcs.html)
 [uClibc->musl](https://elinux.org/images/e/eb/Transitioning_From_uclibc_to_musl_for_Embedded_Development.pdf)
+
+chroot + qemu
+ * [U&L](https://unix.stackexchange.com/questions/41889/how-can-i-chroot-into-a-filesystem-with-a-different-architechture)
+ * [AUR](https://aur.archlinux.org/packages/?O=0&K=qemu+static)
+ * [binfmt](https://en.wikipedia.org/wiki/Binfmt_misc)
+ * [Gentoo wiki](https://wiki.gentoo.org/wiki/Embedded_Handbook/General/Compiling_with_qemu_user_chroot)
+ * [Debian wiki](https://wiki.debian.org/QemuUserEmulation)
+
