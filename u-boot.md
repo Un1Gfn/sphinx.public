@@ -1,9 +1,8 @@
-<!-- readme_u-boot.md -->
+<!-- u-boot.md -->
 
 ---
 
-**&#9656; readme_u-boot.md**\
-&bullet; [readme_display.md](https://github.com/Un1Gfn/beaglebone/blob/master/readme_display.md)\
+**&#9656; u-boot.md**\
 &bullet; [readme.md](https://github.com/Un1Gfn/beaglebone)
 
 ---

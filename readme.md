@@ -2,12 +2,10 @@
 
 ---
 
-&bullet; [readme_u-boot.md](https://github.com/Un1Gfn/beaglebone/blob/master/readme_u-boot.md)\
-&bullet; [readme_display.md](https://github.com/Un1Gfn/beaglebone/blob/master/readme_display.md)\
+&bullet; [u-boot.md](https://github.com/Un1Gfn/beaglebone/blob/master/u-boot.md)\
 **&#9656; readme.md**
 
 ---
-
 
 <details><summary><i>hidden</i></summary>
 
@@ -157,3 +155,10 @@ chroot + qemu
  * [Gentoo wiki](https://wiki.gentoo.org/wiki/Embedded_Handbook/General/Compiling_with_qemu_user_chroot)
  * [Debian wiki](https://wiki.debian.org/QemuUserEmulation)
 
+---
+
+* [LVDS](https://en.wikipedia.org/wiki/Low-voltage_differential_signaling)
+  * [FPD-Link](https://en.wikipedia.org/wiki/FPD-Link)
+* [Miracast](https://en.wikipedia.org/wiki/Miracast)
+* [DisplayPort](https://en.wikipedia.org/wiki/DisplayPort)
+  * [royalty-free](https://en.wikipedia.org/wiki/DisplayPort#Cost)
