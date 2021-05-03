@@ -68,7 +68,7 @@ TRM=TechnicalReferenceManual
 |[techniq](https://github.com/techniq/wiki/wiki/Linux-USB-Gadget-API)|O|||O|O||||||
 |[BBBlfs](https://github.com/ungureanuvladvictor/BBBlfs)|O|||||O|O|O|||
 |[recovery guide](https://elinux.org/AM335x_recovery)<br>[<sup>O</sup>](https://www.barebox.org/) [<sup>O</sup>](https://www.pengutronix.de/en/software/barebox.html)|O|O|O|||O|||||
-|[U-boot on AM335x](https://processors.wiki.ti.com/index.php/AM335x_U-Boot_User's_Guide)|O|O||O||O|||O||
+|[U-boot on AM335x](https://web.archive.org/web/https://processors.wiki.ti.com/index.php/AM335x_U-Boot_User's_Guide)|O|O||O||O|||O||
 |[terminal shells](https://elinux.org/Beagleboard:Terminal_Shells)||||O||||||O|
 |[Android USB SSH](https://stackoverflow.com/questions/44926644/control-beaglebone-black-linux-with-android-smartphone-through-usb-cable)|O|||||||||O|
 |[deleted superuser question](https://superuser.com/questions/1529130/linux-tethering-ethernet-over-usb-network-device-usb0-not-exposed-after-loading)[<sup>O</sup>](https://github.com/techniq/wiki/wiki/Linux-USB-Gadget-API#network-g_ether)|O||||||||||
@@ -100,11 +100,11 @@ TRM=TechnicalReferenceManual
   * [askubuntu](https://askubuntu.com/a/474560/634976)
 * UART
   * [YouTube](https://www.youtube.com/watch?v=3y1LMNPoaJI)
-  * [TI](https://processors.wiki.ti.com/index.php/AM335x_U-Boot_User's_Guide#Boot_Over_UART)
+  * [TI](https://web.archive.org/web/https://processors.wiki.ti.com/index.php/AM335x_U-Boot_User's_Guide#Boot_Over_UART)
 
 ---
 
-###### [Sitara AM3358](http://www.ti.com/product/AM3358) ~ [Arm Cortex-A8](https://en.wikipedia.org/wiki/ARM_Cortex-A8) ~ 32-bit [armhf](https://wiki.debian.org/ArmHardFloatPort#Supported_devices) [<sup>O</sup>](https://wiki.debian.org/ArmEabiPort) [arm-linux-gnueabihf-](https://wiki.debian.org/ArmHardFloatPort#Rationale) [<sup>O</sup>](https://processors.wiki.ti.com/index.php/AM335x_U-Boot_User's_Guide#Prerequisite)
+###### [Sitara AM3358](http://www.ti.com/product/AM3358) ~ [Arm Cortex-A8](https://en.wikipedia.org/wiki/ARM_Cortex-A8) ~ 32-bit [armhf](https://wiki.debian.org/ArmHardFloatPort#Supported_devices) [<sup>O</sup>](https://wiki.debian.org/ArmEabiPort) [arm-linux-gnueabihf-](https://wiki.debian.org/ArmHardFloatPort#Rationale) [<sup>O</sup>](https://web.archive.org/web/https://processors.wiki.ti.com/index.php/AM335x_U-Boot_User's_Guide#Prerequisite)
 * [Functional Block Diagram](http://www.ti.com/data-sheets/diagram.tsp?genericPartNumber=AM3358&diagramId=SPRS717K)
 * Docs [latest rev](http://www.ti.com/product/AM3358/technicaldocuments)
   * Datasheet ~ AM335x Sitara™ Processors datasheet [trunc rev](http://www.ti.com/lit/gpn/am3358)
@@ -113,7 +113,7 @@ TRM=TechnicalReferenceManual
     * "Memery Map" ~ Page 117 (2.1)
     * "Public ROM Code Architecture" (xmodem) ~ Page 5019 (26.1.2) (Figure 26-1)
 * [Boot process](https://processors.wiki.ti.com/index.php/AM335x_board_bringup_tips)
-* [U-boot on AM3358](https://processors.wiki.ti.com/index.php/AM335x_U-Boot_User's_Guide)
+* [U-boot on AM3358](https://web.archive.org/web/https://processors.wiki.ti.com/index.php/AM335x_U-Boot_User's_Guide)
 
 ---
 
@@ -124,14 +124,14 @@ TRM=TechnicalReferenceManual
   * "Building the Software:"
   * [AM335X README](https://gitlab.denx.de/u-boot/u-boot/tree/master/board/ti/am335x) ~ readme
 * [DULG Introduction](https://www.denx.de/wiki/view/DULG/Introduction) ~ 2.3. Availability ~ [manual in PDF](http://www.denx.de/wiki/publish/DULG/DULG-canyonlands.pdf)
-* [U-boot on AM3358](https://processors.wiki.ti.com/index.php/AM335x_U-Boot_User's_Guide)
+* [U-boot on AM3358](https://web.archive.org/web/https://processors.wiki.ti.com/index.php/AM335x_U-Boot_User's_Guide)
 * guides on building u-boot
-  * [Texus Instruments](https://processors.wiki.ti.com/index.php/AM335x_U-Boot_User's_Guide)
+  * [Texus Instruments](https://web.archive.org/web/https://processors.wiki.ti.com/index.php/AM335x_U-Boot_User's_Guide)
   * [PKGBUILD for other SoC](https://aur.archlinux.org/packages/?O=0&SeB=nd&K=u-boot&outdated=&SB=n&SO=a&PP=50&do_Search=Go)
   * [Buildroot](https://git.busybox.net/buildroot/tree/board/beaglebone/readme.txt)
 
 ###### Toolchain
-* [Arago TI-SDK](http://arago-project.org/wiki/index.php/Setting_Up_Build_Environment) [<sup>O</sup>](https://processors.wiki.ti.com/index.php/AM335x_U-Boot_User's_Guide#Prerequisite)
+* [Arago TI-SDK](http://arago-project.org/wiki/index.php/Setting_Up_Build_Environment) [<sup>O</sup>](https://web.archive.org/web/https://processors.wiki.ti.com/index.php/AM335x_U-Boot_User's_Guide#Prerequisite)
 * arm-linux-gnueabi**hf**-gcc [AUR](https://aur.archlinux.org/packages/arm-linux-gnueabihf-gcc/) [ArchLinuxCN](https://github.com/archlinuxcn/repo/tree/master/archlinuxcn/arm-linux-gnueabihf-gcc)
 
 ---
