@@ -1,15 +1,19 @@
+# non-"v" from https://ftp.denx.de/pub/u-boot/
+/u-boot-v20??.??.tar.bz2
+/u-boot-v20??.??/
+
+# "v" from https://source.denx.de/u-boot/u-boot/-/tags
+/u-boot-20??.??.tar.bz2.sig
+/u-boot-20??.??.tar.bz2
+/u-boot-20??.??/
+
+# Git
+/u-boot.git/
+/u-boot/
+
+# Misc
+/bone-debian-9.9-iot-armhf-*.img*
 /void-beaglebone-musl-*.img.xz
 /void-beaglebone-musl-PLATFORMFS-*.tar.xz
 
-/u-boot/
-
-
-/*.out
-
-# /*.pdf
-
-/u-boot-v20??.??.tar.bz2
-/u-boot-v20??.??/
-/u-boot.git/
-
-/bone-debian-9.9-iot-armhf-*.img*
+/usbreset.out

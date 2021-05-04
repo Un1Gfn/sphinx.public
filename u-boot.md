@@ -13,25 +13,51 @@
 
 ## A - Build U-Boot
 
+[eLinux](https://elinux.org/Building_for_BeagleBone)
+
 [Sitara Linux Program the eMMC on Beaglebone Black](https://web.archive.org/web/https://processors.wiki.ti.com/index.php/Sitara_Linux_Program_the_eMMC_on_Beaglebone_Black)
 
-1&#46; Toolchain [arm-linux-gnueabihf-gcc](https://aur.archlinux.org/packages/arm-linux-gnueabihf-gcc/)\
-2&#46; Download tarball from [nginx](https://ftp.denx.de/pub/u-boot/) or [GitLab tags](https://source.denx.de/u-boot/u-boot/-/tags)\
-3&#46; Extract to `u-boot-v202?.??/`\
-4&#46; Build
+with buildroot (recommended)
 
-```bash
-cd u-boot-v202?.??/
-export CROSS_COMPILE='arm-linux-gnueabihf-'
-export KBUILD_OUTPUT='O'
-make -j3 am335x_boneblack_vboot_defconfig
-make -j3 all
-sudo cp -v O/MLO O/u-boot.img O/spl/u-boot-spl.bin ~root/
-```
+?
+
+<details><summary>with AUR toolchain</summary>
+
+1&period; Toolchain [arm-linux-gnueabihf-gcc](https://aur.archlinux.org/packages/arm-linux-gnueabihf-gcc/)\
+
+    cd ~/beaglebone
+    source ~/proxy.bashrc
+    yay -Syu --gpg "$(realpath gpg_proxy.sh)" arm-linux-gnueabihf-glibc-headers
+    yay -Syu --gpg "$(realpath gpg_proxy.sh)" arm-linux-gnueabihf-gcc-stage2
+    yay -Syu --gpg "$(realpath gpg_proxy.sh)" arm-linux-gnueabihf-gcc
+
+2&period; Download tarball from [nginx](https://ftp.denx.de/pub/u-boot/) or [GitLab tags](https://source.denx.de/u-boot/u-boot/-/tags)
+
+[Verify a signature](https://wiki.archlinux.org/title/GnuPG#Verify_a_signature)
+
+    gpg --verify u-boot-202?.??.tar.bz2.sig u-boot-202?.??.tar.bz2
+
+[Searching and receiving keys](https://wiki.archlinux.org/title/GnuPG#Searching_and_receiving_keys)
+
+    gpg --search-key --keyserver-options "http-proxy=http://127.0.0.1:8080" 1A3C7F70E08FAB1707809BBF147C39FF9634B72C
+    gpg --recv-keys --keyserver-options "http-proxy=http://127.0.0.1:8080" 1A3C7F70E08FAB1707809BBF147C39FF9634B72C
+
+3&period; Extract to `u-boot-v202?.??/`\
+4&period; Build
+
+    cd u-boot-v202?.??/
+    export CROSS_COMPILE='arm-linux-gnueabihf-'
+    export KBUILD_OUTPUT='O'
+    make -j3 am335x_boneblack_vboot_defconfig
+    make -j3 all
+    sudo cp -v O/MLO O/u-boot.img O/spl/u-boot-spl.bin ~root/
 
 Output dir `u-boot-v202?.??/O/`
 
-[eewiki](https://www.digikey.com/eewiki/display/linuxonarm/BeagleBone+Black#BeagleBoneBlack-Bootloader:U-Boot)
+</details>
+
+<!-- [eewiki](https://www.digikey.com/eewiki/display/linuxonarm/BeagleBone+Black#BeagleBoneBlack-Bootloader:U-Boot) -->
+<details><summary><a href="https://www.digikey.com/eewiki/display/linuxonarm/BeagleBone+Black#BeagleBoneBlack-Bootloader:U-Boot">eewiki</a></summary>
 
 ```bash
 wget https://gitlab.denx.de/u-boot/u-boot/-/archive/v2019.04/u-boot-v2019.04.tar.bz2
@@ -45,13 +71,15 @@ make -j3 am335x_evm_defconfig
 make -j3 all
 ```
 
+</details>
+
 ## B - Prepare U-Boot eMMC image
 
-### B1/2 - genimage (recommended)
+genimage (recommended)
 
 ?
 
-### B2/2 - manually
+<details><summary>manually</summary>
 
 Escalate
 
@@ -109,6 +137,8 @@ Cleanup
 
 ## C - Hook up serial port and boot BBGW
 
+[serial port](https://elinux.org/BeagleBone/Serial_Port)
+
 lsusb - [067b:2303](https://linux-hardware.org/?id=usb:067b-2303) `Prolific Technology, Inc. PL2303 Serial Port / Mobile Action MA-8910P`
 
 **Connect BBGW to PL2303 and double check, before connecting PL2303 to PC**\
@@ -124,7 +154,7 @@ lsusb - [067b:2303](https://linux-hardware.org/?id=usb:067b-2303) `Prolific Tech
 >which could power the board if connected to one of the VDD_5V pins (P9_05, P9_06)\
 >Just leave it unconnected.
 
-1&#46; Connect BBGW serial port to PL2303
+1&period; Connect BBGW serial port to PL2303
 
     BBGW  PL2303
     ----  ------
@@ -136,13 +166,13 @@ lsusb - [067b:2303](https://linux-hardware.org/?id=usb:067b-2303) `Prolific Tech
     NC
           red (NC)
 
-2&#46; Double check the connection\
-3&#46; Connect PL2303 USB-A to PC\
-4&#46; Hold <kbd>USER</kbd>\
-5&#46; Supply 5v **?A** power through Micro-USB\
-6&#46; Wait for 5 seconds\
-7&#46; Release <kbd>USER</kbd>\
-8&#46; Make sure `lsusb | grep -i prolific` reveals PL2303
+2&period; Double check the connection\
+3&period; Connect PL2303 USB-A to PC\
+4&period; Hold <kbd>USER</kbd>\
+5&period; Supply 5v **?A** power through Micro-USB\
+6&period; Wait for 5 seconds\
+7&period; Release <kbd>USER</kbd>\
+8&period; Make sure `lsusb | grep -i prolific` reveals PL2303
 
 ## D - Send stage2 MLO and stage3 u-boot.img to BBGW RAM
 
@@ -151,6 +181,8 @@ lsusb - [067b:2303](https://linux-hardware.org/?id=usb:067b-2303) `Prolific Tech
 [ArchWiki](https://wiki.archlinux.org/title/Working_with_the_serial_console)
 
 ### D1/2 - minicom (recommended)
+
+[minicom+kermit](https://lists.denx.de/pipermail/u-boot/2003-June/001527.html)
 
 [YouTube - Fastbit Embedded Brain Academy](https://youtu.be/3y1LMNPoaJI)
 
@@ -268,19 +300,22 @@ mmc part
 
 ## Z - Disonnect and poweroff BBGW
 
-* Unplug PL2303 from PC
-* Hold BeagleBone POWER button till it's off
-* Clean up
+1&period; Unplug PL2303 USB-A from PC\
+2&period; [Press and hold <kbd>POWER</kbd> button for 8+ seconds untill `PWR` LED turns off](https://github.com/beagleboard/beaglebone-black/wiki/System-Reference-Manual#power-button)\
+3&period; Clean up
 
-``` bash
-lsusb | grep -i prolific
-./usbreset /dev/bus/usb/...
-```
+    lsusb | grep -i prolific
+    ./usbreset /dev/bus/usb/...
+    lsusb | grep -i prolific
 
 <!-- https://en.wikipedia.org/wiki/List_of_Latin-script_letters -->
-## &Zcaron; - Hidden
+## &Zcaron; - What now?
 
-<details><summary>&nbsp;</summary>
+[boot from USB](https://stackoverflow.com/questions/30488942/how-to-boot-linux-kernel-from-u-boot)
+
+[net](https://source.denx.de/u-boot/u-boot/-/tree/master/drivers/net)/e1000\*
+
+<details><summary>hidden</summary>
 
 Example serial port setup that works
 
