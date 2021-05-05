@@ -13,6 +13,8 @@
 
 ## A - Get U-Boot
 
+[Docs » Build U-Boot » Building with GCC](https://u-boot.readthedocs.io/en/latest/build/gcc.html)
+
 [eLinux](https://elinux.org/Building_for_BeagleBone)
 
 [Sitara Linux Program the eMMC on Beaglebone Black](https://web.archive.org/web/https://processors.wiki.ti.com/index.php/Sitara_Linux_Program_the_eMMC_on_Beaglebone_Black)
@@ -23,6 +25,14 @@
 |MLO           |[**M**MC **lo**ader](https://stackoverflow.com/a/34805466)|O|
 
 ### A1/3 - From Arch Linux ARM
+
+[Write MLO and u-boot.img to the beginning of /dev/mmcblk0](https://archlinuxarm.org/packages/armv7h/uboot-beaglebone/files/uboot-beaglebone.install)
+
+[boot.txt](https://archlinuxarm.org/packages/armv7h/uboot-beaglebone/files/boot.txt)
+
+<details><summary><a href="https://archlinuxarm.org/packages/armv7h/uboot-beaglebone">alarm/uboot-beaglebone 2017.07-1</a></summary>
+
+---
 
 [Arch Linux ARM](https://archlinuxarm.org/platforms/armv7/ti/beaglebone-green-wireless)
 
@@ -44,46 +54,16 @@ Verify
     echo; ls -Al ArchLinuxARM_boot; echo
     sudo rm -fv /root/MINICOM_RES; sudo ln -sfv "$(realpath "$PWD/ArchLinuxARM_boot")" "$_"
 
-### A2/3 - With buildroot
-
-?
-
-### A3/3 - With AUR toolchain
-
-<details><summary>latest</summary>
-
-1&period; Toolchain [arm-linux-gnueabihf-gcc](https://aur.archlinux.org/packages/arm-linux-gnueabihf-gcc/)\
-
-    cd ~/beaglebone
-    source ~/proxy.bashrc
-    yay -Syu --gpg "$(realpath gpg_proxy.sh)" arm-linux-gnueabihf-glibc-headers
-    yay -Syu --gpg "$(realpath gpg_proxy.sh)" arm-linux-gnueabihf-gcc-stage2
-    yay -Syu --gpg "$(realpath gpg_proxy.sh)" arm-linux-gnueabihf-gcc
-
-2&period; Download tarball from [nginx](https://ftp.denx.de/pub/u-boot/) or [GitLab tags](https://source.denx.de/u-boot/u-boot/-/tags)
-
-[Verify a signature](https://wiki.archlinux.org/title/GnuPG#Verify_a_signature)
-
-    gpg --verify u-boot-202?.??.tar.bz2.sig u-boot-202?.??.tar.bz2
-
-[Searching and receiving keys](https://wiki.archlinux.org/title/GnuPG#Searching_and_receiving_keys)
-
-    gpg --search-key --keyserver-options "http-proxy=http://127.0.0.1:8080" 1A3C7F70E08FAB1707809BBF147C39FF9634B72C
-    gpg --recv-keys --keyserver-options "http-proxy=http://127.0.0.1:8080" 1A3C7F70E08FAB1707809BBF147C39FF9634B72C
-
-3&period; Extract to `u-boot-v202?.??/`\
-4&period; Build
-
-    cd u-boot-v202?.??/
-    export CROSS_COMPILE='arm-linux-gnueabihf-'
-    export KBUILD_OUTPUT='O'
-    make -j3 am335x_boneblack_vboot_defconfig
-    make -j3 all
-    sudo cp -v O/MLO O/u-boot.img O/spl/u-boot-spl.bin ~root/
-
-Output dir `u-boot-v202?.??/O/`
+---
 
 </details>
+
+### A2/3 - With buildroot
+
+[BR2_TARGET_UBOOT_VERSION "2021.04"](https://git.busybox.net/buildroot/tree/boot/uboot/Config.in)\
+...
+
+### A3/3 - Build manually
 
 <!-- [eewiki](https://www.digikey.com/eewiki/display/linuxonarm/BeagleBone+Black#BeagleBoneBlack-Bootloader:U-Boot) -->
 <details><summary><a href="https://www.digikey.com/eewiki/display/linuxonarm/BeagleBone+Black#BeagleBoneBlack-Bootloader:U-Boot">eewiki</a></summary>
@@ -101,6 +81,69 @@ make -j3 all
 ```
 
 </details>
+
+1&period; Toolchain
+
+[`-linux-` vs `-none-`](https://stackoverflow.com/questions/33586100/why-arm-linux-gnueabi-gcc-and-not-arm-none-eabi-gcc-when-compiling-linux-kernel#comment54949190_33586100)
+
+either [community/arm-none-eabi-gcc](https://archlinux.org/packages/community/x86_64/arm-none-eabi-gcc)
+
+    sudo pacman -Syu arm-none-eabi-gcc
+
+or [AUR/arm-linux-gnueabihf-gcc](https://aur.archlinux.org/packages/arm-linux-gnueabihf-gcc)
+
+    cd ~/beaglebone
+    source ~/proxy.bashrc
+    yay -Syu --gpg "$(realpath gpg_proxy.sh)" arm-linux-gnueabihf-glibc-headers
+    yay -Syu --gpg "$(realpath gpg_proxy.sh)" arm-linux-gnueabihf-gcc-stage2
+    yay -Syu --gpg "$(realpath gpg_proxy.sh)" arm-linux-gnueabihf-gcc
+
+2&period; Download tarball from [nginx](https://ftp.denx.de/pub/u-boot/) <del>[GitLab tags](https://source.denx.de/u-boot/u-boot/-/tags) (no PGP signature)</del>
+
+[Searching and receiving keys](https://wiki.archlinux.org/title/GnuPG#Searching_and_receiving_keys)
+
+    gpg --search-key --keyserver-options "http-proxy=http://127.0.0.1:8080" 1A3C7F70E08FAB1707809BBF147C39FF9634B72C
+    gpg --recv-keys --keyserver-options "http-proxy=http://127.0.0.1:8080" 1A3C7F70E08FAB1707809BBF147C39FF9634B72C
+
+[Verify a signature](https://wiki.archlinux.org/title/GnuPG#Verify_a_signature)
+
+    gpg --verify u-boot-202?.??.tar.bz2.sig u-boot-202?.??.tar.bz2
+
+3&period; Extract to `u-boot-v202?.??/`
+
+4&period; Build
+
+<!--
+Do NOT use aarch64-linux-gnu-gcc
+aarch64-linux-gnu-gcc  -mabi=ilp32           test.c # skipping incompatible ... cannot find -l...
+aarch64-linux-gnu-gcc -march=armv7-a         test.c # cc1: error: unknown value 'armv7-a' for '-march'
+aarch64-linux-gnu-gcc -mtune=generic-armv7-a test.c # cc1: error: unknown value 'generic-armv7-a' for '-mtune'
+-->
+
+<!--
+$ file ~/beaglebone/u-boot-202?.??/O/cmd/boot.o
+O/cmd/boot.o: ELF 32-bit LSB relocatable, ARM, EABI5 version 1 (SYSV), with debug_info, not stripped
+$ mkdir ~/beaglebone/ArchLinuxARM_boot/initramfs-linux; cd "$_"
+$ zcat ../initramfs-linux.img | cpio -idmv # https://access.redhat.com/solutions/24029
+$ file bin/busybox
+bin/busybox: ELF 32-bit LSB pie executable, ARM, EABI5 version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-armhf.so.3, BuildID[sha1]=4d5ffd0f3a95ec0808d4f4b0e939368db6e0cf63, for GNU/Linux 3.2.0, stripped
+-->
+
+    # make -C u-boot-202?.?? distclean
+    # make -C u-boot-202?.?? clean
+    make -C u-boot-202?.?? CROSS_COMPILE=arm-none-eabi- KBUILD_OUTPUT=O am335x_boneblack_vboot_defconfig
+    make -C u-boot-202?.?? CROSS_COMPILE=arm-none-eabi- KBUILD_OUTPUT=O -j$(nproc) all # V=1
+
+<div></div>
+
+    ls -l \
+      u-boot-202?.??/O/spl/u-boot-spl.bin \
+      u-boot-202?.??/O/MLO \
+      u-boot-202?.??/O/u-boot.img
+    sudo rm -fv /root/MINICOM_RES; sudo ln -sfv "$(realpath "$PWD"/u-boot-202?.??/O)" "$_"
+
+5&period; Check yield
+Output dir `u-boot-v202?.??/O/`
 
 ## B - Prepare U-Boot eMMC image
 
