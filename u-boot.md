@@ -11,17 +11,46 @@
 
 [U-Boot stages](https://elinux.org/Panda_How_to_MLO_%26_u-boot#Introduction)
 
-## A - Build U-Boot
+## A - Get U-Boot
 
 [eLinux](https://elinux.org/Building_for_BeagleBone)
 
 [Sitara Linux Program the eMMC on Beaglebone Black](https://web.archive.org/web/https://processors.wiki.ti.com/index.php/Sitara_Linux_Program_the_eMMC_on_Beaglebone_Black)
 
-with buildroot (recommended)
+||[use case](https://e2e.ti.com/support/processors/f/processors-forum/367260/what-is-the-difference-between-mlo-and-spl)|[520-byte header](https://stackoverflow.com/a/60880147)|
+|-|-|-|
+|u-boot-spl.bin|peripheral boot|X|
+|MLO           |[**M**MC **lo**ader](https://stackoverflow.com/a/34805466)|O|
+
+### A1/3 - From Arch Linux ARM
+
+[Arch Linux ARM](https://archlinuxarm.org/platforms/armv7/ti/beaglebone-green-wireless)
+
+    rm -rfv ArchLinuxARM_boot
+    sha1sum -c ArchLinuxARM-am33x-latest.tar.gz.sha1sum
+
+Extract
+
+    tar -x -v --no-xattrs --strip-components 1 -f ArchLinuxARM-am33x-latest.tar.gz "./boot"
+    mv -v {,ArchLinuxARM_}boot
+
+u-boot-spl.bin - [strip 520-byte header](https://e2e.ti.com/support/processors/f/processors-forum/321500/serial-boot-on-am3359-mlo-does-not-give-prompt)
+
+    # dd if=MLO of=u-boot-spl.bin bs=1 skip=520
+    { [ -e ArchLinuxARM_boot/u-boot-spl.bin ] && echo error; } || tail -c +521 ArchLinuxARM_boot/MLO >ArchLinuxARM_boot/u-boot-spl.bin
+
+Verify
+
+    echo; ls -Al ArchLinuxARM_boot; echo
+    sudo rm -fv /root/MINICOM_RES; sudo ln -sfv "$(realpath "$PWD/ArchLinuxARM_boot")" "$_"
+
+### A2/3 - With buildroot
 
 ?
 
-<details><summary>with AUR toolchain</summary>
+### A3/3 - With AUR toolchain
+
+<details><summary>latest</summary>
 
 1&period; Toolchain [arm-linux-gnueabihf-gcc](https://aur.archlinux.org/packages/arm-linux-gnueabihf-gcc/)\
 
@@ -75,11 +104,13 @@ make -j3 all
 
 ## B - Prepare U-Boot eMMC image
 
-genimage (recommended)
+### B1/2 - with genimage
 
 ?
 
-<details><summary>manually</summary>
+### B2/2 - manually
+
+<details><summary></summary>
 
 Escalate
 
@@ -139,10 +170,9 @@ Cleanup
 
 [serial port](https://elinux.org/BeagleBone/Serial_Port)
 
-lsusb - [067b:2303](https://linux-hardware.org/?id=usb:067b-2303) `Prolific Technology, Inc. PL2303 Serial Port / Mobile Action MA-8910P`
+lsusb\
+[067b:2303](https://linux-hardware.org/?id=usb:067b-2303) `Prolific Technology, Inc. PL2303 Serial Port / Mobile Action MA-8910P`
 
-**Connect BBGW to PL2303 and double check, before connecting PL2303 to PC**\
-**Do NOT connect BBGW to a powered PL2303**
 
 [The acme of foolishness](https://dave.cheney.net/2013/09/22/two-point-five-ways-to-access-the-serial-console-on-your-beaglebone-black)
 >the red wire, this carries +5v from the USB port and can blow the arse out of your BBB\
@@ -154,7 +184,15 @@ lsusb - [067b:2303](https://linux-hardware.org/?id=usb:067b-2303) `Prolific Tech
 >which could power the board if connected to one of the VDD_5V pins (P9_05, P9_06)\
 >Just leave it unconnected.
 
+**Do NOT power BBGW**\
+**Do NOT power PL2303**
+
 1&period; Connect BBGW serial port to PL2303
+
+||||||||
+|-|-|-|-|-|-|-|
+|PL2303 |<div style="font-weight:bold;background:gray;color:black;">black</div>|  |  |<div style="font-weight:bold;background:gray;color:green;">green</div>|<div style="font-weight:bold;background:gray;color:white;">white</div>|  |
+|BBGW   |GND  |NC|NC|RX   |TX   |NC|
 
     BBGW  PL2303
     ----  ------
@@ -169,32 +207,53 @@ lsusb - [067b:2303](https://linux-hardware.org/?id=usb:067b-2303) `Prolific Tech
 2&period; Double check the connection\
 3&period; Connect PL2303 USB-A to PC\
 4&period; Hold <kbd>USER</kbd>\
-5&period; Supply 5v **?A** power through Micro-USB\
+5&period; Supply 5v [**?A**](https://electronics.stackexchange.com/questions/563406/which-wall-charger-for-beaglebone-green-wireless) power through Micro-USB\
 6&period; Wait for 5 seconds\
 7&period; Release <kbd>USER</kbd>\
 8&period; Make sure `lsusb | grep -i prolific` reveals PL2303
 
-## D - Send stage2 MLO and stage3 u-boot.img to BBGW RAM
+## D - Send U-Boot via serial debug port
 
 [SystemSetup &lt; DULG &lt; DENX](https://www.denx.de/wiki/view/DULG/SystemSetup)
 
 [ArchWiki](https://wiki.archlinux.org/title/Working_with_the_serial_console)
 
-### D1/2 - minicom (recommended)
+[parameters](https://web.archive.org/web/https://elinux.org/Beagleboard:BeagleBone_Black_Accessories#Serial_Debug_Cables)
+
+|||
+|-|-|
+|Baud         |115,200|
+|Bits         |8      |
+|Parity       |N      |
+|**Stop Bits**|1      |
+|**Handshake**|None   |
+
+### D1/2 - with minicom (recommended)
 
 [minicom+kermit](https://lists.denx.de/pipermail/u-boot/2003-June/001527.html)
 
 [YouTube - Fastbit Embedded Brain Academy](https://youtu.be/3y1LMNPoaJI)
 
-```bash
-# --metakey
-minicom                 \
-  --color=off           \
-  --baudrate 115200     \
-  --device /dev/ttyUSB0
-```
+1&period; **Make sure lrzsz is installed** \
+2&period; Escalate
 
-### D2/2 - stty+sx+cu
+    su -
+
+3&period; Run minicom
+
+    # --metakey
+    minicom \
+      -c off \
+      -b 115200 \
+      -8 \
+      --device /dev/ttyUSB0
+
+4&period; send `MINICOM_RES/u-boot-spl.bin` with xmodem\
+5&period; send `MINICOM_RES/u-boot.img` with xmodem
+
+### D2/2 - with stty+sx+cu
+
+<details><summary></summary>
 
 Escalate
 
@@ -243,6 +302,8 @@ Exit cu
 => ~.
 
 ```
+
+</details>
 
 ## E F G H I J K L M N O P Q R S T U V W X
 
@@ -311,9 +372,16 @@ mmc part
 <!-- https://en.wikipedia.org/wiki/List_of_Latin-script_letters -->
 ## &Zcaron; - What now?
 
+[net](https://source.denx.de/u-boot/u-boot/-/tree/master/drivers/net)/e1000\* \
+[Net: No ethernet found](https://www.denx.de/wiki/view/DULG/NetNoEthernetFound)\
+[boot from BOOTP/TFTP](https://www.denx.de/wiki/view/DULG/UBootCmdGroupDownload#Section_5.9.5.1.) - [ArchWiki](https://wiki.archlinux.org/title/TFTP)
+
 [boot from USB](https://stackoverflow.com/questions/30488942/how-to-boot-linux-kernel-from-u-boot)
 
-[net](https://source.denx.de/u-boot/u-boot/-/tree/master/drivers/net)/e1000\*
+[TFTP+NFS](https://www.denx.de/wiki/view/DULG/LinuxNfsRoot)
+
+Generate Arch Linux ARM root ext4 image, chop into 256MiB pieces and receive with U-Boot via USB ethernet adapter?\
+PC<->BBGW direct with twisted pair RJ45?
 
 <details><summary>hidden</summary>
 

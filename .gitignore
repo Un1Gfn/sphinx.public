@@ -16,4 +16,9 @@
 /void-beaglebone-musl-*.img.xz
 /void-beaglebone-musl-PLATFORMFS-*.tar.xz
 
+# Arch Linux ARM
+# ArchLinuxARM-am33x-latest.tar.gz.sha1sum
+/ArchLinuxARM-am33x-latest.tar.gz
+/ArchLinuxARM_*
+
 /usbreset.out
