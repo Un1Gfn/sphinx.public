@@ -189,20 +189,14 @@ lsusb\
 
 1&period; Connect BBGW serial port to PL2303
 
+<!--
+|PL2303 |<div style="font-weight:bold;background:gray;color:black;">black</div>|  |  |<div style="font-weight:bold;background:gray;color:green;">green</div>|<div style="font-weight:bold;background:gray;color:white;">white</div>|  |
+-->
+
 ||||||||
 |-|-|-|-|-|-|-|
-|PL2303 |<div style="font-weight:bold;background:gray;color:black;">black</div>|  |  |<div style="font-weight:bold;background:gray;color:green;">green</div>|<div style="font-weight:bold;background:gray;color:white;">white</div>|  |
+|PL2303 |black|  |  |green|white|  |
 |BBGW   |GND  |NC|NC|RX   |TX   |NC|
-
-    BBGW  PL2303
-    ----  ------
-    GND   black
-    NC
-    NC
-    RX    green
-    TX    white
-    NC
-          red (NC)
 
 2&period; Double check the connection\
 3&period; Connect PL2303 USB-A to PC\
@@ -248,8 +242,47 @@ lsusb\
       -8 \
       --device /dev/ttyUSB0
 
-4&period; send `MINICOM_RES/u-boot-spl.bin` with xmodem\
-5&period; send `MINICOM_RES/u-boot.img` with xmodem
+4&period; Send `MINICOM_RES/u-boot-spl.bin` with xmodem
+
+    U-Boot SPL 2017.07-1 (Sep 02 2017 - 21:04:29)
+    Trying to boot from UART
+
+5&period; Send `MINICOM_RES/u-boot.img` with xmodem
+
+```plain
+CxyzModem - CRC mode, 2886(SOH)/0(STX)/0(CAN) packets, 5 retries
+Loaded 369200 bytes
+
+
+U-Boot 2017.07-1 (Sep 02 2017 - 21:04:29 +0000) Arch Linux ARM
+
+CPU  : AM335X-GP rev 2.1
+I2C:   ready
+DRAM:  512 MiB
+No match for driver 'omap_hsmmc'
+No match for driver 'omap_hsmmc'
+Some drivers were not found
+MMC:   OMAP SD/MMC: 0, OMAP SD/MMC: 1
+Using default environment
+
+<ethaddr> not set. Validating first E-fuse MAC
+Net:   Could not get PHY for cpsw: addr 0
+cpsw, usb_ether
+Press SPACE to abort autoboot in 2 seconds
+```
+
+6&period; Press <kbd>SPACE</kbd>
+
+7&period; Check U-Boot version
+
+```plain
+=> version
+
+U-Boot 2017.07-1 (Sep 02 2017 - 21:04:29 +0000) Arch Linux ARM
+gcc (GCC) 7.1.1 20170630
+GNU ld (GNU Binutils) 2.28.0.20170506
+```
+
 
 ### D2/2 - with stty+sx+cu
 
@@ -311,19 +344,27 @@ From here on we will be interacting with the volatile U-Boot code in RAM
 
 ## Y - Write U-Boot eMMC image to eMMC
 
-Erase (wipefs -af /dev/mmcblk0\*) - [mmc](https://www.denx.de/wiki/view/DULG/UBootCmdGroupMMC)
->0x800\*512=2048\*512=1048576=1024\*1024=1Mi
+Check eMMC - [mmc](https://www.denx.de/wiki/view/DULG/UBootCmdGroupMMC)
 
+    mmc list
     mmc dev 1
+    mmc info
     mmc part
-    mmc erase 0 0x800
+
+<div></div>
+
+Erase eMMC (dd if=/dev/zero of=/dev/mmcblk0 bs=512 count=20480)
+<!-- >0x800\*512=2048\*512=1048576=1024\*1024=1Mi -->
+>0x5000blk\*512B/blk=20480blk\*512B/blk=10485760B=10\*1024\*1024B=10MiB
+
+    mmc erase 0 0x5000
     mmc rescan
     mmc part
 
-Zero fill (cat /dev/zero >/dev/mmcblk0) -
+Zero fill DRAM starting from 0x82000000 -
 [cmp](https://www.denx.de/wiki/view/DULG/UBootCmdGroupMemory#Section_5.9.2.3.) -
 [mw](https://www.denx.de/wiki/view/DULG/UBootCmdGroupMemory#Section_5.9.2.8.)
->0x100000=1048576=1024\*1024=1Mi
+>0x100000B\*1B/blk=1048576B=1024\*1024B=1MiB
 
     cmp.b 0x100000 0x82000000 0x100000 # compare byte
     mw.b 0x82000000 0 0x100000         # fill    byte
@@ -362,8 +403,9 @@ mmc part
 ## Z - Disonnect and poweroff BBGW
 
 1&period; Unplug PL2303 USB-A from PC\
-2&period; [Press and hold <kbd>POWER</kbd> button for 8+ seconds untill `PWR` LED turns off](https://github.com/beagleboard/beaglebone-black/wiki/System-Reference-Manual#power-button)\
-3&period; Clean up
+[2&period; Press and hold <kbd>POWER</kbd> button\
+3&period; When LED `PWR` goes off (approx 8s) **release <kbd>POWER</kbd> immediately**](https://github.com/beagleboard/beaglebone-black/wiki/System-Reference-Manual#power-button)\
+4&period; Clean up
 
     lsusb | grep -i prolific
     ./usbreset /dev/bus/usb/...
