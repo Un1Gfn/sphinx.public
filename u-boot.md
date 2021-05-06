@@ -11,6 +11,100 @@
 
 [U-Boot stages](https://elinux.org/Panda_How_to_MLO_%26_u-boot#Introduction)
 
+[Gmail search operators](https://support.google.com/mail/answer/7190) - 
+[filter archived mails `in:archive`](https://webapps.stackexchange.com/questions/1168/can-i-see-only-mail-i-have-archived-in-gmail)
+
+|Toolchain|Tarball|Send `u-boot-spl.bin`|Send `u-boot.img`|
+|-|-:|:-:|:-:|
+|distccd-alarm-armv7h|2021.04 |hang|-|
+|distccd-alarm-armv7h|v2021.04|hang|-|
+|distccd-alarm-armv7h|v2021.01|hang|-|
+|distccd-alarm-armv7h|v2020.10|OK|OK|
+|distccd-alarm-armv7h|v2020.07|?|?|
+|distccd-alarm-armv7h|v2020.04|?|?|
+|distccd-alarm-armv7h|<sup>&alpha;</sup> v2020.01|OK|OK|
+<!-- ||||| -->
+
+<sup>(&alpha;) Fix build error by adding `extern` before `YYLTYPE yylloc;` in `u-boot-v2020.01/scripts/dtc/dtc-lexer.l`</sup>
+
+[history of `configs/am335x_boneblack_vboot_defconfig`](https://source.denx.de/u-boot/u-boot/-/commits/master/configs/am335x_boneblack_vboot_defconfig)
+
+<details><summary>minicom output - 2017.07-1 - ArchLinuxARM</summary>
+
+```plain
+
+U-Boot SPL 2017.07-1 (Sep 02 2017 - 21:04:29)
+Trying to boot from UART
+
+CxyzModem - CRC mode, 2886(SOH)/0(STX)/0(CAN) packets, 5 retries
+Loaded 369200 bytes
+
+
+U-Boot 2017.07-1 (Sep 02 2017 - 21:04:29 +0000) Arch Linux ARM
+
+CPU  : AM335X-GP rev 2.1
+I2C:   ready
+DRAM:  512 MiB
+No match for driver 'omap_hsmmc'
+No match for driver 'omap_hsmmc'
+Some drivers were not found
+MMC:   OMAP SD/MMC: 0, OMAP SD/MMC: 1
+Using default environment
+
+<ethaddr> not set. Validating first E-fuse MAC
+Net:   Could not get PHY for cpsw: addr 0
+cpsw, usb_ether
+Press SPACE to abort autoboot in 2 seconds
+=> version
+
+U-Boot 2017.07-1 (Sep 02 2017 - 21:04:29 +0000) Arch Linux ARM
+gcc (GCC) 7.1.1 20170630
+GNU ld (GNU Binutils) 2.28.0.20170506
+```
+
+</details>
+
+<details><summary>minicom output - v2020.10 - distccd-alarm-armv7h</summary>
+
+```plain
+Welcome to minicom 2.8
+
+OPTIONS: I18n
+Compiled on Jan  9 2021, 12:42:45.
+Port /dev/ttyUSB0, 01:59:52
+
+Press CTRL-A Z for help on special keys
+
+CCCCCCCC
+U-Boot SPL 2020.10 (May 07 2021 - 02:06:21 +0800)
+WDT:   Not found!
+Trying to boot from UART
+CCxyzModem - CRC mode, 4057(SOH)/0(STX)/0(CAN) packets, 9 retries
+Loaded 519045 bytes
+
+
+U-Boot 2020.10 (May 07 2021 - 02:06:21 +0800)
+
+CPU  : AM335X-GP rev 2.1
+Model: TI AM335x BeagleBone Black
+DRAM:  512 MiB
+MMC:   OMAP SD/MMC: 0, OMAP SD/MMC: 1
+Loading Environment from FAT... MMC: no card present
+Loading Environment from MMC... *** Warning - bad CRC, using default environment
+
+<ethaddr> not set. Validating first E-fuse MAC
+Net:   Could not get PHY for ethernet@4a100000: addr 0
+eth2: ethernet@4a100000, eth3: usb_ether
+Press SPACE to abort autoboot in 2 seconds
+=> version
+U-Boot 2020.10 (May 07 2021 - 02:06:21 +0800)
+
+armv7l-unknown-linux-gnueabihf-gcc (crosstool-NG 1.23.0.418-d590) 10.2.0
+GNU ld (crosstool-NG 1.23.0.418-d590) 2.35
+```
+
+</details>
+
 ## A - Get U-Boot
 
 [Docs » Build U-Boot » Building with GCC](https://u-boot.readthedocs.io/en/latest/build/gcc.html)
@@ -60,8 +154,43 @@ Verify
 
 ### A2/3 - With buildroot
 
-[BR2_TARGET_UBOOT_VERSION "2021.04"](https://git.busybox.net/buildroot/tree/boot/uboot/Config.in)\
-...
+<details><summary>&nbsp;</summary>
+
+[BR2_TARGET_UBOOT_VERSION "2021.04"](https://git.busybox.net/buildroot/tree/boot/uboot/Config.in)
+
+[Searching and receiving keys](https://wiki.archlinux.org/title/GnuPG#Searching_and_receiving_keys)
+
+    gpg --search-key --keyserver-options "http-proxy=http://127.0.0.1:8080" AB07D806D2CE741FB886EE50B025BA8B59C36319
+    gpg --recv-keys --keyserver-options "http-proxy=http://127.0.0.1:8080" AB07D806D2CE741FB886EE50B025BA8B59C36319
+
+Verify clearsigned message
+
+    gpg --verify buildroot-202?.??.?.tar.bz2.sign
+
+Verify checksum
+
+    grep tar buildroot-202?.??.?.tar.bz2.sign
+    md5sum buildroot-202?.??.?.tar.bz2
+    sha1sum buildroot-202?.??.?.tar.bz2
+
+[01 little endian](https://serverfault.com/a/749469)
+
+    $ hexdump -s 5 -n 1 -C ~/beaglebone/ArchLinuxARM_boot/initramfs-linux/bin/busybox
+    00000005  01                                                |.|
+    00000006
+
+[NEON™ SIMD Coprocessor](https://www.ti.com/document-viewer/AM3358/datasheet/features-sprs7179524#sprs7179524)
+
+```
+Target options
+  Target Architecture = ARM (little endian)
+  Target Architecture Variant = cortex-A8
+  Target ABI = EABIhf
+  Floating point strategy = NEON
+  ...
+```
+
+</details>
 
 ### A3/3 - Build manually
 
@@ -82,23 +211,27 @@ make -j3 all
 
 </details>
 
-1&period; Toolchain
+1&period; Prepare toolchain
 
-[`-linux-` vs `-none-`](https://stackoverflow.com/questions/33586100/why-arm-linux-gnueabi-gcc-and-not-arm-none-eabi-gcc-when-compiling-linux-kernel#comment54949190_33586100)
+(&alpha;) [AUR/distccd-alarm-armv7h](https://aur.archlinux.org/packages/distccd-alarm-armv7h)\
+&bullet; [ArchLinuxARM Wiki](https://archlinuxarm.org/wiki/Distcc_Cross-Compiling)\
+&bullet; [Arch Wiki](https://wiki.archlinux.org/title/Distcc#Volunteers_2)
 
-either [community/arm-none-eabi-gcc](https://archlinux.org/packages/community/x86_64/arm-none-eabi-gcc)
+(&beta;) [community/arm-none-eabi-gcc](https://archlinux.org/packages/community/x86_64/arm-none-eabi-gcc)\
+&bullet; [`-linux-` vs `-none-`](https://stackoverflow.com/questions/33586100/why-arm-linux-gnueabi-gcc-and-not-arm-none-eabi-gcc-when-compiling-linux-kernel#comment54949190_33586100)\
 
-    sudo pacman -Syu arm-none-eabi-gcc
+<!-- https://superuser.com/questions/360966/how-do-i-use-a-bash-variable-string-containing-quotes-in-a-command -->
+(&gamma;) [AUR/arm-linux-gnueabihf-gcc](https://aur.archlinux.org/packages/arm-linux-gnueabihf-gcc)\
+0&period; `YAY="yay -Syu --gpg '$(realpath ./gpg_proxy.sh)'"`\
+1&period; eval "$YAY" arm-linux-gnueabihf-gcc-stage1\
+2&period; eval "$YAY" arm-linux-gnueabihf-glibc-headers\
+3&period; eval "$YAY" arm-linux-gnueabihf-gcc-stage2\
+4&period; eval "$YAY" arm-linux-gnueabihf-glibc\
+5&period; eval "$YAY" arm-linux-gnueabihf-gcc
 
-or [AUR/arm-linux-gnueabihf-gcc](https://aur.archlinux.org/packages/arm-linux-gnueabihf-gcc)
-
-    cd ~/beaglebone
-    source ~/proxy.bashrc
-    yay -Syu --gpg "$(realpath gpg_proxy.sh)" arm-linux-gnueabihf-glibc-headers
-    yay -Syu --gpg "$(realpath gpg_proxy.sh)" arm-linux-gnueabihf-gcc-stage2
-    yay -Syu --gpg "$(realpath gpg_proxy.sh)" arm-linux-gnueabihf-gcc
-
-2&period; Download tarball from [nginx](https://ftp.denx.de/pub/u-boot/) <del>[GitLab tags](https://source.denx.de/u-boot/u-boot/-/tags) (no PGP signature)</del>
+2&period; Download tarball\
+&bullet; [nginx](https://ftp.denx.de/pub/u-boot/) - 202?.?? - PGP sig\
+&bullet; [GitLab](https://source.denx.de/u-boot/u-boot/-/tags) - **v**202?.?? - no PGP sig
 
 [Searching and receiving keys](https://wiki.archlinux.org/title/GnuPG#Searching_and_receiving_keys)
 
@@ -129,21 +262,42 @@ $ file bin/busybox
 bin/busybox: ELF 32-bit LSB pie executable, ARM, EABI5 version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-armhf.so.3, BuildID[sha1]=4d5ffd0f3a95ec0808d4f4b0e939368db6e0cf63, for GNU/Linux 3.2.0, stripped
 -->
 
-    # make -C u-boot-202?.?? distclean
-    # make -C u-boot-202?.?? clean
-    make -C u-boot-202?.?? CROSS_COMPILE=arm-none-eabi- KBUILD_OUTPUT=O am335x_boneblack_vboot_defconfig
-    make -C u-boot-202?.?? CROSS_COMPILE=arm-none-eabi- KBUILD_OUTPUT=O -j$(nproc) all # V=1
+<!--
+/opt/x-tools7h/arm-unknown-linux-gnueabihf/bin/armv7l-unknown-linux-gnueabihf-gcc
+/usr/lib/distcc/armv7l-unknown-linux-gnueabihf-gcc
+Which one is better?
+-->
 
-<div></div>
+<!--
+Use PATH="$PATH:..." instead of PATH="..:$PATH" to protect /usr/bin/gcc
+-->
 
-    ls -l \
-      u-boot-202?.??/O/spl/u-boot-spl.bin \
-      u-boot-202?.??/O/MLO \
-      u-boot-202?.??/O/u-boot.img
-    sudo rm -fv /root/MINICOM_RES; sudo ln -sfv "$(realpath "$PWD"/u-boot-202?.??/O)" "$_"
+```
+cd ~/beaglebone
+rm -r u-boot-*/
+echo; ls -A1 u-boot-*; echo
+tar xf <TARBALL>
 
-5&period; Check yield
-Output dir `u-boot-v202?.??/O/`
+cd u-boot-*/
+# /opt/x-tools7h/arm-unknown-linux-gnueabihf/bin/armv7l-unknown-linux-gnueabihf-gcc
+export PATH="$PATH:/opt/x-tools7h/arm-unknown-linux-gnueabihf/bin/"
+hash -r
+gcc --version | grep cross; [ "$?" -eq 1 ] && echo ok
+
+export CROSS_COMPILE="armv7l-unknown-linux-gnueabihf-"
+export KBUILD_OUTPUT="O" 
+
+# make distclean
+# make clean
+make am335x_boneblack_vboot_defconfig
+make -j$(nproc) all # V=1
+
+sudo /bin/true
+cd O
+ls -l spl/u-boot-spl.bin MLO u-boot.img
+sudo rm -fv /root/MINICOM_RES; sudo ln -sfv "$(realpath "$PWD")" "$_"
+cd ~/beaglebone
+```
 
 ## B - Prepare U-Boot eMMC image
 
@@ -228,7 +382,7 @@ lsusb\
 >Just leave it unconnected.
 
 **Do NOT power BBGW**\
-**Do NOT power PL2303**
+**Do NOT connect PL2303 USB-A to PC**
 
 1&period; Connect BBGW serial port to PL2303
 
@@ -236,10 +390,10 @@ lsusb\
 |PL2303 |<div style="font-weight:bold;background:gray;color:black;">black</div>|  |  |<div style="font-weight:bold;background:gray;color:green;">green</div>|<div style="font-weight:bold;background:gray;color:white;">white</div>|  |
 -->
 
-||||||||
+||1|2|3|4|5|6|
 |-|-|-|-|-|-|-|
-|PL2303 |black|  |  |green|white|  |
 |BBGW   |GND  |NC|NC|RX   |TX   |NC|
+|PL2303 |black|  |  |green|white|  |
 
 2&period; Double check the connection\
 3&period; Connect PL2303 USB-A to PC\
@@ -271,12 +425,13 @@ lsusb\
 
 [YouTube - Fastbit Embedded Brain Academy](https://youtu.be/3y1LMNPoaJI)
 
-1&period; **Make sure lrzsz is installed** \
-2&period; Escalate
+**Make sure lrzsz is installed**
+
+Escalate
 
     su -
 
-3&period; Run minicom
+Run minicom
 
     # --metakey
     minicom \
@@ -285,47 +440,19 @@ lsusb\
       -8 \
       --device /dev/ttyUSB0
 
-4&period; Send `MINICOM_RES/u-boot-spl.bin` with xmodem
+Wait for at most 30 seconds until `CCC...` appears in minicom console
 
-    U-Boot SPL 2017.07-1 (Sep 02 2017 - 21:04:29)
-    Trying to boot from UART
+<kbd>CTRL</kbd>+<kbd>a</kbd>, <kbd>s</kbd>, xmodem, `[MINICOM_RES]`
 
-5&period; Send `MINICOM_RES/u-boot.img` with xmodem
+Locate `u-boot-spl.bin` (**not `MLO`**) and send
 
-```plain
-CxyzModem - CRC mode, 2886(SOH)/0(STX)/0(CAN) packets, 5 retries
-Loaded 369200 bytes
+Locate `u-boot.img` and send (xmodem, the same)
 
+Press <kbd>SPACE</kbd>
 
-U-Boot 2017.07-1 (Sep 02 2017 - 21:04:29 +0000) Arch Linux ARM
+Check U-Boot version
 
-CPU  : AM335X-GP rev 2.1
-I2C:   ready
-DRAM:  512 MiB
-No match for driver 'omap_hsmmc'
-No match for driver 'omap_hsmmc'
-Some drivers were not found
-MMC:   OMAP SD/MMC: 0, OMAP SD/MMC: 1
-Using default environment
-
-<ethaddr> not set. Validating first E-fuse MAC
-Net:   Could not get PHY for cpsw: addr 0
-cpsw, usb_ether
-Press SPACE to abort autoboot in 2 seconds
-```
-
-6&period; Press <kbd>SPACE</kbd>
-
-7&period; Check U-Boot version
-
-```plain
-=> version
-
-U-Boot 2017.07-1 (Sep 02 2017 - 21:04:29 +0000) Arch Linux ARM
-gcc (GCC) 7.1.1 20170630
-GNU ld (GNU Binutils) 2.28.0.20170506
-```
-
+    => version
 
 ### D2/2 - with stty+sx+cu
 

@@ -21,4 +21,10 @@
 /ArchLinuxARM-am33x-latest.tar.gz
 /ArchLinuxARM_*
 
+# Buildroot
+# /buildroot-202?.??.?.tar.bz2.sign
+/buildroot-202?.??.?.tar.bz2
+/buildroot-202?.??.?/
+
+
 /usbreset.out
