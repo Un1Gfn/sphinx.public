@@ -5,6 +5,25 @@
 &bullet; [u-boot.md](https://github.com/Un1Gfn/beaglebone/blob/master/u-boot.md)\
 **&#9656; readme.md**
 
+[AM3358](https://www.ti.com/product/AM3358) = [Cortex-A8](https://en.wikipedia.org/wiki/ARM_Cortex-A8) = [ARMv7-A](https://en.wikipedia.org/wiki/Comparison_of_ARMv7-A_cores) = 32-bit w/ FPU = [gnueabihf](https://wiki.debian.org/Multiarch/Tuples#armhf)
+
+[Allwinner V5 eMMC Support List](http://files.lindeni.org/lindenis-v5/documents/support_list/Allwinner%C2%A0V5%20eMMC%C2%A0Support%C2%A0List.pdf)\
+&bullet; [MTFC8GAKAJCN-1M WT / **Micron MTFC4GACAJCN-1M WT (possibly 6FA27-JY976)**](https://www.micron.com/products/managed-nand/emmc/part-catalog/mtfc8gakajcn-1m-wt)
+
+Prog.World - [eMMC 5.0 sequential write 90MB/s](https://prog.world/nvme-vs-ufs-3-1-the-battle-of-smartphone-memory-types-parsing/)
+
+[BBGW schematics](https://raw.githubusercontent.com/SeeedDocument/BeagleBone_Green_Wireless/master/resources/BeagleBone_Green%20Wireless_V1.0_SCH_20160314.pdf)
+
+[Arch Linux ARM](https://archlinuxarm.org/platforms/armv7/ti/beaglebone-green-wireless)
+
+    sha1sum -c ArchLinuxARM-am33x-latest.tar.gz.sha1sum
+    mkdir rootfs
+    tar xf ../ArchLinuxARM-am33x-latest.tar.gz
+    PACMAN='pacman --sysroot /home/darren/beaglebone/rootfs'
+    $PACMAN -Syu flashrom
+
+[eLinux/Toolchains](https://elinux.org/Toolchains)
+
 ---
 
 <details><summary><i>hidden</i></summary>

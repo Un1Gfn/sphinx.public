@@ -9,20 +9,34 @@
 
 ## &AElig; - Misc
 
+`mkimage` from community/uboot-tools
+
 [U-Boot stages](https://elinux.org/Panda_How_to_MLO_%26_u-boot#Introduction)
 
 [Gmail search operators](https://support.google.com/mail/answer/7190) - 
-[filter archived mails `in:archive`](https://webapps.stackexchange.com/questions/1168/can-i-see-only-mail-i-have-archived-in-gmail)
+[filter archived mails `in:archive`](https://webapps.stackexchange.com/questions/1168/can-i-see-only-mail-i-have-archived-in-gmail)\
+[Search lists.denx.de with Google](https://www.google.com/search?q=site:lists.denx.de)
 
-|Toolchain|Tarball|Send `u-boot-spl.bin`|Send `u-boot.img`|
-|-|-:|:-:|:-:|
-|distccd-alarm-armv7h|2021.04 |hang|-|
-|distccd-alarm-armv7h|v2021.04|hang|-|
-|distccd-alarm-armv7h|v2021.01|hang|-|
-|distccd-alarm-armv7h|v2020.10|OK|OK|
-|distccd-alarm-armv7h|v2020.07|?|?|
-|distccd-alarm-armv7h|v2020.04|?|?|
-|distccd-alarm-armv7h|<sup>&alpha;</sup> v2020.01|OK|OK|
+am335x_evm_defconfig
+
+|version|u-boot-spl.bin|u-boot.img|
+|-|:-:|:-:|
+|v2021.07-rc1|?|?|
+|v2021.04|OK|OK|
+|v2021.01|OK|OK|
+|v2020.10|OK|OK|
+
+am335x_boneblack_vboot_defconfig
+
+|version|u-boot-spl.bin|u-boot.img|
+|-|:-:|:-:|
+|v2021.07-rc1|hang|-|
+|v2021.04|hang|-|
+|v2021.01|hang|-|
+|v2020.10|OK|OK|
+|v2020.07|?|?|
+|v2020.04|?|?|
+|v2020.01 <sup>&alpha;</sup>|OK|OK|
 <!-- ||||| -->
 
 <sup>(&alpha;) Fix build error by adding `extern` before `YYLTYPE yylloc;` in `u-boot-v2020.01/scripts/dtc/dtc-lexer.l`</sup>
@@ -113,10 +127,10 @@ GNU ld (crosstool-NG 1.23.0.418-d590) 2.35
 
 [Sitara Linux Program the eMMC on Beaglebone Black](https://web.archive.org/web/https://processors.wiki.ti.com/index.php/Sitara_Linux_Program_the_eMMC_on_Beaglebone_Black)
 
-||[use case](https://e2e.ti.com/support/processors/f/processors-forum/367260/what-is-the-difference-between-mlo-and-spl)|[520-byte header](https://stackoverflow.com/a/60880147)|
-|-|-|-|
-|u-boot-spl.bin|peripheral boot|X|
-|MLO           |[**M**MC **lo**ader](https://stackoverflow.com/a/34805466)|O|
+|File|[Use Case](https://e2e.ti.com/support/processors/f/processors-forum/367260/what-is-the-difference-between-mlo-and-spl)|[Header](https://stackoverflow.com/a/60880147)|
+|:-:|:-:|:-:|
+|u-boot-spl.bin|peripheral boot|520 bytes|
+|MLO           |[**M**MC **lo**ader](https://stackoverflow.com/a/34805466)|no|
 
 ### A1/3 - From Arch Linux ARM
 
@@ -242,9 +256,7 @@ make -j3 all
 
     gpg --verify u-boot-202?.??.tar.bz2.sig u-boot-202?.??.tar.bz2
 
-3&period; Extract to `u-boot-v202?.??/`
-
-4&period; Build
+3&period; Build
 
 <!--
 Do NOT use aarch64-linux-gnu-gcc
@@ -263,41 +275,30 @@ bin/busybox: ELF 32-bit LSB pie executable, ARM, EABI5 version 1 (SYSV), dynamic
 -->
 
 <!--
-/opt/x-tools7h/arm-unknown-linux-gnueabihf/bin/armv7l-unknown-linux-gnueabihf-gcc
-/usr/lib/distcc/armv7l-unknown-linux-gnueabihf-gcc
-Which one is better?
+Requirements for "make check"
+python-pytest
 -->
 
 <!--
-Use PATH="$PATH:..." instead of PATH="..:$PATH" to protect /usr/bin/gcc
+comm \
+  -1 -2 -3 \
+  <(sort u-boot-v2020.10.config) \
+  <(sort u-boot-v2021.01.config) \
+  | wc -l
 -->
 
-```
-cd ~/beaglebone
-rm -r u-boot-*/
-echo; ls -A1 u-boot-*; echo
-tar xf <TARBALL>
+<!--
+https://www.kernel.org/doc/html/latest/kbuild/kconfig.html
+make MENUCONFIG_COLOR=mono menuconfig
+-->
 
-cd u-boot-*/
-# /opt/x-tools7h/arm-unknown-linux-gnueabihf/bin/armv7l-unknown-linux-gnueabihf-gcc
-export PATH="$PATH:/opt/x-tools7h/arm-unknown-linux-gnueabihf/bin/"
-hash -r
-gcc --version | grep cross; [ "$?" -eq 1 ] && echo ok
+<!--
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/scripts/diffconfig
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/plain/scripts/diffconfig
+-->
 
-export CROSS_COMPILE="armv7l-unknown-linux-gnueabihf-"
-export KBUILD_OUTPUT="O" 
-
-# make distclean
-# make clean
-make am335x_boneblack_vboot_defconfig
-make -j$(nproc) all # V=1
-
-sudo /bin/true
-cd O
-ls -l spl/u-boot-spl.bin MLO u-boot.img
-sudo rm -fv /root/MINICOM_RES; sudo ln -sfv "$(realpath "$PWD")" "$_"
-cd ~/beaglebone
-```
+    source ~/beaglebone/u-boot.bashrc
+    # Follow the hints
 
 ## B - Prepare U-Boot eMMC image
 
