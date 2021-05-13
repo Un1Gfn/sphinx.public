@@ -3,7 +3,12 @@
 ---
 
 &bullet; [u-boot.md](https://github.com/Un1Gfn/beaglebone/blob/master/u-boot.md)\
+&bullet; [alarm.md](https://github.com/Un1Gfn/beaglebone/blob/master/alarm.md)\
 **&#9656; readme.md**
+
+---
+
+<!-- NAV_END -->
 
 [AM3358](https://www.ti.com/product/AM3358) = [Cortex-A8](https://en.wikipedia.org/wiki/ARM_Cortex-A8) = [ARMv7-A](https://en.wikipedia.org/wiki/Comparison_of_ARMv7-A_cores) = 32-bit w/ FPU = [gnueabihf](https://wiki.debian.org/Multiarch/Tuples#armhf)
 
@@ -29,6 +34,7 @@ Prog.World - [eMMC 5.0 sequential write 90MB/s](https://prog.world/nvme-vs-ufs-3
 <details><summary><i>hidden</i></summary>
 
 Future
+
 ```
 Buildroot Linux on Lattice ECP5 via yosys+prjtrellis+nextpnr
 

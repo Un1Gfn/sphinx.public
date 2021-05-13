@@ -3,9 +3,12 @@
 ---
 
 **&#9656; u-boot.md**\
+&bullet; [alarm.md](https://github.com/Un1Gfn/beaglebone/blob/master/alarm.md)\
 &bullet; [readme.md](https://github.com/Un1Gfn/beaglebone)
 
 ---
+
+<!-- NAV_END -->
 
 ## &AElig; - Misc
 
@@ -15,109 +18,14 @@
 
 [Gmail search operators](https://support.google.com/mail/answer/7190) - 
 [filter archived mails `in:archive`](https://webapps.stackexchange.com/questions/1168/can-i-see-only-mail-i-have-archived-in-gmail)\
-[Search lists.denx.de with Google](https://www.google.com/search?q=site:lists.denx.de)
+[Search lists.denx.de w/ Google](https://www.google.com/search?q=site:lists.denx.de)\
+[Search lists.denx.de w/ MARC](https://marc.info/?l=u-boot)
 
-am335x_evm_defconfig
-
-|version|u-boot-spl.bin|u-boot.img|
-|-|:-:|:-:|
-|v2021.07-rc1|?|?|
-|v2021.04|OK|OK|
-|v2021.01|OK|OK|
-|v2020.10|OK|OK|
-
-am335x_boneblack_vboot_defconfig
-
-|version|u-boot-spl.bin|u-boot.img|
-|-|:-:|:-:|
-|v2021.07-rc1|hang|-|
-|v2021.04|hang|-|
-|v2021.01|hang|-|
-|v2020.10|OK|OK|
-|v2020.07|?|?|
-|v2020.04|?|?|
-|v2020.01 <sup>&alpha;</sup>|OK|OK|
-<!-- ||||| -->
-
-<sup>(&alpha;) Fix build error by adding `extern` before `YYLTYPE yylloc;` in `u-boot-v2020.01/scripts/dtc/dtc-lexer.l`</sup>
+|config|version|u-boot-spl.bin|u-boot.img|
+|-|-|-|-|
+|am335x_evm_defconfig|v2021.04|OK|OK|
 
 [history of `configs/am335x_boneblack_vboot_defconfig`](https://source.denx.de/u-boot/u-boot/-/commits/master/configs/am335x_boneblack_vboot_defconfig)
-
-<details><summary>minicom output - 2017.07-1 - ArchLinuxARM</summary>
-
-```plain
-
-U-Boot SPL 2017.07-1 (Sep 02 2017 - 21:04:29)
-Trying to boot from UART
-
-CxyzModem - CRC mode, 2886(SOH)/0(STX)/0(CAN) packets, 5 retries
-Loaded 369200 bytes
-
-
-U-Boot 2017.07-1 (Sep 02 2017 - 21:04:29 +0000) Arch Linux ARM
-
-CPU  : AM335X-GP rev 2.1
-I2C:   ready
-DRAM:  512 MiB
-No match for driver 'omap_hsmmc'
-No match for driver 'omap_hsmmc'
-Some drivers were not found
-MMC:   OMAP SD/MMC: 0, OMAP SD/MMC: 1
-Using default environment
-
-<ethaddr> not set. Validating first E-fuse MAC
-Net:   Could not get PHY for cpsw: addr 0
-cpsw, usb_ether
-Press SPACE to abort autoboot in 2 seconds
-=> version
-
-U-Boot 2017.07-1 (Sep 02 2017 - 21:04:29 +0000) Arch Linux ARM
-gcc (GCC) 7.1.1 20170630
-GNU ld (GNU Binutils) 2.28.0.20170506
-```
-
-</details>
-
-<details><summary>minicom output - v2020.10 - distccd-alarm-armv7h</summary>
-
-```plain
-Welcome to minicom 2.8
-
-OPTIONS: I18n
-Compiled on Jan  9 2021, 12:42:45.
-Port /dev/ttyUSB0, 01:59:52
-
-Press CTRL-A Z for help on special keys
-
-CCCCCCCC
-U-Boot SPL 2020.10 (May 07 2021 - 02:06:21 +0800)
-WDT:   Not found!
-Trying to boot from UART
-CCxyzModem - CRC mode, 4057(SOH)/0(STX)/0(CAN) packets, 9 retries
-Loaded 519045 bytes
-
-
-U-Boot 2020.10 (May 07 2021 - 02:06:21 +0800)
-
-CPU  : AM335X-GP rev 2.1
-Model: TI AM335x BeagleBone Black
-DRAM:  512 MiB
-MMC:   OMAP SD/MMC: 0, OMAP SD/MMC: 1
-Loading Environment from FAT... MMC: no card present
-Loading Environment from MMC... *** Warning - bad CRC, using default environment
-
-<ethaddr> not set. Validating first E-fuse MAC
-Net:   Could not get PHY for ethernet@4a100000: addr 0
-eth2: ethernet@4a100000, eth3: usb_ether
-Press SPACE to abort autoboot in 2 seconds
-=> version
-U-Boot 2020.10 (May 07 2021 - 02:06:21 +0800)
-
-armv7l-unknown-linux-gnueabihf-gcc (crosstool-NG 1.23.0.418-d590) 10.2.0
-GNU ld (crosstool-NG 1.23.0.418-d590) 2.35
-```
-
-</details>
 
 ## A - Get U-Boot
 
@@ -208,42 +116,14 @@ Target options
 
 ### A3/3 - Build manually
 
-<!-- [eewiki](https://www.digikey.com/eewiki/display/linuxonarm/BeagleBone+Black#BeagleBoneBlack-Bootloader:U-Boot) -->
-<details><summary><a href="https://www.digikey.com/eewiki/display/linuxonarm/BeagleBone+Black#BeagleBoneBlack-Bootloader:U-Boot">eewiki</a></summary>
-
-```bash
-wget https://gitlab.denx.de/u-boot/u-boot/-/archive/v2019.04/u-boot-v2019.04.tar.bz2
-md5 10218bf500cd36894722df95aeb15c91
-
-patch --verbose -p1 < ../0001-am335x_evm-uEnv.txt-bootz-n-fixes.patch
-patch --verbose -p1 < ../0002-U-Boot-BeagleBone-Cape-Manager.patch
-export CROSS_COMPILE='arm-linux-gnueabihf-'
-export KBUILD_OUTPUT='O'
-make -j3 am335x_evm_defconfig
-make -j3 all
-```
-
-</details>
-
 1&period; Prepare toolchain
 
-(&alpha;) [AUR/distccd-alarm-armv7h](https://aur.archlinux.org/packages/distccd-alarm-armv7h)\
-&bullet; [ArchLinuxARM Wiki](https://archlinuxarm.org/wiki/Distcc_Cross-Compiling)\
-&bullet; [Arch Wiki](https://wiki.archlinux.org/title/Distcc#Volunteers_2)
+[AUR/distccd-alarm-armv7h](https://aur.archlinux.org/packages/distccd-alarm-armv7h) -
+[ArchLinuxARM Wiki](https://archlinuxarm.org/wiki/Distcc_Cross-Compiling) -
+[Arch Wiki](https://wiki.archlinux.org/title/Distcc#Volunteers_2)
 
-(&beta;) [community/arm-none-eabi-gcc](https://archlinux.org/packages/community/x86_64/arm-none-eabi-gcc)\
-&bullet; [`-linux-` vs `-none-`](https://stackoverflow.com/questions/33586100/why-arm-linux-gnueabi-gcc-and-not-arm-none-eabi-gcc-when-compiling-linux-kernel#comment54949190_33586100)\
+2&period; Download tarball
 
-<!-- https://superuser.com/questions/360966/how-do-i-use-a-bash-variable-string-containing-quotes-in-a-command -->
-(&gamma;) [AUR/arm-linux-gnueabihf-gcc](https://aur.archlinux.org/packages/arm-linux-gnueabihf-gcc)\
-0&period; `YAY="yay -Syu --gpg '$(realpath ./gpg_proxy.sh)'"`\
-1&period; eval "$YAY" arm-linux-gnueabihf-gcc-stage1\
-2&period; eval "$YAY" arm-linux-gnueabihf-glibc-headers\
-3&period; eval "$YAY" arm-linux-gnueabihf-gcc-stage2\
-4&period; eval "$YAY" arm-linux-gnueabihf-glibc\
-5&period; eval "$YAY" arm-linux-gnueabihf-gcc
-
-2&period; Download tarball\
 &bullet; [nginx](https://ftp.denx.de/pub/u-boot/) - 202?.?? - PGP sig\
 &bullet; [GitLab](https://source.denx.de/u-boot/u-boot/-/tags) - **v**202?.?? - no PGP sig
 
@@ -256,36 +136,7 @@ make -j3 all
 
     gpg --verify u-boot-202?.??.tar.bz2.sig u-boot-202?.??.tar.bz2
 
-3&period; Build
-
-<!--
-Do NOT use aarch64-linux-gnu-gcc
-aarch64-linux-gnu-gcc  -mabi=ilp32           test.c # skipping incompatible ... cannot find -l...
-aarch64-linux-gnu-gcc -march=armv7-a         test.c # cc1: error: unknown value 'armv7-a' for '-march'
-aarch64-linux-gnu-gcc -mtune=generic-armv7-a test.c # cc1: error: unknown value 'generic-armv7-a' for '-mtune'
--->
-
-<!--
-$ file ~/beaglebone/u-boot-202?.??/O/cmd/boot.o
-O/cmd/boot.o: ELF 32-bit LSB relocatable, ARM, EABI5 version 1 (SYSV), with debug_info, not stripped
-$ mkdir ~/beaglebone/ArchLinuxARM_boot/initramfs-linux; cd "$_"
-$ zcat ../initramfs-linux.img | cpio -idmv # https://access.redhat.com/solutions/24029
-$ file bin/busybox
-bin/busybox: ELF 32-bit LSB pie executable, ARM, EABI5 version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-armhf.so.3, BuildID[sha1]=4d5ffd0f3a95ec0808d4f4b0e939368db6e0cf63, for GNU/Linux 3.2.0, stripped
--->
-
-<!--
-Requirements for "make check"
-python-pytest
--->
-
-<!--
-comm \
-  -1 -2 -3 \
-  <(sort u-boot-v2020.10.config) \
-  <(sort u-boot-v2021.01.config) \
-  | wc -l
--->
+3&period; Config
 
 <!--
 https://www.kernel.org/doc/html/latest/kbuild/kconfig.html
@@ -293,12 +144,58 @@ make MENUCONFIG_COLOR=mono menuconfig
 -->
 
 <!--
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/scripts/config
 https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/scripts/diffconfig
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/plain/scripts/config
 https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/plain/scripts/diffconfig
+package "linux-headers"
+/usr/lib/modules/5.12.3-arch1-1/build/scripts/config
+/usr/lib/modules/5.12.3-arch1-1/build/scripts/diffconfig
 -->
 
+    cd ~/beaglebone
     source ~/beaglebone/u-boot.bashrc
-    # Follow the hints
+    tar xf ~/beaglebone/u-boot-v2021.04.tar.bz2
+    cd u-boot-*/
+    make -j4 am335x_evm_defconfig
+    make -j4 xconfig
+
+Manually apply the following changes
+
+    Boot options           - Autoboot options       - Autoboot - ☐
+    # Command line interface - Device access commands - poweroff - ✓ # lib/efi_loader/efi_runtime.c:217: undefined reference to `do_poweroff'
+    Command line interface - Device access commands - gpio     - ✓ # Command 'gpio' failed: Error -19
+
+<div></div>
+
+    Environment - Environment is not stored          - ✓
+    Environment - Environment is in a FAT filesystem - ☐
+
+<div></div>
+
+    # Device Drivers - USB support - EHCI HCD (USB 2.0) support - ✓ # asm/arch/ehci.h not found
+    #
+    # CONFIG_USB_GADGET_VBUS_DRAW undeclared
+    # Device Drivers - USB support - MUSB host mode support - ☐
+    # Device Drivers - USB support - MUSB gadget mode support - ☐
+    # Device Drivers - USB support - Enable TI OTG USB controller - ☐
+    # Device Drivers - USB support - USB Gadget Support - ☐
+    #
+    # ASIX
+    Device Drivers - USB support - USB to Ethernet Controller Drivers - ✓
+    Device Drivers - USB support - USB to Ethernet Controller Drivers - ASIX AX8817X (USB 2.0) support - ✓
+    Device Drivers - USB support - USB to Ethernet Controller Drivers - ASIX AX88179 (USB 3.0) support - ✓
+    # Save
+
+4&period; Build
+    
+    make -j4 all && \
+    ls -l O/{spl/u-boot-spl.bin,MLO,u-boot.img} && \
+    sudo rm -rfv /root/MINICOM_RES && \
+    sudo mkdir /root/MINICOM_RES && \
+    for DEST in {spl/u-boot-spl.bin,u-boot.img}; do
+      sudo ln -sv "$(realpath O)/$DEST" -t /root/MINICOM_RES/
+    done
 
 ## B - Prepare U-Boot eMMC image
 
@@ -447,7 +344,7 @@ Wait for at most 30 seconds until `CCC...` appears in minicom console
 
 Locate `u-boot-spl.bin` (**not `MLO`**) and send
 
-Locate `u-boot.img` and send (xmodem, the same)
+Locate `u-boot.img` and send (xmodem or ymodem)
 
 Press <kbd>SPACE</kbd>
 

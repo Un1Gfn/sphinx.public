@@ -52,32 +52,12 @@ function f {
     ;  [ "$?" -eq 1 ] \
     || { echo "${BASH_SOURCE[0]}:$LINENO: err"; return 1; }
 
-  # rm -r u-boot-*/
-  # echo; ls -A1 -d u-boot-*; echo
-  # tar xf u-boot-v2020.10.tar.bz2
-
   # printf "\e]0;%s\a" "${PWD##*/}"
   echo "PATH=$PATH" && echo
   file "$(which "${CROSS_COMPILE}gcc")" && echo
   [ -L "$(which "${CROSS_COMPILE}gcc")" ] && file "$(realpath "$(which "${CROSS_COMPILE}gcc")")" && echo
   file "$(which gcc)"
   # echo "KBUILD_OUTPUT=$KBUILD_OUTPUT"; echo
-
-  hr
-
-cat <<"EOF"
-# Welcome to ~/beaglebone/u-boot.bashrc "${BASH_SOURCE[0]}"
-# Hints
-~/beaglebone/u-boot-v2021.04.tar.bz2
-~/beaglebone/u-boot-v2021.01.tar.bz2
-~/beaglebone/u-boot-v2020.10.tar.bz2
-make -j4 am335x_evm_defconfig
-make -j4 am335x_boneblack_vboot_defconfig
-make -j4 xconfig
-O/.config
-~/beaglebone/diffconfig
-ls -l O/{spl/u-boot-spl.bin,MLO,u-boot.img} && sudo rm -fv /root/MINICOM_RES && sudo ln -sfv "$(realpath O)" "$_"
-EOF
 
   hr
 

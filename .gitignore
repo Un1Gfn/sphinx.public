@@ -1,7 +1,7 @@
 # Arch Linux ARM
 /ArchLinuxARM-am33x-latest.tar.gz.sha1sum
 /ArchLinuxARM-am33x-latest.tar.gz
-/ArchLinuxARM_*
+/ArchLinuxARM-am33x-latest/
 
 # U-Boot - v - https://source.denx.de/u-boot/u-boot/-/tags
 /u-boot-v202?.??-rc?.tar.bz2
