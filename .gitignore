@@ -29,3 +29,7 @@
 
 # https://askubuntu.com/a/661
 /usbreset.out
+
+
+# Sphinx
+/Documentation/_build
