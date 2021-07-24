@@ -1,8 +1,8 @@
-====
-Test
-====
+==========
+|ico| Test
+==========
 
 test contents
 =============
 
-----
+.. include:: substitution.rst

@@ -1,8 +1,10 @@
-================
-reStructuredText
-================
+======================
+|ico| reStructuredText
+======================
 
 .. image:: https://img.shields.io/badge/%F0%9F%9B%A1%EF%B8%8F-shield-success
+  :target: https://shields.io/
+  :alt: [shield]
 
 |
 
@@ -20,14 +22,31 @@ Ongoing Transition from GitHub Flavored Markdown to reStructuredText ...
 
 Render HTML to ``~/beaglebone.gh-pages`` and push to ``gh-pages`` branch
 
-| `roles`_ - inline elements
-| `directives`_ - block elements
+.. | `directives`_ - block elements
+.. | `roles`_ - inline elements
+.. | .. \`x <y>`_  - Named hyperlink reference
+.. | .. \`x <y>`__  - Anonymous hyperlink reference
 
-.. `roles`_
-..   inline elements
+`Directives`_
+  block elements
 
-.. `directives`_
-..   block elements
+`Roles`_
+  inline elements
+
+\.. \`example <\https://example.org>`_
+  Named hyperlink reference
+
+\.. \`example <\https://example.org>`__
+  Anonymous hyperlink reference
+
+\:doc:\`Hardware`
+  `Direct link to documents <https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html#role-doc>`__
+
+\:file:\`default.conf`
+  File
+
+\:kbd:\`Ctrl+C`
+  Key press
 
 
 .. code:: bash
@@ -49,13 +68,8 @@ Render HTML to ``~/beaglebone.gh-pages`` and push to ``gh-pages`` branch
   ls -d1 conf.py *rst | entr sphinx-build -b html . ~/cgi/cgi-tmp/sphinx
   printf "\n  file://%s\n\n" "$(realpath _build/index.html)"
 
-
-:kbd:`Ctrl+C`
-
-:file:`default.conf`
-
 | Unicode
-| |b| `unicode.rst <_sources/unicode.rst.txt>`__
+| |b| `substitution.rst <_sources/substitution.rst.txt>`__
 | |b| `<http://www.amp-what.com/>`__
 | |b| `<https://www.toptal.com/designers/>`__
 
@@ -75,7 +89,7 @@ rtd missing bullets
 
 .. https://docutils.sourceforge.io/docs/ref/rst/directives.html#include
 
-.. include:: unicode.rst
+.. include:: substitution.rst
 
 .. _roles: https://docutils.sourceforge.io/docs/ref/rst/roles.html
 .. _directives: https://docutils.sourceforge.io/docs/ref/rst/_directives.html

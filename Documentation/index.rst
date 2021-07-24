@@ -1,9 +1,9 @@
 .. Created by sphinx-quickstart
 .. The root `toctree` directive is mandatory
 
-================================================================
-Index of `beaglebone <http://www.github.com/Un1Gfn/beaglebone>`_
-================================================================
+======================================================================
+|ico| Index of `beaglebone <http://www.github.com/Un1Gfn/beaglebone>`_
+======================================================================
 
 .. Directive is "toctree"
 .. Argument are empty
@@ -15,7 +15,8 @@ Index of `beaglebone <http://www.github.com/Un1Gfn/beaglebone>`_
    :maxdepth: 99
    :caption: Contents:
 
-   Beaglebone
+   Hardware
+   Software
    Future
    reStructuredText
    Test
@@ -26,3 +27,7 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+
+----
+
+.. include:: substitution.rst
