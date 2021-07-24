@@ -30,4 +30,4 @@ Indices and tables
 
 ----
 
-.. include:: substitution.rst
+.. include:: substitution.txt

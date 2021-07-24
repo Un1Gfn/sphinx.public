@@ -81,6 +81,6 @@ Pentester Academy - `Embedded Linux Booting Process <https://www.youtube.com/wat
 
 .. [#w] https://web.archive.org/web/20210114145232/https://processors.wiki.ti.com/index.php/AM335x_U-Boot_User's_Guide#Prerequisite
 
-.. include:: link.rst
+.. include:: link.txt
 
-.. include:: substitution.rst
+.. include:: substitution.txt

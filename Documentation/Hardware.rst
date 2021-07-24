@@ -5,27 +5,31 @@
 Board
 =====
 
+.. https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#anonymous-hyperlinks
+
 | GitHub
-| |b| `BBGW schematics <https://raw.githubusercontent.com/SeeedDocument/BeagleBone_Green_Wireless/master/resources/BeagleBone_Green%20Wireless_V1.0_SCH_20160314.pdf>`__
-| |b| `BBB manual <https://github.com/beagleboard/beaglebone-black/wiki/System-Reference-Manual>`__
+| |b| `BBGW schematics`__
+| |b| `BBB manual`__
+
+.. __: https://raw.githubusercontent.com/SeeedDocument/BeagleBone_Green_Wireless/master/resources/BeagleBone_Green%20Wireless_V1.0_SCH_20160314.pdf
+.. __: https://github.com/beagleboard/beaglebone-black/wiki/System-Reference-Manual
 
 | eLinux wiki
-| |b| `BB generations brief <https://elinux.org/BeagleBone_Community>`__
-| |b| `BB <https://elinux.org/BeagleBoard_Community>`__
-| |b| `BBB <https://elinux.org/Beagleboard:BeagleBoneBlack>`__
-| |b| `BBBW <https://elinux.org/Beagleboard:BeagleBoneBlackWireless>`__
+| |b| `BB generations brief`__
+| |b| `BB`__
+| |b| `BBB`__
+| |b| `BBBW`__
+
+.. __: https://elinux.org/BeagleBone_Community
+.. __: https://elinux.org/BeagleBoard_Community
+.. __: https://elinux.org/Beagleboard:BeagleBoneBlack
+.. __: https://elinux.org/Beagleboard:BeagleBoneBlackWireless
 
 | Seeed wiki
 | |b| `BBGW <http://wiki.seeedstudio.com/BeagleBone_Green_Wireless/#specification>`__
 
 Communication Tutorials
 =======================
-
-.. role:: raw-html(raw)
-
-    :format: html
-
-.. |br| replace:: :raw-html:`<br />`
 
 .. |r| replace:: `recovery guide <https://elinux.org/AM335x_recovery>`__
 
@@ -141,6 +145,6 @@ UART
 .. [#c_f_s] https://www.cyberciti.biz/faq/find-out-linux-serial-ports-with-setserial
 .. [#c_h_s] https://www.cyberciti.biz/hardware/5-linux-unix-commands-for-connecting-to-the-serial-console
 
-.. include:: link.rst
+.. include:: link.txt
 
-.. include:: substitution.rst
+.. include:: substitution.txt

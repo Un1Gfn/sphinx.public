@@ -1,0 +1,18 @@
+.. Use "txt" extension in case being captured by conf.py 'source_suffix'
+.. Avoid "WARNING: Footnote [#] is not referenced"
+
+.. Named hyperlink references
+
+.. _nfs-kernel-server:   https://bootlin.com/blog/tftp-nfs-booting-beagle-bone-black-wireless-pocket-beagle
+.. _RidgeRun:            https://developer.ridgerun.com/wiki/index.php/How_to_use_USB_device_networking
+.. _beagleboard:         https://elinux.org/BeagleBoard_Community
+.. _eLinux image:        https://elinux.org/Beagleboard:BeagleBoneBlack_Rebuilding_Software_Image
+.. _terminal shells:     https://elinux.org/Beagleboard:Terminal_Shells
+.. _BOOTP:               https://en.wikipedia.org/wiki/Bootstrap_Protocol
+.. _RNDIS:               https://en.wikipedia.org/wiki/RNDIS
+.. _TFTP:                https://en.wikipedia.org/wiki/Trivial_File_Transfer_Protocol
+.. _BBBlfs:              https://github.com/ungureanuvladvictor/BBBlfs>
+.. _techniq:             https://github.com/techniq/wiki/wiki/Linux-USB-Gadget-API
+.. _Android USB SSH:     https://stackoverflow.com/questions/44926644/control-beaglebone-black-linux-with-android-smartphone-through-usb-cable
+.. _deleted SU question: https://superuser.com/questions/1529130/linux-tethering-ethernet-over-usb-network-device-usb0-not-exposed-after-loading
+.. _U-Boot on AM335x:    https://web.archive.org/web/20210114145232/https://processors.wiki.ti.com/index.php/AM335x_U-Boot_User's_Guide

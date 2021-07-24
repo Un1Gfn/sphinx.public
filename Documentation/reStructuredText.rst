@@ -2,11 +2,19 @@
 |ico| reStructuredText
 ======================
 
+.. Include in the beginning, otherwise get [WARNING: Unknown interpreted text role "raw-html"]
+.. include:: substitution.txt
+
 .. image:: https://img.shields.io/badge/%F0%9F%9B%A1%EF%B8%8F-shield-success
   :target: https://shields.io/
   :alt: [shield]
 
 |
+
+Misc
+====
+
+.. https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html#directives
 
 .. warning::
   A plain text ``README`` in ``$(git rev-parse --show-toplevel)`` points here. There is **NO** ``readme.rst.``
@@ -15,29 +23,173 @@ Ongoing Transition from GitHub Flavored Markdown to reStructuredText ...
 
 `live reST online <http://rst.ninjs.org>`__
 
+.. :tree:`x/y/z`
+.. https://www.sphinx-doc.org/en/master/usage/extensions/extlinks.html#confval-extlinks
+
+| Unicode
+| |b| :tree:`Documentation/substitution.txt`
+| |b| `<http://www.amp-what.com/>`__
+| |b| `<https://www.toptal.com/designers/>`__
+
 | rtd_linux
-| |b| `Specific guidelines for the kernel documentation`_
-| |b| `conf.py`_
-| |b| `theme_overrides.css <https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/sphinx-static/theme_overrides.css>`__
+| |b| `conf.py`__
+| |b| `theme_overrides.css`__
+| |b| `Specific guidelines for the kernel documentation`__
 
-Render HTML to ``~/beaglebone.gh-pages`` and push to ``gh-pages`` branch
+.. __: https://github.com/torvalds/linux/blob/master/Documentation/conf.py
+.. __: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/sphinx-static/theme_overrides.css
+.. __: https://www.kernel.org/doc/html/latest/doc-guide/sphinx.html#specific-guidelines-for-the-kernel-documentation
 
-.. | `directives`_ - block elements
-.. | `roles`_ - inline elements
-.. | .. \`x <y>`_  - Named hyperlink reference
-.. | .. \`x <y>`__  - Anonymous hyperlink reference
 
-`Directives`_
-  block elements
+| Create [#]_ [#]_ [#]_ [#]_ [#]_ an extension
+| |b| Define a custom role ``:itlnk`` similar to `:download:`__
+| |b| Render ``:emlnk:`x <y>``` to ``<em><a style="font-style:italic;" href="y">x</em>``,
+| |b| Post to `SO/q/9645321`__
 
-`Roles`_
-  inline elements
+.. __: https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html#role-download
+.. __: https://stackoverflow.com/questions/9645321/insert-a-link-into-bold-text-in-restructuredtext
 
-\.. \`example <\https://example.org>`_
-  Named hyperlink reference
+h2 Chapters
+===========
 
-\.. \`example <\https://example.org>`__
-  Anonymous hyperlink reference
+h3 Section
+----------
+
+h4 Subsection
+~~~~~~~~~~~~~
+
+h5 ?
+""""
+
+h6 ?
+^^^^
+
+h7 ?
+****
+
+h8 ?
+++++
+
+h9 ?
+####
+
+.. = - ` : ' " ~ ^ _ * + # < >
+
+|
+
+Build
+=====
+
+.. https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html#directives
+
+| Build to ``~/beaglebone.gh-pages`` and push to ``gh-pages`` branch
+| |b| `GitHub Pages with Python Sphinx <https://www.docslikecode.com/articles/github-pages-python-sphinx>`__
+| |b| `sphinx.ext.githubpages <https://www.sphinx-doc.org/en/master/usage/extensions/githubpages.html>`__
+
+.. code:: bash
+
+  cd ~/beaglebone/Documentation
+  sphinx-quickstart
+
+
+.. code:: bash
+
+  rm -rfv ~/beaglebone/Documentation/_build
+  rm -rfv ~/cgi/cgi-tmp/sphinx
+
+`sphinx-build(1) <https://www.sphinx-doc.org/en/master/man/sphinx-build.html>`__
+
+.. code:: bash
+
+  cd ~/beaglebone/Documentation
+  ls -d1 conf.py *rst *txt | entr sphinx-build -b html . _build
+  ls -d1 conf.py *rst *txt | entr sphinx-build -b html . ~/cgi/cgi-tmp/sphinx
+  printf "\n  file://%s\n\n" "$(realpath _build/index.html)"
+
+Syntax
+======
+
+Other Syntax
+------------
+
+:raw-html:`<a style="font-style:italic;" href="https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#enumerated-lists">Enumerated List</a>`
+
+1. li
+2. li
+#. li w/ auto-enumerator
+#. li w/ auto-enumerator
+
+(The following is a :raw-html:`<a style="font-style:italic;" href="https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#line-blocks">Line Block</a>`)
+
+| The following are missing syms :rtdissue:`1115` :rtdissue:`1145`
+| |b| :raw-html:`<a style="font-style:italic;" href="https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#bullet-lists">Bullet List</a>`
+| |b| arabic numerals: 1, 2, 3, ... (no upper limit)
+| |b| uppercase alphabet characters: A, B, C, ..., Z
+| |b| lower-case alphabet characters: a, b, c, ..., z
+| |b| uppercase Roman numerals: I, II, III, IV, ..., MMMMCMXCIX (4999)
+| |b| lowercase Roman numerals: i, ii, iii, iv, ..., mmmmcmxcix (4999)
+
+:raw-html:`<a style="font-style:italic;" href="https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#field-lists">Field List</a>`
+
+:Date: 2001-08-16
+:Version: 1
+:Authors: - Me
+          - Myself
+          - I
+:Indentation: Since the field marker may be quite long, the second
+   and subsequent lines of the field body do not have to line up
+   with the first line, but they must be indented relative to the
+   field name marker, and they must line up with each other.
+:Parameter i: integer
+
+:raw-html:`<a style="font-style:italic;" href="https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#option-lists">Option List</a>`
+
+-a      Output all.
+-b      Output both (this description is
+        quite long).
+-c arg  Output just arg.
+--long  Output all day long.
+
+:raw-html:`<a style="font-style:italic;" href="https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#literal-blocks">Literal Block</a>`
+
+::
+
+     block.
+    literal
+   a
+  is
+ This
+
+
+  This
+    is
+      a
+       block
+        quote
+  https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#block-quotes
+
+:raw-html:`<a style="font-style:italic;" href="https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#doctest-blocks">Doctest Block</a>`
+
+>>> print "This is a doctest block."
+This is a doctest block.
+
+
+|d| :raw-html:`<a style="font-style:italic;" href="https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#transitions">Transition</a>`
+
+----
+
+`Roles`__ / Inline Elements
+---------------------------
+
+.. __: https://docutils.sourceforge.io/docs/ref/rst/roles.html
+
+.. role:: raw-html(raw)
+
+    :format: html
+
+raw html style :raw-html:`<span style="text-align: center; color: green;">green</span>`
+
+(The following is a `definition list <https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#definition-lists>`__)
 
 \:doc:\`Hardware`
   `Direct link to documents <https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html#role-doc>`__
@@ -48,51 +200,104 @@ Render HTML to ``~/beaglebone.gh-pages`` and push to ``gh-pages`` branch
 \:kbd:\`Ctrl+C`
   Key press
 
+.. https://stackoverflow.com/q/9645321/insert-a-link-into-bold-text-in-restructuredtext/63394243#63394243
+.. _it: https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#inline-markup
+.. |it| replace:: *italic link*
 
-.. code:: bash
+*italic text* |it|_ *italic text*
 
-  cd ~/beaglebone/Documentation
-  sphinx-quickstart
+| `Inline Markup <https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#inline-markup>`__
+| |b| \*emphasis\*
+| |b| \*\*strong emphasis\*\*
+| |b| \`interpreted text\`
+| |b| \`\`inline literals\`\`
+| |b| \|substitution reference\|
+| |b| `Hyperlink Reference`_ |l| Click to go to the `inline internal target`__ |hit|
+| |b| \_\`inline internal target\`
 
-.. code:: bash
+.. __: https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#inline-internal-targets
 
-  rm -rfv ~/beaglebone/Documentation/_build
-  rm -rfv ~/cgi/cgi-tmp/sphinx
+| _`Hyperlink Reference` |hit|
+| |b| \`phrase\`\_
+| |b| singleword\_
+| |b| \`anonymous phrase\`\_\ **_**
+| |b| anonymous_singleword\_\ **_**
 
-`sphinx-build(1)`_
 
-.. code:: bash
+:raw-html:`<a style="font-style:italic;" href="https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#footnotes">Footnote</a>`
 
-  cd ~/beaglebone/Documentation
-  ls -d1 conf.py *rst | entr sphinx-build -b html . _build
-  ls -d1 conf.py *rst | entr sphinx-build -b html . ~/cgi/cgi-tmp/sphinx
-  printf "\n  file://%s\n\n" "$(realpath _build/index.html)"
+| \[\#lb\]\_ [#lb]_
+| \[\99\]\_ [99]_
+| \[\#\]\_ [#]_
+  \[\#\]\_ [#]_
+  \[\#\]\_ [#]_
+| \[\*\]\_ [*]_
+  \[\*\]\_ [*]_
+  \[\*\]\_ [*]_
 
-| Unicode
-| |b| `substitution.rst <_sources/substitution.rst.txt>`__
-| |b| `<http://www.amp-what.com/>`__
-| |b| `<https://www.toptal.com/designers/>`__
+`Directives`__ / Block Elements
+-------------------------------
+
+.. __: https://docutils.sourceforge.io/docs/ref/rst/directives.html
+
+`Admonitions <https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html#directives>`__
+
+.. | `directives`_ - block elements
+
+.. danger::
+  danger
+
+.. error::
+  error
+
+.. warning::
+  warning
+
+.. caution::
+  caution
+
+.. attention::
+  attention
+
+.. important::
+  important
+
+.. hint::
+  hint
+
+.. tip::
+  tip
+
+.. note::
+  note
 
 .. https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#transitions
 
-rtd missing bullets
-`#1145 <https://github.com/readthedocs/sphinx_rtd_theme/issues/1145>`__
-`#1115 <https://github.com/readthedocs/sphinx_rtd_theme/issues/1115>`__
+----
 
-.. role:: raw-html(raw)
-
-    :format: html
-
-:raw-html:`<span style="text-align: center; color: green;">build</span>`
+.. [#] https://doughellmann.com/posts/defining-custom-roles-in-sphinx/
+.. [#] https://protips.readthedocs.io/link-roles.html
+.. [#] https://www.sphinx-doc.org/en/master/development/index.html
+.. [#] https://www.sphinx-doc.org/en/master/development/tutorials/helloworld.html
+.. [#] https://www.sphinx-doc.org/en/master/extdev/index.html
 
 ----
 
-.. https://docutils.sourceforge.io/docs/ref/rst/directives.html#include
+.. [#lb] This is a manually *labeled*  footnote.
+.. [99]  This is a manually *numbered* footnote
 
-.. include:: substitution.rst
+----
 
-.. _roles: https://docutils.sourceforge.io/docs/ref/rst/roles.html
-.. _directives: https://docutils.sourceforge.io/docs/ref/rst/_directives.html
-.. _conf.py: https://github.com/torvalds/linux/blob/master/Documentation/conf.py
-.. _Specific guidelines for the kernel documentation: https://www.kernel.org/doc/html/latest/doc-guide/sphinx.html#specific-guidelines-for-the-kernel-documentation
-.. _sphinx-build(1): https://www.sphinx-doc.org/en/master/man/sphinx-build.html
+The numbering is determined by the order of the footnotes (here), not by the order of the references (above).
+
+.. [#] This is     an      auto-numbered footnote.
+.. [#] This is     another auto-numbered footnote.
+.. [#] This is yet another auto-numbered footnote.
+
+----
+
+.. [*] This is     an      auto-symbol footnote.
+.. [*] This is     another auto-symbol footnote.
+.. [*] This is yet another auto-symbol footnote.
+
+.. include:: link.txt

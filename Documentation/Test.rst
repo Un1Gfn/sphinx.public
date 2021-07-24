@@ -5,4 +5,4 @@
 test contents
 =============
 
-.. include:: substitution.rst
+.. include:: substitution.txt

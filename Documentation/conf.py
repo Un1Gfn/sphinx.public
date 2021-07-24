@@ -29,8 +29,24 @@ author = 'Darren Ng'
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
+#
+# https://www.sphinx-doc.org/en/master/usage/extensions/index.html
+#
 extensions = [
+    'sphinx.ext.extlinks'
 ]
+
+# https://www.sphinx-doc.org/en/master/usage/extensions/extlinks.html#confval-extlinks
+extlinks = {
+    'tree': (
+        'https://github.com/Un1Gfn/'+project+'/tree/master/%s',
+        '%s'
+    ),
+    'rtdissue': (
+        'https://github.com/readthedocs/sphinx_rtd_theme/issues/%s',
+        '#%s'
+    )
+}
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
