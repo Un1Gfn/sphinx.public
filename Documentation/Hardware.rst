@@ -95,10 +95,10 @@ CPU
 | `Functional Block Diagram <http://www.ti.com/data-sheets/diagram.tsp?genericPartNumber=AM3358&diagramId=SPRS717K>`__
 | Docs `latest rev <http://www.ti.com/product/AM3358/technicaldocuments>`__
 | |b| Datasheet ~ AM335x Sitara™ Processors datasheet `trunc rev <http://www.ti.com/lit/gpn/am3358>`__
-|     |b| "Functional Block Diagram" ~ Page 5 (1.4)
+|     |b2| "Functional Block Diagram" ~ Page 5 (1.4)
 | |b| User guides ~ AM335x and AMIC110 Sitara™ Processors Technical Reference Manual `trunc rev <http://www.ti.com/lit/pdf/spruh73>`__
-|     |b| "Memery Map" ~ Page 117 (2.1)
-|     |b| "Public ROM Code Architecture" (xmodem) ~ Page 5019 (26.1.2) (Figure 26-1)
+|     |b2| "Memery Map" ~ Page 117 (2.1)
+|     |b2| "Public ROM Code Architecture" (xmodem) ~ Page 5019 (26.1.2) (Figure 26-1)
 | `Boot process <https://processors.wiki.ti.com/index.php/AM335x_board_bringup_tips>`__
 | `U-Boot on AM335x`_
 

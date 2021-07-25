@@ -11,11 +11,43 @@
 
 |
 
+Readings
+=========
+
+.. | |b| ` <>`__
+
+| Tutorials from `Docutils`_
+| |b| :raw-html:`<a style="text-decoration:line-through;" href="https://docutils.sourceforge.io/docs/user/rst/quickref.html">Quick reStructuredText</a>`
+| |b| `A ReStructuredText Primer <https://docutils.sourceforge.io/docs/user/rst/quickstart.html>`__
+| |b| `Docutils FAQ <https://docutils.sourceforge.io/FAQ.html>`__
+
+| Tutorials from `Sphinx`_
+| |b| `Getting Started <https://www.sphinx-doc.org/en/master/usage/quickstart.html>`__
+| |b| `reStructuredText <https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html>`__
+| |b| `reStructuredText Primer <https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html>`__
+| |b| `Sphinx tutorial <https://www.sphinx-doc.org/en/master/tutorial/index.html>`__
+
+| Tutorials from others
+| |b| `Read the Docs - Getting Started with Sphinx <https://docs.readthedocs.io/en/stable/intro/getting-started-with-sphinx.html>`__
+| |b| `TYPO3 - Writing documentation <https://docs.typo3.org/m/typo3/docs-how-to-document/master/en-us/Index.html>`__
+| |b| `Publishing sphinx-generated docs on github <https://daler.github.io/sphinxdoc-test/includeme.html>`__
+| |b| `RST | Sphinx | Sublime | GitHub <https://sublime-and-sphinx-guide.readthedocs.io/en/latest/index.html>`__
+| |b| `Sampledoc <https://matplotlib.org/sampledoc/>`__
+
+| Documentations from `Docutils`_
+| |b| `reStructuredText Markup Specification <https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html>`__
+| |b| `reStructuredText Interpreted Text Roles <reStructuredText Interpreted Text Roles>`__
+| |b| `reStructuredText Directives <https://docutils.sourceforge.io/docs/ref/rst/directives.html>`__
+
+| Documentations from `Sphinx`_
+| |b| `Sphinx documentation <https://www.sphinx-doc.org/en/master/contents.html>`__
+| |b| `Directives <https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html>`__
+| |b| `Domains <https://www.sphinx-doc.org/en/master/usage/restructuredtext/domains.html>`__
+
 Misc
 ====
 
 .. https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html#directives
-
 .. warning::
   A plain text ``README`` in ``$(git rev-parse --show-toplevel)`` points here. There is **NO** ``readme.rst.``
 
@@ -41,11 +73,12 @@ Ongoing Transition from GitHub Flavored Markdown to reStructuredText ...
 .. __: https://www.kernel.org/doc/html/latest/doc-guide/sphinx.html#specific-guidelines-for-the-kernel-documentation
 
 
-| Create [#]_ [#]_ [#]_ [#]_ [#]_ an extension
+| Create [#]_ [#]_ [#]_ [#]_ [#]_ an `extension`__
 | |b| Define a custom role ``:itlnk`` similar to `:download:`__
 | |b| Render ``:emlnk:`x <y>``` to ``<em><a style="font-style:italic;" href="y">x</em>``,
 | |b| Post to `SO/q/9645321`__
 
+.. __: https://www.sphinx-doc.org/en/master/usage/extensions/index.html
 .. __: https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html#role-download
 .. __: https://stackoverflow.com/questions/9645321/insert-a-link-into-bold-text-in-restructuredtext
 
@@ -80,8 +113,6 @@ h9 ?
 Build
 =====
 
-.. https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html#directives
-
 | Build to ``~/beaglebone.gh-pages`` and push to ``gh-pages`` branch
 | |b| `GitHub Pages with Python Sphinx <https://www.docslikecode.com/articles/github-pages-python-sphinx>`__
 | |b| `sphinx.ext.githubpages <https://www.sphinx-doc.org/en/master/usage/extensions/githubpages.html>`__
@@ -90,7 +121,6 @@ Build
 
   cd ~/beaglebone/Documentation
   sphinx-quickstart
-
 
 .. code:: bash
 
@@ -112,7 +142,21 @@ Syntax
 Other Syntax
 ------------
 
-:raw-html:`<a style="font-style:italic;" href="https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#enumerated-lists">Enumerated List</a>`
+`link1`_ `link2`__
+(combination of `Anonymous Hyperlink <https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#anonymous-hyperlinks>`__
+and `Indirect Hyperlink <https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#indirect-hyperlink-targets>`__ ) [#]_
+
+.. __: link1_
+
+.. _link1: https://www.example.org
+
+`Enumerated List`_ |l| Click to go to the `internal hyperlink target with empty link block`__ |hit|\ iht
+
+.. __: https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#internal-hyperlink-targets
+
+.. _Enumerated List:
+
+:raw-html:`<a style="font-style:italic;" href="https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#enumerated-lists">Enumerated List</a>` |hit|\ iht
 
 1. li
 2. li
@@ -183,6 +227,13 @@ This is a doctest block.
 
 .. __: https://docutils.sourceforge.io/docs/ref/rst/roles.html
 
+:raw-html:`<a style="font-style:italic;" href="https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#implicit-hyperlink-targets">Implicit Hyperlink Target</a>`
+
+| Go to `Misc`_
+| Go to `#Misc`_
+
+.. _#Misc: Misc_
+
 .. role:: raw-html(raw)
 
     :format: html
@@ -212,17 +263,16 @@ raw html style :raw-html:`<span style="text-align: center; color: green;">green<
 | |b| \`interpreted text\`
 | |b| \`\`inline literals\`\`
 | |b| \|substitution reference\|
-| |b| `Hyperlink Reference`_ |l| Click to go to the `inline internal target`__ |hit|
+| |b| `Hyperlink Reference`_ |l| Click to go to the `inline internal target`__ |hit|\ iit
 | |b| \_\`inline internal target\`
 
 .. __: https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#inline-internal-targets
 
-| _`Hyperlink Reference` |hit|
+| _`Hyperlink Reference` |hit|\ iit
 | |b| \`phrase\`\_
 | |b| singleword\_
 | |b| \`anonymous phrase\`\_\ **_**
 | |b| anonymous_singleword\_\ **_**
-
 
 :raw-html:`<a style="font-style:italic;" href="https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#footnotes">Footnote</a>`
 
@@ -273,6 +323,11 @@ raw html style :raw-html:`<span style="text-align: center; color: green;">green<
 
 .. https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#transitions
 
+`Footnotes`__
+=============
+
+.. __: https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#footnotes
+
 ----
 
 .. [#] https://doughellmann.com/posts/defining-custom-roles-in-sphinx/
@@ -281,12 +336,12 @@ raw html style :raw-html:`<span style="text-align: center; color: green;">green<
 .. [#] https://www.sphinx-doc.org/en/master/development/tutorials/helloworld.html
 .. [#] https://www.sphinx-doc.org/en/master/extdev/index.html
 
+.. [#] https://docutils.sourceforge.io/docs/user/rst/quickref.html#indirect-hyperlink-targets
+
 ----
 
 .. [#lb] This is a manually *labeled*  footnote.
 .. [99]  This is a manually *numbered* footnote
-
-----
 
 The numbering is determined by the order of the footnotes (here), not by the order of the references (above).
 
@@ -294,10 +349,10 @@ The numbering is determined by the order of the footnotes (here), not by the ord
 .. [#] This is     another auto-numbered footnote.
 .. [#] This is yet another auto-numbered footnote.
 
-----
-
 .. [*] This is     an      auto-symbol footnote.
 .. [*] This is     another auto-symbol footnote.
 .. [*] This is yet another auto-symbol footnote.
+
+----
 
 .. include:: link.txt
