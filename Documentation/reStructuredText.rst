@@ -11,8 +11,20 @@
 
 |
 
+.. https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html#directives
+.. warning::
+  A plain text ``README`` in ``$(git rev-parse --show-toplevel)`` points here. There is **NO** ``readme.rst.``
+
+Contacts
+========
+
+| `Docutils Mailing Lists <https://docutils.sourceforge.io/docs/user/mailing-lists.html>`__
+| |b| `Developing extensions <https://docutils.sourceforge.io/docs/user/mailing-lists.html#docutils-develop>`__
+
+`Bugs <https://docutils.sourceforge.io/BUGS.html>`__
+
 Readings
-=========
+========
 
 .. | |b| ` <>`__
 
@@ -33,23 +45,21 @@ Readings
 | |b| `Publishing sphinx-generated docs on github <https://daler.github.io/sphinxdoc-test/includeme.html>`__
 | |b| `RST | Sphinx | Sublime | GitHub <https://sublime-and-sphinx-guide.readthedocs.io/en/latest/index.html>`__
 | |b| `Sampledoc <https://matplotlib.org/sampledoc/>`__
+| |b| `Sample reStructuredText PEP Template <https://www.python.org/dev/peps/pep-0012/>`__
 
 | Documentations from `Docutils`_
 | |b| `reStructuredText Markup Specification <https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html>`__
-| |b| `reStructuredText Interpreted Text Roles <reStructuredText Interpreted Text Roles>`__
+| |b| `reStructuredText Interpreted Text Roles <https://docutils.sourceforge.io/docs/ref/rst/roles.html>`__
 | |b| `reStructuredText Directives <https://docutils.sourceforge.io/docs/ref/rst/directives.html>`__
 
 | Documentations from `Sphinx`_
 | |b| `Sphinx documentation <https://www.sphinx-doc.org/en/master/contents.html>`__
+| |b| `Roles <https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html>`__
 | |b| `Directives <https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html>`__
 | |b| `Domains <https://www.sphinx-doc.org/en/master/usage/restructuredtext/domains.html>`__
 
 Misc
 ====
-
-.. https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html#directives
-.. warning::
-  A plain text ``README`` in ``$(git rev-parse --show-toplevel)`` points here. There is **NO** ``readme.rst.``
 
 Ongoing Transition from GitHub Flavored Markdown to reStructuredText ...
 
@@ -72,11 +82,13 @@ Ongoing Transition from GitHub Flavored Markdown to reStructuredText ...
 .. __: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/sphinx-static/theme_overrides.css
 .. __: https://www.kernel.org/doc/html/latest/doc-guide/sphinx.html#specific-guidelines-for-the-kernel-documentation
 
-
 | Create [#]_ [#]_ [#]_ [#]_ [#]_ an `extension`__
-| |b| Define a custom role ``:itlnk`` similar to `:download:`__
-| |b| Render ``:emlnk:`x <y>``` to ``<em><a style="font-style:italic;" href="y">x</em>``,
+| |b| Define a custom role ``:itlnk`` similar to `\:download\:`__
+| |b| Render |emlnk_role| to |emlnk_html|
 | |b| Post to `SO/q/9645321`__
+
+.. |emlnk_role| replace:: :code:`:emlnk:`x <y>``
+.. |emlnk_html| replace:: :code:`<em><a style="font-style:italic;" href="y">x</em>`
 
 .. __: https://www.sphinx-doc.org/en/master/usage/extensions/index.html
 .. __: https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html#role-download
@@ -225,10 +237,12 @@ This is a doctest block.
 `Roles`__ / Inline Elements
 ---------------------------
 
+| :raw-html:`<a style="font-style:italic;" href="https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-manpages_url">Cross-reference manpage</a>`
+| Man page of :manpage:`uname(1)`
+
 .. __: https://docutils.sourceforge.io/docs/ref/rst/roles.html
 
-:raw-html:`<a style="font-style:italic;" href="https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#implicit-hyperlink-targets">Implicit Hyperlink Target</a>`
-
+| :raw-html:`<a style="font-style:italic;" href="https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#implicit-hyperlink-targets">Implicit Hyperlink Target</a>`
 | Go to `Misc`_
 | Go to `#Misc`_
 

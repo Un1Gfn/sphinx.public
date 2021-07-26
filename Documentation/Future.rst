@@ -1,6 +1,6 @@
-======
-Future
-======
+============
+|ico| Future
+============
 
 Buildroot Linux on Lattice ECP5 via yosys+prjtrellis+nextpnr
 
@@ -13,3 +13,7 @@ https://elinux.org/BeagleBoardAngstrom
 `LVDS <https://en.wikipedia.org/wiki/Low-voltage_differential_signaling>`__ - `FPD-Link <https://en.wikipedia.org/wiki/FPD-Link>`__
 
 royalty-free `DisplayPort <https://en.wikipedia.org/wiki/DisplayPort>`__ cap for BBGW
+
+----
+
+.. include:: substitution.txt
