@@ -33,3 +33,4 @@
 
 # Sphinx
 /Documentation/_build
+/Documentation/extension/__pycache__/

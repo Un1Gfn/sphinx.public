@@ -26,11 +26,14 @@ Contacts
 Readings
 ========
 
+`awesome-sphinxdoc <https://github.com/yoloseem/awesome-sphinxdoc>`__
+
 .. | |b| ` <>`__
 
 | Tutorials from `Docutils`_
 | |b| :raw-html:`<a style="text-decoration:line-through;" href="https://docutils.sourceforge.io/docs/user/rst/quickref.html">Quick reStructuredText</a>`
 | |b| `A ReStructuredText Primer <https://docutils.sourceforge.io/docs/user/rst/quickstart.html>`__
+| |b| `reStructuredText Cheat Sheet <https://docutils.sourceforge.io/docs/user/rst/cheatsheet.txt>`__
 | |b| `Docutils FAQ <https://docutils.sourceforge.io/FAQ.html>`__
 
 | Tutorials from `Sphinx`_
@@ -58,12 +61,48 @@ Readings
 | |b| `Directives <https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html>`__
 | |b| `Domains <https://www.sphinx-doc.org/en/master/usage/restructuredtext/domains.html>`__
 
+`Extensions`__
+==============
+
+.. __: https://www.sphinx-doc.org/en/master/usage/extensions/index.html
+
+| `The Python Language Reference <https://docs.python.org/3/reference/>`__
+
+| `sphinx.ext.todo <https://www.sphinx-doc.org/en/master/usage/extensions/todo.html>`__
+| `sphinxcontrib-emojicodes <https://github.com/sphinx-contrib/emojicodes>`__
+
+| `sphinx.ext.ifconfig <https://www.sphinx-doc.org/en/master/usage/extensions/ifconfig.html>`__
+| `sphinx.ext.graphviz <https://www.sphinx-doc.org/en/master/usage/extensions/graphviz.html>`__
+| `sphinxcontrib-plantuml <https://github.com/sphinx-contrib/plantuml>`__
+| `sphinxcontrib-tikz <https://github.com/sphinx-contrib/tikz>`__
+
+| `sphinxcontrib-video <https://github.com/sphinx-contrib/video>`__
+| `sphinxcontrib-youtube <https://github.com/sphinx-contrib/youtube>`__
+
+| `sphinxcontrib-doxylink <https://github.com/sphinx-contrib/doxylink>`__
+| `sphinxcontrib-examplecode <https://github.com/sphinx-contrib/examplecode>`__
+
+| Create [#]_ [#]_ [#]_ [#]_ [#]_ [#]_ an `extension`__
+| |b| Define a custom role ``:emlink:``, similar to `\:download\:`__
+| |b| Render |emlink_role| to |emlink_html|
+| |b| Post to `SO/q/9645321`__
+
+.. |emlink_role| replace:: :code:`:emlink:`x <y>``
+.. |emlink_html| replace:: :code:`<em><a style="font-style:italic;" href="y">x</em>`
+
+.. __: https://www.sphinx-doc.org/en/master/usage/extensions/index.html
+.. __: https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html#role-download
+.. __: https://stackoverflow.com/questions/9645321/insert-a-link-into-bold-text-in-restructuredtext
+
 Misc
 ====
 
 Ongoing Transition from GitHub Flavored Markdown to reStructuredText ...
 
+:download:`Sphinx Favicon (SVG)<https://raw.githubusercontent.com/sphinx-doc/sphinx/master/doc/_static/favicon.svg>`.
+
 `live reST online <http://rst.ninjs.org>`__
+
 
 .. :tree:`x/y/z`
 .. https://www.sphinx-doc.org/en/master/usage/extensions/extlinks.html#confval-extlinks
@@ -81,18 +120,6 @@ Ongoing Transition from GitHub Flavored Markdown to reStructuredText ...
 .. __: https://github.com/torvalds/linux/blob/master/Documentation/conf.py
 .. __: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/sphinx-static/theme_overrides.css
 .. __: https://www.kernel.org/doc/html/latest/doc-guide/sphinx.html#specific-guidelines-for-the-kernel-documentation
-
-| Create [#]_ [#]_ [#]_ [#]_ [#]_ an `extension`__
-| |b| Define a custom role ``:itlnk`` similar to `\:download\:`__
-| |b| Render |emlnk_role| to |emlnk_html|
-| |b| Post to `SO/q/9645321`__
-
-.. |emlnk_role| replace:: :code:`:emlnk:`x <y>``
-.. |emlnk_html| replace:: :code:`<em><a style="font-style:italic;" href="y">x</em>`
-
-.. __: https://www.sphinx-doc.org/en/master/usage/extensions/index.html
-.. __: https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html#role-download
-.. __: https://stackoverflow.com/questions/9645321/insert-a-link-into-bold-text-in-restructuredtext
 
 h2 Chapters
 ===========
@@ -136,16 +163,16 @@ Build
 
 .. code:: bash
 
-  rm -rfv ~/beaglebone/Documentation/_build
-  rm -rfv ~/cgi/cgi-tmp/sphinx
+  rm -rf ~/beaglebone/Documentation/_build
+  rm -rf ~/cgi/cgi-tmp/sphinx
 
 `sphinx-build(1) <https://www.sphinx-doc.org/en/master/man/sphinx-build.html>`__
 
 .. code:: bash
 
   cd ~/beaglebone/Documentation
-  ls -d1 conf.py *rst *txt | entr sphinx-build -b html . _build
-  ls -d1 conf.py *rst *txt | entr sphinx-build -b html . ~/cgi/cgi-tmp/sphinx
+  ls -d1 conf.py *rst *txt extension/* | entr sphinx-build -b html . _build
+  ls -d1 conf.py *rst *txt extension/* | entr sphinx-build -b html . ~/cgi/cgi-tmp/sphinx
   printf "\n  file://%s\n\n" "$(realpath _build/index.html)"
 
 Syntax
@@ -344,11 +371,12 @@ raw html style :raw-html:`<span style="text-align: center; color: green;">green<
 
 ----
 
-.. [#] https://doughellmann.com/posts/defining-custom-roles-in-sphinx/
-.. [#] https://protips.readthedocs.io/link-roles.html
-.. [#] https://www.sphinx-doc.org/en/master/development/index.html
-.. [#] https://www.sphinx-doc.org/en/master/development/tutorials/helloworld.html
 .. [#] https://www.sphinx-doc.org/en/master/extdev/index.html
+.. [#] https://www.sphinx-doc.org/en/master/extdev/markupapi.html
+.. [#] https://www.sphinx-doc.org/en/master/development/index.html
+.. [#] https://docutils.sourceforge.io/docs/howto/rst-roles.html
+.. [#] https://protips.readthedocs.io/link-roles.html
+.. [#] https://doughellmann.com/posts/defining-custom-roles-in-sphinx/
 
 .. [#] https://docutils.sourceforge.io/docs/user/rst/quickref.html#indirect-hyperlink-targets
 

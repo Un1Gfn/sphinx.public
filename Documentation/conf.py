@@ -10,9 +10,10 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
-# import os
-# import sys
-# sys.path.insert(0, os.path.abspath('.'))
+import os,sys
+# sys.path.append(os.path.abspath('extension'))
+sys.path.insert(0, os.path.abspath('extension'))
+del os,sys
 
 
 # -- Project information -----------------------------------------------------
@@ -21,22 +22,23 @@ project = 'beaglebone'
 author = 'Darren Ng'
 import time
 copyright = time.strftime("%Y")
+del time
 assert str == type(copyright)
 assert copyright
 copyright += ', '
 copyright += author
-del time
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-# Add any Sphinx extension module names here, as strings. They can be
-# extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
-# ones.
-#
+
 # https://www.sphinx-doc.org/en/master/usage/extensions/index.html
-#
-extensions = ['sphinx.ext.extlinks']
+extensions = [
+    # 'sphinx.ext.duration',
+    'sphinx.ext.extlinks',
+    'sphinx.ext.githubpages', # https://www.sphinx-doc.org/en/master/usage/extensions/githubpages.html
+    'helloworld',
+]
 
 # https://www.sphinx-doc.org/en/master/usage/extensions/extlinks.html#confval-extlinks
 extlinks = {
@@ -55,7 +57,9 @@ source_suffix = {'.rst': 'restructuredtext'}
 source_encoding = 'utf-8-sig'
 
 # Changed in version 4.0: Renamed master_doc to root_doc.
-root_doc = 'Index'
+# Don't use "Index.rst" or there will be "Index.html" instead of "index.html"
+# https://www.sphinx-doc.org/en/master/glossary.html#term-master-document
+root_doc = 'index'
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
@@ -74,8 +78,9 @@ keep_warnings = True
 assert ('suppress_warnings' not in locals()) and ('suppress_warnings' not in globals())
 
 import sphinx
-needs_sphinx = '4.1.1'
-assert (4, 1, 1) == sphinx.version_info[:3]
+needs_sphinx = '4.1.2'
+assert (4, 1, 2) == sphinx.version_info[:3]
+del sphinx
 
 # :manpage:`uname(1)`
 # https://manpages.debian.org/buster/coreutils/uname.1.en.html
@@ -105,6 +110,11 @@ html_theme = 'sphinx_rtd_theme'
 html_theme_options = {
     'navigation_depth': 99
 }
+
+# https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-html_baseurl
+# sphinx.ext.githubpages
+# CNAME
+# html_baseurl = 'https://Un1Gfn.github.io/beaglebone'
 
 html_context = {
     'css_files': ['_static/theme_overrides.css']
