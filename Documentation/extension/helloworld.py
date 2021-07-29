@@ -8,8 +8,10 @@ import sys
 
 import re
 
+
 def color(s):
     return termcolor.colored(s, color='cyan')
+
 
 def hint(*argv):
     # print(type(argv))
@@ -26,35 +28,24 @@ class HelloWorldDirective(docutils.parsers.rst.Directive):
         return [docutils.nodes.paragraph(text='nnn')]
 
 
-# https://www.sphinx-doc.org/en/master/extdev/appapi.html#sphinx.application.Sphinx.add_role
-# https://docutils.sourceforge.io/docs/howto/rst-roles.html#define-the-role-function
-# https://sourceforge.net/p/docutils/code/HEAD/tree/trunk/docutils/docutils/parsers/rst/roles.py
-def emlink_fn(name, rawtext, text, lineno, inliner, options={}, content=[]):
-    assert name =='emlink'
-    assert len(text) >= len('_ <_://_._>')
-    assert rawtext == ':%s:`%s`'%(name,text)
-    assert inliner
-    assert options == {}
-    assert content == []
-    # hint({
-    #     'lineno': lineno,
-    #     'name': name,
-    #     'text': text})
-
-    pattern='([^<]+) +<([^>]+)>'
+def emlink_parse(s):
+    # https://docs.python.org/3/howto/regex.html
+    # https://docs.python.org/3/library/re.html
+    pattern = '([^<]+) +<([^>]+)>'
     # p = re.search(pattern,text,0)
     p = re.compile(pattern)
-    m = p.search(text)
+    m = p.search(s)
 
     # print(m.group(0))
     # print(m.group(1))
     # print(m.group(2))
     g = m.groups()
     assert len(g) == 2
-    hint({
+    return {
         'title': g[0],
-        'url': g[1]})
-
+        'url': g[1]
+    }
+    # hint(result)
     # title=''
     # url=''
     # i=0
@@ -79,8 +70,50 @@ def emlink_fn(name, rawtext, text, lineno, inliner, options={}, content=[]):
 
     # assert len(url) >= 1
 
-    return [], []
-    # return ['<strong>','123','</strong>'], [color('emlink_fn()')]
+
+# https://www.sphinx-doc.org/en/master/extdev/appapi.html#sphinx.application.Sphinx.add_role
+# https://docutils.sourceforge.io/docs/howto/rst-roles.html#define-the-role-function
+# https://sourceforge.net/p/docutils/code/HEAD/tree/trunk/docutils/docutils/parsers/rst/roles.py
+def emlink_fn(name, rawtext, text, lineno, inliner, options={}, content=[]):
+
+    assert      name     =='emlink'
+    assert      rawtext  == ':%s:`%s`'%(name,text)
+    assert  len(text)    >= len('_ <_://_>')
+    assert type(inliner) == docutils.parsers.rst.states.Inliner
+    assert      options  == {}
+    assert      content  == []
+    # hint({'lineno': lineno, 'name': name, 'text': text})
+
+    result = emlink_parse(text)
+
+    # import sphinx.util.docutils
+    # help(sphinx.util.docutils.LoggingReporter)
+    assert type(inliner.reporter) == sphinx.util.docutils.LoggingReporter
+    # import docutils.nodes
+    # help(docutils.nodes.paragraph)
+    nodes = []
+
+    # nodes = [docutils.nodes.paragraph(text=str(result))]
+    # nodes = [docutils.nodes.paragraph(rawsource='<strong>strong1</strong>')]
+    # nodes = [docutils.nodes.paragraph(text='<strong>strong2</strong>')]
+    # nodes = [docutils.nodes.literal('<strong>strong2</strong>')]
+
+    # nodes = [docutils.nodes.strong(text='asdf')]
+
+    # https://sourceforge.net/p/docutils/code/HEAD/tree/trunk/docutils/docutils/parsers/rst/roles.py
+    # register_generic_role('strong', nodes.strong)
+    root = docutils.nodes.strong()
+    root += docutils.nodes.emphasis(text='asdf')
+    root += docutils.nodes.superscript(text='2')
+    nodes = [root]
+
+    # root = docutils.nodes.raw(rawsource='<em>eeemmm</em>')
+    # nodes = [root]
+
+    msg = []
+    # msg = [inliner.reporter.warning(result, line=lineno)]
+    return (nodes, msg)
+    # return [], []
 
 
 def setup(app):

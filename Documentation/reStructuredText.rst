@@ -82,7 +82,7 @@ Readings
 | `sphinxcontrib-doxylink <https://github.com/sphinx-contrib/doxylink>`__
 | `sphinxcontrib-examplecode <https://github.com/sphinx-contrib/examplecode>`__
 
-| Create [#]_ [#]_ [#]_ [#]_ [#]_ [#]_ an `extension`__
+| Create [#]_ [#]_ [#]_ [#]_ [#]_ [#]_ [#]_ an `extension`__
 | |b| Define a custom role ``:emlink:``, similar to `\:download\:`__
 | |b| Render |emlink_role| to |emlink_html|
 | |b| Post to `SO/q/9645321`__
@@ -372,6 +372,7 @@ raw html style :raw-html:`<span style="text-align: center; color: green;">green<
 ----
 
 .. [#] https://www.sphinx-doc.org/en/master/extdev/index.html
+.. [#] https://www.sphinx-doc.org/en/master/extdev/appapi.html
 .. [#] https://www.sphinx-doc.org/en/master/extdev/markupapi.html
 .. [#] https://www.sphinx-doc.org/en/master/development/index.html
 .. [#] https://docutils.sourceforge.io/docs/howto/rst-roles.html
