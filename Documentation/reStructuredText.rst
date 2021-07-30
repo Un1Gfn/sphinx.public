@@ -155,8 +155,8 @@ h9 ?
 
 |
 
-Build
-=====
+Building
+========
 
 | Build to ``~/beaglebone.gh-pages`` and push to ``gh-pages`` branch
 | |b| `GitHub Pages with Python Sphinx <https://www.docslikecode.com/articles/github-pages-python-sphinx>`__
@@ -167,19 +167,12 @@ Build
   cd ~/beaglebone/Documentation
   sphinx-quickstart
 
-.. code:: bash
-
-  rm -rf ~/beaglebone/Documentation/_build
-  rm -rf ~/cgi/cgi-tmp/sphinx
-
 `sphinx-build(1) <https://www.sphinx-doc.org/en/master/man/sphinx-build.html>`__
 
 .. code:: bash
 
   cd ~/beaglebone/Documentation
-  ls -d1 conf.py *rst *txt extension/* | entr sphinx-build -b html . _build
-  ls -d1 conf.py *rst *txt extension/* | entr sphinx-build -b html . ~/cgi/cgi-tmp/sphinx
-  printf "\n  file://%s\n\n" "$(realpath _build/index.html)"
+  make clean; make entr
 
 Syntax
 ======

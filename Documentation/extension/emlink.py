@@ -25,10 +25,10 @@ def hint(*argv):
         print()
 
 
-class HelloWorldDirective(docutils.parsers.rst.Directive):
-    def run(self):
-        # https://www.sphinx-doc.org/en/master/extdev/appapi.html#sphinx.application.Sphinx.add_node
-        return [docutils.nodes.paragraph(text='nnn')]
+# class HelloWorldDirective(docutils.parsers.rst.Directive):
+#     def run(self):
+#         # https://www.sphinx-doc.org/en/master/extdev/appapi.html#sphinx.application.Sphinx.add_node
+#         return [docutils.nodes.paragraph(text='nnn')]
 
 
 def emlink_parse(s):
@@ -131,7 +131,7 @@ def emlink_fn(name, rawtext, text, lineno, inliner, options={}, content=[]):
     # help(docutils.nodes.reference)
     # https://github.com/sphinx-doc/sphinx/blob/ee612ffdeb922ded72e6e3a11bcdc25223abdd53/sphinx/ext/extlinks.py#L75
     # root += docutils.nodes.reference(rawsource='rawsource', text='text', internal=False, refuri='https://example.org')
-    root = docutils.nodes.emphasis()
+    root = docutils.nodes.emphasis(rawsource='', text='')
     root += docutils.nodes.reference(rawsource=result['title'], text=result['title'], internal=False, refuri=result['url'])
 
     return ([root], msg)
@@ -139,30 +139,29 @@ def emlink_fn(name, rawtext, text, lineno, inliner, options={}, content=[]):
 
 def setup(app):
 
-    hint()
-
+    # hint()
     # hint(type())
     hint('setup()')
     assert sphinx.application.Sphinx == type(app)
-    hint()
+    # hint()
 
     # print(sys.path)
     app.require_sphinx(version='4.1') # https://www.sphinx-doc.org/en/master/_modules/sphinx/application.html
     assert sphinx.version_info == (4, 1, 2, 'final', 0)
-    assert 'helloworld' in app.config.extensions
+    assert 'emlink' in app.config.extensions
     # hint()
 
     # https://www.sphinx-doc.org/en/master/extdev/appapi.html#sphinx-core-events
-    app.disconnect(listener_id=app.connect(event='source-read',
-                                           callback=lambda app, docname, source: hint('source-read\n'),
-                                           priority=500))
+    # app.disconnect(listener_id=app.connect(event='source-read',
+    #                                        callback=lambda app, docname, source: hint('source-read\n'),
+    #                                        priority=500))
 
     # app.add_config_value()
 
     # app.add_directive(name="code", cls=None, override=True)
-    app.add_directive(name='helloworld_directive',
-                      cls=HelloWorldDirective,
-                      override=False)
+    # app.add_directive(name='helloworld_directive',
+    #                   cls=HelloWorldDirective,
+    #                   override=False)
 
     app.add_role(name='emlink',
                  role=emlink_fn,

@@ -37,7 +37,7 @@ extensions = [
     # 'sphinx.ext.duration',
     'sphinx.ext.extlinks',
     'sphinx.ext.githubpages', # https://www.sphinx-doc.org/en/master/usage/extensions/githubpages.html
-    'helloworld',
+    'emlink',
 ]
 
 # https://www.sphinx-doc.org/en/master/usage/extensions/extlinks.html#confval-extlinks
