@@ -95,6 +95,11 @@ Readings
 .. __: https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html#role-download
 .. __: https://stackoverflow.com/questions/9645321/insert-a-link-into-bold-text-in-restructuredtext
 
+::
+
+  :raw-html:`<a style="font-style:italic;" href="([^"]+)">([^<]+)</a>`
+  :emlink:`\2 <\1>`
+
 Misc
 ====
 
@@ -196,24 +201,24 @@ and `Indirect Hyperlink <https://docutils.sourceforge.io/docs/ref/rst/restructur
 
 .. _Enumerated List:
 
-:raw-html:`<a style="font-style:italic;" href="https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#enumerated-lists">Enumerated List</a>` |hit|\ iht
+:emlink:`Enumerated List <https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#enumerated-lists>` |hit|\ iht
 
 1. li
 2. li
 #. li w/ auto-enumerator
 #. li w/ auto-enumerator
 
-(The following is a :raw-html:`<a style="font-style:italic;" href="https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#line-blocks">Line Block</a>`)
+(The following is a :emlink:`Line Block <https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#line-blocks>`)
 
 | The following are missing syms :rtdissue:`1115` :rtdissue:`1145`
-| |b| :raw-html:`<a style="font-style:italic;" href="https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#bullet-lists">Bullet List</a>`
+| |b| :emlink:`Bullet List <https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#bullet-lists>`
 | |b| arabic numerals: 1, 2, 3, ... (no upper limit)
 | |b| uppercase alphabet characters: A, B, C, ..., Z
 | |b| lower-case alphabet characters: a, b, c, ..., z
 | |b| uppercase Roman numerals: I, II, III, IV, ..., MMMMCMXCIX (4999)
 | |b| lowercase Roman numerals: i, ii, iii, iv, ..., mmmmcmxcix (4999)
 
-:raw-html:`<a style="font-style:italic;" href="https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#field-lists">Field List</a>`
+:emlink:`Field List <https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#field-lists>`
 
 :Date: 2001-08-16
 :Version: 1
@@ -226,7 +231,7 @@ and `Indirect Hyperlink <https://docutils.sourceforge.io/docs/ref/rst/restructur
    field name marker, and they must line up with each other.
 :Parameter i: integer
 
-:raw-html:`<a style="font-style:italic;" href="https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#option-lists">Option List</a>`
+:emlink:`Option List <https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#option-lists>`
 
 -a      Output all.
 -b      Output both (this description is
@@ -234,7 +239,7 @@ and `Indirect Hyperlink <https://docutils.sourceforge.io/docs/ref/rst/restructur
 -c arg  Output just arg.
 --long  Output all day long.
 
-:raw-html:`<a style="font-style:italic;" href="https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#literal-blocks">Literal Block</a>`
+:emlink:`Literal Block <https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#literal-blocks>`
 
 ::
 
@@ -252,25 +257,26 @@ and `Indirect Hyperlink <https://docutils.sourceforge.io/docs/ref/rst/restructur
         quote
   https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#block-quotes
 
-:raw-html:`<a style="font-style:italic;" href="https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#doctest-blocks">Doctest Block</a>`
+:emlink:`Doctest Block <https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#doctest-blocks>`
 
 >>> print "This is a doctest block."
 This is a doctest block.
 
 
-|d| :raw-html:`<a style="font-style:italic;" href="https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#transitions">Transition</a>`
+|d| :emlink:`Transition <https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#transitions>`
+(`<hr> <https://www.w3schools.com/TAGS/tag_hr.asp>`__)
 
 ----
 
 `Roles`__ / Inline Elements
 ---------------------------
 
-| :raw-html:`<a style="font-style:italic;" href="https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-manpages_url">Cross-reference manpage</a>`
+| :emlink:`Cross-reference manpage <https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-manpages_url>`
 | Man page of :manpage:`uname(1)`
 
 .. __: https://docutils.sourceforge.io/docs/ref/rst/roles.html
 
-| :raw-html:`<a style="font-style:italic;" href="https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#implicit-hyperlink-targets">Implicit Hyperlink Target</a>`
+| :emlink:`Implicit Hyperlink Target <https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#implicit-hyperlink-targets>`
 | Go to `Misc`_
 | Go to `#Misc`_
 
@@ -316,7 +322,7 @@ raw html style :raw-html:`<span style="text-align: center; color: green;">green<
 | |b| \`anonymous phrase\`\_\ **_**
 | |b| anonymous_singleword\_\ **_**
 
-:raw-html:`<a style="font-style:italic;" href="https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#footnotes">Footnote</a>`
+:emlink:`Footnote <https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#footnotes>`
 
 | \[\#lb\]\_ [#lb]_
 | \[\99\]\_ [99]_

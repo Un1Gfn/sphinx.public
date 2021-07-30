@@ -32,18 +32,25 @@ class HelloWorldDirective(docutils.parsers.rst.Directive):
 
 
 def emlink_parse(s):
-    # https://docs.python.org/3/howto/regex.html
-    # https://docs.python.org/3/library/re.html
-    pattern = '([^<]+) +<([^>]+)>'
-    # p = re.search(pattern,text,0)
-    p = re.compile(pattern)
-    m = p.search(s)
 
-    # print(m.group(0)) # Whole
-    # print(m.group(1)) # Group
-    # print(m.group(2)) # Group
-    g = m.groups()
+    # Avoid regex
+    # https://docs.python.org/3/library/stdtypes.html?#str.rfind
+
+    # s='  < y<x>slsd< >sdlkq3 > <    s         <asd>  f> <sdf><k>'
+    # print(re.compile(pattern=split, flags=re.M).search(s).group())
+
+    # https://docs.python.org/3/library/re.html
+    # https://docs.python.org/3/howto/regex.html
+    # https://docs.python.org/3/howto/regex.html#greedy-versus-non-greedy
+    split = '^(.+)<(.*?)>$'
+    g = re.compile(pattern=split, flags=re.M).search(s).groups()
     assert len(g) == 2
+    # print(g)
+
+    strip = '^\s*(.+?)\s*$'
+    gg = re.compile(pattern=strip, flags=re.M).search(g[0]).groups()
+    assert len(gg) == 1
+    # print(gg)
 
     # https://stackoverflow.com/a/38020041
     u = urllib.parse.urlparse(g[1])
@@ -60,7 +67,7 @@ def emlink_parse(s):
         assert False
 
     return {
-        'title': g[0],
+        'title': gg[0],
         'url': g[1]
     }
     # hint(result)
@@ -105,8 +112,8 @@ def emlink_fn(name, rawtext, text, lineno, inliner, options={}, content=[]):
     result = emlink_parse(text)
 
     assert type(inliner.reporter) == sphinx.util.docutils.LoggingReporter
-    msg = [inliner.reporter.warning(result, line=lineno)]
-    # msg = []
+    msg = []
+    # msg = [inliner.reporter.warning(result, line=lineno)]
 
     # root = docutils.nodes.literal('<strong>strong2</strong>')
     # root = docutils.nodes.paragraph(rawsource='<strong>strong1</strong>')
