@@ -35,11 +35,14 @@ copyright += author
 # https://www.sphinx-doc.org/en/master/usage/extensions/index.html
 extensions = [
     # 'sphinx.ext.duration',
+    'sphinxemoji.sphinxemoji',
     'sphinx.ext.extlinks',
     'sphinx.ext.githubpages', # https://www.sphinx-doc.org/en/master/usage/extensions/githubpages.html
     'emlink',
     'archlinux',
 ]
+
+# sphinxemoji_style = 'twemoji' # Too large
 
 # https://www.sphinx-doc.org/en/master/usage/extensions/extlinks.html#confval-extlinks
 extlinks = {
@@ -116,8 +119,13 @@ language = None
 html_theme = 'sphinx_rtd_theme'
 
 # https://stackoverflow.com/a/27767165
+# https://sphinx-rtd-theme.readthedocs.io/en/latest/configuring.html
 html_theme_options = {
-    'navigation_depth': 99
+    'navigation_depth': -1,
+    # 'titles_only': True,
+    'display_version': True,
+    'prev_next_buttons_location': 'both',
+    'style_external_links': True,
 }
 
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-html_baseurl

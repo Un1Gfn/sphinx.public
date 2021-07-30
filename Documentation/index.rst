@@ -5,6 +5,14 @@
 |ico| Index of `beaglebone <http://www.github.com/Un1Gfn/beaglebone>`_
 ======================================================================
 
+.. https://sphinxemojicodes.readthedocs.io/en/stable/#supported-codes
+
+.. hint::
+  Hooray! There is no `Google Analytic`__ on any page. |:rofl:|
+
+.. __: https://sphinx-rtd-theme.readthedocs.io/en/latest/configuring.html#confval-analytics_id
+
+
 .. Directive is "toctree"
    Argument are empty
    Options are "maxdepth" and "caption" (field list)
@@ -17,6 +25,7 @@
 
    Hardware
    U-Boot
+   Alarm
    Software
    Future
    reStructuredText

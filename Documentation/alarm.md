@@ -1,15 +1,3 @@
-<!-- alarm.md -->
-
----
-
-&bullet; [u-boot.md](https://github.com/Un1Gfn/beaglebone/blob/master/u-boot.md)\
-**&#9656; alarm.md**\
-&bullet; [readme.md](https://github.com/Un1Gfn/beaglebone)
-
----
-
-<!-- NAV_END -->
-
 ## &AElig; - Misc 1
 
 alarm &equiv; **A**rch **L**inux **ARM**
@@ -255,6 +243,8 @@ Misc
     ...
 
 ## B - TFTP
+
+Alternative - boot combined image made with `mkimage` from community/uboot-tools
 
 [Example 1 -- old-style (non-FDT) kernel booting](https://source.denx.de/u-boot/u-boot/-/blob/master/doc/uImage.FIT/howto.txt#L153)
 

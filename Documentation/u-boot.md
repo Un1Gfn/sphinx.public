@@ -1,7 +1,5 @@
 ## &AElig; - Misc
 
-`mkimage` from community/uboot-tools
-
 [U-Boot stages](https://elinux.org/Panda_How_to_MLO_%26_u-boot#Introduction)
 
 [Gmail search operators](https://support.google.com/mail/answer/7190) - 
