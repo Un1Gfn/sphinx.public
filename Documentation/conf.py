@@ -38,6 +38,7 @@ extensions = [
     'sphinx.ext.extlinks',
     'sphinx.ext.githubpages', # https://www.sphinx-doc.org/en/master/usage/extensions/githubpages.html
     'emlink',
+    'archlinux',
 ]
 
 # https://www.sphinx-doc.org/en/master/usage/extensions/extlinks.html#confval-extlinks
@@ -49,7 +50,12 @@ extlinks = {
     'rtdissue': (
         'https://github.com/readthedocs/sphinx_rtd_theme/issues/%s',
         '#%s'
-    )
+    ),
+    # Explicitly Banned in extension/archlinux.py
+    # 'aur': (
+    #     'https://aur.archlinux.org/packages/%s',
+    #     'aur/%s'
+    # ),
 }
 
 source_suffix = {'.rst': 'restructuredtext'}
@@ -91,6 +97,8 @@ manpages_url = 'https://man.archlinux.org/man/{page}.{section}'
 
 smartquotes = True
 
+# https://stackoverflow.com/q/44376893/selectively-disable-readthedocs-syntax-highlighting
+# highlight_language = 'none'
 highlight_language = 'bash'
 
 

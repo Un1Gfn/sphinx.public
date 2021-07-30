@@ -95,7 +95,9 @@ Readings
 .. __: https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html#role-download
 .. __: https://stackoverflow.com/questions/9645321/insert-a-link-into-bold-text-in-restructuredtext
 
-::
+.. https://stackoverflow.com/q/44376893/selectively-disable-readthedocs-syntax-highlighting
+
+.. code:: text
 
   :raw-html:`<a style="font-style:italic;" href="([^"]+)">([^<]+)</a>`
   :emlink:`\2 <\1>`
@@ -172,7 +174,7 @@ Building
 .. code:: bash
 
   cd ~/beaglebone/Documentation
-  make clean; make entr
+  make clean; make --no-print-directory entr
 
 Syntax
 ======

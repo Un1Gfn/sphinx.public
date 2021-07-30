@@ -29,7 +29,7 @@ clean:
 # Catch-all target: route all unknown targets to Sphinx using the new
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
 html:
-%: Makefile
+%:
 # 	$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O) # $(BUILDDIR)/html
 	$(SPHINXBUILD) -b $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O) # $(BUILDDIR)
 	@echo
@@ -42,6 +42,7 @@ html:
 	
 
 entr:
+	@echo
 	ls -d1 -- conf.py *rst *txt extension/* | entr $(MAKE) html
 
 

@@ -16,6 +16,7 @@
    :caption: Contents:
 
    Hardware
+   U-Boot
    Software
    Future
    reStructuredText

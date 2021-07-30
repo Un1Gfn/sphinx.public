@@ -1,28 +1,13 @@
 # meld ~/beaglebone/Documentation/extension/helloworld.py <(yapf ~/beaglebone/Documentation/extension/helloworld.py)
 
+# import os # os.path.exists()
 import docutils
-import sphinx
-
-import termcolor
-import sys
-
+import inspect
 import re
+import sphinx
+import urllib.parse  # urllib.parse.urlparse()
 
-import urllib.parse # urllib.parse.urlparse()
-import os           # os.path.exists()
-
-
-def color(s):
-    return termcolor.colored(s, color='cyan')
-
-
-def hint(*argv):
-    # print(type(argv))
-    if 1 == len(argv):
-        print(color(argv[0]), file=sys.stderr)
-    else:
-        assert 0 == len(argv)
-        print()
+import util
 
 
 # class HelloWorldDirective(docutils.parsers.rst.Directive):
@@ -66,11 +51,9 @@ def emlink_parse(s):
     else:
         assert False
 
-    return {
-        'title': gg[0],
-        'url': g[1]
-    }
-    # hint(result)
+    return {'title': gg[0], 'url': g[1]}
+
+    # util.hint(result)
     # title=''
     # url=''
     # i=0
@@ -101,19 +84,19 @@ def emlink_parse(s):
 # https://sourceforge.net/p/docutils/code/HEAD/tree/trunk/docutils/docutils/parsers/rst/roles.py
 def emlink_fn(name, rawtext, text, lineno, inliner, options={}, content=[]):
 
-    assert      name     =='emlink'
-    assert      rawtext  == ':%s:`%s`'%(name,text)
+    assert      name     == 'emlink'
+    assert      rawtext  == ':%s:`%s`' % (name, text)
     assert  len(text)    >= len('_ <_://_>')
     assert type(inliner) == docutils.parsers.rst.states.Inliner
     assert      options  == {}
     assert      content  == []
-    # hint({'lineno': lineno, 'name': name, 'text': text})
+    # util.hint({'lineno': lineno, 'name': name, 'text': text})
 
     result = emlink_parse(text)
 
-    assert type(inliner.reporter) == sphinx.util.docutils.LoggingReporter
-    msg = []
+    # assert type(inliner.reporter) == sphinx.util.docutils.LoggingReporter
     # msg = [inliner.reporter.warning(result, line=lineno)]
+    msg = []
 
     # root = docutils.nodes.literal('<strong>strong2</strong>')
     # root = docutils.nodes.paragraph(rawsource='<strong>strong1</strong>')
@@ -132,28 +115,25 @@ def emlink_fn(name, rawtext, text, lineno, inliner, options={}, content=[]):
     # https://github.com/sphinx-doc/sphinx/blob/ee612ffdeb922ded72e6e3a11bcdc25223abdd53/sphinx/ext/extlinks.py#L75
     # root += docutils.nodes.reference(rawsource='rawsource', text='text', internal=False, refuri='https://example.org')
     root = docutils.nodes.emphasis(rawsource='', text='')
-    root += docutils.nodes.reference(rawsource=result['title'], text=result['title'], internal=False, refuri=result['url'])
+    root += docutils.nodes.reference(rawsource=result['title'],
+                                     text=result['title'],
+                                     internal=False,
+                                     refuri=result['url'])
 
     return ([root], msg)
 
 
 def setup(app):
 
-    # hint()
-    # hint(type())
-    hint('setup()')
-    assert sphinx.application.Sphinx == type(app)
-    # hint()
+    assert __name__ == 'emlink'
+    util.hint(__name__ + '.' + inspect.currentframe().f_code.co_name + '()') # print(inspect.stack()[0][3])
+    assert __name__ in app.config.extensions
 
-    # print(sys.path)
-    app.require_sphinx(version='4.1') # https://www.sphinx-doc.org/en/master/_modules/sphinx/application.html
-    assert sphinx.version_info == (4, 1, 2, 'final', 0)
-    assert 'emlink' in app.config.extensions
-    # hint()
+    util.verifyapp(app)
 
     # https://www.sphinx-doc.org/en/master/extdev/appapi.html#sphinx-core-events
     # app.disconnect(listener_id=app.connect(event='source-read',
-    #                                        callback=lambda app, docname, source: hint('source-read\n'),
+    #                                        callback=lambda app, docname, source: util.hint('source-read\n'),
     #                                        priority=500))
 
     # app.add_config_value()
@@ -163,9 +143,7 @@ def setup(app):
     #                   cls=HelloWorldDirective,
     #                   override=False)
 
-    app.add_role(name='emlink',
-                 role=emlink_fn,
-                 override=False)
+    app.add_role(name='emlink', role=emlink_fn, override=False)
 
     # https://www.sphinx-doc.org/en/master/extdev/index.html#extension-metadata
     return {
