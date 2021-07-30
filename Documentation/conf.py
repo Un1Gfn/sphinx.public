@@ -71,7 +71,8 @@ templates_path = ['_templates']
 
 default_role = None
 
-keep_warnings = True
+# "System Message: WARNING/2 (..., line ...)" in html
+keep_warnings = False
 
 # https://stackoverflow.com/a/20730381/
 # suppress_warnings = []

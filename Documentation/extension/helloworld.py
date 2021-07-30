@@ -86,34 +86,30 @@ def emlink_fn(name, rawtext, text, lineno, inliner, options={}, content=[]):
 
     result = emlink_parse(text)
 
-    # import sphinx.util.docutils
-    # help(sphinx.util.docutils.LoggingReporter)
     assert type(inliner.reporter) == sphinx.util.docutils.LoggingReporter
-    # import docutils.nodes
-    # help(docutils.nodes.paragraph)
-    nodes = []
+    msg = [inliner.reporter.warning(result, line=lineno)]
+    # msg = []
 
-    # nodes = [docutils.nodes.paragraph(text=str(result))]
-    # nodes = [docutils.nodes.paragraph(rawsource='<strong>strong1</strong>')]
-    # nodes = [docutils.nodes.paragraph(text='<strong>strong2</strong>')]
-    # nodes = [docutils.nodes.literal('<strong>strong2</strong>')]
-
-    # nodes = [docutils.nodes.strong(text='asdf')]
+    # root = docutils.nodes.literal('<strong>strong2</strong>')
+    # root = docutils.nodes.paragraph(rawsource='<strong>strong1</strong>')
+    # root = docutils.nodes.paragraph(text='<strong>strong2</strong>')
+    # root = docutils.nodes.paragraph(text=str(result))
+    # root = docutils.nodes.strong(text='asdf')
 
     # https://sourceforge.net/p/docutils/code/HEAD/tree/trunk/docutils/docutils/parsers/rst/roles.py
     # register_generic_role('strong', nodes.strong)
-    root = docutils.nodes.strong()
-    root += docutils.nodes.emphasis(text='asdf')
-    root += docutils.nodes.superscript(text='2')
-    nodes = [root]
+    # root = docutils.nodes.strong()
+    # root += docutils.nodes.emphasis(text='asdf')
+    # root += docutils.nodes.superscript(text='2')
 
-    # root = docutils.nodes.raw(rawsource='<em>eeemmm</em>')
-    # nodes = [root]
+    # import docutils.nodes
+    # help(docutils.nodes.reference)
+    # https://github.com/sphinx-doc/sphinx/blob/ee612ffdeb922ded72e6e3a11bcdc25223abdd53/sphinx/ext/extlinks.py#L75
+    # root += docutils.nodes.reference(rawsource='rawsource', text='text', internal=False, refuri='https://example.org')
+    root = docutils.nodes.emphasis()
+    root += docutils.nodes.reference(rawsource=result['title'], text=result['title'], internal=False, refuri=result['url'])
 
-    msg = []
-    # msg = [inliner.reporter.warning(result, line=lineno)]
-    return (nodes, msg)
-    # return [], []
+    return ([root], msg)
 
 
 def setup(app):
