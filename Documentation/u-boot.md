@@ -1,15 +1,3 @@
-<!-- u-boot.md -->
-
----
-
-**&#9656; u-boot.md**\
-&bullet; [alarm.md](https://github.com/Un1Gfn/beaglebone/blob/master/alarm.md)\
-&bullet; [readme.md](https://github.com/Un1Gfn/beaglebone)
-
----
-
-<!-- NAV_END -->
-
 ## &AElig; - Misc
 
 `mkimage` from community/uboot-tools
@@ -354,57 +342,7 @@ Check U-Boot version
 
 ### D2/2 - with stty+sx+cu
 
-<details><summary></summary>
-
-Escalate
-
-    $ su -
-    # 
-
-stty
-
-    echo '
-    115200
-    -clocal
-    ignbrk ignpar
-    -icrnl -ixon -opost -isig -icanon -iexten -echo
-    ' | xargs stty -F /dev/ttyUSB0
-
-Verify
-
-    cat /dev/ttyUSB0
-    [WAIT FOR 25 SECONDS]
-    SSS...
-
-[XMODEM](http://e2e.ti.com/support/processors/f/791/t/803163?Linux-AM3358-Serial-transfer-of-files)
-
-    sx --xmodem -k -vv </dev/ttyUSB0 >/dev/ttyUSB0 /home/darren/beaglebone/u-boot-v202?.??/O/spl/u-boot-spl.bin
-    sx --xmodem -k -vv </dev/ttyUSB0 >/dev/ttyUSB0 /home/darren/beaglebone/u-boot-v202?.??/O/u-boot.img
-
-cu ([redhat](https://access.redhat.com/solutions/209663)) ([resize](https://wiki.archlinux.org/index.php/Working_with_the_serial_console#Troubleshooting))
-
-    cu -l /dev/ttyUSB0 -s 115200
-    [RUN STTY AGAIN]
-
-    => 
-
-U-Boot
-
-    => help
-    => version
-    => bdinfo
-    => mmcinfo
-    => usb info
-    => reset
-
-Exit cu
-
-```
-=> ~.
-
-```
-
-</details>
+(REMOVED)
 
 ## E F G H I J K L M N O P Q R S T U V W X
 
@@ -498,45 +436,12 @@ PC<->BBGW direct with twisted pair RJ45?
 Example serial port setup that works
 
 stty -aF /dev/ttyUSB0
-```
-speed 115200 baud; rows 0; columns 0; line = 0;
-intr = ^C; quit = ^\; erase = ^?; kill = ^U; eof = ^D; eol = <undef>; eol2 = <undef>; swtch = <undef>; start = ^Q; stop = ^S;
-susp = ^Z; rprnt = ^R; werase = ^W; lnext = ^V; discard = ^O; min = 1; time = 0;
--parenb -parodd -cmspar cs8 hupcl -cstopb cread -clocal -crtscts
-ignbrk -brkint ignpar -parmrk -inpck -istrip -inlcr -igncr -icrnl -ixon -ixoff -iuclc -ixany -imaxbel -iutf8
--opost -olcuc -ocrnl onlcr -onocr -onlret -ofill -ofdel nl0 cr0 tab0 bs0 vt0 ff0
--isig -icanon -iexten -echo echoe echok -echonl -noflsh -xcase -tostop -echoprt echoctl echoke -flusho -extproc
-```
+
+(REMOVED)
 
 Run u-boot on BeagleBone [(kermit)](http://www.kermitproject.org/) [<sup>O</sup>](https://www.denx.de/wiki/view/DULG/SystemSetup#Section_4.3.)
 
-* Launch ckermit
-
-```
-$ su -
-# ckermit
-C-Kermit>set port /dev/ttyUSB0
-C-Kermit>set speed 115200
-C-Kermit>set handshake none
-C-Kermit>set flow-control none
-C-Kermit>set serial 8n1
-C-Kermit>connect
-[Wait for CCC]
-<Ctrl-\> <C>
-```
-
-* Send `u-boot-spl.bin` and `u-boot.img`
-
-```
-C-Kermit>set protocol xmodem
-C-Kermit>set send timeout 90 fixed
-C-Kermit>set retry 0
-C-Kermit>send /home/darren/beaglebone/u-boot-v202?.??/O/spl/u-boot-spl.bin
-C-Kermit>send /home/darren/beaglebone/u-boot-v202?.??/O/u-boot.img
-C-Kermit>connect
-
-=> 
-```
+(REMOVED)
 
 Misc
 
@@ -599,30 +504,15 @@ Page 64(74)
 8 data bits, No parity, 1 stop bit (8N1)
 "SET SERIAL 8N1" == "SET PARITY NONE, SET STOP-BITS 1, SET TERM BYTE 8"
 
+C-Kermit>
 
-set line /dev/ttyUSB0
-set carrier-watch off
-
-
-robust
-set file type bin
-set file name lit
-set rec pack 1000
-set send pack 1000
-set window 5
-
-
-RNDIS
-
-IP & mask
+(REMOVED)
 
 sudo cat /proc/tty/driver/serial
 
-cu \
-  --line /dev/ttyUSB0 \
-  --parity=none \
-  --speed=115200 \
-  --debug all \
+cu
+
+(REMOVED)
 ```
 
 </details>
