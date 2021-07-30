@@ -8,6 +8,9 @@ import sys
 
 import re
 
+import urllib.parse # urllib.parse.urlparse()
+import os           # os.path.exists()
+
 
 def color(s):
     return termcolor.colored(s, color='cyan')
@@ -36,11 +39,26 @@ def emlink_parse(s):
     p = re.compile(pattern)
     m = p.search(s)
 
-    # print(m.group(0))
-    # print(m.group(1))
-    # print(m.group(2))
+    # print(m.group(0)) # Whole
+    # print(m.group(1)) # Group
+    # print(m.group(2)) # Group
     g = m.groups()
     assert len(g) == 2
+
+    # https://stackoverflow.com/a/38020041
+    u = urllib.parse.urlparse(g[1])
+    if u.scheme in ['http', 'https']:
+        assert u.netloc
+    elif u.scheme in ['ftp']:
+        assert u.netloc
+        assert u.path
+    elif u.scheme in ['file', '']:
+        assert not u.netloc
+        assert u.path
+        # assert os.path.exists(u.path)
+    else:
+        assert False
+
     return {
         'title': g[0],
         'url': g[1]

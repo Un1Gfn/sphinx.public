@@ -66,7 +66,8 @@ Readings
 
 .. __: https://www.sphinx-doc.org/en/master/usage/extensions/index.html
 
-| `The Python Language Reference <https://docs.python.org/3/reference/>`__
+`The Python Language Reference <https://docs.python.org/3/reference/>`__ -
+`BNF <https://en.wikipedia.org/wiki/Backus%E2%80%93Naur_form>`__
 
 | `sphinx.ext.todo <https://www.sphinx-doc.org/en/master/usage/extensions/todo.html>`__
 | `sphinxcontrib-emojicodes <https://github.com/sphinx-contrib/emojicodes>`__
