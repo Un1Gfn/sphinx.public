@@ -43,5 +43,3 @@ Indices and tables
 * :ref:`search`
 
 ----
-
-.. include:: substitution.txt

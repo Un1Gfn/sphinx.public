@@ -36,8 +36,13 @@ Misc
   :height: 80
   :width: 100%
 
+|
+
 Get U-Boot
 ==========
+
+|alpha| Get from ALARM [*]_
+---------------------------
 
 Make U-Boot eMMC image
 ======================
@@ -54,5 +59,7 @@ Write U-Boot to eMMC
 Power Off
 =========
 
-.. include:: substitution.txt
-.. include:: link.txt
+Footnotes
+=========
+
+.. [*] Recommended

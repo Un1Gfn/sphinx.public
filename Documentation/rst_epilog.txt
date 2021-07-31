@@ -1,8 +1,11 @@
+.. rst_epilog.txt is included at the end of every source file
+
 .. Use "txt" extension in case being captured by conf.py 'source_suffix' and leading to the following warning
    WARNING: Footnote [#] is not referenced"
 
 .. Named hyperlink references
 
+.. _ALARM:               https://archlinuxarm.org/
 .. _Android USB SSH:     https://stackoverflow.com/questions/44926644/control-beaglebone-black-linux-with-android-smartphone-through-usb-cable
 .. _BBBlfs:              https://github.com/ungureanuvladvictor/BBBlfs>
 .. _beagleboard:         https://elinux.org/BeagleBoard_Community

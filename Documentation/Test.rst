@@ -23,5 +23,3 @@ test contents
 | :aw:`t..x <Tmux>`
 
 ----
-
-.. include:: substitution.txt

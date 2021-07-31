@@ -140,6 +140,3 @@ UART
 .. [#el_ts_s] https://elinux.org/Beagleboard:Terminal_Shells#Serial_Connect
 .. [#c_f_s] https://www.cyberciti.biz/faq/find-out-linux-serial-ports-with-setserial
 .. [#c_h_s] https://www.cyberciti.biz/hardware/5-linux-unix-commands-for-connecting-to-the-serial-console
-
-.. include:: link.txt
-.. include:: substitution.txt

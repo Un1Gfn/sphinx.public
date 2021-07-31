@@ -1,8 +1,6 @@
-===============
-|ico| `ALARM`__
-===============
-
-.. __: https://archlinuxarm.org/
+==============
+|ico| `ALARM`_
+==============
 
 Misc
 ====
@@ -37,5 +35,3 @@ S1\ [1]_ -> S2\ [2]_
 .. [0] **S0:** U-Boot with built-in NIC driver
 .. [1] **S1:** Linux and initramfs as rootfs (busybox?), lacking kernel module for NIC
 .. [2] **S2:** Linux and NFS as rootfs, fully functional
-
-.. include:: substitution.txt

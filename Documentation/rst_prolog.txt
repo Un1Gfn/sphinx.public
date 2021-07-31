@@ -1,3 +1,5 @@
+.. rst_prolog.txt is included at the beginning of every source file
+
 .. Substitution Definitions
    This file should be included w/ "include" directive in each page that needs it 
    https://docutils.sourceforge.io/docs/ref/rst/directives.html#unicode-character-codes
@@ -14,6 +16,11 @@
 .. |biohazard|     unicode:: U+2623
 
 .. https://en.wikipedia.org/wiki/List_of_Unicode_characters#Latin-1_Supplement
+.. |alpha| unicode:: U+3B1 ..
+.. |beta| unicode:: U+3B2 ..
+.. |gamma| unicode:: U+3B3 ..
+.. |delta| unicode:: U+3B4 ..
+.. |epsilon| unicode:: U+3B5 ..
 .. |AE| unicode:: U+C6 .. &AElig;
 .. |ae| unicode:: U+E6 .. &aelig;
 .. |ZC| unicode:: U+17D .. &Zcaron;

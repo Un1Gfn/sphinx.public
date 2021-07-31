@@ -93,6 +93,25 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 
+# https://www.tutorialkart.com/python/python-read-file-as-string/
+import os
+assert os.path.isfile('rst_epilog.txt')
+f = open('rst_epilog.txt', "r")
+# included at the end of every source file
+rst_epilog = f.read()
+assert rst_epilog
+f.close(); del f
+del os
+
+import os
+assert os.path.isfile('rst_prolog.txt')
+f = open('rst_prolog.txt', "r")
+# included at the beginning of every source file
+rst_prolog = f.read()
+assert rst_prolog
+f.close(); del f
+del os
+
 default_role = None
 
 # "System Message: WARNING/2 (..., line ...)" in html

@@ -2,9 +2,6 @@
 |ico| reStructuredText
 ======================
 
-.. Include in the beginning, otherwise get [WARNING: Unknown interpreted text role "raw-html"]
-.. include:: substitution.txt
-
 .. image:: https://img.shields.io/badge/%F0%9F%9B%A1%EF%B8%8F-shield-success
   :target: https://shields.io/
   :alt: [shield]
@@ -407,5 +404,3 @@ The numbering is determined by the order of the footnotes (here), not by the ord
 .. [*] This is yet another auto-symbol footnote.
 
 ----
-
-.. include:: link.txt
