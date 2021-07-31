@@ -7,6 +7,11 @@ Misc
 
 `proper title case <https://capitalizemytitle.com/>`__
 
+.. Pentester Academy Embedded Linux Booting Process
+.. youtube:: DV5S_ZSdK0s
+  :height: 80
+  :width: 100%
+
 Get U-Boot
 ==========
 

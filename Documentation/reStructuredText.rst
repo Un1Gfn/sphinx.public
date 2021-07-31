@@ -107,6 +107,8 @@ Misc
 
 Ongoing Transition from GitHub Flavored Markdown to reStructuredText ...
 
+`Open links in new window <https://stackoverflow.com/a/57733265>`__
+
 :download:`Sphinx Favicon (SVG)<https://raw.githubusercontent.com/sphinx-doc/sphinx/master/doc/_static/favicon.svg>`.
 
 `live reST online <http://rst.ninjs.org>`__

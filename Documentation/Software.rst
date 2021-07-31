@@ -11,10 +11,8 @@
 | |b| `NexGenT <https://www.youtube.com/watch?v=ddM9AcreVqY&list=PLl9NdZbdtA0wK8OIgttkScKRxcMkvoev_>`__
 | |b| `Eli the Computer Guy <https://www.youtube.com/watch?v=EkNq4TrHP_U>`__
 
-Distro
-======
-
-`Arch Linux ARM <https://archlinuxarm.org/platforms/armv7/ti/beaglebone-green-wireless>`__
+Other Distros
+=============
 
 | `Void Linux <https://voidlinux.org/>`__
 | |b| `packages <https://voidlinux.org/packages/>`__
@@ -55,8 +53,6 @@ Toolchain
 
 `U-Boot <https://www.denx.de/wiki/U-Boot>`__
 ============================================
-
-Pentester Academy - `Embedded Linux Booting Process <https://www.youtube.com/watch?v=DV5S_ZSdK0s>`__
 
 `FIT image <https://elinux.org/images/f/f4/Elc2013_Fernandes.pdf>`__
 

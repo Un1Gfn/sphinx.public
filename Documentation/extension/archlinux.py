@@ -30,7 +30,7 @@ def pkg_fn(name, rawtext, text, lineno, inliner, options={}, content=[]):
 
     l = text.split('/')
     assert len(l) == 2
-    util.hint(l)
+    # util.hint(l)
     repo = l[0]
     pkg = l[1]
     del l
@@ -93,6 +93,8 @@ def setup(app):
 
     util.verifyapp(app)
     app.add_role(name='pkg', role=pkg_fn,          override=False)
+
+    # Use :pkg:`AUR/package` instead of :aur:`package`
     app.add_role(name='aur', role=aur_nonexist_fn, override=False)
 
     # https://www.sphinx-doc.org/en/master/extdev/index.html#extension-metadata

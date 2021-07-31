@@ -41,6 +41,7 @@ extensions = [
     'sphinx.ext.githubpages',  # https://www.sphinx-doc.org/en/master/usage/extensions/githubpages.html
     'xxlink',  # emlink stlink
     'archlinux',
+    'sphinxcontrib.youtube'  # /usr/lib/python3*/site-packages/sphinxcontrib/youtube/
 ]
 
 # sphinxemoji_style = 'twemoji' # Too large
@@ -55,6 +56,18 @@ extlinks = {
         'https://github.com/readthedocs/sphinx_rtd_theme/issues/%s',
         '#%s'
     ),
+    # archlinux.py
+    # https://en.wikipedia.org/wiki/Help:Interwiki_linking
+    # 'wp': (
+    #     'https://en.wikipedia.org/wiki/%s',
+    #     'wp:%s'
+    # ),
+    # archlinux.py
+    # https://wiki.archlinux.org/title/Help:Editing#Interwiki_links
+    # 'aw': (
+    #     'https://wiki.archlinux.org/title/%s',
+    #     'aw:%s'
+    # ),
     # Explicitly Banned in extension/archlinux.py
     # 'aur': (
     #     'https://aur.archlinux.org/packages/%s',

@@ -24,9 +24,9 @@
    :caption: Contents:
 
    Hardware
-   U-Boot
-   Alarm
    Software
+   U-Boot
+   ALARM
    Future
    reStructuredText
    Test

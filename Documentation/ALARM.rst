@@ -1,9 +1,12 @@
 ============
-|ico| Alarm
+|ico| ALARM
 ============
+
 
 Misc
 ====
+
+ALARM/`BBGW <https://archlinuxarm.org/platforms/armv7/ti/beaglebone-green-wireless>`__
 
 PC Set up NIC
 =============
