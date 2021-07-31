@@ -5,11 +5,22 @@
 test contents
 =============
 
-`example <https://example.org>`__
-:stlink:`example <https://example.org>`
-:emlink:`example <https://example.org>`
+.. archlinux.py
 
-:emlink:`https://example.org`
+| :pkg:`core/base`
+| :pkg:`AUR/distccd-alarm-armv7h`
+
+.. xxlink.py
+
+| `example <https://example.org>`__
+| :stlink:`example <https://example.org>`
+| :emlink:`example <https://example.org>`
+| :emlink:`https://example.org`
+
+.. wikilink.py
+
+| :wp:`H..B <HolB>`
+| :aw:`t..x <Tmux>`
 
 ----
 

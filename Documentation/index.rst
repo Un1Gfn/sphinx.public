@@ -7,8 +7,10 @@
 
 .. https://sphinxemojicodes.readthedocs.io/en/stable/#supported-codes
 
+.. \|:rofl:|
+
 .. hint::
-  Hooray! There is no `Google Analytic`__ on any page. |:rofl:|
+  Hooray! There is no `Google Analytic`__ on any page. |:fire:|
 
 .. __: https://sphinx-rtd-theme.readthedocs.io/en/latest/configuring.html#confval-analytics_id
 

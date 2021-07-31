@@ -36,12 +36,13 @@ copyright += author
 # https://www.sphinx-doc.org/en/master/usage/extensions/index.html
 extensions = [
     # 'sphinx.ext.duration',
-    'sphinxemoji.sphinxemoji',
     'sphinx.ext.extlinks',
     'sphinx.ext.githubpages',  # https://www.sphinx-doc.org/en/master/usage/extensions/githubpages.html
-    'xxlink',  # emlink stlink
+    'sphinxemoji.sphinxemoji',
+    'sphinxcontrib.youtube',  # /usr/lib/python3*/site-packages/sphinxcontrib/youtube/
     'archlinux',
-    'sphinxcontrib.youtube'  # /usr/lib/python3*/site-packages/sphinxcontrib/youtube/
+    'xxlink',  # emlink stlink
+    'wikilink'  # wp:Wikipedia aw:ArchWiki
 ]
 
 # sphinxemoji_style = 'twemoji' # Too large
@@ -139,7 +140,7 @@ html_theme_options = {
     # 'titles_only': True,
     'display_version': True,
     'prev_next_buttons_location': 'both',
-    'style_external_links': True,
+    # 'style_external_links': True,
 }
 
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-html_baseurl

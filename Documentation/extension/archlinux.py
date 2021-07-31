@@ -1,3 +1,5 @@
+#!/dev/null
+
 import docutils
 import inspect
 import re
@@ -22,7 +24,7 @@ def pkg_fn(name, rawtext, text, lineno, inliner, options={}, content=[]):
     """
 
     assert      name     == 'pkg'
-    assert      rawtext  == ':%s:`%s`' % (name,text)
+    assert      rawtext  == ':%s:`%s`' % (name, text)
     assert  len(text)    >= len('_/_')
     assert type(inliner) == docutils.parsers.rst.states.Inliner
     assert      options  == {}
@@ -74,7 +76,7 @@ def pkg_fn(name, rawtext, text, lineno, inliner, options={}, content=[]):
     ],[]
 
 
-def aur_nonexist_fn(name, rawtext, text, lineno, inliner, options={}, content=[]):
+def aur_nonexist_fn(name: str, rawtext: str, text: str, lineno, inliner, options={}, content=[]):
     assert type(inliner.reporter) == sphinx.util.docutils.LoggingReporter
     # msg = '\n' \
     #       '  There is no :aur:`package`\n' \
@@ -85,17 +87,18 @@ def aur_nonexist_fn(name, rawtext, text, lineno, inliner, options={}, content=[]
     # return [], [inliner.reporter.severe(msg, line=lineno)] # colorless
 
 
-def setup(app):
+def setup(app: sphinx.application.Sphinx):
 
     assert __name__ == 'archlinux'
     util.hint(__name__ + '.' + inspect.currentframe().f_code.co_name + '()')  # print(inspect.stack()[0][3])
     assert __name__ in app.config.extensions
-
     util.verifyapp(app)
-    app.add_role(name='pkg', role=pkg_fn,          override=False)
+
+    # ArchWiki :aw: is provided in wikilink.py, not here
 
     # Use :pkg:`AUR/package` instead of :aur:`package`
     app.add_role(name='aur', role=aur_nonexist_fn, override=False)
+    app.add_role(name='pkg', role=pkg_fn,          override=False)
 
     # https://www.sphinx-doc.org/en/master/extdev/index.html#extension-metadata
     return {
