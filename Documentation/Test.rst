@@ -9,6 +9,8 @@ test contents
 :stlink:`example <https://example.org>`
 :emlink:`example <https://example.org>`
 
+:emlink:`https://example.org`
+
 ----
 
 .. include:: substitution.txt
