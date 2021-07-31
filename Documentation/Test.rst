@@ -5,11 +5,9 @@
 test contents
 =============
 
-.. helloworld_directive\:\:
-
-.. :emlink:`example <https://example.org>`
-
-:emlink:`sdlkfj  ls mdk slsl sldf m <file:///dev/null>`
+`example <https://example.org>`__
+:stlink:`example <https://example.org>`
+:emlink:`example <https://example.org>`
 
 ----
 

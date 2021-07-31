@@ -4,16 +4,17 @@
 # list see the documentation:
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 
+
 # -- Path setup --------------------------------------------------------------
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
-import os,sys
+import os, sys
 # sys.path.append(os.path.abspath('extension'))
 sys.path.insert(0, os.path.abspath('extension'))
-del os,sys
+del os, sys
 
 
 # -- Project information -----------------------------------------------------
@@ -28,17 +29,17 @@ assert copyright
 copyright += ', '
 copyright += author
 
+
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
-
 
 # https://www.sphinx-doc.org/en/master/usage/extensions/index.html
 extensions = [
     # 'sphinx.ext.duration',
     'sphinxemoji.sphinxemoji',
     'sphinx.ext.extlinks',
-    'sphinx.ext.githubpages', # https://www.sphinx-doc.org/en/master/usage/extensions/githubpages.html
-    'emlink',
+    'sphinx.ext.githubpages',  # https://www.sphinx-doc.org/en/master/usage/extensions/githubpages.html
+    'xxlink',  # emlink stlink
     'archlinux',
 ]
 
