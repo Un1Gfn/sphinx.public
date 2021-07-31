@@ -17,10 +17,13 @@ def setup(app: sphinx.application.Sphinx):
     assert __name__ in app.config.extensions
     util.verifyapp(app)
 
-    app.add_role(name='wp', role=util.link_fn, override=False)  # Wikipedia
-    app.add_role(name='aw', role=util.link_fn, override=False)  # ArchWiki
-    app.add_role(name='el', role=util.link_fn, override=False)  # eLinux.org
-    app.add_role(name='dw', role=util.link_fn, override=False)  # Debian Wiki
+    for n in [
+        'wp', # Wikipedia
+        'aw', # ArchWiki
+        'el', # eLinux.org
+        'dw', # Debian Wiki
+        'gw', # Gentoo Wiki
+    ]: app.add_role(name=n, role=util.link_fn, override=False)
 
     return {
         'version': '0.1',

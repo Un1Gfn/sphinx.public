@@ -1,7 +1,8 @@
-============
-|ico| ALARM
-============
+===============
+|ico| `ALARM`__
+===============
 
+.. __: https://archlinuxarm.org/
 
 Misc
 ====
@@ -16,9 +17,6 @@ S0\ [0]_ Set up NIC
 
 NIC.TFTP Send zImage+initramfs
 ==============================
-
-alternatively make combined image
-w/``mkimage`` from :pkg:`community/uboot-tools`
 
 S0\ [0]_ -> S1\ [1]_
 ====================

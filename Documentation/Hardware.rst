@@ -122,7 +122,7 @@ UART
 
 `TI <https://web.archive.org/web/20210114145232/https://processors.wiki.ti.com/index.php/AM335x_U-Boot_User's_Guide#Boot_Over_UART>`__
 
-..  Fastbit Embedded Brain Academy - Beaglebone Black Serial booting procedure ( UART BOOT )
+..  Fastbit Embedded Brain Academy .. Beaglebone Black Serial booting procedure ( UART BOOT )
 .. youtube:: 3y1LMNPoaJI
   :height: 80
   :width: 100%
@@ -142,5 +142,4 @@ UART
 .. [#c_h_s] https://www.cyberciti.biz/hardware/5-linux-unix-commands-for-connecting-to-the-serial-console
 
 .. include:: link.txt
-
 .. include:: substitution.txt

@@ -197,13 +197,13 @@ Other Syntax
 
 .. _link1: https://www.example.org
 
-`Enumerated List`_ |l| Click to go to the `internal hyperlink target with empty link block`__ |hit|\ iht
+`Enumerated List`_ |:point_left:| Click to go to the `internal hyperlink target with empty link block`__ |:dart:|\ iht
 
 .. __: https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#internal-hyperlink-targets
 
 .. _Enumerated List:
 
-:emlink:`Enumerated List <https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#enumerated-lists>` |hit|\ iht
+:emlink:`Enumerated List <https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#enumerated-lists>` |:dart:|\ iht
 
 1. li
 2. li
@@ -265,7 +265,7 @@ Other Syntax
 This is a doctest block.
 
 
-|d| :emlink:`Transition <https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#transitions>`
+|:point_down:| :emlink:`Transition <https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#transitions>`
 (`<hr> <https://www.w3schools.com/TAGS/tag_hr.asp>`__)
 
 ----
@@ -313,10 +313,13 @@ raw html style :raw-html:`<span style="text-align: center; color: green;">green<
 | |b| \`interpreted text\`
 | |b| \`\`inline literals\`\`
 | |b| :emlink:`|substitution reference| <https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#substitution-references>`
-| |b| `Hyperlink Reference`_ |l| Click to go to the :emlink:`Inline Internal Target <https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#inline-internal-targets>` |hit|\ iit
+| |b| `Hyperlink Reference`_
+      |:point_left:| Click to go to the
+      :emlink:`Inline Internal Target <https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#inline-internal-targets>`
+      |:dart:|\ iit
 | |b| \_\`inline internal target\`
 
-| _`Hyperlink Reference` |hit|\ iit
+| _`Hyperlink Reference` |:dart:|\ iit
 | |b| \`phrase\`\_
 | |b| singleword\_
 | |b| \`anonymous phrase\`\_\ **_**

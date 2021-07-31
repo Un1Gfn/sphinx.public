@@ -63,6 +63,7 @@ def wikiprepend(n: str, t: str) -> str:
     elif n == 'aw': t = "https://wiki.archlinux.org/title/" + t
     elif n == 'el': t = "https://elinux.org/"               + t
     elif n == 'dw': t = "https://wiki.debian.org/"          + t
+    elif n == 'gw': t = "https://wiki.gentoo.org/wiki/"     + t
     else:           assert n in ['emlink', 'stlink']
     _verifyurl(t)
     return t

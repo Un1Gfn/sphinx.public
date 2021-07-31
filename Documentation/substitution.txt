@@ -2,15 +2,15 @@
    This file should be included w/ "include" directive in each page that needs it 
    https://docutils.sourceforge.io/docs/ref/rst/directives.html#unicode-character-codes
 
+.. /usr/lib/python3.9/site-packages/sphinxemoji/codes.json
+   https://sphinxemojicodes.readthedocs.io/en/stable/#supported-codes
+.. |O|     replace:: |:green_circle:|
+
 .. Unicode characters
    printf '...' | uniname
-.. |O|     unicode:: U+01F7E2 .. https://emojipedia.org/large-green-circle/                      .. 🟢
 .. |b|     unicode:: U+02022  .. https://www.toptal.com/designers/htmlarrows/punctuation/bullet/ .. •
 .. |b2|    unicode:: U+25E6   .. https://www.compart.com/en/unicode/U+25E6                       .. ◦
 .. |asymp| unicode:: U+2248   .. https://unicode-table.com/en/2248/                              .. ≈
-.. |hit|   unicode:: U+1F3AF  .. https://www.htmlsymbols.xyz/unicode/U+1F3AF                     .. 🎯 
-.. |d|     unicode:: U+1F447  .. https://emojipedia.org/backhand-index-pointing-down/            .. 👇
-.. |l|     unicode:: U+1F448  .. https://emojipedia.org/backhand-index-pointing-left/            .. 👈
 .. |biohazard|     unicode:: U+2623
 
 .. https://en.wikipedia.org/wiki/List_of_Unicode_characters#Latin-1_Supplement
@@ -25,8 +25,7 @@
   :target: https://icon-icons.com/icon/chip-computer-hardware-memory-electronic-device/142017
   :alt: [ico]
 
+.. https://docutils.sourceforge.io/docs/ref/rst/roles.html#raw
 .. role:: raw-html(raw)
-
-    :format: html
-
+   :format: html
 .. |br| replace:: :raw-html:`<br />`
