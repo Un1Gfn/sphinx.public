@@ -1,3 +1,5 @@
+.. include:: substitution.txt
+
 ============
 |ico| Future
 ============
@@ -15,3 +17,5 @@ https://elinux.org/BeagleBoardAngstrom
 royalty-free `DisplayPort <https://en.wikipedia.org/wiki/DisplayPort>`__ cap for BBGW
 
 ----
+
+.. include:: link.txt

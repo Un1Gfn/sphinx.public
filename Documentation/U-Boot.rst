@@ -1,3 +1,5 @@
+.. include:: substitution.txt
+
 ================
 |ico| `U-Boot`__
 ================
@@ -33,8 +35,8 @@ Misc
 
 .. Pentester Academy TV .. Embedded Linux Booting Process (Multi-Stage Bootloaders, Kernel, Filesystem)
 .. youtube:: DV5S_ZSdK0s
-  :height: 80
-  :width: 100%
+   :height: 80
+   :width: 100%
 
 |
 
@@ -63,3 +65,5 @@ Footnotes
 =========
 
 .. [*] Recommended
+
+.. include:: link.txt

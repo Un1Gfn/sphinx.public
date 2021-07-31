@@ -1,19 +1,15 @@
-.. rst_prolog.txt is included at the beginning of every source file
-
-.. Substitution Definitions
-   This file should be included w/ "include" directive in each page that needs it 
-   https://docutils.sourceforge.io/docs/ref/rst/directives.html#unicode-character-codes
+.. Include substitution.txt at the beginning of every file
 
 .. /usr/lib/python3.9/site-packages/sphinxemoji/codes.json
    https://sphinxemojicodes.readthedocs.io/en/stable/#supported-codes
 .. |O|     replace:: |:green_circle:|
 
-.. Unicode characters
+.. https://docutils.sourceforge.io/docs/ref/rst/directives.html#unicode-character-codes
    printf '...' | uniname
-.. |b|     unicode:: U+02022  .. https://www.toptal.com/designers/htmlarrows/punctuation/bullet/ .. •
-.. |b2|    unicode:: U+25E6   .. https://www.compart.com/en/unicode/U+25E6                       .. ◦
-.. |asymp| unicode:: U+2248   .. https://unicode-table.com/en/2248/                              .. ≈
-.. |biohazard|     unicode:: U+2623
+.. |b|         unicode:: U+02022  .. https://www.toptal.com/designers/htmlarrows/punctuation/bullet/ .. •
+.. |b2|        unicode:: U+25E6   .. https://www.compart.com/en/unicode/U+25E6                       .. ◦
+.. |asymp|     unicode:: U+2248   .. https://unicode-table.com/en/2248/                              .. ≈
+.. |biohazard| unicode:: U+2623
 
 .. https://en.wikipedia.org/wiki/List_of_Unicode_characters#Latin-1_Supplement
 .. |alpha| unicode:: U+3B1 ..
@@ -29,10 +25,11 @@
 .. Favicon
    https://icon-icons.com/downloadimage.php?id=142017&root=2313/ICO/32/&file=chip_computer_hardware_memory_electronic_device_icon_142017.ico
 .. |ico| image:: favicon.ico
-  :target: https://icon-icons.com/icon/chip-computer-hardware-memory-electronic-device/142017
-  :alt: [ico]
+   :target: https://icon-icons.com/icon/chip-computer-hardware-memory-electronic-device/142017
+   :alt: [ico]
 
 .. https://docutils.sourceforge.io/docs/ref/rst/roles.html#raw
 .. role:: raw-html(raw)
    :format: html
+
 .. |br| replace:: :raw-html:`<br />`

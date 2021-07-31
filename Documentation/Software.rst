@@ -1,3 +1,5 @@
+.. include:: substitution.txt
+
 ==============
 |ico| Software
 ==============
@@ -24,8 +26,8 @@ eLinux/:el:`Toolchains`
 
 .. Eli the Computer Guy .. TCP/IP and Subnet Masking
 .. youtube:: EkNq4TrHP_U
-  :width: 100%
-  :height: 80
+   :width: 100%
+   :height: 80
 
 |
 
@@ -33,8 +35,8 @@ eLinux/:el:`Toolchains`
 
 .. NexGenT .. IPv4 Addressing Lesson 1: Binary and the IP Address MADE EASY
 .. youtube:: ddM9AcreVqY
-  :width: 100%
-  :height: 80
+   :width: 100%
+   :height: 80
 
 |
 
@@ -73,3 +75,5 @@ QEMU
 ----
 
 .. [#w] https://web.archive.org/web/20210114145232/https://processors.wiki.ti.com/index.php/AM335x_U-Boot_User's_Guide#Prerequisite
+
+.. include:: link.txt

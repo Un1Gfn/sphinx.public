@@ -1,16 +1,18 @@
+.. include:: substitution.txt
+
 ======================
 |ico| reStructuredText
 ======================
 
 .. image:: https://img.shields.io/badge/%F0%9F%9B%A1%EF%B8%8F-shield-success
-  :target: https://shields.io/
-  :alt: [shield]
+   :target: https://shields.io/
+   :alt: [shield]
 
 |
 
 .. https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html#directives
 .. warning::
-  A plain text ``README`` in ``$(git rev-parse --show-toplevel)`` points here. There is **NO** ``readme.rst.``
+   A plain text ``README`` in ``$(git rev-parse --show-toplevel)`` points here. There is **NO** ``readme.rst.``
 
 Contacts
 ========
@@ -98,8 +100,8 @@ Readings
 
 .. code:: text
 
-  :raw-html:`<a style="font-style:italic;" href="([^"]+)">([^<]+)</a>`
-  :emlink:`\2 <\1>`
+   :raw-html:`<a style="font-style:italic;" href="([^"]+)">([^<]+)</a>`
+   :emlink:`\2 <\1>`
 
 Misc
 ====
@@ -168,15 +170,15 @@ Building
 
 .. code::
 
-  cd ~/beaglebone/Documentation
-  sphinx-quickstart
+   cd ~/beaglebone/Documentation
+   sphinx-quickstart
 
 `sphinx-build(1) <https://www.sphinx-doc.org/en/master/man/sphinx-build.html>`__
 
 .. code:: bash
 
-  cd ~/beaglebone/Documentation
-  make clean; make --no-print-directory entr
+   cd ~/beaglebone/Documentation
+   make clean; make --no-print-directory entr
 
 Syntax
 ======
@@ -242,19 +244,18 @@ Other Syntax
 
 ::
 
-     block.
-    literal
-   a
-  is
- This
-
-
-  This
+       block.
+      literal
+     a
     is
-      a
-       block
-        quote
-  https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#block-quotes
+   This
+
+   This
+     is
+       a
+        block
+         quote
+   https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#block-quotes
 
 :emlink:`Doctest Block <https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#doctest-blocks>`
 
@@ -290,13 +291,13 @@ raw html style :raw-html:`<span style="text-align: center; color: green;">green<
 (The following is a :emlink:`Definition List <https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#definition-lists>`)
 
 \:doc:\`Hardware`
-  `Direct link to documents <https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html#role-doc>`__
+   `Direct link to documents <https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html#role-doc>`__
 
 \:file:\`default.conf`
-  File
+   File
 
 \:kbd:\`Ctrl+C`
-  Key press
+   Key press
 
 .. https://stackoverflow.com/q/9645321/insert-a-link-into-bold-text-in-restructuredtext/63394243#63394243
 .. _it: https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#inline-markup
@@ -343,31 +344,31 @@ raw html style :raw-html:`<span style="text-align: center; color: green;">green<
 .. | `directives`_ - block elements
 
 .. danger::
-  danger
+   danger
 
 .. error::
-  error
+   error
 
 .. warning::
-  warning
+   warning
 
 .. caution::
-  caution
+   caution
 
 .. attention::
-  attention
+   attention
 
 .. important::
-  important
+   important
 
 .. hint::
-  hint
+   hint
 
 .. tip::
-  tip
+   tip
 
 .. note::
-  note
+   note
 
 .. https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#transitions
 
@@ -404,3 +405,5 @@ The numbering is determined by the order of the footnotes (here), not by the ord
 .. [*] This is yet another auto-symbol footnote.
 
 ----
+
+.. include:: link.txt

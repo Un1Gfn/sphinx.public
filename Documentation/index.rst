@@ -1,6 +1,8 @@
 .. Created by sphinx-quickstart
    The root `toctree` directive is mandatory
 
+.. include:: substitution.txt
+
 =============================
 |ico| Index of `beaglebone`__
 =============================
@@ -12,7 +14,7 @@
 .. \|:rofl:|
 
 .. hint::
-  Hooray! There is no `Google Analytic`__ on any page. |:fire:|
+   Hooray! There is no `Google Analytic`__ on any page. |:fire:|
 
 .. __: https://sphinx-rtd-theme.readthedocs.io/en/latest/configuring.html#confval-analytics_id
 
@@ -42,4 +44,4 @@ Indices and tables
 * :ref:`modindex`
 * :ref:`search`
 
-----
+.. include:: link.txt

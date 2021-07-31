@@ -85,6 +85,11 @@ source_encoding = 'utf-8-sig'
 # https://www.sphinx-doc.org/en/master/glossary.html#term-master-document
 root_doc = 'index'
 
+# exclude_patterns = [
+#     'rst_epilog.rst',
+#     'rst_prolog.rst',
+# ]
+
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
@@ -93,24 +98,24 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 
-# https://www.tutorialkart.com/python/python-read-file-as-string/
-import os
-assert os.path.isfile('rst_epilog.txt')
-f = open('rst_epilog.txt', "r")
-# included at the end of every source file
-rst_epilog = f.read()
-assert rst_epilog
-f.close(); del f
-del os
+# # https://www.tutorialkart.com/python/python-read-file-as-string/
+# import os
+# f = open('rst_epilog.rst', "r")
+# # f = open('rst_epilog.txt', "r")
+# # included at the end of every source file
+# rst_epilog = f.read()
+# assert rst_epilog
+# f.close(); del f
+# del os
 
-import os
-assert os.path.isfile('rst_prolog.txt')
-f = open('rst_prolog.txt', "r")
-# included at the beginning of every source file
-rst_prolog = f.read()
-assert rst_prolog
-f.close(); del f
-del os
+# import os
+# f = open('rst_prolog.rst', "r")
+# # f = open('rst_prolog.txt', "r")
+# # included at the beginning of every source file
+# rst_prolog = f.read()
+# assert rst_prolog
+# f.close(); del f
+# del os
 
 default_role = None
 

@@ -1,3 +1,5 @@
+.. include:: substitution.txt
+
 ==========
 |ico| Test
 ==========
@@ -23,3 +25,5 @@ test contents
 | :aw:`t..x <Tmux>`
 
 ----
+
+.. include:: link.txt
