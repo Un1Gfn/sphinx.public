@@ -67,7 +67,7 @@ Readings
 .. __: https://www.sphinx-doc.org/en/master/usage/extensions/index.html
 
 `The Python Language Reference <https://docs.python.org/3/reference/>`__ -
-`BNF <https://en.wikipedia.org/wiki/Backus%E2%80%93Naur_form>`__
+:wp:`BNF <Backus–Naur_form>`
 
 | `sphinx-toolbox <https://github.com/sphinx-toolbox/sphinx-toolbox>`__
 
@@ -114,7 +114,6 @@ Ongoing Transition from GitHub Flavored Markdown to reStructuredText ...
 :download:`Sphinx Favicon (SVG)<https://raw.githubusercontent.com/sphinx-doc/sphinx/master/doc/_static/favicon.svg>`.
 
 `live reST online <http://rst.ninjs.org>`__
-
 
 .. :tree:`x/y/z`
 .. https://www.sphinx-doc.org/en/master/usage/extensions/extlinks.html#confval-extlinks
@@ -168,7 +167,9 @@ Building
 | |b| `GitHub Pages with Python Sphinx <https://www.docslikecode.com/articles/github-pages-python-sphinx>`__
 | |b| `sphinx.ext.githubpages <https://www.sphinx-doc.org/en/master/usage/extensions/githubpages.html>`__
 
-.. code:: bash
+.. conf.py .. highlight_language = 'bash'
+
+.. code::
 
   cd ~/beaglebone/Documentation
   sphinx-quickstart
@@ -187,8 +188,10 @@ Other Syntax
 ------------
 
 `link1`_ `link2`__
-(combination of `Anonymous Hyperlink <https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#anonymous-hyperlinks>`__
-and `Indirect Hyperlink <https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#indirect-hyperlink-targets>`__ ) [#]_
+(combination of `Anonymous Hyperlink`__ and `Indirect Hyperlink`__ ) [#]_
+
+.. __: https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#anonymous-hyperlinks
+.. __: https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#indirect-hyperlink-targets
 
 .. __: link1_
 
@@ -287,7 +290,7 @@ This is a doctest block.
 
 raw html style :raw-html:`<span style="text-align: center; color: green;">green</span>`
 
-(The following is a `definition list <https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#definition-lists>`__)
+(The following is a :emlink:`Definition List <https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#definition-lists>`)
 
 \:doc:\`Hardware`
   `Direct link to documents <https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html#role-doc>`__
@@ -304,16 +307,14 @@ raw html style :raw-html:`<span style="text-align: center; color: green;">green<
 
 *italic text* |it|_ *italic text*
 
-| `Inline Markup <https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#inline-markup>`__
+| :emlink:`Inline Markup <https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#inline-markup>`
 | |b| \*emphasis\*
 | |b| \*\*strong emphasis\*\*
 | |b| \`interpreted text\`
 | |b| \`\`inline literals\`\`
-| |b| \|substitution reference\|
-| |b| `Hyperlink Reference`_ |l| Click to go to the `inline internal target`__ |hit|\ iit
+| |b| :emlink:`|substitution reference| <https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#substitution-references>`
+| |b| `Hyperlink Reference`_ |l| Click to go to the :emlink:`Inline Internal Target <https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#inline-internal-targets>` |hit|\ iit
 | |b| \_\`inline internal target\`
-
-.. __: https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#inline-internal-targets
 
 | _`Hyperlink Reference` |hit|\ iit
 | |b| \`phrase\`\_

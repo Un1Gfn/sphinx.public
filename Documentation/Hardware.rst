@@ -15,15 +15,10 @@ Board
 .. __: https://github.com/beagleboard/beaglebone-black/wiki/System-Reference-Manual
 
 | eLinux wiki
-| |b| `BB generations brief`__
-| |b| `BB`__
-| |b| `BBB`__
-| |b| `BBBW`__
-
-.. __: https://elinux.org/BeagleBone_Community
-.. __: https://elinux.org/BeagleBoard_Community
-.. __: https://elinux.org/Beagleboard:BeagleBoneBlack
-.. __: https://elinux.org/Beagleboard:BeagleBoneBlackWireless
+| |b| :el:`BB generations brief <BeagleBone_Community>`
+| |b| :el:`BeagleBoard <BeagleBoard_Community>`
+| |b| :el:`BBB <Beagleboard:BeagleBoneBlack>`
+| |b| :el:`BBBW <Beagleboard:BeagleBoneBlackWireless>`
 
 | Seeed wiki
 | |b| `BBGW <http://wiki.seeedstudio.com/BeagleBone_Green_Wireless/#specification>`__
@@ -83,14 +78,13 @@ CPU
 `Cortex-A8 <https://en.wikipedia.org/wiki/ARM_Cortex-A8>`__ =
 `ARMv7-A <https://en.wikipedia.org/wiki/Comparison_of_ARMv7-A_cores>`__ =
 32-bit w/ FPU =
-`gnueabihf <https://wiki.debian.org/Multiarch/Tuples#armhf>`__
+:dw:`gnueabihf <Multiarch/Tuples#armhf>`
 
 `Sitara AM3358 <http://www.ti.com/product/AM3358>`__ ~
 `Arm Cortex-A8 <https://en.wikipedia.org/wiki/ARM_Cortex-A8>`__ ~
-32-bit `armhf <https://wiki.debian.org/ArmHardFloatPort#Supported_devices>`__
-`ArmEabiPort <https://wiki.debian.org/ArmEabiPort>`__
-`arm-linux-gnueabihf- <https://wiki.debian.org/ArmHardFloatPort#Rationale>`__
-[#w]_
+32-bit :dw:`armhf <ArmHardFloatPort#Supported_devices>` ~
+:dw:`ArmEabiPort <ArmEabiPort>` ~
+:dw:`arm-linux-gnueabihf- <ArmHardFloatPort#Rationale>`\ [#w]_
 
 | `Functional Block Diagram <http://www.ti.com/data-sheets/diagram.tsp?genericPartNumber=AM3358&diagramId=SPRS717K>`__
 | Docs `latest rev <http://www.ti.com/product/AM3358/technicaldocuments>`__
@@ -126,10 +120,12 @@ Serial
 UART
 ====
 
-| |b| `YouTube <https://www.youtube.com/watch?v=3y1LMNPoaJI>`__
-| |b| `TI <https://web.archive.org/web/20210114145232/https://processors.wiki.ti.com/index.php/AM335x_U-Boot_User's_Guide#Boot_Over_UART>`__
+`TI <https://web.archive.org/web/20210114145232/https://processors.wiki.ti.com/index.php/AM335x_U-Boot_User's_Guide#Boot_Over_UART>`__
 
-.. https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#transitions
+..  Fastbit Embedded Brain Academy - Beaglebone Black Serial booting procedure ( UART BOOT )
+.. youtube:: 3y1LMNPoaJI
+  :height: 80
+  :width: 100%
 
 ----
 

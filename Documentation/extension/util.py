@@ -58,6 +58,16 @@ def verifyapp(app: sphinx.application.Sphinx):
     app.require_sphinx(version='4.1')
 
 
+def wikiprepend(n: str, t: str) -> str:
+    if   n == 'wp': t = "https://en.wikipedia.org/wiki/"    + t
+    elif n == 'aw': t = "https://wiki.archlinux.org/title/" + t
+    elif n == 'el': t = "https://elinux.org/"               + t
+    elif n == 'dw': t = "https://wiki.debian.org/"          + t
+    else:           assert n in ['emlink', 'stlink']
+    _verifyurl(t)
+    return t
+
+
 # https://www.sphinx-doc.org/en/master/extdev/appapi.html#sphinx.application.Sphinx.add_role
 # https://docutils.sourceforge.io/docs/howto/rst-roles.html#define-the-role-function
 # https://sourceforge.net/p/docutils/code/HEAD/tree/trunk/docutils/docutils/parsers/rst/roles.py
@@ -76,7 +86,7 @@ def link_fn(
     text = text = docutils.nodes.unescape(text)
 
     # assert (xx.__name__, xx,) in inspect.getmembers(docutils.nodes)
-    assert       name         in ['emlink', 'stlink', 'wp', 'aw']
+    # assert       name         in ['emlink', 'stlink', 'wp', ...]
     assert       rawtext      == ':%s:`%s`' % (name, text)
     assert   len(text)        >= len('_ <_://_>')
     assert       options      == {}
@@ -87,11 +97,7 @@ def link_fn(
     if not has_explicit:
         assert title == target == text
 
-    if name == 'wp':
-        target = "https://en.wikipedia.org/wiki/" + target
-    elif name == 'aw':
-        target = "https://wiki.archlinux.org/title/" + target
-    _verifyurl(target)
+    target = wikiprepend(name, target)
 
     ref = docutils.nodes.reference(rawsource=rawtext,
                                    text=title,

@@ -1,9 +1,11 @@
 .. Created by sphinx-quickstart
    The root `toctree` directive is mandatory
 
-======================================================================
-|ico| Index of `beaglebone <http://www.github.com/Un1Gfn/beaglebone>`_
-======================================================================
+=============================
+|ico| Index of `beaglebone`__
+=============================
+
+.. __: http://www.github.com/Un1Gfn/beaglebone
 
 .. https://sphinxemojicodes.readthedocs.io/en/stable/#supported-codes
 

@@ -30,6 +30,5 @@ Write U-Boot to eMMC
 Power Off
 =========
 
-----
-
 .. include:: substitution.txt
+
