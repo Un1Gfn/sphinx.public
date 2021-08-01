@@ -33,3 +33,7 @@
    :format: html
 
 .. |br| replace:: :raw-html:`<br />`
+
+.. https://stackoverflow.com/questions/6518788/rest-strikethrough
+.. role:: pr
+   :class: problematic

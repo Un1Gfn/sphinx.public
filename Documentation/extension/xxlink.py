@@ -13,8 +13,11 @@ def setup(app: sphinx.application.Sphinx):
     assert __name__ in app.config.extensions
     util.verifyapp(app)
 
-    app.add_role(name='emlink', role=util.link_fn, override=False)
-    app.add_role(name='stlink', role=util.link_fn, override=False)
+    for n in [
+        'emlink',
+        'stlink',
+        'prlink',  # => docutils.nodes.problematic -> span class="problematic" -> problematic.css -> strikethrough
+    ]: app.add_role(name=n, role=util.link_fn, override=False)
 
     # https://www.sphinx-doc.org/en/master/extdev/index.html#extension-metadata
     return {

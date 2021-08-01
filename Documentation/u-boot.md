@@ -1,18 +1,5 @@
 ## &AElig; - Misc
 
-[U-Boot stages](https://elinux.org/Panda_How_to_MLO_%26_u-boot#Introduction)
-
-[Gmail search operators](https://support.google.com/mail/answer/7190) - 
-[filter archived mails `in:archive`](https://webapps.stackexchange.com/questions/1168/can-i-see-only-mail-i-have-archived-in-gmail)\
-[Search lists.denx.de w/ Google](https://www.google.com/search?q=site:lists.denx.de)\
-[Search lists.denx.de w/ MARC](https://marc.info/?l=u-boot)
-
-|config|version|u-boot-spl.bin|u-boot.img|
-|-|-|-|-|
-|am335x_evm_defconfig|v2021.04|OK|OK|
-
-[history of `configs/am335x_boneblack_vboot_defconfig`](https://source.denx.de/u-boot/u-boot/-/commits/master/configs/am335x_boneblack_vboot_defconfig)
-
 ## A - Get U-Boot
 
 [Docs » Build U-Boot » Building with GCC](https://u-boot.readthedocs.io/en/latest/build/gcc.html)

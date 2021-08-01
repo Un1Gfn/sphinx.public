@@ -1,4 +1,5 @@
 #!/dev/null
+# import urllib.parse
 import docutils
 import sphinx
 import sphinx.util  # sphinx.util.nodes.split_explicit_title
@@ -64,9 +65,17 @@ def wikiprepend(n: str, t: str) -> str:
     elif n == 'el': t = "https://elinux.org/"               + t
     elif n == 'dw': t = "https://wiki.debian.org/"          + t
     elif n == 'gw': t = "https://wiki.gentoo.org/wiki/"     + t
-    else:           assert n in ['emlink', 'stlink']
+    else:           assert n in ['emlink', 'stlink', 'prlink']
     _verifyurl(t)
+    # https://www.urlencoder.io/python/
+    # https://stackoverflow.com/questions/1695183/how-to-percent-encode-url-parameters-in-python
+    # help(urllib.parse.quote)
     return t
+
+
+def inspectchar(s: str) -> str:
+    assert len(s) == 1
+    return ',%s,%d,'%(s,ord(s),)
 
 
 # https://www.sphinx-doc.org/en/master/extdev/appapi.html#sphinx.application.Sphinx.add_role
@@ -84,30 +93,65 @@ def link_fn(
 ) -> typing.Tuple[typing.List[docutils.nodes.reference],
                   typing.List[docutils.nodes.system_message]]:
 
-    text = text = docutils.nodes.unescape(text)
-
     # assert (xx.__name__, xx,) in inspect.getmembers(docutils.nodes)
     # assert       name         in ['emlink', 'stlink', 'wp', ...]
-    assert       rawtext      == ':%s:`%s`' % (name, text)
-    assert   len(text)        >= len('_ <_://_>')
+    # assert       rawtext      == ':%s:`%s`' % (name, text)  # Fails with scaped space
+    # assert   len(text)        >= len('_ <_://_>')  # Fails with if not has_explicit
     assert       options      == {}
     assert       content      == []
 
+    text_neutralized = docutils.nodes.unescape(text)
+
     # https://github.com/sphinx-toolbox/sphinx-toolbox/blob/master/sphinx_toolbox/wikipedia.py
-    has_explicit, title, target = sphinx.util.nodes.split_explicit_title(text)
+    has_explicit, title, target = sphinx.util.nodes.split_explicit_title(text_neutralized)
     if not has_explicit:
-        assert title == target == text
+        assert title == target == text_neutralized
 
     target = wikiprepend(name, target)
+
+    # if name == 'prlink':
+    #     hint()
+    #     hint(rawtext+'###')
+    #     hint()
+    #     hint(text+'###')
+    #     hint(inspectchar(text[0]))
+    #     hint(inspectchar(text[1]))
+    #     hint(inspectchar(text[2]))
+    #     hint('...')
+    #     hint(inspectchar(text[-1]))
+    #     hint(inspectchar(text[-2]))
+    #     hint(inspectchar(text[-3]))
+    #     hint()
+    #     hint(inspectchar(text_neutralized[0]))
+    #     hint(inspectchar(text_neutralized[1]))
+    #     hint(inspectchar(text_neutralized[2]))
+    #     hint('...')
+    #     hint(text_neutralized+'###')
+    #     hint(inspectchar(text_neutralized[-1]))
+    #     hint(inspectchar(text_neutralized[-2]))
+    #     hint(inspectchar(text_neutralized[-3]))
+    #     assert False
+
+    if text[0] == '\0':
+        hint('space prefix detected')
+        assert text[1] == ' '
+        title = ' ' + title
+
+    if text[-1] == ' ':
+        hint('space postfix detected')
+        assert text[-2] == '\0'
+        assert text[-3] == '>'
+        title = title + ' '
 
     ref = docutils.nodes.reference(rawsource=rawtext,
                                    text=title,
                                    internal=False,
                                    refuri=target)
 
-    root = docutils.nodes.emphasis(rawsource=rawtext, text='').__iadd__(ref) if name == 'emlink' else (
-           docutils.nodes.strong(rawsource=rawtext, text='').__iadd__(ref) if name == 'stlink' else (
-           ref))
+    root = docutils.nodes.emphasis(rawsource=rawtext, text='').__iadd__(ref)    if name == 'emlink' else (
+           docutils.nodes.strong(rawsource=rawtext, text='').__iadd__(ref)      if name == 'stlink' else (
+           docutils.nodes.problematic(rawsource=rawtext, text='').__iadd__(ref) if name == 'prlink' else (
+           ref)))
            # None ))
 
     # assert type(inliner.reporter) == sphinx.util.docutils.LoggingReporter
