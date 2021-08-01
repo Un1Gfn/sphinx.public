@@ -1,7 +1,9 @@
-# Arch Linux ARM
+# ALARM
 /ArchLinuxARM-am33x-latest.tar.gz.sha1sum
 /ArchLinuxARM-am33x-latest.tar.gz
 /ArchLinuxARM-am33x-latest/
+/uboot-beaglebone-20??.??-?-armv7h.pkg.tar.xz
+/alarm_boot
 
 # U-Boot - v - https://source.denx.de/u-boot/u-boot/-/tags
 /u-boot-v202?.??-rc?.tar.bz2
@@ -29,7 +31,6 @@
 
 # https://askubuntu.com/a/661
 /usbreset.out
-
 
 # Sphinx
 /Documentation/_build

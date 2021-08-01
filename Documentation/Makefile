@@ -32,10 +32,12 @@ html:
 %:
 # 	$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O) # $(BUILDDIR)/html
 	$(SPHINXBUILD) -b $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O) # $(BUILDDIR)
+# 	sphinx.ext.githubpages
+# 	touch "$(BUILDDIR)/.nojekyll"
 	@echo
 	@printf "  file://%s\n"                         \
 		"$(BUILDDIR)/index.html"
-	@# https://serverfault.com/a/1042167
+# 	https://serverfault.com/a/1042167
 	@printf "  http://%s/cgi-tmp/sphinx/index.html\n" \
 		"$(shell ip -4 addr show wlp2s0 | awk '/inet / {print $$2}' | cut -d/ -f1)"
 	@echo
