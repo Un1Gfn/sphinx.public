@@ -49,6 +49,10 @@ libc
 Other Distros
 =============
 
+| https://beagleboard.org/latest-images
+| |b| Debian
+| |b| Ångström (at the bottom of the page) (:wp:`Wikipedia <Ångström_distribution>`) (:el:`eLinux <BeagleBoardAngstrom>`)
+
 | `Void Linux <https://voidlinux.org/>`__
 | |b| `packages <https://voidlinux.org/packages/>`__
 | |b| `void-beaglebone-musl-\*.img.xz`__ extract |asymp| 2000 MiB sparse live image
@@ -66,11 +70,31 @@ Other Distros
 QEMU
 ====
 
-| |b| `U&L <https://unix.stackexchange.com/questions/41889/how-can-i-chroot-into-a-filesystem-with-a-different-architechture>`__
-| |b| `AUR <https://aur.archlinux.org/packages/?O=0&K=qemu+static>`__
+| `chroot + qemu-arm-static <https://unix.stackexchange.com/questions/41889/how-can-i-chroot-into-a-filesystem-with-a-different-architechture>`__
+| |b| AUR/`qemu+static <https://aur.archlinux.org/packages/?O=0&K=qemu+static>`__
 | |b| :wp:`binfmt <Binfmt_misc>`
-| |b| :gw:`Gentoo wiki <Embedded_Handbook/General/Compiling_with_qemu_user_chroot>`
-| |b| :dw:`Debian wiki <QemuUserEmulation>`
+| |b| :gw:`Gentoo Wiki <Embedded_Handbook/General/Compiling_with_qemu_user_chroot>`
+| |b| :dw:`Debian Wiki <QemuUserEmulation>`
+
+| `Keys in the character backend multiplexer <https://qemu-project.gitlab.io/qemu/system/mux-chardev.html>`__
+| |b| :kbd:`<CTRL-A><X>` to exit emulator
+
+| `try u-boot with qemu <https://dev.to/rulyrudel/how-to-execute-u-boot-on-qemu-system-arm-2b22>`__
+| |b| QEMU wiki `Platforms/ARM <https://wiki.qemu.org/Documentation/Platforms/ARM>`__
+| |b| :pr:`qemu-system-arm -machine vexpress-a9` vexpress_ca9x4_defconfig vanished
+| |b| ``qemu-system-arm -machine virt`` w/ ``make -j4 qemu_arm_defconfig``
+
+.. https://docs.readthedocs.io/en/stable/guides/cross-referencing-with-sphinx.html
+
+:ref:`build u-boot <reference_label_u-boot_build_manually>`
+
+run qemu ::
+
+   qemu-system-arm \
+      -machine virt \
+      -nographic \
+      -no-reboot \
+      -kernel ./O/u-boot
 
 ----
 

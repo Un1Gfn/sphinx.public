@@ -11,6 +11,7 @@
 .. |b2|        unicode:: U+25E6 .. https://www.compart.com/en/unicode/U+25E6                       .. ◦
 .. |asymp|     unicode:: U+2248 .. https://unicode-table.com/en/2248/                              .. ≈
 .. |biohazard| unicode:: U+2623
+.. |larr|      unicode:: U+2190 .. https://www.toptal.com/designers/htmlarrows/
 .. |rarr|      unicode:: U+2192 .. https://www.toptal.com/designers/htmlarrows/
 .. |tm|        unicode:: U+2122 .. Mot to be confused with sphinxemojicodes |:tm:|
 

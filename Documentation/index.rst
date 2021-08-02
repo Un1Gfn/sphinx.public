@@ -14,10 +14,11 @@
 .. \|:rofl:|
 
 .. hint::
-   Hooray! There is no `Google Analytic`__ on any page. |:fire:|
+   Hooray!
+   There is no `Google Analytics`__
+   on any page! |:fire:|
 
 .. __: https://sphinx-rtd-theme.readthedocs.io/en/latest/configuring.html#confval-analytics_id
-
 
 .. Directive is "toctree"
    Argument are empty
