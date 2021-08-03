@@ -400,17 +400,21 @@ Connect Serial Debug Port
 | |b| `067b:2303 <https://linux-hardware.org/?id=usb:067b-2303>`__
 | |b| ``Prolific Technology, Inc. PL2303 Serial Port / Mobile Action MA-8910P``
 
-`The acme of foolishness <https://dave.cheney.net/2013/09/22/two-point-five-ways-to-access-the-serial-console-on-your-beaglebone-black>`__ ::
+`The acme of foolishness <https://dave.cheney.net/2013/09/22/two-point-five-ways-to-access-the-serial-console-on-your-beaglebone-black>`__
 
-> the red wire, this carries +5v from the USB port and can blow the arse out of your BBB
-> you must leave it unconnected
-> Do not connect the red lead to anything!
+.. code:: text
 
-:el:`eLinux <Beagleboard:BeagleBone_Black_Serial>` ::
+   the red wire, this carries +5v from the USB port and can blow the arse out of your BBB
+   you must leave it unconnected
+   Do not connect the red lead to anything!
 
-> an extra RED wire on this cable that supplies 5V @ 500mA
-> which could power the board if connected to one of the VDD_5V pins (P9_05, P9_06)
-> Just leave it unconnected.
+:el:`eLinux <Beagleboard:BeagleBone_Black_Serial>`
+
+.. code:: text
+
+   an extra RED wire on this cable that supplies 5V @ 500mA
+   which could power the board if connected to one of the VDD_5V pins (P9_05, P9_06)
+   Just leave it unconnected.
 
 .. warning::
 
@@ -429,15 +433,9 @@ Connect Serial Debug Port
     PL2303   |:black_circle:|   NC   NC   |O|   |:white_circle:|   NC
    ======== ================== ==== ==== ===== ================== ====
 
-1. Double check the connection
+1. Double check the pinout
 2. Connect PL2303 USB-A to PC
-3. Hold :kbd:`USER`
-4. Supply 5v :stlink:`?A <https://electronics.stackexchange.com/questions/563406/which-wall-charger-for-beaglebone-green-wireless>`
-   power through Micro-USB
-5. Wait for 5 seconds
-6. Release :kbd:`USER`
-7. Make sure ``lsusb | grep -i prolific`` reveals ``PL2303``
-
+3. Make sure ``lsusb | grep -i prolific`` reveals ``PL2303``
 
 Serial Send
 ===========
@@ -487,9 +485,24 @@ run minicom ::
      -8 \
      --device /dev/ttyUSB0
 
-Wait for at most 30 seconds until ``CCC...`` appears in minicom console
+.. code:: text
 
-:kbd:`<CTRL+A>` |rarr| :kbd:`<S>` |rarr| xmodem |rarr| ``[MINICOM_RES]``
+   <RESET>
+
+   <POWER>
+
+   USBUSB    AM3358     RAM
+
+   USBUSB             *<USER>*
+             SERIAL
+
+1. Hold :kbd:`USER`
+2. Supply 5v :stlink:`?A <https://electronics.stackexchange.com/questions/563406/which-wall-charger-for-beaglebone-green-wireless>`
+   power through Micro-USB
+3. Wait for 5 seconds
+4. Release :kbd:`USER`
+
+Wait for at most 30 seconds until ``CCC...`` appears in minicom console
 
 .. warning::
 
@@ -497,11 +510,15 @@ Wait for at most 30 seconds until ``CCC...`` appears in minicom console
    | ``MLO`` is for booting from eMMC.
    | Use ``u-boot-spl.bin``.
 
-locate ``u-boot-spl.bin`` and send (xmodem)
+.. tip::
 
-locate ``u-boot.img`` and send (either xmodem or ymodem)
+   | Don't miss the chance to
+   | ``Press SPACE to abort autoboot in 2 seconds`` |:smile:|
 
-press :kbd:`<SPACE>`
+1. :kbd:`<CTRL+A>` |rarr| :kbd:`<S>` |rarr|    xmodem |rarr| ``[MINICOM_RES]`` |rarr| ``u-boot-spl.bin``
+2. :kbd:`<CTRL+A>` |rarr| :kbd:`<S>` |rarr| [xy]modem |rarr| ``[MINICOM_RES]`` |rarr| ``u-boot.img``
+
+
 
 check U-Boot version ::
 
@@ -604,16 +621,24 @@ view installed MLO
 Power Off
 =========
 
-1. Unplug PL2303 USB-A from PC
-2. Press and hold :kbd:`POWER` button
-3. When LED ``PWR`` goes off (approx 8s)
+.. warning::
+
+   Exit & reset minicom before unplugging PL2303!
+
+1. :kbd:`<CTRL-A><X>` eXit and reset minicom
+2. Unplug PL2303 USB-A from PC
+3. Press and hold :kbd:`POWER` button
+4. When LED ``PWR`` goes off (approx 8s)
    `release POWER button immediately <https://github.com/beagleboard/beaglebone-black/wiki/System-Reference-Manual#power-button>`__
-4. Clean up
 
 ::
 
    lsusb | grep -i prolific
-   ./usbreset /dev/bus/usb/...
+
+if stray ``PL2303`` is still there ::
+
+   eval "$(head -1 usbreset.c | cut -d'/' -f3-)"
+   ./usbreset.out /dev/bus/usb/...
    lsusb | grep -i prolific
 
 Footnotes
