@@ -103,6 +103,8 @@ Readings
    :raw-html:`<a style="font-style:italic;" href="([^"]+)">([^<]+)</a>`
    :emlink:`\2 <\1>`
 
+`extend the HTML writer to produce a proper <del> tag <https://stackoverflow.com/a/62493316/>`__
+
 Misc
 ====
 

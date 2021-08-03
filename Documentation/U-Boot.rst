@@ -342,36 +342,63 @@ Make eMMC image
 |beta|. manually
 ----------------
 
-escalate::
+:aw:`Partitioning#Tools`
+
+| create empty image
+| ``1MiB = 1024 * 1024B = 1048576B``
+
+::
+
+   # truncate -s 1048576 /tmp/emmc.img # Does not wipe existing content
+   head -c 1048576 /dev/zero >/tmp/emmc.img
+   if [ "$(sha1sum <emmc.img)" = '3b71f43ff30f4b15b5cd85dd9e95ebc7e84eb5a3  -' ]; then
+      echo -e "\n\e[32mok   \e[0m\n"
+   else
+      echo -e "\n\e[31merror\e[0m\n"
+   fi
+
+partition with :manpage:`sfdisk(8)`\ [#FAT12]_ ::
+
+   WRITE="/bin/sfdisk --color=always --lock -X dos -w always -W always"
+   $WRITE           emmc.img <<<',,FAT12,*'
+   $WRITE --disk-id emmc.img 0x19890604
+   unset -v WRITE
+
+   if [ "$(sha1sum <emmc.img)" = '868998a0e79a979da6f4a09ec44da7c44b0b1893  -' ]; then
+      echo -e "\n\e[32mok   \e[0m\n"
+   else
+      echo -e "\n\e[31merror\e[0m\n"
+   fi
+
+   sfdisk --color=always    -d emmc.img; echo
+   sfdisk --color=always    -g emmc.img; echo
+   sfdisk --color=always    -J emmc.img; echo
+   sfdisk --color=always -V -l emmc.img; echo
+   sfdisk --color=always    -F emmc.img; echo
+
+   # $WRITE        -N 1 emmc.img <<<'help'
+   # $WRITE          -A emmc.img 1
+   # $WRITE --part-type emmc.img 1 FAT12 # sfdisk -T | grep -i -e fat -e dos -e bios -e win -e w9
+
+escalate
+
+.. https://pygments.org/docs/lexers/#pygments.lexers.shell.BashSessionLexer
+.. code:: shell-session
 
    $ su -
    #
 
-zerofill (e.g. 1MiB)::
-
-   cd /tmp
-   dd if=/dev/zero of=emmc.img bs=1 count=$((1024*1024))
-   fdisk -l emmc.img
-
-loop device::
+loop device ::
 
    losetup -l -a
    losetup -f --show -L -P -v emmc.img
    losetup -l -a
    fdisk -l /dev/loop0
 
-partition::
-
-   fdisk /dev/loop0
-   o
-   n p 1 1 2047
-   t 1 a
-   w
-
-format::
+format\ [#FAT12]_ ::
 
    lsblk -f
-   mkfs.fat -v /dev/loop0p1
+   mkfs.fat -F 12 -v /dev/loop0p1
 
 write::
 
@@ -651,5 +678,9 @@ Footnotes
 .. [#]      http://lifeonubuntu.com/tar-errors-ignoring-unknown-extended-header-keyword/
 .. [#gpgSR] https://wiki.archlinux.org/title/GnuPG#Searching_and_receiving_keys
 .. [#gpgV]  https://wiki.archlinux.org/title/GnuPG#Verify_a_signature
+.. [#FAT12] we have less than 1MiB, thus
+            :pr:`FAT32`
+            :pr:`FAT16`
+            `FAT12 only <https://en.wikipedia.org/wiki/Design_of_the_FAT_file_system#Size_limits>`__
 
 .. include:: link.txt
