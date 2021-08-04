@@ -57,6 +57,10 @@ PC Set up NFS
 | ``root=/dev/nfs``
 | ``nfsroot=[<server-ip>:]<root-dir>[,<nfs-options>]``\ [#]_
 
+.. warning::
+   
+   Check eMMC partition alignment!
+
 Footnotes
 =========
 

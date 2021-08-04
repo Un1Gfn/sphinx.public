@@ -290,7 +290,7 @@ Manually apply the following changes
    - USB to Ethernet Controller Drivers - ASIX AX88179 (USB 3.0) support - ✓
    # Save
 
-build::
+build ::
 
    make -j4 all && \
    ls -l O/{spl/u-boot-spl.bin,MLO,u-boot.img} && \
@@ -328,16 +328,58 @@ check output ::
 Make eMMC image
 ===============
 
+::
+
+   rm -v /tmp/emmc.img
+
 |alpha|. with `genimage`__ [R]_
 -------------------------------
 
+.. warning::
+
+   | Use :pkg:`AUR/genimage-git` instead of :pkg:`AUR/genimage`
+     to avoid ``-b`` in :manpage:`mcopy(1)` (:pkg:`extra/mtools`)
+     and other issues
+   | |b| `pull/73 <https://github.com/pengutronix/genimage/pull/73>`__
+   | |b| `pull/151 <https://github.com/pengutronix/genimage/pull/151>`__
+   | |b| `issues/71 <https://github.com/pengutronix/genimage/issues/71>`__
+
 .. __: https://github.com/pengutronix/genimage
 
-| :pkg:`AUR/genimage`
 | `genimage <https://git.busybox.net/buildroot/tree/package/genimage>`__\
   :superscript:`buildroot`
+| cfg `documentation <https://github.com/pengutronix/genimage/blob/master/README.rst>`__
 
-...
+::
+
+   rm -rv /tmp/genimage*
+   # mkdir -pv /tmp/genimage_emptydir
+   f=(MLO boot.scr boot.txt mkscr u-boot.img)
+   for i in $f; do touch -c -d "1989-06-04T00:00:00" "$(git rev-parse --show-toplevel)/alarm_boot/$f"; done
+   ./cfg.sh ${f[@]}
+   python3 -m pygments -l cfg /tmp/genimage.cfg
+
+.. https://stackoverflow.com/a/60394068
+.. raw:: html
+
+   <details><summary>What's in <code>cfg.sh</code>?</summary>
+
+.. https://pygments.org/docs/lexers/#pygments.lexers.configs.IniLexer
+.. https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html#directive-literalinclude
+.. literalinclude:: ../cfg.sh
+   :language: cfg
+   :lines: 2-
+
+:raw-html:`</details>`
+
+genimage is intended to be run in a fakeroot environment\ [#]_ ::
+
+   fakeroot genimage --config /tmp/genimage.cfg
+
+`mdir(1) <https://www.gnu.org/software/mtools/manual/mtools.html#mdir>`__
+\- `"-i" <https://www.gnu.org/software/mtools/manual/mtools.html#Drive-letters>`__ ::
+
+   mdir -i /tmp/genimage_outputpath/fat.partimg
 
 |beta|. manually
 ----------------
@@ -678,6 +720,7 @@ Footnotes
 .. [#]      http://lifeonubuntu.com/tar-errors-ignoring-unknown-extended-header-keyword/
 .. [#gpgSR] https://wiki.archlinux.org/title/GnuPG#Searching_and_receiving_keys
 .. [#gpgV]  https://wiki.archlinux.org/title/GnuPG#Verify_a_signature
+.. [#]      https://github.com/pengutronix/genimage#genimage---the-image-creation-tool
 .. [#FAT12] we have less than 1MiB, thus
             :pr:`FAT32`
             :pr:`FAT16`
