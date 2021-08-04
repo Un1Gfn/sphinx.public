@@ -328,9 +328,17 @@ check output ::
 Make eMMC image
 ===============
 
-::
+.. table:: :wp:`Design_of_the_FAT_file_system#Size_limits`
+   :align: left
+   :widths: auto
 
-   rm -v /tmp/emmc.img
+   ============================== =================  ==============
+    Number of table element bits   Minimum size       Applicable?
+   ============================== =================  ==============
+    FAT12                          |asymp|\ 0.5B      |O|
+    FAT16                          |asymp|\ 1MiB      |:question:|
+    FAT32                          |asymp|\ 32MiB     |:x:|
+   ============================== =================  ==============
 
 |alpha|. with `genimage`__ [R]_
 -------------------------------
@@ -384,7 +392,9 @@ genimage is intended to be run in a fakeroot environment\ [#]_ ::
 |beta|. manually
 ----------------
 
-:aw:`Partitioning#Tools`
+| :aw:`Partitioning#Tools`
+| |b| :manpage:`sfdisk(8)` [#]_ [#]_
+| |b| :manpage:`parted(8)` [#]_
 
 | create empty image
 | ``1MiB = 1024 * 1024B = 1048576B``
@@ -399,7 +409,9 @@ genimage is intended to be run in a fakeroot environment\ [#]_ ::
       echo -e "\n\e[31merror\e[0m\n"
    fi
 
-partition with :manpage:`sfdisk(8)`\ [#FAT12]_ ::
+partition (sfdisk)
+
+::
 
    WRITE="/bin/sfdisk --color=always --lock -X dos -w always -W always"
    $WRITE           emmc.img <<<',,FAT12,*'
@@ -430,14 +442,17 @@ escalate
    $ su -
    #
 
-loop device ::
+loop device
+(`kpartx? <https://unix.stackexchange.com/questions/94103/how-can-i-partition-a-volume-in-a-regular-file-without-loop>`__)
+
+::
 
    losetup -l -a
    losetup -f --show -L -P -v emmc.img
    losetup -l -a
    fdisk -l /dev/loop0
 
-format\ [#FAT12]_ ::
+format ::
 
    lsblk -f
    mkfs.fat -F 12 -v /dev/loop0p1
@@ -721,9 +736,9 @@ Footnotes
 .. [#gpgSR] https://wiki.archlinux.org/title/GnuPG#Searching_and_receiving_keys
 .. [#gpgV]  https://wiki.archlinux.org/title/GnuPG#Verify_a_signature
 .. [#]      https://github.com/pengutronix/genimage#genimage---the-image-creation-tool
-.. [#FAT12] we have less than 1MiB, thus
-            :pr:`FAT32`
-            :pr:`FAT16`
-            `FAT12 only <https://en.wikipedia.org/wiki/Design_of_the_FAT_file_system#Size_limits>`__
+
+.. [#]      https://superuser.com/questions/332252/how-to-create-and-format-a-partition-using-a-bash-script
+.. [#]      https://www.thegeekstuff.com/2017/05/sfdisk-examples/
+.. [#]      https://unix.stackexchange.com/questions/53378/how-can-i-script-the-creation-of-a-single-partition-that-uses-the-entire-device
 
 .. include:: link.txt
