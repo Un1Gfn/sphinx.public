@@ -1,8 +1,8 @@
 .. include:: substitution.txt
 
-======================
-|ico| reStructuredText
-======================
+==========
+|ico| reST
+==========
 
 .. image:: https://img.shields.io/badge/%F0%9F%9B%A1%EF%B8%8F-shield-success
    :target: https://shields.io/

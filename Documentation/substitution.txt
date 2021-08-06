@@ -15,6 +15,10 @@
 .. |rarr|      unicode:: U+2192 .. https://www.toptal.com/designers/htmlarrows/
 .. |tm|        unicode:: U+2122 .. Mot to be confused with sphinxemojicodes |:tm:|
 
+.. https://unicode-search.net/unicode-namesearch.pl?term=ASTERISK
+.. https://www.toptal.com/designers/htmlarrows/math/asterisk-operator/
+.. |lowast|    unicode:: U+2217
+
 .. https://en.wikipedia.org/wiki/List_of_Unicode_characters#Latin-1_Supplement
 .. |alpha|   unicode:: U+3B1
 .. |beta|    unicode:: U+3B2

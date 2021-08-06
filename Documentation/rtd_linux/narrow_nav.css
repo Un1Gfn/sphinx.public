@@ -1,0 +1,19 @@
+/* conf.py:  html_theme_options= */
+/* conf.py:  html_context=       */
+
+@media screen {
+
+	.wy-nav-side
+		{ width: 200px; }
+
+	.wy-side-scroll
+		{ width: 220px; }
+
+	.wy-side-nav-search,
+	.wy-menu.wy-menu-vertical
+		{ width: 200px; }
+
+	.wy-nav-content-wrap
+		{ margin-left: 200px; }
+
+}

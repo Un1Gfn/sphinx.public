@@ -24,6 +24,9 @@ denx `TFTP+NFS <https://www.denx.de/wiki/view/DULG/LinuxNfsRoot>`__
 
 ArchWiki/:aw:`Working with the serial console`
 
+make `FIT image <https://elinux.org/images/f/f4/Elc2013_Fernandes.pdf>`__
+with :pkg:`community/uboot-tools` :manpage:`mkimage(1)`
+
 PC Set up NIC
 =============
 

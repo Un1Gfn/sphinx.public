@@ -35,8 +35,11 @@
    U-Boot
    ALARM
    Future
-   reStructuredText
+   reST
    Test
+   GPU_hang
+   Cheatsheet
+   PkgMgmt
 
 Indices and tables
 ==================

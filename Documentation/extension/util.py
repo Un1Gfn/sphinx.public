@@ -1,6 +1,7 @@
 #!/dev/null
 # import urllib.parse
 import docutils
+import re  # re.match
 import sphinx
 import sphinx.util  # sphinx.util.nodes.split_explicit_title
 import sys  # sys.stderr
@@ -65,7 +66,8 @@ def wikiprepend(n: str, t: str) -> str:
     elif n == 'el': t = "https://elinux.org/"               + t
     elif n == 'dw': t = "https://wiki.debian.org/"          + t
     elif n == 'gw': t = "https://wiki.gentoo.org/wiki/"     + t
-    else:           assert n in ['emlink', 'stlink', 'prlink']
+    else:
+        assert re.match('^[a-z]{2}link$', n)
     _verifyurl(t)
     # https://www.urlencoder.io/python/
     # https://stackoverflow.com/questions/1695183/how-to-percent-encode-url-parameters-in-python
@@ -149,10 +151,11 @@ def link_fn(
                                    refuri=target)
 
     root = docutils.nodes.emphasis(rawsource=rawtext, text='').__iadd__(ref)    if name == 'emlink' else (
-           docutils.nodes.strong(rawsource=rawtext, text='').__iadd__(ref)      if name == 'stlink' else (
+           docutils.nodes.literal(rawsource=rawtext, text='').__iadd__(ref)     if name == 'ltlink' else (
            docutils.nodes.problematic(rawsource=rawtext, text='').__iadd__(ref) if name == 'prlink' else (
-           ref)))
-           # None ))
+           docutils.nodes.strong(rawsource=rawtext, text='').__iadd__(ref)      if name == 'stlink' else (
+           ref))))
+           # None ))))
 
     # assert type(inliner.reporter) == sphinx.util.docutils.LoggingReporter
     # msg = [inliner.reporter.warning(result, line=lineno)]

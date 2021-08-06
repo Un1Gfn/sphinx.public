@@ -1,0 +1,7 @@
+code.docutils.literal.notranslate:not(.file)
+	{ background-color: #f0f0f0!important; }
+
+/* https://stackoverflow.com/a/16552398 */
+code.docutils.literal.notranslate:not(.file):before,
+code.docutils.literal.notranslate:not(.file):after
+	{ content: "\00a0 "; }

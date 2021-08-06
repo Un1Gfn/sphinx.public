@@ -14,8 +14,8 @@ Misc
 | misterious article
 | `<http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.set.boards/index.html>`__
 
-| `GitLab Instance repo <https://source.denx.de/u-boot/u-boot>`__ |:snail:|
 | `GitHub mirror <https://github.com/u-boot/u-boot>`__ |:zap:|\ |:zap:|\ |:zap:|
+| `GitLab repo <https://source.denx.de/u-boot/u-boot>`__ |:snail:|
 
 :el:`U-Boot stages <Panda How_to_MLO_&_u-boot#Introduction>`
 
@@ -50,17 +50,14 @@ no need for verified boot, use ``configs/am335x_evm_defconfig`` instead\ [#]_
 
 .. table::
 
-   ========================================== ============= ================ ============
-    config                                     version       u-boot-spl.bin   u-boot.img 
-   ========================================== ============= ================ ============
-    :pr:`configs/am335x_evm_defconfig`         `history`__
-    configs/am335x_boneblack_vboot_defconfig   v2021.04      |O|              |O|
-   ========================================== ============= ================ ============
+   =================================== ============= ================ ============
+    :file:`configs/am335x`              version       u-boot-spl.bin   u-boot.img
+   =================================== ============= ================ ============
+    :pr:`evm_defconfig`                 `history`__
+    :file:`boneblack_vboot_defconfig`   v2021.04      |O|              |O|
+   =================================== ============= ================ ============
 
 .. __: https://github.com/u-boot/u-boot/commits/master/configs/am335x_boneblack_vboot_defconfig
-
-make `FIT image <https://elinux.org/images/f/f4/Elc2013_Fernandes.pdf>`__
-with :pkg:`community/uboot-tools` :manpage:`mkimage(1)`
 
 | `README <https://github.com/u-boot>`__
   - *Building the Software:*
@@ -343,27 +340,33 @@ Make eMMC image
 |alpha|. with `genimage`__ [R]_
 -------------------------------
 
-.. warning::
-
-   | Use :pkg:`AUR/genimage-git` instead of :pkg:`AUR/genimage`
-     to avoid ``-b`` in :manpage:`mcopy(1)` (:pkg:`extra/mtools`)
-     and other issues
-   | |b| `pull/73 <https://github.com/pengutronix/genimage/pull/73>`__
-   | |b| `pull/151 <https://github.com/pengutronix/genimage/pull/151>`__
-   | |b| `issues/71 <https://github.com/pengutronix/genimage/issues/71>`__
-
 .. __: https://github.com/pengutronix/genimage
 
-| `genimage <https://git.busybox.net/buildroot/tree/package/genimage>`__\
-  :superscript:`buildroot`
-| cfg `documentation <https://github.com/pengutronix/genimage/blob/master/README.rst>`__
+`genimage <https://git.busybox.net/buildroot/tree/package/genimage>`__\
+:superscript:`buildroot`
+
+.. warning::
+
+   | Use :pkg:`AUR/genimage-git` instead of genimage\ :superscript:`AUR`
+     to avoid :pkg:`extra/mtools` :manpage:`mcopy(1)` bugs
+   | |b| `issues/71 <https://github.com/pengutronix/genimage/issues/71>`__
+   | |b| `pull/151 <https://github.com/pengutronix/genimage/pull/151>`__
+   | |b| `pull/73 <https://github.com/pengutronix/genimage/pull/73>`__
+
+.. warning::
+
+   Generated image is NOT ``2MiB``, but **confusingly slightly more than** ``2MiB``
+
+genimage.cfg `syntax <https://github.com/pengutronix/genimage/blob/master/README.rst>`__
 
 ::
 
-   rm -rv /tmp/genimage*
+   rm -rfv /tmp/genimage*
    # mkdir -pv /tmp/genimage_emptydir
+   # Don't put u-boot-spl.bin here!
    f=(MLO boot.scr boot.txt mkscr u-boot.img)
-   for i in $f; do touch -c -d "1989-06-04T00:00:00" "$(git rev-parse --show-toplevel)/alarm_boot/$f"; done
+   # For preserve of timestamps, in "image fat.partimg", use "mountpoint=" instead of "vfat{}"
+   # for i in $f; do touch -c -d "1989-06-04T00:00:00" "$(git rev-parse --show-toplevel)/alarm_boot/$f"; done
    ./cfg.sh ${f[@]}
    python3 -m pygments -l cfg /tmp/genimage.cfg
 
@@ -382,12 +385,27 @@ Make eMMC image
 
 genimage is intended to be run in a fakeroot environment\ [#]_ ::
 
-   fakeroot genimage --config /tmp/genimage.cfg
+   # "+X" and it won't get stuck at the bottom of the screen
+   fakeroot genimage --config /tmp/genimage.cfg |& less +X -S
 
-`mdir(1) <https://www.gnu.org/software/mtools/manual/mtools.html#mdir>`__
-\- `"-i" <https://www.gnu.org/software/mtools/manual/mtools.html#Drive-letters>`__ ::
+| inspect
+| |b|
+  :ltlink:`-i <https://www.gnu.org/software/mtools/manual/mtools.html#Drive-letters>`
+  of
+  `mdir(1) <https://www.gnu.org/software/mtools/manual/mtools.html#mdir>`__
 
-   mdir -i /tmp/genimage_outputpath/fat.partimg
+::
+
+   echo; sfdisk -Vl /tmp/genimage_outputpath/emmc.img
+   echo; mdir -i /tmp/genimage_outputpath/fat.partimg
+
+shortcut for minicom ::
+
+   echo; \
+   sudo rm -fv /root/MINICOM_RES/emmc.img; \
+   sudo ln -sv "$(realpath /tmp/genimage_outputpath/emmc.img)" "$_"; echo; \
+   sudo file /root/MINICOM_RES; echo
+   sudo ls -Al /root/MINICOM_RES/; echo
 
 |beta|. manually
 ----------------
@@ -475,14 +493,15 @@ cleanup::
    losetup -l -a
    mv -v emmc.img ~/
 
-Connect Serial Debug Port
-=========================
+Connect Serial
+==============
 
-:el:`BB serial port <BeagleBone/Serial_Port>`
+.. warning::
 
-| lsusb\
-| |b| `067b:2303 <https://linux-hardware.org/?id=usb:067b-2303>`__
-| |b| ``Prolific Technology, Inc. PL2303 Serial Port / Mobile Action MA-8910P``
+   | Don't supply any power to BBGW yet.
+   | Don't connect PL2303 USB-A to PC yet.
+
+:el:`BB Serial Debug Port <BeagleBone/Serial_Port>`
 
 `The acme of foolishness <https://dave.cheney.net/2013/09/22/two-point-five-ways-to-access-the-serial-console-on-your-beaglebone-black>`__
 
@@ -500,11 +519,6 @@ Connect Serial Debug Port
    which could power the board if connected to one of the VDD_5V pins (P9_05, P9_06)
    Just leave it unconnected.
 
-.. warning::
-
-   | Don't supply any power to BBGW yet.
-   | Don't connect PL2303 USB-A to PC yet.
-
 .. https://docutils.sourceforge.io/docs/ref/rst/directives.html#table
 .. table:: pinout
    :align: left
@@ -519,9 +533,16 @@ Connect Serial Debug Port
 
 1. Double check the pinout
 2. Connect PL2303 USB-A to PC
-3. Make sure ``lsusb | grep -i prolific`` reveals ``PL2303``
+3. | 
+     Make sure ``lsusb | grep -i prolific`` reveals
+   | |b| `067b:2303 <https://linux-hardware.org/?id=usb:067b-2303>`__
+   | |b| ``Prolific Technology, Inc. PL2303 Serial Port / Mobile Action MA-8910P``
 
-Serial Send
+.. warning::
+
+   Don't supply any power to BBGW yet.
+
+Send U-Boot
 ===========
 
 `SystemSetup < DULG < DENX <http://www.denx.de/wiki/view/DULG/SystemSetup#Section_4.3>`__
@@ -590,84 +611,191 @@ Wait for at most 30 seconds until ``CCC...`` appears in minicom console
 
 .. warning::
 
-   | Don't use ``MLO``.
-   | ``MLO`` is for booting from eMMC.
-   | Use ``u-boot-spl.bin``.
+   | Don't use :file:`MLO`.
+   | :file:`MLO` is for booting from eMMC.
+   | Use :file:`u-boot-spl.bin`.
+
+1. :kbd:`<CTRL+A>` |rarr| :kbd:`<S>` |rarr|    xmodem |rarr| ``[MINICOM_RES]/`` |rarr| ``u-boot-spl.bin``
+
+.. code:: text
+
+   U-Boot SPL 2017.07-1 (Sep 02 2017 - 21:04:29)
+   Trying to boot from UART
 
 .. tip::
 
    | Don't miss the chance to
    | ``Press SPACE to abort autoboot in 2 seconds`` |:smile:|
 
-1. :kbd:`<CTRL+A>` |rarr| :kbd:`<S>` |rarr|    xmodem |rarr| ``[MINICOM_RES]`` |rarr| ``u-boot-spl.bin``
-2. :kbd:`<CTRL+A>` |rarr| :kbd:`<S>` |rarr| [xy]modem |rarr| ``[MINICOM_RES]`` |rarr| ``u-boot.img``
+2. :kbd:`<CTRL+A>` |rarr| :kbd:`<S>` |rarr| ymodem |rarr| ``[MINICOM_RES]/`` |rarr| ``u-boot.img``
 
+.. code:: text
 
+   mode, 2887(SOH)/0(STX)/0(CAN) packets, 7 retries
+   Loaded 369200 bytes
 
-check U-Boot version ::
+   U-Boot 2017.07-1 (Sep 02 2017 - 21:04:29 +0000) Arch Linux ARM
+
+   CPU  : AM335X-GP rev 2.1
+   I2C:   ready
+   DRAM:  512 MiB
+   No match for driver 'omap_hsmmc'
+   No match for driver 'omap_hsmmc'
+   Some drivers were not found
+   MMC:   OMAP SD/MMC: 0, OMAP SD/MMC: 1
+   Using default environment
+
+   <ethaddr> not set. Validating first E-fuse MAC
+   Net:   Could not get PHY for cpsw: addr 0
+   cpsw, usb_ether
+   Press SPACE to abort autoboot in 2 seconds
+
+check U-Boot version
+
+.. code:: text
 
    => version
+   U-Boot 2017.07-1 (Sep 02 2017 - 21:04:29 +0000) Arch Linux ARM
+   gcc (GCC) 7.1.1 20170630
+   GNU ld (GNU Binutils) 2.28.0.20170506
 
-Write eMMC
-==========
+Send & Write eMMC
+=================
+
+to get exact size of eMMC image,
+fire up another terminal and escalate
+
+.. code:: shell-session
+
+   $ su -
+   Password:
+   #
+
+get size & verify 512B-align ::
+
+   sz="$(wc -c </root/MINICOM_RES/emmc.img)"
+   rem="$((sz%512))"
+   n_blocks_dec="$((sz/512))"
+   n_blocks_hex="$(printf "%x" "$n_blocks_dec")"
+   if [ "$rem" -eq 0 ]
+   then printf "\n  \e[32m[%s]\e[0m %sB = %s(0x%s) * 512B + %sB\n\n" ok    "$sz" "$n_blocks_dec" "$n_blocks_hex" "$rem"
+   else printf "\n  \e[31m[%s]\e[0m %sB = %s(0x%s) * 512B + %sB\n\n" error "$sz" "$n_blocks_dec" "$n_blocks_hex" "$rem"
+   fi
+   unset -v rem
 
 `ALARM <https://archlinuxarm.org/packages/armv7h/uboot-beaglebone/files/uboot-beaglebone.install>`__
 - `boot.txt <https://archlinuxarm.org/packages/armv7h/uboot-beaglebone/files/boot.txt>`__
 
-`mmc <https://www.denx.de/wiki/view/DULG/UBootCmdGroupMMC>`__
+| make sure eMMC block size is ``512B``
+| |b| `mmc <https://www.denx.de/wiki/view/DULG/UBootCmdGroupMMC>`__
 
 .. code:: text
 
-   mmc list
-   mmc dev 1
-   mmc info
-   mmc part
+   => mmc list
+   OMAP SD/MMC: 0
+   OMAP SD/MMC: 1
 
-erase
+(microSD/TF slot?)
+
+.. code:: text
+
+   => mmc dev 0
+   Card did not respond to voltage select!
+   mmc_init: -95, time 13
+
+eMMC
+
+.. code:: text
+
+   => mmc dev 1
+   ** First descriptor is NOT a primary desc on 1:1 **
+   switch to partitions #0, OK
+   mmc1(part 0) is current device
+
+.. https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html#directive-option-code-block-emphasize-lines
+.. code-block:: text
+   :emphasize-lines: 7
+
+   => mmc info
+   Device: OMAP SD/MMC
+   Manufacturer ID: 13
+   OEM: 14e
+   Name: Q2J54
+   Tran Speed: 52000000
+   Rd Block Len: 512
+   MMC version 5.0
+   High Capacity: Yes
+   Capacity: 3.6 GiB
+   Bus Width: 4-bit
+   Erase Group Size: 512 KiB
+   HC WP Group Size: 8 MiB
+   User Capacity: 3.6 GiB WRREL
+   Boot Capacity: 2 MiB ENH
+   RPMB Capacity: 512 KiB ENH
+
+.. code:: text
+
+   => mmc part
+   ## Unknown partition table type 0
 
 .. tip::
-   | eMMC block size is ``512B``\ :superscript:`citation needed`
+   | Make sure eMMC block size is ``512B``
    | ``0x5000blk * 512B/blk = 20480blk * 512B/blk`` (=10485760B=10*1024*1024B=\ **10MiB**\ )
    | Therefore the following are roughly equivalent
    | |b| mmc erase 0 0x5000
    | |b| dd if=/dev/zero of=/dev/mmcblk0 bs=512 count=20480
 
+erase the first 10MiB of eMMC
+
 .. code:: text
 
-   mmc erase 0 0x5000
-   mmc rescan
-   mmc part
+  => mmc erase 0 0x5000
 
-| zerofill 1MiB RAM, starting from 0x82000000
-| |b| `cmp`__.b - compare byte
-| |b| `mw`__.b - memory write byte
+  MMC erase: dev # 1, block # 0, count 20480 ... 20480 blocks erased: OK
+  => mmc rescan
+  ** First descriptor is NOT a primary desc on 1:1 **
+  => mmc part
+  ## Unknown partition table type 0
+
+.. tip::
+   | |b| RAM block size is ``1B``
+   | |b| ``0xa00000blk * 1B/blk = 0xa00000B = 10485760B = 10240 * 1024B = 10MiB``
+   | |b| An all-zero chunk starts from ``0x100000``\ :superscript:`citation needed`
+   | |b| RAM address starts from ``0x82000000``\ :superscript:`citation needed`
+
+| zerofill ``10MiB`` RAM
+| |b| ``cmp.b addr1 addr2 count`` - `compare`__ byte
+| |b| ``mw.b address value [count]`` - `memory write (fill)`__ byte
 
 .. __: https://www.denx.de/wiki/view/DULG/UBootCmdGroupMemory#Section_5.9.2.3.
 .. __: https://www.denx.de/wiki/view/DULG/UBootCmdGroupMemory#Section_5.9.2.8.
 
-.. tip::
-   | RAM block size is ``1B``
-   | ``0x100000blk * 1B/blk = 0x100000B = 1048576B = 1024 * 1024B = 1MiB``
+.. code:: text
+
+   => cmp.b   0x100000 0x82000000 0xa00000
+      # Expect difference
+   => mw.b  0x82000000          0 0xa00000
+   => cmp.b   0x100000 0x82000000 0xa00000
+   Total of 10485760 byte(s) were the same
+
+get ready for receiving
 
 .. code:: text
 
-   cmp.b   0x100000 0x82000000 0x100000
-   mw.b  0x82000000          0 0x100000
-   cmp.b   0x100000 0x82000000 0x100000
+   => loady 0x82000000 115200
 
-| xmodem send eMMC image to RAM
-| md.b - memory display byte
+minicom |rarr| :kbd:`<CTRL+A>` |rarr| :kbd:`<S>` |rarr| ymodem |rarr| ``[MINICOM_RES]/`` |rarr| ``emmc.img``
+
+|b| md.b - memory display byte
 
 .. code:: text
 
-   loadx 0x82000000 115200
    md.b  0x82000000 0x4
 
-dump eMMC image from RAM to eMMC
-- `mmc <https://www.denx.de/wiki/view/DULG/UBootCmdGroupMMC>`__
-
-.. tip::
-   ``0x800 * 512B = 2048 * 512B = 1048576B = 1024 * 1024B = 1MiB``
+| dump eMMC image from RAM to eMMC
+  - `mmc <https://www.denx.de/wiki/view/DULG/UBootCmdGroupMMC>`__
+| |b| replace ``<N_BLOCKS_HEX>`` with the value of ``$n_blocks_hex``
+| |b| for ``<N_BLOCKS_DEC>`` expect the same value as ``$n_blocks_dec``
 
 .. code:: text
 
@@ -675,21 +803,18 @@ dump eMMC image from RAM to eMMC
    mmc dev 1
    mmc info
    mmc part
-   mmc write 0x82000000 0 0x800
-      MMC write: dev # 1, block # 0, count 2048 ... 2048 blocks written: OK
+   mmc write 0x82000000 0 <N_BLOCKS_HEX>
+      MMC write: dev # 1, block # 0, count <N_BLOCKS_DEC> ... <N_BLOCKS_DEC> blocks written: OK
 
 verify partition layout
 
 .. code:: text
 
    mmc part
-      Partition Map for MMC device 1  --   Partition Type: DOS
-
-      Part    Start Sector    Num Sectors     UUID            Type
-        1     1               2047            01d0a302-01     01
+      # (A)
    mmc rescan
    mmc part
-      # Should be the same as prevous one
+      # Should be the same as (A)
 
 view installed MLO
 

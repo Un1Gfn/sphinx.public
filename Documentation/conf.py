@@ -173,8 +173,10 @@ html_theme_options = {
 # html_baseurl = 'https://Un1Gfn.github.io/beaglebone'
 
 html_context = {'css_files': [
-    '_static/theme_overrides.css',
+    '_static/code.css',
+    '_static/narrow_nav.css',
     '_static/problematic.css',
+    '_static/theme_overrides.css',
 ]}
 
 # https://icon-icons.com/icon/chip-computer-hardware-memory-electronic-device/142017

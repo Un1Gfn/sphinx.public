@@ -15,8 +15,9 @@ def setup(app: sphinx.application.Sphinx):
 
     for n in [
         'emlink',
-        'stlink',
+        'ltlink',
         'prlink',  # => docutils.nodes.problematic -> span class="problematic" -> problematic.css -> strikethrough
+        'stlink',
     ]: app.add_role(name=n, role=util.link_fn, override=False)
 
     # https://www.sphinx-doc.org/en/master/extdev/index.html#extension-metadata
