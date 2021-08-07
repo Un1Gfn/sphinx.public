@@ -40,6 +40,7 @@
    GPU_hang
    Cheatsheet
    PkgMgmt
+   820G3
 
 Indices and tables
 ==================

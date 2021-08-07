@@ -9,6 +9,8 @@
 Misc
 ====
 
+U-Boot on `Read the Docs <https://u-boot.readthedocs.io/en/latest/index.html>`__
+
 `Title Capitalization Tool <https://capitalizemytitle.com/>`__
 
 | misterious article
@@ -20,6 +22,8 @@ Misc
 :el:`U-Boot stages <Panda How_to_MLO_&_u-boot#Introduction>`
 
 .. table::
+   :align: left
+   :widths: auto
 
    ================ ================= ============
     File             `Use Case`__      `Header`__
@@ -43,21 +47,6 @@ Misc
 .. __: https://lists.denx.de/listinfo
 .. __: https://www.google.com/search?q=site:lists.denx.de
 .. __: https://marc.info/?l=u-boot
-
-.. :prlink:`history <https://github.com/u-boot/u-boot/commits/master/configs/am335x_boneblack_vboot_defconfig>\ `\ :pr:`of configs/am335x_boneblack_vboot_defconfig`
-
-no need for verified boot, use ``configs/am335x_evm_defconfig`` instead\ [#]_
-
-.. table::
-
-   =================================== ============= ================ ============
-    :file:`configs/am335x`              version       u-boot-spl.bin   u-boot.img
-   =================================== ============= ================ ============
-    :pr:`evm_defconfig`                 `history`__
-    :file:`boneblack_vboot_defconfig`   v2021.04      |O|              |O|
-   =================================== ============= ================ ============
-
-.. __: https://github.com/u-boot/u-boot/commits/master/configs/am335x_boneblack_vboot_defconfig
 
 | `README <https://github.com/u-boot>`__
   - *Building the Software:*
@@ -85,8 +74,19 @@ no need for verified boot, use ``configs/am335x_evm_defconfig`` instead\ [#]_
 Get U-Boot
 ==========
 
-|alpha|. from `ALARM`__ [R]_
-----------------------------
+|alpha|. from `ALARM`__
+-----------------------
+
+.. error::
+     
+   | With :pkg:`alarm-armv7h/uboot-beaglebone`\ ``2017.07-1``, sending :file:`emmc.img` (>2Mib),
+   |  either right after :file:`u-boot-spl.bin`
+   |  or\ ``loadx``/\ ``loady``\ when U-Boot is running,
+   |   I get NAK at approx 500K.
+   | Anything other than
+     :file:`u-boot-spl.bin` (80KiB) and
+     :file:`u-boot.img` (400KiB)
+     is not realy possible to send.
 
 .. __: https://archlinuxarm.org/platforms/armv7/ti/beaglebone-green-wireless
 
@@ -130,7 +130,7 @@ u-boot-spl.bin ::
       <(xxd -c 8 -u alarm_boot/MLO            | cut -d':' -f2-) \
       <(xxd -c 8 -u alarm_boot/u-boot-spl.bin | cut -d':' -f2-)
 
-shortcut for minicom::
+convenience symlink for minicom\ [#MR]_ ::
 
    echo; \
       ls -Al alarm_boot; echo; \
@@ -138,8 +138,302 @@ shortcut for minicom::
       sudo ln -sv "$(realpath alarm_boot)" "$_"; echo; \
       sudo ls -Al /root/MINICOM_RES/; echo
 
-|beta|. build w/ buildroot
---------------------------
+.. https://docs.readthedocs.io/en/stable/guides/cross-referencing-with-sphinx.html
+.. _reference_label_u-boot_build_manually:
+
+|beta|. build Manually [R]_
+---------------------------
+
+.. :prlink:`history <https://github.com/u-boot/u-boot/commits/master/configs/am335x_boneblack_vboot_defconfig>\ `\ :pr:`of configs/am335x_boneblack_vboot_defconfig`
+
+no need for verified boot, use\ ``configs/am335x_evm_defconfig``\ instead\ [#]_
+
+.. table::
+   :align: left
+   :widths: auto
+
+   ================================== ============= ============= =========
+   \                                                 successful?
+   ------------------------------------------------ -----------------------
+    :file:`configs/am335x`             version       stage 2       stage 3
+   ================================== ============= ============= =========
+    :pr:`_boneblack_vboot_defconfig`   `history`__
+    :file:`_evm_defconfig`             v2021.04      |O|           |O|
+    :file:`_evm_defconfig`             v2021.07      ?             ?
+   ================================== ============= ============= =========
+
+.. __: https://github.com/u-boot/u-boot/commits/master/configs/am335x_boneblack_vboot_defconfig
+
+`contributing <https://archlinuxarm.org/wiki/Contributing>`__
+- send PR to archlinuxarm/PKGBUILDs/\ `alarm/uboot-beaglebone <https://github.com/archlinuxarm/PKGBUILDs/tree/master/alarm/uboot-beaglebone>`__
+
+| Docs » Build U-Boot » `Building with GCC <https://u-boot.readthedocs.io/en/latest/build/gcc.html>`__
+| :el:`eLinux <Building_for_BeagleBone>`
+| TI/`Create a Network Bootable U-Boot Image <https://web.archive.org/web/https://processors.wiki.ti.com/index.php/Sitara_Linux_Program_the_eMMC_on_Beaglebone_Black#Create_a_Network_Bootable_U-Boot_Image>`__
+
+| :pkg:`AUR/distccd-alarm-armv7h`
+| |b| :aw:`arch wiki <Distcc_Cross-Compiling>`
+| |b| `alarm wiki <https://archlinuxarm.org/wiki/Distcc_Cross-Compiling>`__
+
+.. table:: u-boot tarball
+   :align: left
+   :widths: auto
+
+   =================== ========== =========
+    Source              Name       GPG sig
+   =================== ========== =========
+    `nginx`__            202?.??   |O|
+    `GitLab`__          v202?.?? 
+    `GitHub mirror`__   v202?.?? 
+   =================== ========== =========
+
+.. __: https://ftp.denx.de/pub/u-boot/
+.. __: https://source.denx.de/u-boot/u-boot/-/tags
+.. __: https://github.com/u-boot/u-boot/tags
+
+get key\ [#gpgSR]_ ::
+
+   gpg --search-key --keyserver-options "http-proxy=http://127.0.0.1:8080" 1A3C7F70E08FAB1707809BBF147C39FF9634B72C
+   gpg --recv-keys  --keyserver-options "http-proxy=http://127.0.0.1:8080" 1A3C7F70E08FAB1707809BBF147C39FF9634B72C
+
+verify tarball wigh signature\ [#gpgV]_ ::
+
+   gpg --verify u-boot-2021.07.tar.bz2.sig u-boot-2021.07.tar.bz2
+
+kbuild menuconfig\ :ltlink:`$MENUCONFIG_COLOR <https://www.kernel.org/doc/html/latest/kbuild/kconfig.html#menuconfig-color>` ::
+
+   # make MENUCONFIG_COLOR=mono menuconfig
+
+.. danger::
+
+   Previous build will be lost!
+
+tools/`genboardscfg.py <https://github.com/u-boot/u-boot/blob/master/tools/genboardscfg.py>`__
+
+::
+
+   cd ~/beaglebone
+   rm -rf u-boot-2021.07/
+   tar xf ~/beaglebone/u-boot-2021.07.tar.bz2
+   cd u-boot-2021.07/
+
+.. warning::
+
+   Building U-Boot is non-trival.
+   Run everything in ``tmux || tmux attach`` from now on.
+
+.. warning::
+
+   ``export vars`` before invoking ``make`` on **any** target. Otherwise expect broken recipes!
+
+export vars ::
+
+   # In tmux
+   if [ -n "$PATH0" -o -n "$CROSS_COMPILE" -o -n "$KBUILD_OUTPUT" ]; then
+      printf "\n\e[31m%s\e[0m\n\n" "error"
+   else
+      PATH0="$PATH"
+      export PATH="$PATH:/opt/x-tools7h/arm-unknown-linux-gnueabihf/bin/"; hash -r
+      export CROSS_COMPILE="armv7l-unknown-linux-gnueabihf-"
+      export KBUILD_OUTPUT="O"
+      printf "\n\e[32m%s\e[0m\n\n" "vars exported"
+      echo PATH =
+      tr ':' '\n' <<<"$PATH"; echo
+      echo CROSS_COMPILE = "$CROSS_COMPILE"
+      file "$(which "${CROSS_COMPILE}gcc")"
+      echo
+      echo KBUILD_OUTPUT = "$KBUILD_OUTPUT"; echo
+   fi
+
+| :pkg:`core/linux-headers`\ :file:`/usr/lib/modules/$(uname -r)/build/scripts/`
+| |b| `diffconfig`__ - compare two .config files
+| |b| `config`__ - manipulate options in a .config file
+
+.. __: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/scripts/config
+.. __: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/scripts/diffconfig
+
+::
+
+   /usr/lib/modules/*/build/scripts/diffconfig configs/am335x_evm{,_spiboot}_defconfig | sed \
+      -e "$(printf 's/^-\(.*\)$/%s- \\1%s/g' $'\e''[31m' $'\e''[0m')" \
+      -e "$(printf 's/^+\(.*\)$/%s+ \\1%s/g' $'\e''[32m' $'\e''[0m')" \
+      | sort -k 2
+   make -j4 am335x_evm_defconfig
+   make -s ubootrelease
+   make -s ubootversion
+
+:raw-html:`<details><summary>failed <code class="docutils literal notranslate">make pdfdocs</code> attempt</summary>`
+
+| texbin/xelatex
+| texlive-core/mktexfmt
+| texbin/pdftex
+| texlive-latexextra/fncychap.sty
+| texlive-langchinese/ctexhook.sty
+
+| `<https://01.org/linuxgraphics/gfx-docs/drm/doc-guide/sphinx.html#sphinx-build>`__
+| `<https://www.sphinx-doc.org/en/master/man/sphinx-build.html#cmdoption-sphinx-build-D>`__
+| `<https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-language>`__
+
+::
+
+   make SPHINXOPTS="-D language=en" pdfdocs
+
+.. code:: text
+
+   Writing index file imx.idx
+   No file imx.aux.
+   (/usr/share/texmf-dist/tex/latex/base/ts1cmr.fd)
+   *geometry* driver: auto-detecting
+   *geometry* detected driver: xetex
+   (/usr/share/texmf-dist/tex/latex/hyperref/nameref.sty
+   (/usr/share/texmf-dist/tex/latex/refcount/refcount.sty)
+   (/usr/share/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty))
+
+   Package hyperref Warning: Rerun to get /PageLabels entry.
+
+
+   Package xeCJK Warning: Unknown CJK family `\CJKsfdefault' is being ignored.
+   (xeCJK)
+   (xeCJK)                Try to use `\setCJKsansfont[...]{...}' to define it.
+
+   (/usr/share/texmf-dist/tex/latex/amsfonts/umsa.fd)
+   (/usr/share/texmf-dist/tex/latex/amsfonts/umsb.fd) [1] [2] [1] [2]
+   Chapter 1.
+
+   Underfull \hbox (badness 10000) in paragraph at lines 85--85
+   |[][]\TU/DejaVuSans(0)/b/n/14.4 i.MX7D/i.MX8MM SRC_GPR10 PER-
+
+   ! LaTeX Error: Too deeply nested.
+
+   See the LaTeX manual or LaTeX Companion for explanation.
+   Type  H <return>  for immediate help.
+    ...
+
+   l.181 \begin{itemize}
+
+   ?
+
+:raw-html:`</details>`
+
+GTK2 (requires :pkg:`AUR/glade-gtk2` or :pkg:`AUR/libglade`?) ::
+
+   # make -j4 gconfig
+
+Qt5
+
+::
+
+   ldd scripts/kconfig/qconf | grep -i qt
+      # libQt5Widgets.so.5 => /usr/lib/libQt5Widgets.so.5 (0x00007fb634061000)
+      # libQt5Gui.so.5 => /usr/lib/libQt5Gui.so.5 (0x00007fb633987000)
+      # libQt5Core.so.5 => /usr/lib/libQt5Core.so.5 (0x00007fb63342e000)
+   make -j4 xconfig
+
+xconfig
+~~~~~~~
+
+apply the following changes by hand
+
+``Boot options -``
+
+.. code:: text
+
+   - Autoboot options - Autoboot - ☐
+
+``Command line interface -``
+
+.. code:: text
+
+   # - Device access commands - poweroff - ✓ # lib/efi_loader/efi_runtime.c:217: undefined reference to `do_poweroff'
+   - Device access commands - gpio     - ✓ # Command 'gpio' failed: Error -19
+
+``Environment -``
+
+.. code:: text
+
+   - Environment is not stored          - ✓
+   - Environment is in a FAT filesystem - ☐
+
+``Device Drivers - USB support -``
+
+.. code:: text
+
+   # - EHCI HCD (USB 2.0) support - ✓ # asm/arch/ehci.h not found
+   #
+   # CONFIG_USB_GADGET_VBUS_DRAW undeclared
+   # - MUSB host mode support - ☐
+   # - MUSB gadget mode support - ☐
+   # - Enable TI OTG USB controller - ☐
+   # - USB Gadget Support - ☐
+   #
+   # ASIX
+   - USB to Ethernet Controller Drivers - ✓
+   - USB to Ethernet Controller Drivers - ASIX AX8817X (USB 2.0) support - ✓
+   - USB to Ethernet Controller Drivers - ASIX AX88179 (USB 3.0) support - ✓
+
+| :kbd:`<CTRL+S>` (File - Save)
+| :kbd:`<CTRL+Q>` (File - Quit)
+
+build
+~~~~~
+
+build ::
+
+   # In tmux
+   /usr/bin/time --format="\n  wall clock time - %E\n" make -j4 W=1 all
+
+reset vars ::
+
+   # https://stackoverflow.com/a/35322346
+   if [ -n "$PATH0" ]; then
+      export -n CROSS_COMPILE KBUILD_OUTPUT PATH0
+      export PATH="$PATH0"; hash -r
+      unset  -v CROSS_COMPILE KBUILD_OUTPUT PATH0
+      printf "\n\e[32m%s\e[0m\n\n" "vars reset"
+   else
+      printf "\n\e[31m%s\e[0m\n\n" "error"
+   fi
+
+check output ::
+
+   # git check-ignore * | xargs file
+   { \
+      echo
+      file O/* O/spl/* | grep -v -F -e ASCII -e directory
+      echo
+      find O/ -type f -a \( \
+           -iname GARBAGE        \
+        -o -iname "*bin"         \
+        -o -iname "*dtb"         \
+        -o -iname "*img"         \
+        -o -iname "*spl"         \
+        -o -iname "*spl*bin*"    \
+        -o -iname "*spl*dtb*"    \
+        -o -iname "*spl*img*"    \
+        -o -iname "*u-boot"      \
+        -o -iname "*u-boot*bin*" \
+        -o -iname "*u-boot*dtb*" \
+        -o -iname "*u-boot*img*" \
+        -o -iname "mlo*"         \
+      \)
+      echo
+   } | less +X -SRM +%
+
+convenience symlink for minicom\ [#MR]_ ::
+
+   TS=(O/{spl/u-boot-spl.bin,MLO,u-boot.img})
+   echo && \
+      ls -lh ${TS[@]} && echo && \
+      sudo rm -rfv /root/MINICOM_RES && echo && \
+      sudo mkdir -pv /root/MINICOM_RES && \
+      for T in ${TS[@]}; do
+        sudo ln -sv "$(realpath "$T")" -t /root/MINICOM_RES/
+      done && \
+      echo
+   unset -v TS
+
+|gamma|. build w/ buildroot
+---------------------------
 
 | bump :pkg:`AUR/buildroot-meta` according to latest `requirements <https://buildroot.org/downloads/manual/manual.html>`__
 | install :pkg:`AUR/buildroot-meta`
@@ -183,144 +477,7 @@ verify tarball with checksum ::
       Floating point strategy = NEON
       ...
 
-\...
-
-.. https://docs.readthedocs.io/en/stable/guides/cross-referencing-with-sphinx.html
-.. _reference_label_u-boot_build_manually:
-
-|gamma|. build Manually
------------------------
-
-`contributing <https://archlinuxarm.org/wiki/Contributing>`__
-- send PR to archlinuxarm/PKGBUILDs/\ `alarm/uboot-beaglebone <https://github.com/archlinuxarm/PKGBUILDs/tree/master/alarm/uboot-beaglebone>`__
-
-| Docs » Build U-Boot » `Building with GCC <https://u-boot.readthedocs.io/en/latest/build/gcc.html>`__
-| :el:`eLinux <Building_for_BeagleBone>`
-| TI/`Create a Network Bootable U-Boot Image <https://web.archive.org/web/https://processors.wiki.ti.com/index.php/Sitara_Linux_Program_the_eMMC_on_Beaglebone_Black#Create_a_Network_Bootable_U-Boot_Image>`__
-
-| :pkg:`AUR/distccd-alarm-armv7h`
-| |b| :aw:`arch wiki <Distcc_Cross-Compiling>`
-| |b| `alarm wiki <https://archlinuxarm.org/wiki/Distcc_Cross-Compiling>`__
-
-.. table:: u-boot tarball
-
-   =================== ========== =========
-    Source              Name       GPG sig
-   =================== ========== =========
-    `nginx`__            202?.??   |O|
-    `GitLab`__          v202?.?? 
-    `GitHub mirror`__   v202?.?? 
-   =================== ========== =========
-
-.. __: https://ftp.denx.de/pub/u-boot/
-.. __: https://source.denx.de/u-boot/u-boot/-/tags
-.. __: https://github.com/u-boot/u-boot/tags
-
-get key\ [#gpgSR]_ ::
-
-    gpg --search-key --keyserver-options "http-proxy=http://127.0.0.1:8080" 1A3C7F70E08FAB1707809BBF147C39FF9634B72C
-    gpg --recv-keys  --keyserver-options "http-proxy=http://127.0.0.1:8080" 1A3C7F70E08FAB1707809BBF147C39FF9634B72C
-
-verify tarball wigh signature\ [#gpgV]_ ::
-
-    gpg --verify u-boot-202?.??.tar.bz2.sig u-boot-202?.??.tar.bz2
-
-`kbuild <https://www.kernel.org/doc/html/latest/kbuild/kconfig.html#menuconfig-color>`__ ::
-
-   make MENUCONFIG_COLOR=mono menuconfig
-
-| :pkg:`core/linux-headers`/usr/lib/modules/$(uname -r)/build/scripts/
-| |b| `diffconfig`__ - compare two .config files
-| |b| `config`__ - manipulate options in a .config file
-
-.. __: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/scripts/config
-.. __: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/scripts/diffconfig
-
-tools/`genboardscfg.py <https://github.com/u-boot/u-boot/blob/master/tools/genboardscfg.py>`__
-
-::
-
-   cd ~/beaglebone
-   source ~/beaglebone/u-boot.bashrc
-   tar xf ~/beaglebone/u-boot-v2021.04.tar.bz2
-   cd u-boot-*/
-   make -j4 am335x_evm_defconfig
-   make -j4 xconfig
-
-Manually apply the following changes
-
-``Boot options -``
-
-.. code:: text
-
-   - Autoboot options - Autoboot - ☐
-
-``Command line interface -``
-
-.. code:: text
-
-   # - Device access commands - poweroff - ✓ # lib/efi_loader/efi_runtime.c:217: undefined reference to `do_poweroff'
-   - Device access commands - gpio     - ✓ # Command 'gpio' failed: Error -19
-
-``Environment -``
-
-.. code:: text
-
-   - Environment is not stored          - ✓
-   - Environment is in a FAT filesystem - ☐
-
-``Device Drivers - USB support -``
-
-.. code:: text
-
-   # - EHCI HCD (USB 2.0) support - ✓ # asm/arch/ehci.h not found
-   #
-   # CONFIG_USB_GADGET_VBUS_DRAW undeclared
-   # - MUSB host mode support - ☐
-   # - MUSB gadget mode support - ☐
-   # - Enable TI OTG USB controller - ☐
-   # - USB Gadget Support - ☐
-   #
-   # ASIX
-   - USB to Ethernet Controller Drivers - ✓
-   - USB to Ethernet Controller Drivers - ASIX AX8817X (USB 2.0) support - ✓
-   - USB to Ethernet Controller Drivers - ASIX AX88179 (USB 3.0) support - ✓
-   # Save
-
-build ::
-
-   make -j4 all && \
-   ls -l O/{spl/u-boot-spl.bin,MLO,u-boot.img} && \
-   sudo rm -rfv /root/MINICOM_RES && \
-   sudo mkdir /root/MINICOM_RES && \
-   for DEST in {spl/u-boot-spl.bin,u-boot.img}; do
-     sudo ln -sv "$(realpath O)/$DEST" -t /root/MINICOM_RES/
-   done
-
-check output ::
-
-   git check-ignore * | xargs file
-   file * spl/* | grep -v -F -e ASCII -e directory | less -S
-   find . -type f -a \( \
-        -iname GARBAGE"       \
-     -o -iname "*bin"         \
-     -o -iname "*dtb"         \
-     -o -iname "*img"         \
-     -o -iname "*spl"         \
-     -o -iname "*spl*bin*"    \
-     -o -iname "*spl*dtb*"    \
-     -o -iname "*spl*img*"    \
-     -o -iname "*u-boot"      \
-     -o -iname "*u-boot*bin*" \
-     -o -iname "*u-boot*dtb*" \
-     -o -iname "*u-boot*img*" \
-     -o -iname "mlo*"         \
-   \)
-
-
-
-.. subsection
-.. ~~~~~~~~~~
+\... (incomplete)
 
 Make eMMC image
 ===============
@@ -399,7 +556,7 @@ genimage is intended to be run in a fakeroot environment\ [#]_ ::
    echo; sfdisk -Vl /tmp/genimage_outputpath/emmc.img
    echo; mdir -i /tmp/genimage_outputpath/fat.partimg
 
-shortcut for minicom ::
+convenience symlink for minicom\ [#MR]_ ::
 
    echo; \
    sudo rm -fv /root/MINICOM_RES/emmc.img; \
@@ -857,6 +1014,7 @@ Footnotes
 
 .. [#]      MLO = **M**\ MC **lo**\ ader
 .. [#]      https://lists.denx.de/pipermail/u-boot/2021-May/449518.html
+.. [#MR]    These should all be consistent
 .. [#]      http://lifeonubuntu.com/tar-errors-ignoring-unknown-extended-header-keyword/
 .. [#gpgSR] https://wiki.archlinux.org/title/GnuPG#Searching_and_receiving_keys
 .. [#gpgV]  https://wiki.archlinux.org/title/GnuPG#Verify_a_signature

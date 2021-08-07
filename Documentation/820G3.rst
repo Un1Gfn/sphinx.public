@@ -1,0 +1,29 @@
+=====
+820G3
+=====
+
+BIOS
+====
+
+(WIP move everything from `<https://github.com/Un1Gfn/820g3>`__)
+
+D surface screws
+================
+
+.. tip::
+
+   To access ``A``, eject plactic dummy SD.
+
+.. https://electronicsclub.info/ics.htm#pins
+.. code:: text
+
+   [PWR> 8      7      6      5
+                               
+         9     [ V E N T ]             
+           >RJ45]              
+         A             C      4
+                               
+                B              
+                               
+         1      2             3
+

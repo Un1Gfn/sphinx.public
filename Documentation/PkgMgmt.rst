@@ -4,9 +4,13 @@
 PkgMgmt
 =======
 
-paru inplace [R]_
+/usr/local/bin/pm
 =================
 
+?
+
+paru inplace [R]_
+=================
 
 :file:`/etc/paru.conf`
 
