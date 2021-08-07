@@ -104,10 +104,10 @@ in case of ``tar: Ignoring unknown extended header keyword 'SCHILY.fflags'``\
 
    # sha1sum -c ArchLinuxARM-am33x-latest.tar.gz.sha1sum
    # tar -x -v --no-xattrs --strip-components 1 -f ArchLinuxARM-am33x-latest.tar.gz "./boot"
-   rm -rfv alarm_boot
-   mkdir -pv alarm_boot
+   rm -rfv /tmp/MINICOM_RES
+   mkdir -pv /tmp/MINICOM_RES
    bsdtar -x \
-      -C "./alarm_boot" \
+      -C "/tmp/MINICOM_RES" \
       -f uboot-beaglebone-2017.07-1-armv7h.pkg.tar.xz \
       --no-xattrs \
       --strip-components 1 \
@@ -117,26 +117,18 @@ in case of ``tar: Ignoring unknown extended header keyword 'SCHILY.fflags'``\
    #    --no-xattrs \
    #    --strip-components 1 \
    #    -f uboot-beaglebone-2017.07-1-armv7h.pkg.tar.xz \
-   #    -C "./alarm_boot"
+   #    -C "/tmp/MINICOM_RES"
 
 ``MLO``
 |rarr| `strip 520-byte header <https://e2e.ti.com/support/processors/f/processors-forum/321500/serial-boot-on-am3359-mlo-does-not-give-prompt>`__ |rarr|
 u-boot-spl.bin ::
 
    # dd if=MLO of=u-boot-spl.bin bs=1 skip=520
-   { [ -f alarm_boot/u-boot-spl.bin ] && echo error; } \
-      || tail -c +521 alarm_boot/MLO >alarm_boot/u-boot-spl.bin
+   { [ -f /tmp/MINICOM_RES/u-boot-spl.bin ] && echo error; } \
+      || tail -c +521 /tmp/MINICOM_RES/MLO >/tmp/MINICOM_RES/u-boot-spl.bin
    diff -u10 \
-      <(xxd -c 8 -u alarm_boot/MLO            | cut -d':' -f2-) \
-      <(xxd -c 8 -u alarm_boot/u-boot-spl.bin | cut -d':' -f2-)
-
-convenience symlink for minicom\ [#MR]_ ::
-
-   echo; \
-      ls -Al alarm_boot; echo; \
-      sudo rm -fv /root/MINICOM_RES; \
-      sudo ln -sv "$(realpath alarm_boot)" "$_"; echo; \
-      sudo ls -Al /root/MINICOM_RES/; echo
+      <(xxd -c 8 -u /tmp/MINICOM_RES/MLO            | cut -d':' -f2-) \
+      <(xxd -c 8 -u /tmp/MINICOM_RES/u-boot-spl.bin | cut -d':' -f2-)
 
 .. https://docs.readthedocs.io/en/stable/guides/cross-referencing-with-sphinx.html
 .. _reference_label_u-boot_build_manually:
@@ -204,9 +196,17 @@ kbuild menuconfig\ :ltlink:`$MENUCONFIG_COLOR <https://www.kernel.org/doc/html/l
 
    # make MENUCONFIG_COLOR=mono menuconfig
 
+.. _ref_label_already_built_BACKREF:
+
+.. tip::
+
+   If a previous build is available,
+   jump :ref:`here <ref_label_already_built>`\ |:dart:|
+   to collect its output instead of building again.
+
 .. danger::
 
-   Previous build will be lost!
+   Previous build will be lost if you proceed!
 
 tools/`genboardscfg.py <https://github.com/u-boot/u-boot/blob/master/tools/genboardscfg.py>`__
 
@@ -374,9 +374,6 @@ apply the following changes by hand
 | :kbd:`<CTRL+S>` (File - Save)
 | :kbd:`<CTRL+Q>` (File - Quit)
 
-build
-~~~~~
-
 build ::
 
    # In tmux
@@ -394,8 +391,14 @@ reset vars ::
       printf "\n\e[31m%s\e[0m\n\n" "error"
    fi
 
-check output ::
+.. _ref_label_already_built:
 
+| :ref:`jump back<ref_label_already_built_BACKREF>`\ |:dart:|
+| check output
+
+::
+
+   cd ~/beaglebone/u-boot-2021.07
    # git check-ignore * | xargs file
    { \
       echo
@@ -419,17 +422,14 @@ check output ::
       echo
    } | less +X -SRM +%
 
-convenience symlink for minicom\ [#MR]_ ::
+collect artifacts ::
 
-   TS=(O/{spl/u-boot-spl.bin,MLO,u-boot.img})
+   TS=(O/{spl/u-boot-spl.bin,MLO,u-boot.img}) &&
    echo && \
       ls -lh ${TS[@]} && echo && \
-      sudo rm -rfv /root/MINICOM_RES && echo && \
-      sudo mkdir -pv /root/MINICOM_RES && \
-      for T in ${TS[@]}; do
-        sudo ln -sv "$(realpath "$T")" -t /root/MINICOM_RES/
-      done && \
-      echo
+      rm -rfv /tmp/MINICOM_RES && \
+      mkdir -pv /tmp/MINICOM_RES && echo && \
+      cp -iv "${TS[@]}" /tmp/MINICOM_RES/ && echo
    unset -v TS
 
 |gamma|. build w/ buildroot
@@ -521,9 +521,9 @@ genimage.cfg `syntax <https://github.com/pengutronix/genimage/blob/master/README
    rm -rfv /tmp/genimage*
    # mkdir -pv /tmp/genimage_emptydir
    # Don't put u-boot-spl.bin here!
-   f=(MLO boot.scr boot.txt mkscr u-boot.img)
+   f=(MLO u-boot.img)
    # For preserve of timestamps, in "image fat.partimg", use "mountpoint=" instead of "vfat{}"
-   # for i in $f; do touch -c -d "1989-06-04T00:00:00" "$(git rev-parse --show-toplevel)/alarm_boot/$f"; done
+   # for i in $f; do touch -c -d "1989-06-04T00:00:00" "/tmp/MINICOM_RES/$f"; done
    ./cfg.sh ${f[@]}
    python3 -m pygments -l cfg /tmp/genimage.cfg
 
@@ -556,13 +556,13 @@ genimage is intended to be run in a fakeroot environment\ [#]_ ::
    echo; sfdisk -Vl /tmp/genimage_outputpath/emmc.img
    echo; mdir -i /tmp/genimage_outputpath/fat.partimg
 
-convenience symlink for minicom\ [#MR]_ ::
+collect artifacts ::
 
-   echo; \
-   sudo rm -fv /root/MINICOM_RES/emmc.img; \
-   sudo ln -sv "$(realpath /tmp/genimage_outputpath/emmc.img)" "$_"; echo; \
-   sudo file /root/MINICOM_RES; echo
-   sudo ls -Al /root/MINICOM_RES/; echo
+   echo && \
+      ls -Alh /tmp/MINICOM_RES && echo
+      rm -fv /tmp/MINICOM_RES/emmc.img && \
+         cp -iv /tmp/genimage_outputpath/emmc.img "$_" && echo && \
+      ls -Alh /tmp/MINICOM_RES/ && echo
 
 |beta|. manually
 ----------------
@@ -738,6 +738,11 @@ escalate ::
 
    su -
 
+convenience symlink for minicom ::
+
+   sudo rm -rfv /root/MINICOM_RES
+   sudo ln -sv "/tmp/MINICOM_RES" /root/MINICOM_RES
+
 run minicom ::
 
    # --metakey
@@ -786,59 +791,58 @@ Wait for at most 30 seconds until ``CCC...`` appears in minicom console
 
 2. :kbd:`<CTRL+A>` |rarr| :kbd:`<S>` |rarr| ymodem |rarr| ``[MINICOM_RES]/`` |rarr| ``u-boot.img``
 
-.. code:: text
+.. code-block:: text
+   :emphasize-lines: 13
 
-   mode, 2887(SOH)/0(STX)/0(CAN) packets, 7 retries
-   Loaded 369200 bytes
+   CRC mode, 8852(SOH)/0(STX)/0(CAN) packets, 4 retries
+   Loaded 1132684 bytes
 
-   U-Boot 2017.07-1 (Sep 02 2017 - 21:04:29 +0000) Arch Linux ARM
+
+   U-Boot 2021.07 (Aug 07 2021 - 13:40:18 +0800)
 
    CPU  : AM335X-GP rev 2.1
-   I2C:   ready
+   Model: TI AM335x BeagleBone Black
    DRAM:  512 MiB
-   No match for driver 'omap_hsmmc'
-   No match for driver 'omap_hsmmc'
-   Some drivers were not found
+   WDT:   Started with servicing (60s timeout)
+   NAND:  0 MiB
    MMC:   OMAP SD/MMC: 0, OMAP SD/MMC: 1
-   Using default environment
-
+   Loading Environment from nowhere... OK
    <ethaddr> not set. Validating first E-fuse MAC
-   Net:   Could not get PHY for cpsw: addr 0
-   cpsw, usb_ether
-   Press SPACE to abort autoboot in 2 seconds
+   Net:   Could not get PHY for ethernet@4a100000: addr 0
+   eth2: ethernet@4a100000, eth3: usb_ether
+
 
 check U-Boot version
 
 .. code:: text
 
-   => version
-   U-Boot 2017.07-1 (Sep 02 2017 - 21:04:29 +0000) Arch Linux ARM
-   gcc (GCC) 7.1.1 20170630
-   GNU ld (GNU Binutils) 2.28.0.20170506
+   version
+      # U-Boot 2021.07 (Aug 07 2021 - 13:40:18 +0800)
+
+      # armv7l-unknown-linux-gnueabihf-gcc (crosstool-NG 1.23.0.418-d590) 10.2.0
+      # GNU ld (crosstool-NG 1.23.0.418-d590) 2.35
 
 Send & Write eMMC
 =================
 
-to get exact size of eMMC image,
-fire up another terminal and escalate
+| fire up another terminal,
+  get exact size of eMMC image and verify 512B-alignment
 
-.. code:: shell-session
+::
 
-   $ su -
-   Password:
-   #
-
-get size & verify 512B-align ::
-
-   sz="$(wc -c </root/MINICOM_RES/emmc.img)"
+   sz="$(wc -c </tmp/MINICOM_RES/emmc.img)"
    rem="$((sz%512))"
    n_blocks_dec="$((sz/512))"
    n_blocks_hex="$(printf "%x" "$n_blocks_dec")"
    if [ "$rem" -eq 0 ]
-   then printf "\n  \e[32m[%s]\e[0m %sB = %s(0x%s) * 512B + %sB\n\n" ok    "$sz" "$n_blocks_dec" "$n_blocks_hex" "$rem"
-   else printf "\n  \e[31m[%s]\e[0m %sB = %s(0x%s) * 512B + %sB\n\n" error "$sz" "$n_blocks_dec" "$n_blocks_hex" "$rem"
+   then printf "\n  \e[32m[%s]\e[0m %sB = %s(0x%s) * 512B + \e[32m%sB\e[0m\n\n" ok    "$sz" "$n_blocks_dec" "$n_blocks_hex" "$rem"
+   else printf "\n  \e[31m[%s]\e[0m %sB = %s(0x%s) * 512B + \e[31m%sB\e[0m\n\n" error "$sz" "$n_blocks_dec" "$n_blocks_hex" "$rem"
    fi
    unset -v rem
+   printf '  %s = %s\n'             '$sz' "$sz"
+   printf '  %s = %s\n' '0x$n_blocks_hex' "0x$n_blocks_hex"
+   printf '  %s = %s\n'   '$n_blocks_dec'   "$n_blocks_dec"
+   echo
 
 `ALARM <https://archlinuxarm.org/packages/armv7h/uboot-beaglebone/files/uboot-beaglebone.install>`__
 - `boot.txt <https://archlinuxarm.org/packages/armv7h/uboot-beaglebone/files/boot.txt>`__
@@ -848,52 +852,43 @@ get size & verify 512B-align ::
 
 .. code:: text
 
-   => mmc list
-   OMAP SD/MMC: 0
-   OMAP SD/MMC: 1
-
-(microSD/TF slot?)
+   mmc list
+      # OMAP SD/MMC: 0
+      # OMAP SD/MMC: 1
 
 .. code:: text
 
-   => mmc dev 0
-   Card did not respond to voltage select!
-   mmc_init: -95, time 13
-
-eMMC
-
-.. code:: text
-
-   => mmc dev 1
-   ** First descriptor is NOT a primary desc on 1:1 **
-   switch to partitions #0, OK
-   mmc1(part 0) is current device
+   mmc dev 1
+      # switch to partitions #0, OK
+      # mmc1(part 0) is current device
 
 .. https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html#directive-option-code-block-emphasize-lines
 .. code-block:: text
-   :emphasize-lines: 7
+   :emphasize-lines: 8
 
    => mmc info
    Device: OMAP SD/MMC
    Manufacturer ID: 13
    OEM: 14e
    Name: Q2J54
-   Tran Speed: 52000000
+   Bus Speed: 48000000
+   Mode: MMC High Speed (52MHz)
    Rd Block Len: 512
    MMC version 5.0
    High Capacity: Yes
    Capacity: 3.6 GiB
-   Bus Width: 4-bit
+   Bus Width: 8-bit
    Erase Group Size: 512 KiB
-   HC WP Group Size: 8 MiB
    User Capacity: 3.6 GiB WRREL
    Boot Capacity: 2 MiB ENH
    RPMB Capacity: 512 KiB ENH
+   Boot area 0 is not write protected
+   Boot area 1 is not write protected
 
 .. code:: text
 
-   => mmc part
-   ## Unknown partition table type 0
+   mmc part
+      # ## Unknown partition table type 0
 
 .. tip::
    | Make sure eMMC block size is ``512B``
@@ -906,13 +901,12 @@ erase the first 10MiB of eMMC
 
 .. code:: text
 
-  => mmc erase 0 0x5000
-
-  MMC erase: dev # 1, block # 0, count 20480 ... 20480 blocks erased: OK
-  => mmc rescan
-  ** First descriptor is NOT a primary desc on 1:1 **
-  => mmc part
-  ## Unknown partition table type 0
+   mmc erase 0 0x5000
+      #
+      # MMC erase: dev # 1, block # 0, count 20480 ... 20480 blocks erased: OK
+   mmc rescan
+   mmc part
+      # ## Unknown partition table type 0
 
 .. tip::
    | |b| RAM block size is ``1B``
@@ -929,30 +923,38 @@ erase the first 10MiB of eMMC
 
 .. code:: text
 
-   => cmp.b   0x100000 0x82000000 0xa00000
-      # Expect difference
-   => mw.b  0x82000000          0 0xa00000
-   => cmp.b   0x100000 0x82000000 0xa00000
-   Total of 10485760 byte(s) were the same
+   # Error prone, don't try accessing 0x100000 any more
+   # cmp.b   0x100000 0x82000000 0xa00000
+   mw.b  0x82000000          0 0xa00000
 
-get ready for receiving
+get ready for ``ymodem`` transfer
 
 .. code:: text
 
-   => loady 0x82000000 115200
+   loady 0x82000000 115200
 
-minicom |rarr| :kbd:`<CTRL+A>` |rarr| :kbd:`<S>` |rarr| ymodem |rarr| ``[MINICOM_RES]/`` |rarr| ``emmc.img``
+| minicom |rarr| :kbd:`<CTRL+A>` |rarr| :kbd:`<S>` |rarr| ymodem |rarr| ``[MINICOM_RES]/`` |rarr| ``emmc.img``
+| for ``<N_BLOCKS_DEC>`` expect the same value as ``$sz``
+
+.. code:: text
+
+   ## Ready for binary (ymodem) download to 0x82000000 at 115200 bps...
+   CRC mode, 16390(SOH)/0(STX)/0(CAN) packets, 4 retries
+   ## Total Size      = 0x... = <N_BLOCKS_DEC> Bytes
 
 |b| md.b - memory display byte
 
 .. code:: text
 
-   md.b  0x82000000 0x4
+   md.b 0x82000000 0x1BE
+      # Expect 446 bytes all zero
+   md.b 0x82000000 0x200
+      # Expect 512 bytes with MBR partition table near the end
 
 | dump eMMC image from RAM to eMMC
   - `mmc <https://www.denx.de/wiki/view/DULG/UBootCmdGroupMMC>`__
-| |b| replace ``<N_BLOCKS_HEX>`` with the value of ``$n_blocks_hex``
-| |b| for ``<N_BLOCKS_DEC>`` expect the same value as ``$n_blocks_dec``
+| |b| replace ``<N_BLOCKS_HEX>`` with the value of ``echo "0x$n_blocks_hex"`` |:warning:| add ``0x`` prefix
+| |b| for ``<N_BLOCKS_DEC>`` expect the same value as ``echo "$n_blocks_dec"``
 
 .. code:: text
 
@@ -973,12 +975,11 @@ verify partition layout
    mmc part
       # Should be the same as (A)
 
-view installed MLO
+view installed ``MLO`` and ``u-boot.img``
 
 .. warning::
 
    | There shouldn't be ``u-boot-spl.bin`` here.
-   | Expect ``MLO``.
 
 .. code:: text
 
@@ -1014,7 +1015,6 @@ Footnotes
 
 .. [#]      MLO = **M**\ MC **lo**\ ader
 .. [#]      https://lists.denx.de/pipermail/u-boot/2021-May/449518.html
-.. [#MR]    These should all be consistent
 .. [#]      http://lifeonubuntu.com/tar-errors-ignoring-unknown-extended-header-keyword/
 .. [#gpgSR] https://wiki.archlinux.org/title/GnuPG#Searching_and_receiving_keys
 .. [#gpgV]  https://wiki.archlinux.org/title/GnuPG#Verify_a_signature
