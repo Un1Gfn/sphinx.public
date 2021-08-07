@@ -4,6 +4,11 @@
 PkgMgmt
 =======
 
+Pull GPG Key
+============
+
+:file:`~/beaglebone/gpg_proxy.sh`
+
 /usr/local/bin/pm
 =================
 

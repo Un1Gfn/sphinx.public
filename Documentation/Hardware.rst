@@ -129,6 +129,14 @@ UART
    :height: 80
    :width: 100%
 
+|
+
+USB
+===
+
+| `<http://wiki.seeedstudio.com/BeagleBone_Green_Wireless/#step2-install-drivers>`__
+| |b| ``./mkudevrule.sh``
+
 ----
 
 .. Footnotes

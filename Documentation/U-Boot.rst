@@ -201,7 +201,7 @@ kbuild menuconfig\ :ltlink:`$MENUCONFIG_COLOR <https://www.kernel.org/doc/html/l
 .. tip::
 
    If a previous build is available,
-   jump :ref:`here <ref_label_already_built>`\ |:dart:|
+   :ref:`jump forth <ref_label_already_built>`\ |:dart:|
    to collect its output instead of building again.
 
 .. danger::
@@ -220,7 +220,11 @@ tools/`genboardscfg.py <https://github.com/u-boot/u-boot/blob/master/tools/genbo
 .. warning::
 
    Building U-Boot is non-trival.
-   Run everything in ``tmux || tmux attach`` from now on.
+   Run everything in tmux from now on.
+
+::
+
+   tmux || tmux attach
 
 .. warning::
 
@@ -254,6 +258,7 @@ export vars ::
 
 ::
 
+   # In tmux
    /usr/lib/modules/*/build/scripts/diffconfig configs/am335x_evm{,_spiboot}_defconfig | sed \
       -e "$(printf 's/^-\(.*\)$/%s- \\1%s/g' $'\e''[31m' $'\e''[0m')" \
       -e "$(printf 's/^+\(.*\)$/%s+ \\1%s/g' $'\e''[32m' $'\e''[0m')" \
@@ -391,6 +396,10 @@ reset vars ::
       printf "\n\e[31m%s\e[0m\n\n" "error"
    fi
 
+exit tmux ::
+
+   logout
+
 .. _ref_label_already_built:
 
 | :ref:`jump back<ref_label_already_built_BACKREF>`\ |:dart:|
@@ -518,6 +527,7 @@ genimage.cfg `syntax <https://github.com/pengutronix/genimage/blob/master/README
 
 ::
 
+   cd ~/beaglebone
    rm -rfv /tmp/genimage*
    # mkdir -pv /tmp/genimage_emptydir
    # Don't put u-boot-spl.bin here!
@@ -555,6 +565,13 @@ genimage is intended to be run in a fakeroot environment\ [#]_ ::
 
    echo; sfdisk -Vl /tmp/genimage_outputpath/emmc.img
    echo; mdir -i /tmp/genimage_outputpath/fat.partimg
+
+.. code:: text
+
+   ... Boot   Start ... Size Id Type
+   ... *    (not 1) ...   2M  1 FAT12
+   No errors detected.
+
 
 collect artifacts ::
 
@@ -934,9 +951,10 @@ get ready for ``ymodem`` transfer
    loady 0x82000000 115200
 
 | minicom |rarr| :kbd:`<CTRL+A>` |rarr| :kbd:`<S>` |rarr| ymodem |rarr| ``[MINICOM_RES]/`` |rarr| ``emmc.img``
-| for ``<N_BLOCKS_DEC>`` expect the same value as ``$sz``
+| |b| expect ``<N_BLOCKS_DEC>`` to be the same as ``$sz``
 
-.. code:: text
+.. code-block:: text
+   :emphasize-lines: 3
 
    ## Ready for binary (ymodem) download to 0x82000000 at 115200 bps...
    CRC mode, 16390(SOH)/0(STX)/0(CAN) packets, 4 retries
@@ -946,17 +964,17 @@ get ready for ``ymodem`` transfer
 
 .. code:: text
 
-   md.b 0x82000000 0x1BE
-      # Expect 446 bytes all zero
    md.b 0x82000000 0x200
-      # Expect 512 bytes with MBR partition table near the end
+      # Expect 512 bytes with boot code and MBR partition table near the end
 
 | dump eMMC image from RAM to eMMC
   - `mmc <https://www.denx.de/wiki/view/DULG/UBootCmdGroupMMC>`__
-| |b| replace ``<N_BLOCKS_HEX>`` with the value of ``echo "0x$n_blocks_hex"`` |:warning:| add ``0x`` prefix
-| |b| for ``<N_BLOCKS_DEC>`` expect the same value as ``echo "$n_blocks_dec"``
+| |b| replace ``<N_BLOCKS_HEX>`` with ``0x$n_blocks_hex``
+|     \- |:warning:| add ``0x`` prefix
+| |b| expect ``<N_BLOCKS_DEC>`` to be the same value as ``$n_blocks_dec``
 
-.. code:: text
+.. code-block:: text
+   :emphasize-lines: 5,6
 
    mmc list
    mmc dev 1
@@ -975,15 +993,15 @@ verify partition layout
    mmc part
       # Should be the same as (A)
 
-view installed ``MLO`` and ``u-boot.img``
-
 .. warning::
 
-   | There shouldn't be ``u-boot-spl.bin`` here.
+   There shouldn't be ``u-boot-spl.bin`` here.
+
+inspect installed ``MLO`` and ``u-boot.img``
 
 .. code:: text
 
-   fatls mmc 1
+   fatls mmc 1:1 /
 
 Power Off
 =========
