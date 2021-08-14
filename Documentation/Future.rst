@@ -14,6 +14,8 @@ ReFirmLabs/binwalk firmware analysis tool
 
 royalty-free `DisplayPort <https://en.wikipedia.org/wiki/DisplayPort>`__ cap for BBGW
 
+`barebox on am335x <https://www.barebox.org/doc/latest/boards/am335x.html>`__
+
 ----
 
 .. include:: link.txt

@@ -4,6 +4,9 @@
 |ico| Test
 ==========
 
+tmp
+===
+
 test contents
 =============
 

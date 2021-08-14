@@ -67,35 +67,6 @@ Other Distros
 | `yocto <https://www.yoctoproject.org/>`__ (build images on CircleCI)
 | |b| `packages <https://layers.openembedded.org/layerindex/branch/master/recipes/>`__
 
-QEMU
-====
-
-| `chroot + qemu-arm-static <https://unix.stackexchange.com/questions/41889/how-can-i-chroot-into-a-filesystem-with-a-different-architechture>`__
-| |b| AUR/`qemu+static <https://aur.archlinux.org/packages/?O=0&K=qemu+static>`__
-| |b| :wp:`binfmt <Binfmt_misc>`
-| |b| :gw:`Gentoo Wiki <Embedded_Handbook/General/Compiling_with_qemu_user_chroot>`
-| |b| :dw:`Debian Wiki <QemuUserEmulation>`
-
-| `Keys in the character backend multiplexer <https://qemu-project.gitlab.io/qemu/system/mux-chardev.html>`__
-| |b| :kbd:`<CTRL-A><X>` to exit emulator
-
-| `try u-boot with qemu <https://dev.to/rulyrudel/how-to-execute-u-boot-on-qemu-system-arm-2b22>`__
-| |b| QEMU wiki `Platforms/ARM <https://wiki.qemu.org/Documentation/Platforms/ARM>`__
-| |b| :pr:`qemu-system-arm -machine vexpress-a9` vexpress_ca9x4_defconfig vanished
-| |b| ``qemu-system-arm -machine virt`` w/ ``make -j4 qemu_arm_defconfig``
-
-.. https://docs.readthedocs.io/en/stable/guides/cross-referencing-with-sphinx.html
-
-:ref:`build u-boot <reference_label_u-boot_build_manually>`
-
-run qemu ::
-
-   qemu-system-arm \
-      -machine virt \
-      -nographic \
-      -no-reboot \
-      -kernel ./O/u-boot
-
 ----
 
 .. [#w] https://web.archive.org/web/20210114145232/https://processors.wiki.ti.com/index.php/AM335x_U-Boot_User's_Guide#Prerequisite

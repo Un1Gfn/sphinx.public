@@ -20,6 +20,8 @@
 
 .. __: https://sphinx-rtd-theme.readthedocs.io/en/latest/configuring.html#confval-analytics_id
 
+.. todolist::
+
 .. Directive is "toctree"
    Argument are empty
    Options are "maxdepth" and "caption" (field list)
@@ -33,6 +35,7 @@
    Hardware
    Software
    U-Boot
+   QEMU
    ALARM
    Future
    reST

@@ -1,9 +1,7 @@
 # ALARM
-/ArchLinuxARM-am33x-latest.tar.gz.sha1sum
 /ArchLinuxARM-am33x-latest.tar.gz
-/ArchLinuxARM-am33x-latest/
-/uboot-beaglebone-20??.??-?-armv7h.pkg.tar.xz
-/alarm_boot
+/?*-armv7h.pkg.tar.xz
+/alarm_root
 
 # U-Boot - v - https://source.denx.de/u-boot/u-boot/-/tags
 /u-boot-v202?.??-rc?.tar.bz2
@@ -12,7 +10,6 @@
 /u-boot-v202?.??/
 
 # U-Boot - non-v - https://ftp.denx.de/pub/u-boot/
-/u-boot-202?.??.tar.bz2.sig
 /u-boot-202?.??.tar.bz2
 /u-boot-202?.??/
 
@@ -20,14 +17,14 @@
 /u-boot.git/
 
 # Other distros
-/bone-debian-9.9-iot-armhf-*.img*
-/void-beaglebone-musl-*.img.xz
-/void-beaglebone-musl-PLATFORMFS-*.tar.xz
+# /bone-debian-9.9-iot-armhf-*.img*
+# /void-beaglebone-musl-*.img.xz
+# /void-beaglebone-musl-PLATFORMFS-*.tar.xz
 
 # Buildroot
 # /buildroot-202?.??.?.tar.bz2.sign
-/buildroot-202?.??.?.tar.bz2
-/buildroot-202?.??.?/
+# /buildroot-202?.??.?.tar.bz2
+# /buildroot-202?.??.?/
 
 # https://askubuntu.com/a/661
 /usbreset.out

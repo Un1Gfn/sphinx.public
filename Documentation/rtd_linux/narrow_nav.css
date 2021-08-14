@@ -1,7 +1,8 @@
 /* conf.py:  html_theme_options= */
 /* conf.py:  html_context=       */
 
-@media screen {
+/* https://www.w3schools.com/cssref/css3_pr_mediaquery.asp */
+@media only screen {
 
 	.wy-nav-side
 		{ width: 200px; }

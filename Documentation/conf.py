@@ -38,6 +38,7 @@ extensions = [
     # 'sphinx.ext.duration',
     'sphinx.ext.extlinks',
     'sphinx.ext.githubpages',  # https://www.sphinx-doc.org/en/master/usage/extensions/githubpages.html
+    'sphinx.ext.todo',
     'sphinxemoji.sphinxemoji',
     'sphinxcontrib.youtube',  # /usr/lib/python3*/site-packages/sphinxcontrib/youtube/
     'archlinux',
@@ -75,6 +76,10 @@ extlinks = {
     #     'aur/%s'
     # ),
 }
+
+# https://www.sphinx-doc.org/en/master/usage/extensions/todo.html#configuration
+todo_include_todos = True
+todo_emit_warnings = True
 
 source_suffix = {'.rst': 'restructuredtext'}
 

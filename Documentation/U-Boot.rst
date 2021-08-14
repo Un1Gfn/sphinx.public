@@ -18,6 +18,7 @@ U-Boot on `Read the Docs <https://u-boot.readthedocs.io/en/latest/index.html>`__
 
 | `GitHub mirror <https://github.com/u-boot/u-boot>`__ |:zap:|\ |:zap:|\ |:zap:|
 | `GitLab repo <https://source.denx.de/u-boot/u-boot>`__ |:snail:|
+| `TI fork <https://git.ti.com/cgit/ti-u-boot/ti-u-boot>`__
 
 :el:`U-Boot stages <Panda How_to_MLO_&_u-boot#Introduction>`
 
@@ -48,10 +49,20 @@ U-Boot on `Read the Docs <https://u-boot.readthedocs.io/en/latest/index.html>`__
 .. __: https://www.google.com/search?q=site:lists.denx.de
 .. __: https://marc.info/?l=u-boot
 
-| `README <https://github.com/u-boot>`__
-  - *Building the Software:*
-  - *Monitor Commands - Overview:*
-| AM335X/`README <https://github.com/u-boot/u-boot/tree/master/board/ti/am335x>`__
+.. warning::
+
+   | eMMC =
+     NAND +
+     :wp:`FTL <Flash_translation_layer_(FTL)_and_mapping>`
+   | There is **no** raw NAND on BBGW, only eMMC!
+
+
+| /`README <https://github.com/u-boot>`__\
+  /*Building the Software:*\
+  /*Monitor Commands*\
+  /*Overview:*
+| /board/ti/am335x/`README <https://github.com/u-boot/u-boot/tree/master/board/ti/am335x>`__\
+  /NAND (copy from SD card to NAND)
 
 `DULG Introduction <https://www.denx.de/wiki/view/DULG/Introduction>`__
 ~ 2.3. Availability
@@ -70,6 +81,40 @@ U-Boot on `Read the Docs <https://u-boot.readthedocs.io/en/latest/index.html>`__
    :width: 100%
 
 |
+
+`local variables space and global environment variables space are separated <https://www.denx.de/wiki/view/DULG/CommandLineParsing#Section_14.2.17.2.>`__
+
+.. code:: text
+
+   => setenv g mmc list
+   => run g
+   OMAP SD/MMC: 0
+   OMAP SD/MMC: 1
+
+.. code:: text
+
+   => l="mmc"
+   => $l
+   mmc - MMC sub system
+
+   Usage:
+   mmc info - display info of the current MMC device
+   mmc read addr blk# cnt
+   mmc write addr blk# cnt
+   mmc erase blk# cnt
+   mmc rescan
+   mmc part - lists available partition on current mmc device
+   mmc dev [dev] [part] - show or set current mmc device [partition]
+   mmc list - lists available devices
+   mmc wp - power on write protect boot partitions
+   mmc setdsr <value> - set DSR register value
+
+   => l="$l list"
+   => "$l"
+   Unknown command 'mmc list' - try 'help'
+   => $l
+   OMAP SD/MMC: 0
+   OMAP SD/MMC: 1
 
 Get U-Boot
 ==========
@@ -183,12 +228,12 @@ no need for verified boot, use\ ``configs/am335x_evm_defconfig``\ instead\ [#]_
 .. __: https://source.denx.de/u-boot/u-boot/-/tags
 .. __: https://github.com/u-boot/u-boot/tags
 
-get key\ [#gpgSR]_ ::
+get key\ [#gSR]_ ::
 
    gpg --search-key --keyserver-options "http-proxy=http://127.0.0.1:8080" 1A3C7F70E08FAB1707809BBF147C39FF9634B72C
    gpg --recv-keys  --keyserver-options "http-proxy=http://127.0.0.1:8080" 1A3C7F70E08FAB1707809BBF147C39FF9634B72C
 
-verify tarball wigh signature\ [#gpgV]_ ::
+verify tarball wigh signature\ [#gV]_ ::
 
    gpg --verify u-boot-2021.07.tar.bz2.sig u-boot-2021.07.tar.bz2
 
@@ -224,7 +269,7 @@ tools/`genboardscfg.py <https://github.com/u-boot/u-boot/blob/master/tools/genbo
 
 ::
 
-   tmux || tmux attach
+    tmux attach || tmux
 
 .. warning::
 
@@ -349,8 +394,9 @@ apply the following changes by hand
 
 .. code:: text
 
-   # - Device access commands - poweroff - ✓ # lib/efi_loader/efi_runtime.c:217: undefined reference to `do_poweroff'
+   - Memory commands        - sha1sum  - ✓
    - Device access commands - gpio     - ✓ # Command 'gpio' failed: Error -19
+   # - Device access commands - poweroff - ✓ # lib/efi_loader/efi_runtime.c:217: undefined reference to `do_poweroff'
 
 ``Environment -``
 
@@ -451,12 +497,12 @@ collect artifacts ::
 | it builds u-boot version ``boot/uboot/Config.in:BR2_TARGET_UBOOT_VERSION``
   (`git <https://git.busybox.net/buildroot/tree/boot/uboot/Config.in>`__)
 
-get key\ [#gpgSR]_ ::
+get key\ [#gSR]_ ::
 
    gpg --search-key --keyserver-options "http-proxy=http://127.0.0.1:8080" AB07D806D2CE741FB886EE50B025BA8B59C36319
    gpg --recv-keys  --keyserver-options "http-proxy=http://127.0.0.1:8080" AB07D806D2CE741FB886EE50B025BA8B59C36319
 
-verify clear signed message of checksum\ [#gpgV]_ ::
+verify clear signed message of checksum\ [#gV]_ ::
 
    gpg --verify buildroot-202?.??.?.tar.bz2.sign
 
@@ -760,7 +806,10 @@ convenience symlink for minicom ::
    sudo rm -rfv /root/MINICOM_RES
    sudo ln -sv "/tmp/MINICOM_RES" /root/MINICOM_RES
 
-run minicom ::
+| run minicom
+| |b| :ltlink:`busybox microcom <https://www.busybox.net/downloads/BusyBox.html#microcom>`?
+
+::
 
    # --metakey
    minicom \
@@ -828,7 +877,6 @@ Wait for at most 30 seconds until ``CCC...`` appears in minicom console
    Net:   Could not get PHY for ethernet@4a100000: addr 0
    eth2: ethernet@4a100000, eth3: usb_ether
 
-
 check U-Boot version
 
 .. code:: text
@@ -839,30 +887,46 @@ check U-Boot version
       # armv7l-unknown-linux-gnueabihf-gcc (crosstool-NG 1.23.0.418-d590) 10.2.0
       # GNU ld (crosstool-NG 1.23.0.418-d590) 2.35
 
+:raw-html:`<details><summary>bdinfo</summary>`
+
+.. literalinclude:: ../bdinfo.txt
+   :language: text
+
+:raw-html:`</details>`
+
+:raw-html:`<details><summary>printenv</summary>`
+
+.. literalinclude:: ../printenv.txt
+   :language: text
+
+:raw-html:`</details>`
+
 Send & Write eMMC
 =================
 
 | fire up another terminal,
-  get exact size of eMMC image and verify 512B-alignment
+| get exact size of eMMC image
+| verify 512B-alignment
+| checksum
 
 ::
 
-   sz="$(wc -c </tmp/MINICOM_RES/emmc.img)"
-   rem="$((sz%512))"
-   n_blocks_dec="$((sz/512))"
+   sz_dec="$(wc -c </tmp/MINICOM_RES/emmc.img)"
+   sz_hex="$(printf "%x" "$sz_dec")"
+   rem="$((sz_dec%512))"
+   n_blocks_dec="$((sz_dec/512))"
    n_blocks_hex="$(printf "%x" "$n_blocks_dec")"
    if [ "$rem" -eq 0 ]
-   then printf "\n  \e[32m[%s]\e[0m %sB = %s(0x%s) * 512B + \e[32m%sB\e[0m\n\n" ok    "$sz" "$n_blocks_dec" "$n_blocks_hex" "$rem"
-   else printf "\n  \e[31m[%s]\e[0m %sB = %s(0x%s) * 512B + \e[31m%sB\e[0m\n\n" error "$sz" "$n_blocks_dec" "$n_blocks_hex" "$rem"
+   then printf "\n  \e[32m[%s]\e[0m %sB = %s(0x%s) * 512B + \e[32m%sB\e[0m\n\n" ok    "$sz_dec" "$n_blocks_dec" "$n_blocks_hex" "$rem"
+   else printf "\n  \e[31m[%s]\e[0m %sB = %s(0x%s) * 512B + \e[31m%sB\e[0m\n\n" error "$sz_dec" "$n_blocks_dec" "$n_blocks_hex" "$rem"
    fi
    unset -v rem
-   printf '  %s = %s\n'             '$sz' "$sz"
+   printf '  %s = %s\n'         '$sz_dec'         "$sz_dec"
+   printf '  %s = %s\n'       '0x$sz_hex'       "0x$sz_hex"
    printf '  %s = %s\n' '0x$n_blocks_hex' "0x$n_blocks_hex"
    printf '  %s = %s\n'   '$n_blocks_dec'   "$n_blocks_dec"
+   printf '  %s = %s\n'         'sha1sum'   "$(sha1sum /tmp/MINICOM_RES/emmc.img|cut -d' ' -f1)"
    echo
-
-`ALARM <https://archlinuxarm.org/packages/armv7h/uboot-beaglebone/files/uboot-beaglebone.install>`__
-- `boot.txt <https://archlinuxarm.org/packages/armv7h/uboot-beaglebone/files/boot.txt>`__
 
 | make sure eMMC block size is ``512B``
 | |b| `mmc <https://www.denx.de/wiki/view/DULG/UBootCmdGroupMMC>`__
@@ -926,6 +990,15 @@ erase the first 10MiB of eMMC
       # ## Unknown partition table type 0
 
 .. tip::
+
+   | Why ``0x82000000``?
+   | |b| ``bdinfo`` gives ``DRAM bank ... start = 0x80000000``
+   | |b| ``printenv`` gives ``kernel_addr_r=0x82000000`` and ``loadaddr=0x82000000``
+   |     |b| defined in include/configs/`ti_armv7_common.h <https://github.com/u-boot/u-boot/blob/master/include/configs/ti_armv7_common.h>`__
+   |     |b| propagated in include/configs/`am335x_evm.h <https://github.com/u-boot/u-boot/blob/master/include/configs/am335x_evm.h>`__ ? [#]_
+   |     |b| `u-boot relocation on ARM architecture <https://stackoverflow.com/a/35348068>`__
+
+.. tip::
    | |b| RAM block size is ``1B``
    | |b| ``0xa00000blk * 1B/blk = 0xa00000B = 10485760B = 10240 * 1024B = 10MiB``
    | |b| An all-zero chunk starts from ``0x100000``\ :superscript:`citation needed`
@@ -941,8 +1014,8 @@ erase the first 10MiB of eMMC
 .. code:: text
 
    # Error prone, don't try accessing 0x100000 any more
-   # cmp.b   0x100000 0x82000000 0xa00000
-   mw.b  0x82000000          0 0xa00000
+   # cmp.b 0x82000000   0x100000 0xa00000
+      mw.b 0x82000000          0 0xa00000
 
 get ready for ``ymodem`` transfer
 
@@ -951,7 +1024,7 @@ get ready for ``ymodem`` transfer
    loady 0x82000000 115200
 
 | minicom |rarr| :kbd:`<CTRL+A>` |rarr| :kbd:`<S>` |rarr| ymodem |rarr| ``[MINICOM_RES]/`` |rarr| ``emmc.img``
-| |b| expect ``<N_BLOCKS_DEC>`` to be the same as ``$sz``
+| |b| expect ``<N_BLOCKS_DEC>`` to be the same as ``$sz_dec``
 
 .. code-block:: text
    :emphasize-lines: 3
@@ -960,17 +1033,23 @@ get ready for ``ymodem`` transfer
    CRC mode, 16390(SOH)/0(STX)/0(CAN) packets, 4 retries
    ## Total Size      = 0x... = <N_BLOCKS_DEC> Bytes
 
-|b| md.b - memory display byte
+md.b - memory display byte
 
 .. code:: text
 
    md.b 0x82000000 0x200
       # Expect 512 bytes with boot code and MBR partition table near the end
 
+| verify checksum
+| |b| replace ``<SZ_HEX>`` with ``0x$sz_hex`` - |:warning:| add ``0x`` prefix
+
+.. code:: text
+
+   sha1sum 0x82000000 <SZ_HEX>
+
 | dump eMMC image from RAM to eMMC
   - `mmc <https://www.denx.de/wiki/view/DULG/UBootCmdGroupMMC>`__
-| |b| replace ``<N_BLOCKS_HEX>`` with ``0x$n_blocks_hex``
-|     \- |:warning:| add ``0x`` prefix
+| |b| replace ``<N_BLOCKS_HEX>`` with ``0x$n_blocks_hex`` - |:warning:| add ``0x`` prefix
 | |b| expect ``<N_BLOCKS_DEC>`` to be the same value as ``$n_blocks_dec``
 
 .. code-block:: text
@@ -1029,17 +1108,19 @@ if stray ``PL2303`` is still there ::
 Footnotes
 =========
 
-.. [R]      Recommended
+.. [R]    Recommended
 
-.. [#]      MLO = **M**\ MC **lo**\ ader
-.. [#]      https://lists.denx.de/pipermail/u-boot/2021-May/449518.html
-.. [#]      http://lifeonubuntu.com/tar-errors-ignoring-unknown-extended-header-keyword/
-.. [#gpgSR] https://wiki.archlinux.org/title/GnuPG#Searching_and_receiving_keys
-.. [#gpgV]  https://wiki.archlinux.org/title/GnuPG#Verify_a_signature
-.. [#]      https://github.com/pengutronix/genimage#genimage---the-image-creation-tool
+.. [#]    MLO = **M**\ MC **lo**\ ader
+.. [#]    https://lists.denx.de/pipermail/u-boot/2021-May/449518.html
+.. [#]    http://lifeonubuntu.com/tar-errors-ignoring-unknown-extended-header-keyword/
+.. [#gSR] https://wiki.archlinux.org/title/GnuPG#Searching_and_receiving_keys
+.. [#gV]  https://wiki.archlinux.org/title/GnuPG#Verify_a_signature
+.. [#]    https://github.com/pengutronix/genimage#genimage---the-image-creation-tool
 
-.. [#]      https://superuser.com/questions/332252/how-to-create-and-format-a-partition-using-a-bash-script
-.. [#]      https://www.thegeekstuff.com/2017/05/sfdisk-examples/
-.. [#]      https://unix.stackexchange.com/questions/53378/how-can-i-script-the-creation-of-a-single-partition-that-uses-the-entire-device
+.. [#]    https://superuser.com/questions/332252/how-to-create-and-format-a-partition-using-a-bash-script
+.. [#]    https://www.thegeekstuff.com/2017/05/sfdisk-examples/
+.. [#]    https://unix.stackexchange.com/questions/53378/how-can-i-script-the-creation-of-a-single-partition-that-uses-the-entire-device
+
+.. [#]    https://stackoverflow.com/a/9113058
 
 .. include:: link.txt
