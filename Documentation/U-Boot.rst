@@ -904,29 +904,28 @@ check U-Boot version
 Send & Write eMMC
 =================
 
-| fire up another terminal,
-| get exact size of eMMC image
-| verify 512B-alignment
-| checksum
+verify 512B-alignment of eMMC image in another terminal
 
 ::
 
-   sz_dec="$(wc -c </tmp/MINICOM_RES/emmc.img)"
-   sz_hex="$(printf "%x" "$sz_dec")"
-   rem="$((sz_dec%512))"
-   n_blocks_dec="$((sz_dec/512))"
-   n_blocks_hex="$(printf "%x" "$n_blocks_dec")"
-   if [ "$rem" -eq 0 ]
-   then printf "\n  \e[32m[%s]\e[0m %sB = %s(0x%s) * 512B + \e[32m%sB\e[0m\n\n" ok    "$sz_dec" "$n_blocks_dec" "$n_blocks_hex" "$rem"
-   else printf "\n  \e[31m[%s]\e[0m %sB = %s(0x%s) * 512B + \e[31m%sB\e[0m\n\n" error "$sz_dec" "$n_blocks_dec" "$n_blocks_hex" "$rem"
-   fi
-   unset -v rem
-   printf '  %s = %s\n'         '$sz_dec'         "$sz_dec"
-   printf '  %s = %s\n'       '0x$sz_hex'       "0x$sz_hex"
-   printf '  %s = %s\n' '0x$n_blocks_hex' "0x$n_blocks_hex"
-   printf '  %s = %s\n'   '$n_blocks_dec'   "$n_blocks_dec"
-   printf '  %s = %s\n'         'sha1sum'   "$(sha1sum /tmp/MINICOM_RES/emmc.img|cut -d' ' -f1)"
+   # Spawn a new terminal
    echo
+   n_bytes_dec="$(wc -c </tmp/MINICOM_RES/emmc.img)"
+   rem="$((n_bytes_dec%512))"
+   n_blocks_dec="$((n_bytes_dec/512))"
+   n_blocks_hex="$(printf "%x" "$n_blocks_dec")"
+   sha1sum="$(sha1sum /tmp/MINICOM_RES/emmc.img|cut -d' ' -f1)"
+   if [ "$rem" -eq 0 ]
+   then printf "\n  \e[32m[%s]\e[0m %sB = %s(0x%s) * 512B + \e[32m%sB\e[0m\n\n" ok    "$n_bytes_dec" "$n_blocks_dec" "$n_blocks_hex" "$rem"
+   else printf "\n  \e[31m[%s]\e[0m %sB = %s(0x%s) * 512B + \e[31m%sB\e[0m\n\n" error "$n_bytes_dec" "$n_blocks_dec" "$n_blocks_hex" "$rem"
+   fi
+   printf '  %s = %s\n\n'        '$sha1sum'        "$sha1sum"
+   printf '  %s = %s\n\n' '0x$n_blocks_hex' "0x$n_blocks_hex"
+   printf '  %s = %s\n\n'   '$n_blocks_dec'   "$n_blocks_dec"
+   unset -v n_bytes_dec
+   unset -v rem
+   echo
+   # Don't close this terminal
 
 | make sure eMMC block size is ``512B``
 | |b| `mmc <https://www.denx.de/wiki/view/DULG/UBootCmdGroupMMC>`__
@@ -1021,31 +1020,40 @@ get ready for ``ymodem`` transfer
 
 .. code:: text
 
-   loady 0x82000000 115200
+   # printenv loadaddr
+   #    # loadaddr=0x82000000
+   # env default -f loadaddr
+   # env print loadaddr
+   #    # loadaddr=0x82000000
+   echo; echo -n "  "; if test ${loadaddr} -eq 0x82000000 -a ${baudrate} -eq 115200; then echo ok; else echo err; fi; echo
 
-| minicom |rarr| :kbd:`<CTRL+A>` |rarr| :kbd:`<S>` |rarr| ymodem |rarr| ``[MINICOM_RES]/`` |rarr| ``emmc.img``
-| |b| expect ``<N_BLOCKS_DEC>`` to be the same as ``$sz_dec``
+.. code:: text
+
+   loady ${loadaddr} ${baudrate}
+
+minicom |rarr| :kbd:`<CTRL+A>` |rarr| :kbd:`<S>` |rarr| ymodem |rarr| ``[MINICOM_RES]/`` |rarr| ``emmc.img``
 
 .. code-block:: text
-   :emphasize-lines: 3
 
    ## Ready for binary (ymodem) download to 0x82000000 at 115200 bps...
-   CRC mode, 16390(SOH)/0(STX)/0(CAN) packets, 4 retries
-   ## Total Size      = 0x... = <N_BLOCKS_DEC> Bytes
+   CRC mode, ...(SOH)/0(STX)/0(CAN) packets, 4 retries
+   ## Total Size      = 0x... = ... Bytes
 
-md.b - memory display byte
+| md.b - memory display byte
+| |b| expect 512 bytes with some boot code and an MBR partition table near the end
 
 .. code:: text
 
    md.b 0x82000000 0x200
-      # Expect 512 bytes with boot code and MBR partition table near the end
 
 | verify checksum
-| |b| replace ``<SZ_HEX>`` with ``0x$sz_hex`` - |:warning:| add ``0x`` prefix
+| |b| expect ``<SHA1SUM>`` to be the same value as ``$sha1sum``
+
 
 .. code:: text
 
-   sha1sum 0x82000000 <SZ_HEX>
+   sha1sum ${loadaddr} ${filesize}
+      # sha1 for ... ... ... ==> <SHA1SUM>
 
 | dump eMMC image from RAM to eMMC
   - `mmc <https://www.denx.de/wiki/view/DULG/UBootCmdGroupMMC>`__
@@ -1059,7 +1067,7 @@ md.b - memory display byte
    mmc dev 1
    mmc info
    mmc part
-   mmc write 0x82000000 0 <N_BLOCKS_HEX>
+   mmc write ${loadaddr} 0 <N_BLOCKS_HEX>
       MMC write: dev # 1, block # 0, count <N_BLOCKS_DEC> ... <N_BLOCKS_DEC> blocks written: OK
 
 verify partition layout
