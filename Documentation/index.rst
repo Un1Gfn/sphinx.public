@@ -32,18 +32,18 @@
    :maxdepth: 99
    :caption: Contents:
 
+   reST
+   Test
    Hardware
    Software
    U-Boot
-   QEMU
    ALARM
    Future
-   reST
-   Test
    GPU_hang
    Cheatsheet
    PkgMgmt
    820G3
+   hr
 
 Indices and tables
 ==================

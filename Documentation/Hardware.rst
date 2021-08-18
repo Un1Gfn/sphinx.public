@@ -4,7 +4,7 @@
 |ico| Hardware
 ==============
 
-Board
+Specs
 =====
 
 .. https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#anonymous-hyperlinks
@@ -24,6 +24,9 @@ Board
 
 | Seeed wiki
 | |b| `BBGW <http://wiki.seeedstudio.com/BeagleBone_Green_Wireless/#specification>`__
+
+| ALARM
+| |b| `BBGW <https://archlinuxarm.org/platforms/armv7/ti/beaglebone-green-wireless>`__
 
 Communication Tutorials
 =======================

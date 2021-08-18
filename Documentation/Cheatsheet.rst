@@ -9,13 +9,17 @@ Bash
 
 WIP move everything from :file:`~/cheatsheet.sh`
 
-assertion
+`sysfs <https://www.kernel.org/doc/html/latest/filesystems/sysfs.html>`__ kernal doc - :manpage:`sysfs(5)`
+
+assertion or error handling
 
 .. code:: bash
 
+   # trap 'echo "SIGINT"; exit 0' SIGINT
    [ ] || { notify-send "${BASH_SOURCE[0]}" "${FUNCNAME[0]}${LF}line ${BASH_LINENO[0]}"; return 1; }
    [ ] || { echo "${BASH_SOURCE[0]}:$LINENO:${FUNCNAME[0]}: err"; return 1; }
    [ ] || { echo "${BASH_SOURCE[0]}:$LINENO:${FUNCNAME[0]}: err"; exit 1; }
+   # ${BASH_COMMAND}
 
 when you have no choice but to pass executable as ``$1``
 
@@ -53,15 +57,107 @@ zip archive mojibake
    unzip -O sjis SHIFTJIS.ZIP
    unzip -O cp936 GBK.ZIP
 
+`fd abuse HTTP <https://unix.stackexchange.com/q/436200#comment788048_436200>`__ ::
+
+   { \
+      echo -e "GET / HTTP/1.0\r\nHost: www.example.com\r\n\r" >&3; \
+      cat <&3 ; \
+   } 3<> /dev/tcp/www.example.org/80
+
+:aw:`fd abuse tcping <NFS#Automatic_mount_handling>` ::
+
+   if timeout 1 bash -c ": < /dev/tcp/${SERVER}/80"; then
+      printf "\n\e[32m  %s\e[0m\n\n" "reached"
+   else
+      printf "\n\e[31m  %s\e[0m\n\n" "timeout"
+   fi
+
+`process tree better than pstree <https://unix.stackexchange.com/a/436579>`__ ::
+
+   ps -aef --forest | less -SRM +%
+
+reverse video time stamp ::
+
+   printf "\n\e[7m  %s  \e[0m\n\n" "$(date)"
+
+`kernel module parameters <https://askubuntu.com/q/59135>`__ ::
+
+   modinfo nfsd \
+     | grep '^parm:' \
+     | cut -d' ' -f12- \
+     | sed -E -e 's/^([^:]+):(.+)$/\1:\n  \2\n/g' \
+     | less -F +X -S
+
+::
+
+   modinfo -p nfs \
+     | sed -E -e 's/^([^:]+):(.+)$/\1:\n  \2\n/g' \
+     | less -F +X -S
+
+
 C
 ===
 
 WIP move everything from :file:`~/cheatsheet.c`
 
+:wp:`C11 extensions <C11_(C_standard_revision)#Changes_from_C99>`
+
+`cdecl: C gibberish ↔ English <https://cdecl.org/>`__
+
 | `Sparse, Smatch, and Coccinelle <https://thenewstack.io/checking-linuxs-code-with-static-analysis-tools/>`__\ [#]_
 | |b| :wp:`Coccinelle_(software)`
 | gcc `-fanalyzer <https://developers.redhat.com/blog/2020/03/26/static-analysis-in-gcc-10>`__
 | `splint <https://github.com/splintchecker/splint>`__
+
+stringify macro
+
+.. code:: C
+
+   #define STR0(x) #x
+   #define STR(x) STR0(x)
+
+range-based for loop macro
+
+.. code:: C
+
+   #define for_range_int(var,range) for(size_t var=0;var<sizeof(range)/sizeof(int);++var)
+   int arr[]={19,89,6,4}
+   for_range_int(i,arr){
+      printf("%d ",arr[i]);
+   }
+   puts("");
+
+instant linked list
+
+.. code:: C
+
+   typedef struct _Node{
+     int ele;
+     struct _Node *next;
+   } Node;
+   #define M malloc(sizeof(Node))
+   Node *root=M;
+   *(*(*(*
+     root=(Node){1,M}
+   ).next=(Node){2,M}
+   ).next=(Node){3,M}
+   ).next=(Node){4,M};
+
+eprintf macro
+
+.. code:: C
+
+   #define eprintf(...) fprintf(stderr,__VA_ARGS__)
+
+lambda macro
+
+.. code:: C
+
+   
+   #define LAMBDA(X) ({ X f;})
+   g_array_sort(edges,LAMBDA(gint f(const void *x,const void *y){
+     return ((Edge*)x)->weight - ((Edge*)y)->weight ;
+   }));
 
 Git
 ===
@@ -84,12 +180,86 @@ convert shallow clone to full
 Makefile
 ========
 
-WIP move everything from :file:`~/cheatsheet.Makefile`
+`Appendix A Quick Reference <https://www.gnu.org/software/make/manual/html_node/Quick-Reference.html>`__
+
+`Functions for String Substitution and Analysis
+<https://www.gnu.org/software/make/manual/html_node/Text-Functions.html#Text-Functions>`__
+
+.. code:: Makefile
+
+   $(word 2,$^)
+   $(filter-out $<,$^)
+   $(filter-out $(word 3,$^),$^)
+
+recursively remove binary
+
+.. code:: Makefile
+   
+   clean:
+   	find . -type f -a \( -name "*.o" -o -name "*.out" \) -exec rm -v {} \;
+
+`PlantUML <https://plantuml.com/>`__
+
+.. code:: Makefile
+
+   clean:
+   	@find .                                          \
+   		-type f                                       \
+   		-a                                            \
+   		\(                                            \
+   			-name 'DUMMY'                              \
+   			-o -name "*.o"                             \
+   			-o -name "*.out"                           \
+   			-o -name "puml_*.eps"                      \
+   			-o -name "puml_*.pdf"                      \
+   			-o -name "puml_*.png"                      \
+   			-o -name "puml_*.svg"                      \
+   		\)                                            \
+   		-a                                            \
+   		\(                                            \
+   			-not -name 'DUMMY'                         \
+   			-a -not -name "puml_cdecl.svg"             \
+   			-a -not -name "puml_submit_divl_lib32.svg" \
+   			-a -not -name "puml_utos.svg"              \
+   		\)                                            \
+   		-exec rm -v {} \;
 
 Verilog
 =======
 
-WIP move everything from :file:`~/cheatsheet.v`
+`assertion <https://stackoverflow.com/a/31302223>`__
+
+.. code:: verilog
+
+   `define assert(signal,value) \
+   if(signal!==value)begin \
+       $display("ASSERTION FAILED in %m: signal != value"); \
+       $finish; \
+   end
+
+   // ui.out: ui.c:21: shm_connect: Assertion `shmid>=0' failed.
+
+   if()begin
+     $display("%s:%03d: %m: Assertion failed.",`__FILE__,`__LINE__);
+     $finish();
+   end
+
+timeout
+
+.. code:: verilog
+
+   initial begin #100 $finish;
+
+conditional VCD dump
+
+.. code:: verilog
+   
+   `ifdef VCD
+     initial begin
+       $dumpfile(`VCD);
+       $dumpvars;
+     end
+   `endif
 
 Footnotes
 =========

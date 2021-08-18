@@ -16,6 +16,11 @@ royalty-free `DisplayPort <https://en.wikipedia.org/wiki/DisplayPort>`__ cap for
 
 `barebox on am335x <https://www.barebox.org/doc/latest/boards/am335x.html>`__
 
+`boot from USB <https://stackoverflow.com/questions/30488942/how-to-boot-linux-kernel-from-u-boot>`__
+
+assemble latest tarball by pulling from alarm's repo with :manpage:`pacstrap(8)` ``-C``,
+instead of downloading alarm's tarball
+
 ----
 
 .. include:: link.txt

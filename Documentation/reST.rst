@@ -374,6 +374,32 @@ raw html style :raw-html:`<span style="text-align: center; color: green;">green<
 
 .. https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#transitions
 
+
+Reorder Footnotes
+=================
+
+| `viewing the entire file with highlighted matches <https://stackoverflow.com/q/981601>`__
+| |b| `GREP_COLORS <https://askubuntu.com/q/1042234>`__
+
+::
+
+   export GREP_COLORS='ms=00;34:mc=00;34'
+   echo
+   egrep \
+     -o \
+     -e '<a class="footnote-reference brackets" href="#[^>]+>' \
+     ~/cgi/cgi-tmp/sphinx/ALARM.html \
+     | egrep -e '^.*href="#id[0-9]+".*$|$'
+   echo
+   egrep \
+     -o \
+     -e '<dt class="label" id="[^>]+>' \
+     -e '<dt class="label" id="id[0-9]+[^>]+>' \
+     ~/cgi/cgi-tmp/sphinx/ALARM.html \
+     | egrep -e '^.*id="id[0-9]+".*$|$'
+   echo
+   unset -v GREP_COLORS
+
 `Footnotes`__
 =============
 

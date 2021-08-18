@@ -20,6 +20,10 @@ def setup(app: sphinx.application.Sphinx):
         'stlink',
     ]: app.add_role(name=n, role=util.link_fn, override=False)
 
+    for n in [
+        'prlt',
+    ]: app.add_role(name=n, role=util.pr_fn, override=False)
+
     # https://www.sphinx-doc.org/en/master/extdev/index.html#extension-metadata
     return {
         'version': '0.1',

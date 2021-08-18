@@ -41,7 +41,7 @@ def pkg_fn(name, rawtext, text, lineno, inliner, options={}, content=[]):
     # Inspect <select> below "Repository"
     assert repo in [
         'AUR',
-        'alarm-armv7h',
+        'alarm',
         'community',
         'community-testing',
         'core',
@@ -69,8 +69,8 @@ def pkg_fn(name, rawtext, text, lineno, inliner, options={}, content=[]):
                                  text=pkg,
                                  internal=False,
                                  # https://docs.python.org/3/reference/expressions.html#conditional-expressions
-                                 refuri='https://aur.archlinux.org/packages/'+pkg       if repo == 'AUR'          else (
-                                        'https://archlinuxarm.org/packages/armv7h/'+pkg if repo == 'alarm-armv7h' else (
+                                 refuri='https://aur.archlinux.org/packages/'+pkg       if repo == 'AUR'   else (
+                                        'https://archlinuxarm.org/packages/armv7h/'+pkg if repo == 'alarm' else (
                                         'https://archlinux.org/packages/%s/x86_64/%s/'%(repo,pkg)))),
         docutils.nodes.superscript(rawsource=repo,
                                    text=repo),

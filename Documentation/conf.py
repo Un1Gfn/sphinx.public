@@ -58,6 +58,10 @@ extlinks = {
         'https://github.com/readthedocs/sphinx_rtd_theme/issues/%s',
         '#%s'
     ),
+    'r': (
+        'https://www.reddit.com/r/%s',
+        'r/%s'
+    ),
     # archlinux.py
     # https://en.wikipedia.org/wiki/Help:Interwiki_linking
     # 'wp': (

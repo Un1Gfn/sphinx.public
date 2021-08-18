@@ -124,7 +124,7 @@ Get U-Boot
 
 .. error::
      
-   | With :pkg:`alarm-armv7h/uboot-beaglebone`\ ``2017.07-1``, sending :file:`emmc.img` (>2Mib),
+   | With :pkg:`alarm/uboot-beaglebone`\ ``2017.07-1``, sending :file:`emmc.img` (>2Mib),
    |  either right after :file:`u-boot-spl.bin`
    |  or\ ``loadx``/\ ``loady``\ when U-Boot is running,
    |   I get NAK at approx 500K.
@@ -135,7 +135,7 @@ Get U-Boot
 
 .. __: https://archlinuxarm.org/platforms/armv7/ti/beaglebone-green-wireless
 
-download :pkg:`alarm-armv7h/uboot-beaglebone` ::
+download :pkg:`alarm/uboot-beaglebone` ::
 
    pacman -Qqlp uboot-beaglebone-2017.07-1-armv7h.pkg.tar.xz
 
@@ -304,6 +304,9 @@ export vars ::
 ::
 
    # In tmux
+   # make clean
+   # make mrproper
+   make distclean
    /usr/lib/modules/*/build/scripts/diffconfig configs/am335x_evm{,_spiboot}_defconfig | sed \
       -e "$(printf 's/^-\(.*\)$/%s- \\1%s/g' $'\e''[31m' $'\e''[0m')" \
       -e "$(printf 's/^+\(.*\)$/%s+ \\1%s/g' $'\e''[32m' $'\e''[0m')" \
@@ -713,6 +716,8 @@ cleanup::
    losetup -l -a
    mv -v emmc.img ~/
 
+.. _reference_label_section_connect_serial:
+
 Connect Serial
 ==============
 
@@ -764,6 +769,16 @@ Connect Serial
 
 Send U-Boot
 ===========
+
+|    :pkg:`community/python-pyserial` - `pypi`__ - `doc`__
+|    `xmodem`__ - `pypi`__ - `doc`__
+
+.. __: https://pypi.org/project/pyserial
+.. __: https://pythonhosted.org/pyserial
+
+.. __: https://github.com/tehmaze/xmodem
+.. __: https://pypi.org/project/xmodem
+.. __: https://pythonhosted.org/xmodem
 
 `SystemSetup < DULG < DENX <http://www.denx.de/wiki/view/DULG/SystemSetup#Section_4.3>`__
 
@@ -1046,7 +1061,7 @@ minicom |rarr| :kbd:`<CTRL+A>` |rarr| :kbd:`<S>` |rarr| ymodem |rarr| ``[MINICOM
 
    md.b 0x82000000 0x200
 
-| verify checksum
+| verify checksum [#]_
 | |b| expect ``<SHA1SUM>`` to be the same value as ``$sha1sum``
 
 
@@ -1130,5 +1145,10 @@ Footnotes
 .. [#]    https://unix.stackexchange.com/questions/53378/how-can-i-script-the-creation-of-a-single-partition-that-uses-the-entire-device
 
 .. [#]    https://stackoverflow.com/a/9113058
+
+.. [#]   `sh1sum.c <https://github.com/u-boot/u-boot/blob/master/cmd/sha1sum.c>`__:\
+         ``do_sha1sum`` |larr|
+         `hash.c <https://github.com/u-boot/u-boot/blob/master/common/hash.c>`__:\
+         ``hash_command()``
 
 .. include:: link.txt

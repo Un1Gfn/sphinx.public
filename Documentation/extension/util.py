@@ -162,3 +162,22 @@ def link_fn(
     msg = []
     return [root], msg
     # return ([root], msg,)
+
+
+def pr_fn(
+    name: str,
+    rawtext: str,
+    text: str,
+    lineno: int,
+    inliner: docutils.parsers.rst.states.Inliner,
+    options: typing.Dict = {},
+    content: typing.List[str] = []
+) -> typing.Tuple[typing.List[docutils.nodes.reference],
+                  typing.List[docutils.nodes.system_message]]:
+
+    root = docutils.nodes.problematic(rawsource=rawtext, text='')
+
+    root += docutils.nodes.literal(rawsource=rawtext, text=docutils.nodes.unescape(text)) if name == 'prlt' else (
+            None)
+
+    return [root], []

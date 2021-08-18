@@ -1,7 +1,10 @@
 # ALARM
-/ArchLinuxARM-am33x-latest.tar.gz
 /?*-armv7h.pkg.tar.xz
+/ArchLinuxARM-am33x-latest.tar.gz
 /alarm_root
+
+# systemd-nspawn
+/.#alarm_root.lck
 
 # U-Boot - v - https://source.denx.de/u-boot/u-boot/-/tags
 /u-boot-v202?.??-rc?.tar.bz2
@@ -32,5 +35,6 @@
 # Sphinx
 /Documentation/_build
 /Documentation/extension/__pycache__/
+
 
 # ?
