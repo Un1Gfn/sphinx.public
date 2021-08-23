@@ -109,6 +109,12 @@ WIP move everything from :file:`~/cheatsheet.c`
 | gcc `-fanalyzer <https://developers.redhat.com/blog/2020/03/26/static-analysis-in-gcc-10>`__
 | `splint <https://github.com/splintchecker/splint>`__
 
+compile flags
+
+.. code:: text
+
+   -std=gnu11 -g -O0 -Wextra -Wall -Winline -Wshadow -fanalyzer
+
 stringify macro
 
 .. code:: C
@@ -223,6 +229,25 @@ recursively remove binary
    			-a -not -name "puml_utos.svg"              \
    		\)                                            \
    		-exec rm -v {} \;
+
+
+`MediaWiki`__
+=============
+
+.. __: https://www.mediawiki.org/
+
+`Manual:Date_formatting <https://www.mediawiki.org/wiki/Manual:Date_formatting>`__
+
+`{{cite web}} <https://en.wikipedia.org/wiki/Template:Cite_web>`__
+
+`zh_xx conversion <https://zh.wikipedia.org/wiki/Wikipedia:%E7%B9%81%E7%AE%80%E5%A4%84%E7%90%86>`__
+
+`force rename title <https://zh.wikipedia.org/wiki/Help:%E4%B8%AD%E6%96%87%E7%BB%B4%E5%9F%BA%E7%99%BE%E7%A7%91%E7%9A%84%E7%B9%81%E7%AE%80%E3%80%81%E5%9C%B0%E5%8C%BA%E8%AF%8D%E5%A4%84%E7%90%86#%E6%8E%A7%E5%88%B6%E8%87%AA%E5%8A%A8%E8%BD%AC%E6%8D%A2%E7%9A%84-{zh-cn:%E4%BB%A3%E7%A0%81;zh-tw:%E7%A8%8B%E5%BC%8F%E7%A2%BC}->`__
+
+.. WARNING: Pygments lexer name 'mediawiki' is not known
+.. code:: text
+
+   -{T|New Title}-
 
 Verilog
 =======

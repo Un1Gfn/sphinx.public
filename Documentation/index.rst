@@ -40,9 +40,10 @@
    ALARM
    Future
    GPU_hang
-   Cheatsheet
    PkgMgmt
    820G3
+   Cheatsheet
+   Framebuffer
    hr
 
 Indices and tables
