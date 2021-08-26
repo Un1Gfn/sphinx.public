@@ -44,6 +44,9 @@
    820G3
    Cheatsheet
    Framebuffer
+   Archiso
+   Hentai
+   Holonews
    hr
 
 Indices and tables

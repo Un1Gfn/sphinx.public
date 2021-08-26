@@ -4,26 +4,28 @@
 PkgMgmt
 =======
 
-Pull GPG Key
-============
 
-:file:`~/beaglebone/gpg_proxy.sh`
+Expac
+=====
 
-/usr/local/bin/pm
-=================
+expac dictionary ::
 
-?
+   function dict {
+     (( $#>=1 )) || { echo "${FUNCNAME[0]}: error"; return 1; }
+     expac --sync '%n\t%d' "$@" | column --separator $'\t' --table
+     echo
+   }
 
-paru inplace [R]_
-=================
+   echo
+   (($#>=1)) && dict "$@"
 
-:file:`/etc/paru.conf`
+   while :; do
+     read -e -p "search: " -r line
+     echo
+     # shellcheck disable=SC2086
+     dict $line
+   done
 
-.. code:: ini
-
-   [options]
-   # LocalRepo # Turn off
-   # Chroot # Turn off
 
 paru chroot
 ===========
@@ -121,8 +123,38 @@ jail might not access proxy, thus ``--holdver`` ::
       -- \
          -A --holdver -s
 
-?
-=====
+
+paru inplace [R]_
+=================
+
+:file:`/etc/paru.conf`
+
+.. code:: ini
+
+   [options]
+   # LocalRepo # Turn off
+   # Chroot # Turn off
+
+
+/usr/local/bin/pm
+=================
+
+``pm url <PKG> [<PKG>]...``
+
+| ``pm -Fql``
+| ``pm -Fl``
+| ``pm -Qql``
+| ``pm -Ql``
+
+
+Pull GPG Key
+============
+
+:file:`~/beaglebone/gpg_proxy.sh`
+
+
+???
+===
 
 ::
 
@@ -135,6 +167,7 @@ jail might not access proxy, thus ``--holdver`` ::
    cat <<EOI | paru -Siiq - | grep -e Repo -e Name -e Des
    ...
    EOI
+
 
 ----
 

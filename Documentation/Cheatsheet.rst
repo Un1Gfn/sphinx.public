@@ -21,6 +21,21 @@ assertion or error handling
    [ ] || { echo "${BASH_SOURCE[0]}:$LINENO:${FUNCNAME[0]}: err"; exit 1; }
    # ${BASH_COMMAND}
 
+.. code:: bash
+
+   [ ] || @ABRTEXIT@
+   [ ] || @ABRTRET@
+   ABRTEXIT='{ echo "${BASH_SOURCE[0]}:$LINENO:${FUNCNAME[0]}: err"; return 1; }'
+   ABRTRET='{ echo "${BASH_SOURCE[0]}:$LINENO:${FUNCNAME[0]}: err"; exit 1; }'
+   TMP="$(mktemp /tmp/mktemp-XXX.sh)"
+   sed \
+      -e "s/@ABRTEXIT@/$ABRTEXIT/g" \
+      -e "s/@ABRTRET@/$ABRTRET/g" \
+      SCRIPT.sh \
+      > "$TMP"
+   printf "\e[32m%s\e[0m\n" "running $TMP ..."
+   bash "$TMP"
+
 when you have no choice but to pass executable as ``$1``
 
 .. code:: shell-session
@@ -45,10 +60,14 @@ horizontal separator ruler / transition line / <hr>
    unset -v _
 
 | :manpage:`console_codes(4)`
-| |:red_circle:|    :file:`printf "\\n\\e[31m%s\\e[0m\\n\\n" "err"`
-| |:green_circle:|  :file:`printf "\\n\\e[32m%s\\e[0m\\n\\n" "ok"`
-| |:brown_circle:|  :file:`printf "\\n\\e[33m%s\\e[0m\\n\\n" "warning"`
-| |:blue_circle:|   :file:`printf "\\n\\e[34m%s\\e[0m\\n\\n" "info"`
+| |:red_circle:|
+| :file:`printf "\\n\\e[31m%s\\e[0m\\n\\n" "  err"`
+| |:green_circle:|
+| :file:`printf "\\n\\e[32m%s\\e[0m\\n\\n" "  ok"`
+| |:brown_circle:|
+| :file:`printf "\\n\\e[33m%s\\e[0m\\n\\n" "  warning"`
+| |:blue_circle:|
+| :file:`printf "\\n\\e[34m%s\\e[0m\\n\\n" "  info"`
 
 zip archive mojibake
 
