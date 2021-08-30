@@ -139,12 +139,9 @@ paru inplace [R]_
 /usr/local/bin/pm
 =================
 
-``pm url <PKG> [<PKG>]...``
-
-| ``pm -Fql``
-| ``pm -Fl``
-| ``pm -Qql``
-| ``pm -Ql``
+.. https://pythonhosted.org/sphinxcontrib-programoutput/
+.. command-output:: /usr/local/bin/pm
+   :returncode: 0
 
 
 Pull GPG Key

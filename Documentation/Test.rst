@@ -1,32 +1,61 @@
 .. include:: substitution.txt
+.. include:: link.txt
 
 ==========
 |ico| Test
 ==========
 
-tmp
+Tmp
 ===
 
-test contents
-=============
+::
 
-.. archlinux.py
+   sudo rm -rf /tmp/alarm_root &&
+   # mkdir -pv "$_" &&
+   # cd "$_" &&
+   # bsdtar -x --no-same-permissions -f ~/beaglebone/ArchLinuxARM-am33x-latest.tar.gz
+   sudo mkdir -pv "$_" &&
+   cd "$_" &&
+   sudo bsdtar -xpf ~/beaglebone/ArchLinuxARM-am33x-latest.tar.gz -p
 
-| :pkg:`core/base`
-| :pkg:`AUR/distccd-alarm-armv7h`
+::
 
-.. xxlink.py
+   # error: chroot to '/tmp/alarm_root' failed: (Operation not permitted)
+   # PACMAN="fakeroot /usr/bin/pacman --sysroot /tmp/alarm_root"
+     PACMAN="sudo /usr/bin/pacman --sysroot /tmp/alarm_root"
+   $PACMAN -Q  | tee ~/beaglebone/alarm_pacman_Q
+   $PACMAN -Qq | tee ~/beaglebone/alarm_pacman_Qq
+   $PACMAN -Rsc --color auto $($PACMAN -Qq)
 
-| `example <https://example.org>`__
-| :stlink:`example <https://example.org>`
-| :emlink:`example <https://example.org>`
-| :emlink:`https://example.org`
+::
 
-.. wikilink.py
+   sudo tree -a -I 'ca-certificates|certs' -F -C
 
-| :wp:`H..B <HolB>`
-| :aw:`t..x <Tmux>`
 
-----
 
-.. include:: link.txt
+
+
+:raw-html:`<br /><br />`
+
+Extension Showcase
+==================
+
+| archlinux.py
+| |b| :pkg:`core/base`
+| |b| :pkg:`AUR/distccd-alarm-armv7h`
+
+| xxlink.py
+| |b| `example <https://example.org>`__
+| |b| :emlink:`example <https://example.org>`
+| |b| :prlink:`example <https://example.org>`
+| |b| :stlink:`example <https://example.org>`
+| |b| :ltlink:`example <https://example.org>`
+
+
+| wikilink.py
+| |b| :wp:`Wikipedia`
+| |b| :aw:`Archiso`
+| |b| :el:`Device Tree Reference`
+| |b| :dw:`DebianReleases`
+| |b| :gw:`Portage`
+

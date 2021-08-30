@@ -47,6 +47,7 @@
    Archiso
    Hentai
    Holonews
+   Router
    hr
 
 Indices and tables

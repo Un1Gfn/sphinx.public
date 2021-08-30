@@ -113,6 +113,24 @@ reverse video time stamp ::
      | sed -E -e 's/^([^:]+):(.+)$/\1:\n  \2\n/g' \
      | less -F +X -S
 
+`How to read the whole shell script before executing it? <https://unix.stackexchange.com/q/331837/>`__
+
+.. code:: bash
+
+   #!/bin/bash
+   function main {
+      foo
+      bar
+   }
+   main "$@"; exit
+
+.. code:: bash
+
+   #!/bin/bash
+   {
+      foo
+      bar
+   }; exit
 
 C
 ===

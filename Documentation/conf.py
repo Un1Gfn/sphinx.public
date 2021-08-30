@@ -37,10 +37,11 @@ copyright += author
 extensions = [
     # 'sphinx.ext.duration',
     'sphinx.ext.extlinks',
-    'sphinx.ext.githubpages',  # https://www.sphinx-doc.org/en/master/usage/extensions/githubpages.html
+    'sphinx.ext.githubpages',       # https://www.sphinx-doc.org/en/master/usage/extensions/githubpages.html
     'sphinx.ext.todo',
     'sphinxemoji.sphinxemoji',
-    'sphinxcontrib.youtube',  # /usr/lib/python3*/site-packages/sphinxcontrib/youtube/
+    'sphinxcontrib.youtube',        # /usr/lib/python3*/site-packages/sphinxcontrib/youtube/
+    'sphinxcontrib.programoutput',  # https://pythonhosted.org/sphinxcontrib-programoutput/
     'archlinux',
     'xxlink',  # emlink stlink
     'wikilink'  # wp:Wikipedia aw:ArchWiki
@@ -172,7 +173,7 @@ html_theme_options = {
     'navigation_depth': -1,
     # 'titles_only': True,
     'display_version': True,
-    'prev_next_buttons_location': 'both',
+    'prev_next_buttons_location': 'None',
     # 'style_external_links': True,
 }
 

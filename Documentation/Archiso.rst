@@ -397,13 +397,7 @@ qemu ::
 
 .. __: https://gitlab.archlinux.org/archlinux/archiso/-/blob/master/docs/README.transfer
 
-Escalate
-
-.. code:: shell-session
-
-   $ su -
-   Password:
-   #
+.. include:: escalate.txt
 
 plug in removable drive ::
 

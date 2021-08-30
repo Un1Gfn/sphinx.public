@@ -57,13 +57,12 @@ Build Static QEMU
 Get ALARM
 =========
 
-get the `key <https://archlinuxarm.org/about/package-signing#keys>`__ of Arch Linux ARM Build System ::
+get the `key <https://archlinuxarm.org/about/package-signing#keys>`__ of ALARM Build System ::
 
    gpg --search-key --keyserver-options "http-proxy=http://127.0.0.1:8080" 68B3537F39A313B3E574D06777193F152BDBE6A6
    gpg --recv-keys  --keyserver-options "http-proxy=http://127.0.0.1:8080" 68B3537F39A313B3E574D06777193F152BDBE6A6
 
-download from `mirrors <https://archlinuxarm.org/about/mirrors>`__
-and verify ::
+download from `mirrors <https://archlinuxarm.org/about/mirrors>`__ ::
 
    cd ~/beaglebone
    source ~/proxy.bashrc
@@ -71,65 +70,143 @@ and verify ::
    wget http://mirror.archlinuxarm.org/os/ArchLinuxARM-am33x-latest.tar.gz.md5
    wget http://mirror.archlinuxarm.org/os/ArchLinuxARM-am33x-latest.tar.gz.sig
    proxy_off
+
+verify ::
+
    md5sum -c ArchLinuxARM-am33x-latest.tar.gz.md5
    gpg --verify ArchLinuxARM-am33x-latest.tar.gz{.sig,}
+
+.. include:: escalate.txt
 
 extract
 
 .. warning::
 
-   | This removes everything from a previous extract (if any)
+   | Everything from a previous extract will be lost
    | \
-     Make sure services are
-     :ref:`spinned down <reference_label_section_clean_up>`
-     before removing anything
+     Make sure nfs-related services are
+     :ref:`spinned down <reference_label_section_clean_up>` |:dart:|
+     before removing
 
 ::
 
-   cd ~/beaglebone
-   # { sudo umount -v ~/beaglebone/alarm_root; chmod -R u+w alarm_root; rm -rf alarm_root; }
-   # [ ! -e alarm_root ] &&
-   sudo rm -rf ~/beaglebone/alarm_root
-   # Detected unsafe path transition / (owned by alarm) -> /etc (owned by root) during canonicalization of /etc.
-   sudo mkdir -pv alarm_root
-   sudo chmod -v 777 alarm_root
-   cd alarm_root/
-   # /usr/bin/time --format="\n  wall clock time - %E\n"
-   # /usr/bin/bsdtar -x --no-same-permissions -f ../ArchLinuxARM-am33x-latest.tar.gz
-   sudo /usr/bin/bsdtar -x -f ../ArchLinuxARM-am33x-latest.tar.gz -p
+   # sudo -u darren /usr/bin/bsdtar -x --no-same-permissions -f ../ArchLinuxARM-am33x-latest.tar.gz
+   if [ "No machines." = "$(machinectl)" ] && ! mount | grep beaglebone; then
+      cd ~darren/beaglebone &&
+         rm -rf ~/beaglebone/alarm_root &&
+         mkdir -pv alarm_root &&
+         chmod -v 777 alarm_root &&
+         cd alarm_root/ &&
+         /usr/bin/bsdtar -xpf ../ArchLinuxARM-am33x-latest.tar.gz &&
+         cd ~darren/beaglebone
+   else
+      printf "\n\e[31m  %s\e[0m\n\n" "err"
+   fi
+
+proxy for pacman ::
+
+   cp -v ~darren/proxy.bashrc ~darren/beaglebone/alarm_root/
+
+change password ::
+
+   chpasswd -R ~darren/beaglebone/alarm_root <<<"root:root"$'\n'"alarm:alarm"
+
+workaround :aw:`systemd-nspawn#Root_login_fails` ::
+
+   # printf "\npts/0\n\n" >>~darren/beaglebone/alarm_root/usr/share/factory/etc/securetty
+     printf "\npts/0\n\n" >>~darren/beaglebone/alarm_root/etc/securetty
+     cat ~darren/beaglebone/alarm_root/etc/securetty
 
 | remove fstab
 | |b| :aw:`NFS#Mount_using_/etc/fstab`
 
 ::
 
-   cd ~/beaglebone
+   cd ~darren/beaglebone
    grep -q -e '^[^#]' alarm_root/etc/fstab && printf "\n\e[31m  %s\e[0m\n\n" "err"
-   sudo rm -v alarm_root/etc/fstab
+   rm -v alarm_root/etc/fstab
 
-proxy script for pacman ::
+:raw-html:`<details><summary><s>GPG timeout workaround by disabling package signature checking (fixed with rngd.service in host)</s></summary>`
 
-   cp -v ~/proxy.bashrc alarm_root/
+:aw:`Pacman/Package_signing#Disabling_signature_checking`
 
-workaround :aw:`systemd-nspawn#Root_login_fails` ::
+|:warning:| vulnerable ::
 
-   # printf "\npts/0\n\n" | sudo tee -a alarm_root/usr/share/factory/etc/securetty
-     printf "\npts/0\n\n" | sudo tee -a alarm_root/etc/securetty
-
-:aw:`Pacman/Package_signing#Disabling_signature_checking` |:warning:| potential thread, but GPG times out ::
-
-   sudo sed -i.pacnew \
+   sed -i.pacnew \
       -e 's/SigLevel    = Required DatabaseOptional/SigLevel = Never/g' \
       -e 's/^#Color$/Color/g' \
       -e 's/^#VerbosePkgLists$/VerbosePkgLists/g' \
       alarm_root/etc/pacman.conf
    diff -u --color alarm_root/etc/pacman.conf{.pacnew,}
 
+:raw-html:`</details>`
+
+disable problematic units
+
+::
+
+   # systemctl get-default
+   # systemctl set-default multi-user.target
+   # systemctl set-default graphical.target
+   # systemctl disable haveged.service
+   # systemctl disable dhcpcd.service
+   # systemctl disable dhcpcd@.service
+   # systemctl disable systemd-networkd-wait-online.service
+   # systemctl disable systemd-networkd.service
+   # systemctl disable systemd-networkd.socket
+   if cd ~darren/beaglebone/alarm_root/etc/systemd/system; then
+      # Leave sshd.service enabled, for debugging purposes
+      rm -v \
+         multi-user.target.wants/systemd-networkd.service \
+         multi-user.target.wants/systemd-resolved.service \
+         network-online.target.wants/systemd-networkd-wait-online.service \
+         sockets.target.wants/systemd-networkd.socket \
+         sysinit.target.wants/haveged.service \
+         sysinit.target.wants/systemd-timesyncd.service
+      exa -alT
+      cd ~darren/beaglebone/
+   fi
+
+Entrophy
+========
+
+`myths about /dev/urandom <https://www.2uo.de/myths-about-urandom/>`__
+
+| might take a very long time without much entryphy
+| |b| :aw:`pacman-key --init <Pacman/Package_signing#Initializing_the_keyring>`
+| |b| :aw:`nfs <NFS#Starting_the_server>`
+
+`820g3 has TPM 1.2 <https://support.hp.com/us-en/document/c04913012#:~:text=Trusted%20Platform%20Module%20(TPM%20)%201.2%20Embedded%20Security%20Chip%20(Common%20Criteria%20EAL4%2B%20Certified)>`__
+
+.. include:: escalate.txt
+
+load tpm drivers ::
+
+   modprobe tpm
+   modprobe -a tpm_{infineon,tis,crb}
+
+check hardware random number generator (TRNG) ::
+
+   file /dev/hwrng
+
+| :pkg:`community/rng-tools` (:aw:`ArchWiki <Rng-tools>`)
+
+::
+
+   systemctl start rngd.service # (-B)
+
+wait for approx 7s until harvest rate reaches at least :file:`[ 48KiB/s]`\ [#si]_
+
+::
+
+   pv -prb </dev/random >/dev/null
+
+
 Modify Initramfs
 ================
 
 | `gen_initramfs.sh <https://github.com/torvalds/linux/blob/master/usr/gen_initramfs.sh>`__
-| kernel doc `Ramfs, rootfs and initramfs <https://www.kernel.org/doc/html/latest/filesystems/ramfs-rootfs-initramfs.html#what-is-rootfs>`__
+| kernel doc - `ramfs, rootfs and initramfs <https://www.kernel.org/doc/html/latest/filesystems/ramfs-rootfs-initramfs.html#what-is-rootfs>`__
 
 | QEMU+chroot
 | |b| `Unix&Linux <https://unix.stackexchange.com/questions/41889/how-can-i-chroot-into-a-filesystem-with-a-different-architechture>`__
@@ -141,7 +218,7 @@ Modify Initramfs
 
 .. __: https://www.youtube.com/watch?v=s7LlUs5D9p4
 
-machine id
+prepare machine id ``-M alarm``
 
 ::
 
@@ -149,7 +226,7 @@ machine id
    sudo rm -fv /var/lib/machines/alarm
    sudo ln -sv "$(realpath alarm_root/)" /var/lib/machines/alarm
 
-change passwords in bootless container
+:raw-html:`<details><summary><s>bootless container</s></summary>`
 
 ::
 
@@ -157,52 +234,42 @@ change passwords in bootless container
    # sudo arch-chroot alarm_root /bin/bash
    sudo systemd-nspawn -D alarm_root -M alarm
 
-::
-
-   if [ "$(uname -m)" == armv7l ]; then
-      chpasswd <<< "root:root"$'\n'"alarm:alarm"
-   else
-      printf "\n\e[31m  %s\e[0m\n\n" "err"
-   fi
-   exit
+:raw-html:`</details>`
 
 launch booted container |:rocket:|
 
 ::
 
-   sudo systemd-nspawn -b -M alarm --bind-ro=/etc/resolv.conf --link-journal=guest
-   # source /proxy.bashrc
+   P="$(realpath ~/beaglebone/alarm_root/var/cache/pacman/pkg)"
+   if [ -z "$(ls -A "$P")" ]; then
+      # --link-journal=guest
+      sudo systemd-nspawn \
+         -b \
+         -M alarm \
+         --bind-ro=/etc/resolv.conf \
+         --bind=/var/cache/pacman/pkg \
+   else
+      printf "\n\e[31m  %s\e[0m\n\n" "err"
+   fi
 
-**kill da madafakin dhc\***
+log in as :file:`root:root`, wait approx 25s (max 60s) for bash prompt
 
-::
+.. tip::
 
-   # systemctl get-default
-   # systemctl set-default multi-user.target
-   # systemctl set-default graphical.target
-   systemctl disable dhcpcd.service
-   systemctl disable dhcpcd@.service
-   systemctl disable systemd-networkd-wait-online.service
-   systemctl disable systemd-networkd.service
-   systemctl disable systemd-networkd.socket
+   | |b| :pr:`Run journalctl -M alarm [-f] in host for container journal`
+   | |b| Run ``systemctl shutdown`` for peaceful shutdown
+   | |b| \
+         To force quit, press
+         :kbd:`<CTRL+]><CTRL+]><CTRL+]>` or
+         :kbd:`<CTRL+5><CTRL+5><CTRL+5>` within one second
 
-::
+make sure no units harmful to nfs are enabled ::
 
    env SYSTEMD_COLORS=0 systemctl --no-pager --legend=0 list-unit-files \
       | rev \
       | env LC_ALL=C sort -k 2,2 -s \
       | rev \
       | less -SRM +%
-
-.. tip::
-
-   | |b| log in as :file:`root:root` :pr:`then wait in all patience (approx 25s; max 60s) for bash prompt`
-   | |b| for container journal - run ``journalctl [-f] -M alarm`` in **host**
-   | |b| peaceful quit - ``systemctl shutdown``
-   | |b| \
-         force quit -
-         :kbd:`<CTRL+]><CTRL+]><CTRL+]>` or
-         :kbd:`<CTRL+5><CTRL+5><CTRL+5>` within one second
 
 backup & regen ::
 
@@ -211,7 +278,7 @@ backup & regen ::
    mv -iv /boot/initramfs-linux{,-regen}.img
 
 | |b| :aw:`Mkinitcpio#Using_net`
-| |b| :aw:`Diskless_system#NFS_2` |:back_of_hand:| v4? no thanks, we use NFSv3 |:grinning:|
+| |b| :aw:`Diskless_system#NFS_2`
 | |b| \
       :pkg:`alarm/mkinitcpio-netconf`
       depends on
@@ -224,12 +291,12 @@ backup & regen ::
    :align: left
    :widths: auto
 
-   ======== ===================== =====================
-    \        ``\( \)``             ``( )``
-   ======== ===================== =====================
-    ``-E``   literal parenthesis   substitution group
-    \        ?                     literal parenthesis
-   ======== ===================== =====================
+   =========== ===================== =====================
+    \           ``\( \)``             ``( )``
+   =========== ===================== =====================
+       ``-E``   literal parenthesis   substitution group
+    no ``-E``   ?                     literal parenthesis
+   =========== ===================== =====================
 
 ::
 
@@ -256,13 +323,22 @@ backup & regen ::
     :pkg:`alarm/mkinitcpio-nfs-utils`   ``net``             ``ip=`` ``nfsaddrs=`` ``nfsroot=``
    =================================== =================== ==========================================
 
-::
+:aw:`import archlinuxarm keys <Offline_installation#Importing_archlinux_keys>` ::
+
+   # We have already started rngd.service in host
+   # No /usr/bin/pv available in container
+   # Benchmark in container with "dd if=/dev/random of=/dev/null status=progress"
+   # Check CPU usage of "gpg-agent" to make sure it ain't blocked
+   pacman-key --init
+   # Avoid downloading keys again
+   #  downloading required keys...
+   #  :: Import PGP key 77193F152BDBE6A6, "Arch Linux ARM Build System <builder+xu6@archlinuxarm.org>"? [Y/n] y
+   pacman-key --populate archlinux
+
+sysuupgrade & install ::
 
    source /proxy.bashrc
-   # pacman-key --init # We have disabled signature checking
-   # gpg --search-key --keyserver-options "http-proxy=http://127.0.0.1:8080" 68B3537F39A313B3E574D06777193F152BDBE6A6 # Times out
-   # netnfs4 needs mount.nfs4 binary
-   pacman -Syu nfs-utils mkinitcpio-nfs-utils
+   pacman -Syu nfs-utils mkinitcpio-nfs-utils # netnfs4 needs mount.nfs4 binary
    # pacman -Ql mkinitcpio-netconf
    pacman -Ql mkinitcpio-nfs-utils
    mkinitcpio -L
@@ -362,8 +438,26 @@ inspect ::
 
    rm -r /tmp/img-{orig,regen,net}
 
+
 PC TFTP
 =======
+
+.. table::
+   :align: left
+   :widths: auto
+
+   === ====== ================ ======================================
+    \   settings
+   --- ----------------------- --------------------------------------
+    \   a      b                result
+   === ====== ================ ======================================
+    1   Auto   Auto             |:white_check_mark:| operate at Full
+    2   Auto   Half             |:white_check_mark:| operate at Half
+    3   Auto   Full\ [#AuFl]_    |:x:|                boom!
+    4   Half   Half             |:white_check_mark:| operate at Half
+    5   Half   Full             |:x:|                boom!
+    6   Full   Full             |:white_check_mark:| operate at Full
+   === ====== ================ ======================================
 
 :manpage:`systemd.net-naming-scheme(7)`
 
@@ -389,11 +483,7 @@ PC TFTP
 
 submit to ArchWiki :aw:`BusyBox` and link from :aw:`TFTP#Server`
 
-.. code:: shell-session
-
-   $ su -
-   Password:
-   #
+.. include:: escalate.txt
 
 ::
 
@@ -427,37 +517,7 @@ client |rarr| ``mount`` |rarr| server |rarr| ``rpcbind`` |rarr| ``nfsd`` |rarr| 
 
    Use NFSv3 instead of NFSv4
 
-escalate
-
-.. code:: shell-session
-
-   $ su -
-   Password:
-   #
-
-820g3
-`has TPM 1.2 <https://support.hp.com/us-en/document/c04913012#:~:text=Trusted%20Platform%20Module%20(TPM%20)%201.2%20Embedded%20Security%20Chip%20(Common%20Criteria%20EAL4%2B%20Certified)>`__
-
-
-load tpm drivers ::
-
-   modprobe tpm
-   modprobe -a tpm_{infineon,tis,crb}
-
-check hardware random number generator (TRNG) ::
-
-   file /dev/hwrng
-
-:pkg:`community/rng-tools` (:aw:`ArchWiki <Rng-tools>`) ::
-
-   systemctl start rngd.service # (-B)
-
-| wait for approx 7s (tcsd.service fully up)
-| expect more than :file:`[ 48KiB/s]` [#si]_ afterwards
-
-::
-
-   pv -prb </dev/random >/dev/null
+.. include:: escalate.txt
 
 `append to /etc/exports <https://wiki.archlinux.org/title/Diskless_system#NFS>`__ ::
 
@@ -815,13 +875,9 @@ Tune
 Clean up
 ========
 
-escalate
+|:dart:|
 
-.. code:: shell-session
-
-   $ su -
-   Password:
-   #
+.. include:: escalate.txt
 
 ::
 
@@ -852,12 +908,13 @@ Footnotes
 
 ----
 
+.. [#AuFl] :wp:`Autonegotiation#Duplex_mismatch`
+
 .. [#ax8817] https://unix.stackexchange.com/a/60080
 .. [#si] 50 kB/s |asymp| 48.828 KiB/s
 
 .. [#down] https://www.denx.de/wiki/view/U-Boot/DesignPrinciples#2_Keep_it_Fast
 .. [#tcp] https://www.denx.de/wiki/view/DULG/EthernetIsUnreliable
-
 
 .. [#noinput] https://www.denx.de/wiki/view/DULG/NoInputUsingFramebuffer
 

@@ -182,11 +182,9 @@ Building
    cd ~/beaglebone/Documentation
    make clean; make --no-print-directory entr
 
-Syntax
-======
 
-Other Syntax
-------------
+Syntax.Others
+=============
 
 `link1`_ `link2`__
 (combination of `Anonymous Hyperlink`__ and `Indirect Hyperlink`__ ) [#]_
@@ -268,15 +266,14 @@ This is a doctest block.
 |:point_down:| :emlink:`Transition <https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#transitions>`
 (`<hr> <https://www.w3schools.com/TAGS/tag_hr.asp>`__)
 
-----
 
-`Roles`__ / Inline Elements
----------------------------
+Syntax.\ `Roles`__\ :raw-html:`<br />`\ Inline Elements
+====================================================================
+
+.. __: https://docutils.sourceforge.io/docs/ref/rst/roles.html
 
 | :emlink:`Cross-reference manpage <https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-manpages_url>`
 | Man page of :manpage:`uname(1)`
-
-.. __: https://docutils.sourceforge.io/docs/ref/rst/roles.html
 
 | :emlink:`Implicit Hyperlink Target <https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#implicit-hyperlink-targets>`
 | Go to `Misc`_
@@ -336,8 +333,9 @@ raw html style :raw-html:`<span style="text-align: center; color: green;">green<
   \[\*\]\_ [*]_
   \[\*\]\_ [*]_
 
-`Directives`__ / Block Elements
--------------------------------
+
+Syntax.\ `Directives`__\ :raw-html:`<br />`\ Block Elements
+===========================================================
 
 .. __: https://docutils.sourceforge.io/docs/ref/rst/directives.html
 

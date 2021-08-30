@@ -9,18 +9,47 @@
 Misc
 ====
 
-U-Boot on `Read the Docs <https://u-boot.readthedocs.io/en/latest/index.html>`__
-
 `Title Capitalization Tool <https://capitalizemytitle.com/>`__
+
+| Gmail `search operators`__
+| |b| `filter archived mails`__ with ``in:archive``
+| |b| Search `lists.denx.de`__
+|     |b2| `with Google`__
+|     |b2| `with MARC`__
+
+.. __: https://support.google.com/mail/answer/7190
+.. __: https://webapps.stackexchange.com/questions/1168/can-i-see-only-mail-i-have-archived-in-gmail
+.. __: https://lists.denx.de/listinfo
+.. __: https://www.google.com/search?q=site:lists.denx.de
+.. __: https://marc.info/?l=u-boot
 
 | misterious article
 | `<http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.set.boards/index.html>`__
 
-| `GitHub mirror <https://github.com/u-boot/u-boot>`__ |:zap:|\ |:zap:|\ |:zap:|
-| `GitLab repo <https://source.denx.de/u-boot/u-boot>`__ |:snail:|
-| `TI fork <https://git.ti.com/cgit/ti-u-boot/ti-u-boot>`__
+:el:`u-boot stages <panda how_to_mlo_&_u-boot#introduction>`
 
-:el:`U-Boot stages <Panda How_to_MLO_&_u-boot#Introduction>`
+u-boot `PKGBUILDs <https://aur.archlinux.org/packages/?O=0&SeB=nd&K=u-boot&outdated=&SB=n&SO=a&PP=50&do_Search=Go>`__
+
+buildroot - `build beaglebone+am335x-evm image <https://git.busybox.net/buildroot/tree/board/beaglebone/readme.txt>`__
+
+| u-boot
+| |b| `GitHub mirror <https://github.com/u-boot/u-boot>`__ |:zap:|\ |:zap:|\ |:zap:|
+| |b| `GitLab repo <https://source.denx.de/u-boot/u-boot>`__ |:snail:|
+| |b| `read the docs <https://u-boot.readthedocs.io/en/latest/index.html>`__
+| |b| /`README <https://github.com/u-boot>`__\
+      /*Building the Software:*\
+      /*Monitor Commands*\
+      /*Overview:*
+| |b| /board/ti/am335x/`README <https://github.com/u-boot/u-boot/tree/master/board/ti/am335x>`__\
+      /*NAND (copy from SD card to NAND)*
+| |b| `DULG Introduction <https://www.denx.de/wiki/view/DULG/Introduction>`__\
+      /2.3. Availability/\
+      `PDF manual <http://www.denx.de/wiki/publish/DULG/DULG-canyonlands.pdf>`__
+
+| ti
+| |b| `fork <https://git.ti.com/cgit/ti-u-boot/ti-u-boot>`__ of u-boot
+| |b| `U-Boot on AM335x`_
+| |b| `AM335x U-Boot User's Guide <https://web.archive.org/web/20210114145232/https://processors.wiki.ti.com/index.php/AM335x_U-Boot_User's_Guide>`__
 
 .. table::
    :align: left
@@ -37,43 +66,12 @@ U-Boot on `Read the Docs <https://u-boot.readthedocs.io/en/latest/index.html>`__
 .. __: https://stackoverflow.com/a/60880147
 .. __: https://stackoverflow.com/a/34805466
 
-| Gmail `search operators`__
-| |b| `filter archived mails`__ with ``in:archive``
-| |b| Search `lists.denx.de`__
-|     |b2| `with Google`__
-|     |b2| `with MARC`__
+.. note::
 
-.. __: https://support.google.com/mail/answer/7190
-.. __: https://webapps.stackexchange.com/questions/1168/can-i-see-only-mail-i-have-archived-in-gmail
-.. __: https://lists.denx.de/listinfo
-.. __: https://www.google.com/search?q=site:lists.denx.de
-.. __: https://marc.info/?l=u-boot
-
-.. warning::
-
-   | eMMC =
+   | \
+     eMMC =
      NAND +
      :wp:`FTL <Flash_translation_layer_(FTL)_and_mapping>`
-   | There is **no** raw NAND on BBGW, only eMMC!
-
-
-| /`README <https://github.com/u-boot>`__\
-  /*Building the Software:*\
-  /*Monitor Commands*\
-  /*Overview:*
-| /board/ti/am335x/`README <https://github.com/u-boot/u-boot/tree/master/board/ti/am335x>`__\
-  /NAND (copy from SD card to NAND)
-
-`DULG Introduction <https://www.denx.de/wiki/view/DULG/Introduction>`__
-~ 2.3. Availability
-~ `PDF manual <http://www.denx.de/wiki/publish/DULG/DULG-canyonlands.pdf>`__
-
-`U-Boot on AM335x`_
-
-| Guides on building u-boot
-| |b| `TI <https://web.archive.org/web/20210114145232/https://processors.wiki.ti.com/index.php/AM335x_U-Boot_User's_Guide>`__
-| |b| `PKGBUILD for other SoC <https://aur.archlinux.org/packages/?O=0&SeB=nd&K=u-boot&outdated=&SB=n&SO=a&PP=50&do_Search=Go>`__
-| |b| `Buildroot <https://git.busybox.net/buildroot/tree/board/beaglebone/readme.txt>`__
 
 .. Pentester Academy TV .. Embedded Linux Booting Process (Multi-Stage Bootloaders, Kernel, Filesystem)
 .. youtube:: DV5S_ZSdK0s
@@ -82,7 +80,7 @@ U-Boot on `Read the Docs <https://u-boot.readthedocs.io/en/latest/index.html>`__
 
 |
 
-`local variables space and global environment variables space are separated <https://www.denx.de/wiki/view/DULG/CommandLineParsing#Section_14.2.17.2.>`__
+`local var space and globalenv var space are separated <https://www.denx.de/wiki/view/DULG/CommandLineParsing#Section_14.2.17.2.>`__
 
 .. code:: text
 
@@ -124,10 +122,10 @@ Get U-Boot
 
 .. error::
      
-   | With :pkg:`alarm/uboot-beaglebone`\ ``2017.07-1``, sending :file:`emmc.img` (>2Mib),
-   |  either right after :file:`u-boot-spl.bin`
-   |  or\ ``loadx``/\ ``loady``\ when U-Boot is running,
-   |   I get NAK at approx 500K.
+   | With :pkg:`alarm/uboot-beaglebone`\ ``2017.07-1``, sending :file:`emmc.img` (>2Mib), either
+   |  |b| right after :file:`u-boot-spl.bin`, or
+   |  |b| with\ ``loadx``/\ ``loady``\ when U-Boot is running,
+   |  I get NAK at approx. 500K.
    | Anything other than
      :file:`u-boot-spl.bin` (80KiB) and
      :file:`u-boot.img` (400KiB)
@@ -183,34 +181,35 @@ u-boot-spl.bin ::
 
 .. :prlink:`history <https://github.com/u-boot/u-boot/commits/master/configs/am335x_boneblack_vboot_defconfig>\ `\ :pr:`of configs/am335x_boneblack_vboot_defconfig`
 
-no need for verified boot, use\ ``configs/am335x_evm_defconfig``\ instead\ [#]_
-
 .. table::
    :align: left
    :widths: auto
 
-   ================================== ============= ============= =========
-   \                                                 successful?
-   ------------------------------------------------ -----------------------
-    :file:`configs/am335x`             version       stage 2       stage 3
-   ================================== ============= ============= =========
-    :pr:`_boneblack_vboot_defconfig`   `history`__
-    :file:`_evm_defconfig`             v2021.04      |O|           |O|
-    :file:`_evm_defconfig`             v2021.07      ?             ?
-   ================================== ============= ============= =========
+   =============================================== ============= ============= =========
+    \                                                             successful?
+   ------------------------------------------------------------- -----------------------
+    :file:`configs/?`                               `release`__   stage 2       stage 3
+   =============================================== ============= ============= =========
+    :pr:`am335x_boneblack_vboot_defconfig` [#vb]_   `history`__
+    :file:`am335x_evm_defconfig`                    v2021.04      |O|           |O|
+    :file:`am335x_evm_defconfig`                    v2021.07      |O|           |O|
+   =============================================== ============= ============= =========
 
+.. __: https://github.com/u-boot/u-boot/releases
 .. __: https://github.com/u-boot/u-boot/commits/master/configs/am335x_boneblack_vboot_defconfig
 
-`contributing <https://archlinuxarm.org/wiki/Contributing>`__
-- send PR to archlinuxarm/PKGBUILDs/\ `alarm/uboot-beaglebone <https://github.com/archlinuxarm/PKGBUILDs/tree/master/alarm/uboot-beaglebone>`__
+.. tip::
+
+   | `contributing <https://archlinuxarm.org/wiki/Contributing>`__
+   | send a PR to archlinuxarm/PKGBUILDs/\ `alarm/uboot-beaglebone <https://github.com/archlinuxarm/PKGBUILDs/tree/master/alarm/uboot-beaglebone>`__
 
 | Docs » Build U-Boot » `Building with GCC <https://u-boot.readthedocs.io/en/latest/build/gcc.html>`__
-| :el:`eLinux <Building_for_BeagleBone>`
-| TI/`Create a Network Bootable U-Boot Image <https://web.archive.org/web/https://processors.wiki.ti.com/index.php/Sitara_Linux_Program_the_eMMC_on_Beaglebone_Black#Create_a_Network_Bootable_U-Boot_Image>`__
+| eLinux - :el:`building for BeagleBone`
+| TI - `Create a Network Bootable U-Boot Image <https://web.archive.org/web/https://processors.wiki.ti.com/index.php/Sitara_Linux_Program_the_eMMC_on_Beaglebone_Black#Create_a_Network_Bootable_U-Boot_Image>`__
 
 | :pkg:`AUR/distccd-alarm-armv7h`
-| |b| :aw:`arch wiki <Distcc_Cross-Compiling>`
 | |b| `alarm wiki <https://archlinuxarm.org/wiki/Distcc_Cross-Compiling>`__
+| |b| :aw:`ArchWiki <Distcc_Cross-Compiling>`
 
 .. table:: u-boot tarball
    :align: left
@@ -228,18 +227,14 @@ no need for verified boot, use\ ``configs/am335x_evm_defconfig``\ instead\ [#]_
 .. __: https://source.denx.de/u-boot/u-boot/-/tags
 .. __: https://github.com/u-boot/u-boot/tags
 
-get key\ [#gSR]_ ::
+get key [#gSR]_ ::
 
    gpg --search-key --keyserver-options "http-proxy=http://127.0.0.1:8080" 1A3C7F70E08FAB1707809BBF147C39FF9634B72C
    gpg --recv-keys  --keyserver-options "http-proxy=http://127.0.0.1:8080" 1A3C7F70E08FAB1707809BBF147C39FF9634B72C
 
-verify tarball wigh signature\ [#gV]_ ::
+verify tarball wigh signature [#gV]_ ::
 
-   gpg --verify u-boot-2021.07.tar.bz2.sig u-boot-2021.07.tar.bz2
-
-kbuild menuconfig\ :ltlink:`$MENUCONFIG_COLOR <https://www.kernel.org/doc/html/latest/kbuild/kconfig.html#menuconfig-color>` ::
-
-   # make MENUCONFIG_COLOR=mono menuconfig
+   gpg --verify u-boot-2021.07.tar.bz2{.sig,}
 
 .. _ref_label_already_built_BACKREF:
 
@@ -249,9 +244,9 @@ kbuild menuconfig\ :ltlink:`$MENUCONFIG_COLOR <https://www.kernel.org/doc/html/l
    :ref:`jump forth <ref_label_already_built>`\ |:dart:|
    to collect its output instead of building again.
 
-.. danger::
+.. warning::
 
-   Previous build will be lost if you proceed!
+   Previous builds will be lost
 
 tools/`genboardscfg.py <https://github.com/u-boot/u-boot/blob/master/tools/genboardscfg.py>`__
 
@@ -262,18 +257,16 @@ tools/`genboardscfg.py <https://github.com/u-boot/u-boot/blob/master/tools/genbo
    tar xf ~/beaglebone/u-boot-2021.07.tar.bz2
    cd u-boot-2021.07/
 
-.. warning::
+.. tip::
 
-   Building U-Boot is non-trival.
-   Run everything in tmux from now on.
+   ::
 
-::
-
-    tmux attach || tmux
+      tmux attach || tmux
 
 .. warning::
 
-   ``export vars`` before invoking ``make`` on **any** target. Otherwise expect broken recipes!
+   | Export vars before invoking ``make`` on **any target** in case of broken recipes
+   | Vars survive **neither entering nor exiting** tmux
 
 export vars ::
 
@@ -368,11 +361,30 @@ export vars ::
 
 :raw-html:`</details>`
 
-GTK2 (requires :pkg:`AUR/glade-gtk2` or :pkg:`AUR/libglade`?) ::
+Configure
+~~~~~~~~~
 
-   # make -j4 gconfig
+:raw-html:`<details><summary>ncurses menuconfig</summary>`
 
-Qt5
+menuconfig\ :ltlink:`$MENUCONFIG_COLOR <https://www.kernel.org/doc/html/latest/kbuild/kconfig.html#menuconfig-color>`
+
+::
+
+   make MENUCONFIG_COLOR=mono menuconfig
+
+:raw-html:`</details>`
+
+:raw-html:`<details><summary>gtk2 gconfig</summary>`
+
+:pkg:`AUR/glade-gtk2` or :pkg:`AUR/libglade` ?
+
+::
+
+   make -j4 gconfig
+
+:raw-html:`</details>`
+
+qt5 xconfig
 
 ::
 
@@ -382,10 +394,7 @@ Qt5
       # libQt5Core.so.5 => /usr/lib/libQt5Core.so.5 (0x00007fb63342e000)
    make -j4 xconfig
 
-xconfig
-~~~~~~~
-
-apply the following changes by hand
+**for 2021.07**, apply the following changes by hand
 
 ``Boot options -``
 
@@ -397,8 +406,8 @@ apply the following changes by hand
 
 .. code:: text
 
-   - Memory commands        - sha1sum  - ✓
-   - Device access commands - gpio     - ✓ # Command 'gpio' failed: Error -19
+     - Memory commands        - sha1sum  - ✓
+     - Device access commands - gpio     - ✓ # Command 'gpio' failed: Error -19
    # - Device access commands - poweroff - ✓ # lib/efi_loader/efi_runtime.c:217: undefined reference to `do_poweroff'
 
 ``Environment -``
@@ -421,9 +430,9 @@ apply the following changes by hand
    # - USB Gadget Support - ☐
    #
    # ASIX
-   - USB to Ethernet Controller Drivers - ✓
-   - USB to Ethernet Controller Drivers - ASIX AX8817X (USB 2.0) support - ✓
-   - USB to Ethernet Controller Drivers - ASIX AX88179 (USB 3.0) support - ✓
+     - USB to Ethernet Controller Drivers - ✓
+     - USB to Ethernet Controller Drivers - ASIX AX8817X (USB 2.0) support - ✓
+     - USB to Ethernet Controller Drivers - ASIX AX88179 (USB 3.0) support - ✓
 
 | :kbd:`<CTRL+S>` (File - Save)
 | :kbd:`<CTRL+Q>` (File - Quit)
@@ -500,12 +509,12 @@ collect artifacts ::
 | it builds u-boot version ``boot/uboot/Config.in:BR2_TARGET_UBOOT_VERSION``
   (`git <https://git.busybox.net/buildroot/tree/boot/uboot/Config.in>`__)
 
-get key\ [#gSR]_ ::
+get key  [#gSR]_ ::
 
    gpg --search-key --keyserver-options "http-proxy=http://127.0.0.1:8080" AB07D806D2CE741FB886EE50B025BA8B59C36319
    gpg --recv-keys  --keyserver-options "http-proxy=http://127.0.0.1:8080" AB07D806D2CE741FB886EE50B025BA8B59C36319
 
-verify clear signed message of checksum\ [#gV]_ ::
+verify clear signed message of checksum [#gV]_ ::
 
    gpg --verify buildroot-202?.??.?.tar.bz2.sign
 
@@ -570,7 +579,8 @@ Make eMMC image
 
 .. warning::
 
-   Generated image is NOT ``2MiB``, but **confusingly slightly more than** ``2MiB``
+   | Generated image is **not** ``2MiB``
+   | It is **slightly more than** ``2MiB``
 
 genimage.cfg `syntax <https://github.com/pengutronix/genimage/blob/master/README.rst>`__
 
@@ -599,16 +609,17 @@ genimage.cfg `syntax <https://github.com/pengutronix/genimage/blob/master/README
 
 :raw-html:`</details>`
 
-genimage is intended to be run in a fakeroot environment\ [#]_ ::
+`genimage is intended to be run in a fakeroot environment <https://github.com/pengutronix/genimage#genimage---the-image-creation-tool>`__
+
+::
 
    # "+X" and it won't get stuck at the bottom of the screen
    fakeroot genimage --config /tmp/genimage.cfg |& less +X -S
 
 | inspect
 | |b|
-  :ltlink:`-i <https://www.gnu.org/software/mtools/manual/mtools.html#Drive-letters>`
-  of
   `mdir(1) <https://www.gnu.org/software/mtools/manual/mtools.html#mdir>`__
+  :ltlink:`-i <https://www.gnu.org/software/mtools/manual/mtools.html#Drive-letters>`
 
 ::
 
@@ -675,13 +686,7 @@ partition (sfdisk)
    # $WRITE          -A emmc.img 1
    # $WRITE --part-type emmc.img 1 FAT12 # sfdisk -T | grep -i -e fat -e dos -e bios -e win -e w9
 
-escalate
-
-.. https://pygments.org/docs/lexers/#pygments.lexers.shell.BashSessionLexer
-.. code:: shell-session
-
-   $ su -
-   #
+.. include:: escalate.txt
 
 loop device
 (`kpartx? <https://unix.stackexchange.com/questions/94103/how-can-i-partition-a-volume-in-a-regular-file-without-loop>`__)
@@ -758,20 +763,23 @@ Connect Serial
 
 1. Double check the pinout
 2. Connect PL2303 USB-A to PC
-3. | 
-     Make sure ``lsusb | grep -i prolific`` reveals
-   | |b| `067b:2303 <https://linux-hardware.org/?id=usb:067b-2303>`__
-   | |b| ``Prolific Technology, Inc. PL2303 Serial Port / Mobile Action MA-8910P``
+3. .. code:: shell-session
+
+      $ lsusb | grep -i pl
+      Bus * Device *: ID 067b:2303 Prolific Technology, Inc. PL2303 Serial Port / Mobile Action MA-8910P
+
+`067b:2303 <https://linux-hardware.org/?id=usb:067b-2303>`__
+
+
+Send U-Boot
+===========
 
 .. warning::
 
    Don't supply any power to BBGW yet.
 
-Send U-Boot
-===========
-
-|    :pkg:`community/python-pyserial` - `pypi`__ - `doc`__
-|    `xmodem`__ - `pypi`__ - `doc`__
+| :pkg:`community/python-pyserial` - `pypi`__ - `doc`__
+| `xmodem`__ - `pypi`__ - `doc`__
 
 .. __: https://pypi.org/project/pyserial
 .. __: https://pythonhosted.org/pyserial
@@ -780,27 +788,26 @@ Send U-Boot
 .. __: https://pypi.org/project/xmodem
 .. __: https://pythonhosted.org/xmodem
 
-`SystemSetup < DULG < DENX <http://www.denx.de/wiki/view/DULG/SystemSetup#Section_4.3>`__
+`SystemSetup <http://www.denx.de/wiki/view/DULG/SystemSetup>`__ < DULG < DENX
 
-lists.denx.de `minicom+kermit <https://lists.denx.de/pipermail/u-boot/2003-June/001527.html>`__
+lists.denx.de - `minicom+kermit <https://lists.denx.de/pipermail/u-boot/2003-June/001527.html>`__
 
-`DULG <https://www.denx.de/wiki/view/DULG/SystemSetup>`__
-- :aw:`ArchWiki <Working_with_the_serial_console>`
-- :el:`eLinux <Beagleboard:BeagleBone_Black_Accessories#Serial_Debug_Cables>`
+:aw:`Working_with_the_serial_console`
+
+:el:`Beagleboard:BeagleBone_Black_Accessories#Serial_Debug_Cables`
 
 .. https://docutils.sourceforge.io/docs/ref/rst/directives.html#table
-.. table:: parameters
+.. table::
    :align: left
    :widths: auto
 
-   =========== =========
-   =========== =========
-    Baud        115,200
+   =========== ========
+    Baud        115200
     Bits        8
     Parity      N
     Stop Bits   1
     Handshake   None
-   =========== =========
+   =========== ========
 
 ..  Fastbit Embedded Brain Academy .. Beaglebone Black Serial booting procedure ( UART BOOT )
 .. youtube:: 3y1LMNPoaJI
@@ -812,9 +819,7 @@ lists.denx.de `minicom+kermit <https://lists.denx.de/pipermail/u-boot/2003-June/
 .. warning::
    Make sure :pkg:`community/lrzsz` is installed.
 
-escalate ::
-
-   su -
+.. include:: escalate.txt
 
 convenience symlink for minicom ::
 
@@ -844,19 +849,20 @@ convenience symlink for minicom ::
    USBUSB             *<USER>*
              SERIAL
 
-1. Hold :kbd:`USER`
-2. Supply 5v :stlink:`?A <https://electronics.stackexchange.com/questions/563406/which-wall-charger-for-beaglebone-green-wireless>`
-   power through Micro-USB
-3. Wait for 5 seconds
+1. Press down :kbd:`USER`
+2. Keep holding :kbd:`USER`,
+   supply 5v :stlink:`?A <https://electronics.stackexchange.com/questions/563406/which-wall-charger-for-beaglebone-green-wireless>`
+   power through Micro USB
+3. Keep holding :kbd:`USER`,
+   wait for 5 seconds
 4. Release :kbd:`USER`
 
 Wait for at most 30 seconds until ``CCC...`` appears in minicom console
 
 .. warning::
 
-   | Don't use :file:`MLO`.
-   | :file:`MLO` is for booting from eMMC.
-   | Use :file:`u-boot-spl.bin`.
+   | Use :file:`u-boot-spl.bin`
+   | Don't use :file:`MLO`, which is for booting from eMMC
 
 1. :kbd:`<CTRL+A>` |rarr| :kbd:`<S>` |rarr|    xmodem |rarr| ``[MINICOM_RES]/`` |rarr| ``u-boot-spl.bin``
 
@@ -868,7 +874,7 @@ Wait for at most 30 seconds until ``CCC...`` appears in minicom console
 .. tip::
 
    | Don't miss the chance to
-   | ``Press SPACE to abort autoboot in 2 seconds`` |:smile:|
+   | ``Press SPACE to abort autoboot in 2 seconds``
 
 2. :kbd:`<CTRL+A>` |rarr| :kbd:`<S>` |rarr| ymodem |rarr| ``[MINICOM_RES]/`` |rarr| ``u-boot.img``
 
@@ -988,11 +994,11 @@ verify 512B-alignment of eMMC image in another terminal
 .. tip::
    | Make sure eMMC block size is ``512B``
    | ``0x5000blk * 512B/blk = 20480blk * 512B/blk`` (=10485760B=10*1024*1024B=\ **10MiB**\ )
-   | Therefore the following are roughly equivalent
-   | |b| mmc erase 0 0x5000
-   | |b| dd if=/dev/zero of=/dev/mmcblk0 bs=512 count=20480
+   | Therefore the following are equivalent
+   | |b| ``mmc erase 0 0x5000``
+   | |b| ``dd if=/dev/zero of=/dev/mmcblk0 bs=512 count=20480``
 
-erase the first 10MiB of eMMC
+erase the first 10MiB from eMMC
 
 .. code:: text
 
@@ -1008,15 +1014,20 @@ erase the first 10MiB of eMMC
    | Why ``0x82000000``?
    | |b| ``bdinfo`` gives ``DRAM bank ... start = 0x80000000``
    | |b| ``printenv`` gives ``kernel_addr_r=0x82000000`` and ``loadaddr=0x82000000``
-   |     |b| defined in include/configs/`ti_armv7_common.h <https://github.com/u-boot/u-boot/blob/master/include/configs/ti_armv7_common.h>`__
-   |     |b| propagated in include/configs/`am335x_evm.h <https://github.com/u-boot/u-boot/blob/master/include/configs/am335x_evm.h>`__ ? [#]_
-   |     |b| `u-boot relocation on ARM architecture <https://stackoverflow.com/a/35348068>`__
+   |     |b| defined in include/configs/`ti_armv7_common.h`__
+   |     |b| `propagated`__ in include/configs/`am335x_evm.h`__ ?
+   |     |b| `u-boot relocation on ARM architecture`__
+
+.. __: https://github.com/u-boot/u-boot/blob/master/include/configs/ti_armv7_common.h
+.. __: https://stackoverflow.com/a/9113058
+.. __: https://github.com/u-boot/u-boot/blob/master/include/configs/am335x_evm.h
+.. __: https://stackoverflow.com/a/35348068
 
 .. tip::
    | |b| RAM block size is ``1B``
    | |b| ``0xa00000blk * 1B/blk = 0xa00000B = 10485760B = 10240 * 1024B = 10MiB``
-   | |b| An all-zero chunk starts from ``0x100000``\ :superscript:`citation needed`
-   | |b| RAM address starts from ``0x82000000``\ :superscript:`citation needed`
+   | |b| :pr:`An all-zero chunk starts from 0x100000`
+   | |b| :pr:`RAM address starts from 0x82000000`
 
 | zerofill ``10MiB`` RAM
 | |b| ``cmp.b addr1 addr2 count`` - `compare`__ byte
@@ -1051,18 +1062,18 @@ minicom |rarr| :kbd:`<CTRL+A>` |rarr| :kbd:`<S>` |rarr| ymodem |rarr| ``[MINICOM
 .. code-block:: text
 
    ## Ready for binary (ymodem) download to 0x82000000 at 115200 bps...
-   CRC mode, ...(SOH)/0(STX)/0(CAN) packets, 4 retries
+   CRC mode, ...(SOH)/0(STX)/0(CAN) packets, * retries
    ## Total Size      = 0x... = ... Bytes
 
 | md.b - memory display byte
-| |b| expect 512 bytes with some boot code and an MBR partition table near the end
+| |:eyes:| expect 512 bytes with some boot code and an MBR partition table near the end
 
 .. code:: text
 
    md.b 0x82000000 0x200
 
 | verify checksum [#]_
-| |b| expect ``<SHA1SUM>`` to be the same value as ``$sha1sum``
+| |:eyes:| expect ``<SHA1SUM>`` to be the same value as ``$sha1sum``
 
 
 .. code:: text
@@ -1072,8 +1083,8 @@ minicom |rarr| :kbd:`<CTRL+A>` |rarr| :kbd:`<S>` |rarr| ymodem |rarr| ``[MINICOM
 
 | dump eMMC image from RAM to eMMC
   - `mmc <https://www.denx.de/wiki/view/DULG/UBootCmdGroupMMC>`__
-| |b| replace ``<N_BLOCKS_HEX>`` with ``0x$n_blocks_hex`` - |:warning:| add ``0x`` prefix
-| |b| expect ``<N_BLOCKS_DEC>`` to be the same value as ``$n_blocks_dec``
+| |:pencil2:| replace ``<N_BLOCKS_HEX>`` with ``0x$n_blocks_hex`` - |:warning:| add ``0x`` prefix
+| |:eyes:|    expect ``<N_BLOCKS_DEC>`` to be the same value as ``$n_blocks_dec``
 
 .. code-block:: text
    :emphasize-lines: 5,6
@@ -1090,14 +1101,12 @@ verify partition layout
 .. code:: text
 
    mmc part
-      # (A)
    mmc rescan
    mmc part
-      # Should be the same as (A)
 
 .. warning::
 
-   There shouldn't be ``u-boot-spl.bin`` here.
+   There should be **no** ``u-boot-spl.bin`` here
 
 inspect installed ``MLO`` and ``u-boot.img``
 
@@ -1114,41 +1123,38 @@ Power Off
 
 1. :kbd:`<CTRL-A><X>` eXit and reset minicom
 2. Unplug PL2303 USB-A from PC
-3. Press and hold :kbd:`POWER` button
-4. When LED ``PWR`` goes off (approx 8s)
+3. Press down :kbd:`POWER` button
+4. Hold :kbd:`POWER` button for approx. 8s until LED ``PWR`` goes off, then
    `release POWER button immediately <https://github.com/beagleboard/beaglebone-black/wiki/System-Reference-Manual#power-button>`__
 
 ::
 
-   lsusb | grep -i prolific
+   lsusb | grep -i pl
 
 if stray ``PL2303`` is still there ::
 
    eval "$(head -1 usbreset.c | cut -d'/' -f3-)"
    ./usbreset.out /dev/bus/usb/...
-   lsusb | grep -i prolific
+   lsusb | grep -i pl
 
 Footnotes
 =========
 
 .. [R]    Recommended
 
-.. [#]    MLO = **M**\ MC **lo**\ ader
-.. [#]    https://lists.denx.de/pipermail/u-boot/2021-May/449518.html
-.. [#]    http://lifeonubuntu.com/tar-errors-ignoring-unknown-extended-header-keyword/
+.. [#] MLO = **M**\ MC **lo**\ ader
+.. [#] http://lifeonubuntu.com/tar-errors-ignoring-unknown-extended-header-keyword/
+.. [#vb] `no need for verified boot, use configs/am335x_evm_defconfig instead <https://lists.denx.de/pipermail/u-boot/2021-May/449518.html>`__
 .. [#gSR] https://wiki.archlinux.org/title/GnuPG#Searching_and_receiving_keys
-.. [#gV]  https://wiki.archlinux.org/title/GnuPG#Verify_a_signature
-.. [#]    https://github.com/pengutronix/genimage#genimage---the-image-creation-tool
+.. [#gV] https://wiki.archlinux.org/title/GnuPG#Verify_a_signature
 
-.. [#]    https://superuser.com/questions/332252/how-to-create-and-format-a-partition-using-a-bash-script
-.. [#]    https://www.thegeekstuff.com/2017/05/sfdisk-examples/
-.. [#]    https://unix.stackexchange.com/questions/53378/how-can-i-script-the-creation-of-a-single-partition-that-uses-the-entire-device
+.. [#]  https://superuser.com/questions/332252/how-to-create-and-format-a-partition-using-a-bash-script
+.. [#]  https://www.thegeekstuff.com/2017/05/sfdisk-examples/
+.. [#]  https://unix.stackexchange.com/questions/53378/how-can-i-script-the-creation-of-a-single-partition-that-uses-the-entire-device
 
-.. [#]    https://stackoverflow.com/a/9113058
-
-.. [#]   `sh1sum.c <https://github.com/u-boot/u-boot/blob/master/cmd/sha1sum.c>`__:\
-         ``do_sha1sum`` |larr|
-         `hash.c <https://github.com/u-boot/u-boot/blob/master/common/hash.c>`__:\
-         ``hash_command()``
+.. [#] `sh1sum.c <https://github.com/u-boot/u-boot/blob/master/cmd/sha1sum.c>`__:\
+       ``do_sha1sum`` |larr|
+       `hash.c <https://github.com/u-boot/u-boot/blob/master/common/hash.c>`__:\
+       ``hash_command()``
 
 .. include:: link.txt

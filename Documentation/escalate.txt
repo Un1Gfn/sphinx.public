@@ -1,0 +1,8 @@
+escalate
+
+.. https://pygments.org/docs/lexers/#pygments.lexers.shell.BashSessionLexer
+.. code:: shell-session
+
+   $ su -
+   Password
+   #
