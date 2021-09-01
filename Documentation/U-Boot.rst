@@ -32,16 +32,16 @@ u-boot `PKGBUILDs <https://aur.archlinux.org/packages/?O=0&SeB=nd&K=u-boot&outda
 
 buildroot - `build beaglebone+am335x-evm image <https://git.busybox.net/buildroot/tree/board/beaglebone/readme.txt>`__
 
-| u-boot
+| u-boot repo
 | |b| `GitHub mirror <https://github.com/u-boot/u-boot>`__ |:zap:|\ |:zap:|\ |:zap:|
 | |b| `GitLab repo <https://source.denx.de/u-boot/u-boot>`__ |:snail:|
+
+| u-boot doc
 | |b| `read the docs <https://u-boot.readthedocs.io/en/latest/index.html>`__
-| |b| /`README <https://github.com/u-boot>`__\
-      /*Building the Software:*\
-      /*Monitor Commands*\
-      /*Overview:*
-| |b| /board/ti/am335x/`README <https://github.com/u-boot/u-boot/tree/master/board/ti/am335x>`__\
-      /*NAND (copy from SD card to NAND)*
+| |b| `Monitor Commands - Overview <https://github.com/u-boot/u-boot/blob/7a4ff7c41bab8b43767eacc0b30ca1573ab6acb1/README#L3127>`__
+| |b| `List of environment variables (most likely not complete) <https://github.com/u-boot/u-boot/blob/7a4ff7c41bab8b43767eacc0b30ca1573ab6acb1/README#L3201>`__
+| |b| `NAND <https://github.com/u-boot/u-boot/blob/fa840b09216c6ea728240294b66d2d9ae42c36e1/board/ti/am335x/README#L43>`__
+      (copy from SD card to NAND)
 | |b| `DULG Introduction <https://www.denx.de/wiki/view/DULG/Introduction>`__\
       /2.3. Availability/\
       `PDF manual <http://www.denx.de/wiki/publish/DULG/DULG-canyonlands.pdf>`__
@@ -898,8 +898,6 @@ Wait for at most 30 seconds until ``CCC...`` appears in minicom console
    Net:   Could not get PHY for ethernet@4a100000: addr 0
    eth2: ethernet@4a100000, eth3: usb_ether
 
-check U-Boot version
-
 .. code:: text
 
    version
@@ -907,6 +905,18 @@ check U-Boot version
 
       # armv7l-unknown-linux-gnueabihf-gcc (crosstool-NG 1.23.0.418-d590) 10.2.0
       # GNU ld (crosstool-NG 1.23.0.418-d590) 2.35
+
+.. code:: text
+
+   printenv serial#
+      # ...
+
+.. code:: text
+
+   coninfo
+      List of available devices:
+      serial@0 00000007 IO stdin stdout stderr
+      serial   00000003 IO
 
 :raw-html:`<details><summary>bdinfo</summary>`
 

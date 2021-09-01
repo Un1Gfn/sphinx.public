@@ -150,6 +150,36 @@ USB
 | |b| ``./mkudevrule.sh``
 
 
+Wi-Fi
+=====
+
+`schematics`__ page 10 - `WL1835MOD`__
+
+.. __: https://raw.githubusercontent.com/SeeedDocument/BeagleBone_Green_Wireless/master/resources/BeagleBone_Green%20Wireless_V1.0_SCH_20160314.pdf
+.. __: https://www.ti.com/product/WL1835MOD
+
+| connector - :wp:`RF connectors <list of RF connector types>`\
+  /:wp:`micro-sized <list of RF connector types#Micro-sized>`\
+| |b| :wp:`Hirose_U.FL`
+
+| `mouser <https://www.mouser.com/>`__\
+  /Products\
+  /Passive Components\
+  /`Antennas <https://www.mouser.com/Passive-Components/Antennas/_/N-8w0fa>`__\
+  /Termination Style\
+  /
+| |b| :file:`IPEX*`
+| |b| :file:`MHF / U.FL Plug`
+| |b| :file:`u.FL`
+| |b| :file:`U.FL*`
+
+| :pkg:`alarm/firmware-beaglebone`
+| |b| `rcn-ee <https://github.com/rcn-ee/repos>`__
+| |b| `latest-images <https://github.com/beagleboard/Latest-Images>`__
+  |larr| `wl18xx_fw <https://git.ti.com/cgit/wilink8-wlan/wl18xx_fw/>`__
+  |larr| `WiLink™ 8 Wi-Fi Driver for Linux OS <https://www.ti.com/tool/WILINK8-WIFI-NLCP>`__
+
+
 ----
 
 .. Footnotes

@@ -4,9 +4,20 @@
 Router
 ======
 
-| Reddit
-| |b| `r/HomeNetworking <https://www.reddit.com/r/HomeNetworking/>`__
-| |b| `r/openwrt/      <https://www.reddit.com/r/openwrt/>`__
+
+Contacts
+========
+
+| `r/HomeNetworking <https://www.reddit.com/r/HomeNetworking/>`__
+| `r/openwrt        <https://www.reddit.com/r/openwrt/>`__
+
+| `t.me/ctcgfw_openwrt_discuss <https://t.me/ctcgfw_openwrt_discuss>`__
+| `t.me/pdcn2                  <https://t.me/pdcn2>`__
+| `t.me/Nas699                 <https://t.me/Nas699>`__
+
+
+Misc
+====
 
 `Padavan <http://en.techinfodepot.shoutwiki.com/wiki/List_of_Padavan_firmware_supported_devices>`__
 
@@ -26,6 +37,9 @@ Router
 | |b| `NanoPi R2S <https://www.friendlyarm.com/index.php?route=product/product&product_id=282>`__ |:warning:| external USB wifi dongle required
 | |b| `NanoPi R4S <https://www.friendlyarm.com/index.php?route=product/product&product_id=284>`__ |:warning:| external USB wifi dongle required
 | |b| :pr:`J4125` :pr:`J6413`
+| |b| `RouterBOARD <https://mikrotik.com/products/group/routerboard>`__
+      - `toh <https://openwrt.org/toh/mikrotik/start>`__
+      - `common procedures for mikrotik routerboard products <https://openwrt.org/toh/mikrotik/common>`__
 
 | Solder SPI alongside NAND
 | |b| https://koolshare.cn/thread-124946-1-1.html

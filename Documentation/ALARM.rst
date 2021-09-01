@@ -3,6 +3,7 @@
 .. |S0| replace:: S\ :subscript:`0`
 .. |S1| replace:: S\ :subscript:`1`
 .. |S2| replace:: S\ :subscript:`2`
+.. |S3| replace:: S\ :subscript:`3`
 
 
 ==============
@@ -103,6 +104,10 @@ extract
       printf "\n\e[31m  %s\e[0m\n\n" "err"
    fi
 
+copy tarball for installation ::
+
+   cp -v ~darren/beaglebone/ArchLinuxARM-am33x-latest.tar.gz darren/beaglebone/alarm_root/
+
 proxy for pacman ::
 
    cp -v ~darren/proxy.bashrc ~darren/beaglebone/alarm_root/
@@ -167,6 +172,7 @@ disable problematic units
       cd ~darren/beaglebone/
    fi
 
+
 Entrophy
 ========
 
@@ -195,7 +201,7 @@ check hardware random number generator (TRNG) ::
 
    systemctl start rngd.service # (-B)
 
-wait for approx 7s until harvest rate reaches at least :file:`[ 48KiB/s]`\ [#si]_
+wait for approx 7s until harvest rate reaches at least :file:`[ 48KiB/s]` [#si]_
 
 ::
 
@@ -271,21 +277,67 @@ make sure no units harmful to nfs are enabled ::
       | rev \
       | less -SRM +%
 
-backup & regen ::
+check rng ::
 
-   mv -iv /boot/initramfs-linux{,-orig}.img
-   mkinitcpio -p linux-am33x
-   mv -iv /boot/initramfs-linux{,-regen}.img
+   # We have already started rngd.service in host
+   # No /usr/bin/pv available in container
+   dd if=/dev/random of=/dev/null status=progress
 
-| |b| :aw:`Mkinitcpio#Using_net`
+| :aw:`import <Offline_installation#Importing_archlinux_keys>` ALARM keys
+| |b| this step is usually done by pacstrap
+
+::
+
+   # Check CPU usage of "gpg-agent" to make sure it ain't blocked
+   pacman-key --init
+   # Avoid downloading keys again
+   #  downloading required keys...
+   #  :: Import PGP key 77193F152BDBE6A6, "Arch Linux ARM Build System <builder+xu6@archlinuxarm.org>"? [Y/n] y
+   pacman-key --populate archlinux
+
+| install packages
+| :pkg:`core/nfs-utils`
+|  |b| /usr/bin/mount.nfs4
+| :pkg:`core/mkinitcpio-nfs-utils`
+|  |b| /usr/lib/initcpio/hooks/net
+|  |b| /usr/lib/initcpio/install/net
+| :aw:`Mkinitcpio#Using_net`
+| :aw:`Diskless_system#NFS_2`
+
+.. table::
+   :align: left
+   :widths: auto
+
+   =================================== =================== ==========================================
+    pkg                                 hooks it provide    kernel cmdline params it parses
+   =================================== =================== ==========================================
+    :pkg:`alarm/mkinitcpio-netconf`     ``netconf``         ``ip=``
+    :pkg:`alarm/mkinitcpio-nfs-utils`   ``net``             ``ip=`` ``nfsaddrs=`` ``nfsroot=``
+   =================================== =================== ==========================================
+
+::
+
+   source /proxy.bashrc
+   pacman -Syu nfs-utils mkinitcpio-nfs-utils
+   pacman -Ql mkinitcpio-nfs-utils
+   mkinitcpio -L
+   mkinitcpio -H net
+
+| use ``mount.nfs4`` instead of ``nfsmount`` in hook ``net``
+| |b| :pkg:`AUR/mkinitcpio-nfs4-hooks`
 | |b| :aw:`Diskless_system#NFS_2`
-| |b| \
-      :pkg:`alarm/mkinitcpio-netconf`
-      depends on
-      :pkg:`alarm/mkinitcpio-nfs-utils`
 
+::
+
+   echo
+   mv -fv /usr/lib/initcpio/hooks/net{.orig,}
+   sed -e 's/nfsmount/mount.nfs4/g' -i.orig /usr/lib/initcpio/hooks/net
+   diff -u --color /usr/lib/initcpio/hooks/net{.orig,}
+   echo
+
+| modify :file:`mkinitcpio.conf`
 | add :file:`ax88179_178a.ko.gz` module
-| add :file:`net` hook
+| add ``net`` hook
 
 .. table::
    :align: left
@@ -312,75 +364,23 @@ backup & regen ::
       /etc/mkinitcpio.conf
    diff --color=always -u /etc/mkinitcpio.conf{.orig,}
 
-.. table::
-   :align: left
-   :widths: auto
-
-   =================================== =================== ==========================================
-    pkg                                 hooks it provides   kernel cmdline params it parses
-   =================================== =================== ==========================================
-    :pkg:`alarm/mkinitcpio-netconf`     ``netconf``         ``ip=``
-    :pkg:`alarm/mkinitcpio-nfs-utils`   ``net``             ``ip=`` ``nfsaddrs=`` ``nfsroot=``
-   =================================== =================== ==========================================
-
-:aw:`import archlinuxarm keys <Offline_installation#Importing_archlinux_keys>` ::
-
-   # We have already started rngd.service in host
-   # No /usr/bin/pv available in container
-   # Benchmark in container with "dd if=/dev/random of=/dev/null status=progress"
-   # Check CPU usage of "gpg-agent" to make sure it ain't blocked
-   pacman-key --init
-   # Avoid downloading keys again
-   #  downloading required keys...
-   #  :: Import PGP key 77193F152BDBE6A6, "Arch Linux ARM Build System <builder+xu6@archlinuxarm.org>"? [Y/n] y
-   pacman-key --populate archlinux
-
-sysuupgrade & install ::
-
-   source /proxy.bashrc
-   pacman -Syu nfs-utils mkinitcpio-nfs-utils # netnfs4 needs mount.nfs4 binary
-   # pacman -Ql mkinitcpio-netconf
-   pacman -Ql mkinitcpio-nfs-utils
-   mkinitcpio -L
-   # mkinitcpio -H netconf
-   mkinitcpio -H net
-
-| use ``mount.nfs4`` instead of ``nfsmount``
-| |b| :pkg:`AUR/mkinitcpio-nfs4-hooks`
-| |b| :aw:`Diskless_system#NFS_2`
-
-::
-
-   echo
-   sed \
-     -e 's/nfsmount/mount.nfs4/g' \
-     /usr/lib/initcpio/hooks/net \
-     >/usr/lib/initcpio/hooks/netnfs4
-   diff -u --color /usr/lib/initcpio/hooks/net*
-   echo
-   cp -v /usr/lib/initcpio/install/net{,nfs4}
-   echo
-
 .. tip::
 
    | Remove mouse USB receiver to avoid copying
    | |b| :file:`hid-logitech-dj.ko`
    | |b| :file:`hid-logitech-hidpp.ko`
 
-commit
-
-::
+mkinitcpio ::
 
    if [ "$(uname -m)" == armv7l ]; then
       mkinitcpio -p linux-am33x
-      mv -iv /boot/initramfs-linux{,-net}.img
    else
       printf "\n\e[31m  %s\e[0m\n\n" "err"
    fi
 
-verify ::
+inspect initramfs ::
 
-   lsinitcpio -a /boot/initramfs-linux-net.img
+   lsinitcpio -a /boot/initramfs-linux.img
 
 exit ::
 
@@ -392,74 +392,44 @@ exit ::
 
 ::
 
-   sudo rm -rv ~darren/beaglebone/alarm_root/var/log/journal/*
    sudo rm -fv /var/lib/machines/alarm
+   # sudo rm -rfv ~darren/beaglebone/alarm_root/var/log/journal/*
    # sudo umount -v ~/beaglebone/alarm_root
-
-inspect ::
-
-   for i in orig regen net; do
-      rm -rf /tmp/img-${i}
-      mkdir -pv /tmp/img-${i}
-      cd /tmp/img-${i}
-      #
-      # gunzip -l ~/beaglebone/alarm_root/boot/initramfs-linux-$i.img
-      # gunzip -c -d -k -S.gz -v ~/beaglebone/alarm_root/boot/initramfs-linux-$i.img >$i.cpio
-      # # cpio -it -v    <$i.cpio
-      #   cpio -i     -d <$i.cpio
-      # rm -v $i.cpio
-      #
-      # lsinitcpio -a ~/beaglebone/alarm_root/boot/initramfs-linux-$i.img
-      # lsinitcpio -l ~/beaglebone/alarm_root/boot/initramfs-linux-$i.img
-      lsinitcpio -x ~/beaglebone/alarm_root/boot/initramfs-linux-$i.img
-      #
-      cd /tmp
-   done
-
-::
-
-   # exa -alT /tmp/img-*
-   #             -q          -y             -W999       -r
-   # DIFF="diff --brief     --side-by-side --width=999 --recursive --no-dereference --color=always"
-     DIFF="diff --unified=1                --width=999 --recursive --no-dereference --color=always"
-   cd /tmp/
-   echo
-   if $DIFF img-{orig,regen}; then
-      printf "\e[32m%s\e[0m\n" "orig regen identical"
-   else
-      printf "\e[31m%s\e[0m\n" "orig regen mismatch"
-   fi
-   echo
-   $DIFF img-{orig,net}
-   echo
-   unset -v DIFF
-
-::
-
-   rm -r /tmp/img-{orig,regen,net}
 
 
 PC TFTP
 =======
 
+:manpage:`systemd.net-naming-scheme(7)`
+
+| :wp:`autonegotiation`
+| :wp:`duplex (telecommunications)#Half_duplex`
+| :wp:`duplex (telecommunications)#Full_duplex`
+| :wp:`duplex mismatch`
+
 .. table::
    :align: left
    :widths: auto
 
-   === ====== ================ ======================================
-    \   settings
-   --- ----------------------- --------------------------------------
-    \   a      b                result
-   === ====== ================ ======================================
-    1   Auto   Auto             |:white_check_mark:| operate at Full
-    2   Auto   Half             |:white_check_mark:| operate at Half
-    3   Auto   Full\ [#AuFl]_    |:x:|                boom!
-    4   Half   Half             |:white_check_mark:| operate at Half
-    5   Half   Full             |:x:|                boom!
-    6   Full   Full             |:white_check_mark:| operate at Full
-   === ====== ================ ======================================
+   +---+-----------+---------------------------------------------+
+   | # | port conf | result                                      |
+   +===+===+=======+=============================================+
+   | 1 | A | A     | |:white_check_mark:| operate at full duplex |
+   +---+---+-------+---------------------------------------------+
+   | 2 | A | H     | |:white_check_mark:| operate at half duplex |
+   +---+---+-------+---------------------------------------------+
+   | 3 | A | F     | |:x:|                boom  [#AuFl]_         |
+   +---+---+-------+---------------------------------------------+
+   | 4 | H | H     | |:white_check_mark:| operate at half duplex |
+   +---+---+-------+---------------------------------------------+
+   | 5 | H | F     | |:x:|                boom                   |
+   +---+---+-------+---------------------------------------------+
+   | 6 | F | F     | |:white_check_mark:| operate at full duplex |
+   +---+---+-------+---------------------------------------------+
 
-:manpage:`systemd.net-naming-scheme(7)`
+| `0b95:1790 <https://linux-hardware.org/?id=usb:0b95-1790>`__
+| `OUI Lookup Tool <https://www.wireshark.org/tools/oui-lookup.html>`__
+| 00:0E:C6 - Asix Electronics Corp.
 
 .. code:: text
 
@@ -467,16 +437,33 @@ PC TFTP
    enp0s20f0u2 -> [KEYBOARD] <- enp0s20f0u1
                   [TOUCHPAD]
 
-| linux-hardware.org/`0b95-1790 <https://linux-hardware.org/?id=usb:0b95-1790>`__
-| ``$ lsusb`` :file:`Bus 00? Device 00?: ID 0b95:1790 ASIX Electronics Corp. AX88179 Gigabit Ethernet`
-| ``$ ip addr`` :file:`link/ether 00:0e:c6:d3:2d:5f`
-| ``$ usb-devices``\ [#ax8817]_ :file:`Driver=ax88179_178a`
+.. code:: shell-session
+
+  $ lsusb | grep -i ax
+  Bus * Device *: ID 0b95:1790 ASIX Electronics Corp. AX88179 Gigabit Ethernet
+  $ ip addr
+  ... link/ether 00:0e:c6:d3:2d:5f ...
+  $ usb-devices
+  T:  Bus=* Lev=* Prnt=* Port=* Cnt=* Dev#=  2 Spd=5000 MxCh= 0
+  D:  Ver= 3.00 Cls=ff(vend.) Sub=ff Prot=00 MxPS= 9 #Cfgs=  1
+  P:  Vendor=0b95 ProdID=1790 Rev=01.00
+  S:  Manufacturer=ASIX Elec. Corp.
+  S:  Product=AX88179
+  S:  SerialNumber=000000000001E9
+  C:  #Ifs= 1 Cfg#= 1 Atr=a0 MxPwr=496mA
+  I:  If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=00 Driver=ax88179_178a
+  E:  Ad=03(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+  E:  Ad=81(I) Atr=03(Int.) MxPS=   8 Ivl=11ms
+  E:  Ad=82(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
 
 | make `FIT image <https://elinux.org/images/f/f4/Elc2013_Fernandes.pdf>`__
   with :manpage:`mkimage(1)`
   from :pkg:`community/uboot-tools`
+| |b| `uImage.FIT/howto.txt <https://github.com/u-boot/u-boot/blob/master/doc/uImage.FIT/howto.txt>`__
 | |b| `ELF to uImage <https://www.denx.de/wiki/view/DULG/HowCanICreateAnUImageFromAELFFile>`__
 | |b| `Combining a Kernel and a Ramdisk into a Multi-File Image <https://www.denx.de/wiki/view/DULG/CombiningKernelAndRamdisk>`__
+
+`booting ARM linux <https://www.kernel.org/doc/html/latest/arm/booting.html>`__
 
 | denx - `boot from BOOTP/TFTP <https://www.denx.de/wiki/view/DULG/UBootCmdGroupDownload#Section_5.9.5.1.>`__
 | ArchWiki - :aw:`TFTP`
@@ -487,6 +474,8 @@ submit to ArchWiki :aw:`BusyBox` and link from :aw:`TFTP#Server`
 
 ::
 
+   # ip link set dev enp0s31f6 down
+   # ethtool -s enp0s31f6 mdix on
    echo
    ip link    set                dev enp0s31f6 up
    ip address flush              dev enp0s31f6
@@ -500,8 +489,7 @@ submit to ArchWiki :aw:`BusyBox` and link from :aw:`TFTP#Server`
       dtbs/am335x-bonegreen-wireless.dtb \
       initramfs-linux-net.img
    echo
-   # busybox udpsvd -Ev -u darren:darren -l 820g3 10.0.0.89 69 tftpd -r -u darren -l .
-     busybox udpsvd -Ev                  -l 820g3 10.0.0.89 69 tftpd -r           -l .
+   busybox udpsvd -E -l 820g3 10.0.0.89 69 tftpd -r -l "$PWD"
 
 
 PC :wp:`NFS<Network_File_System>`
@@ -513,16 +501,12 @@ PC :wp:`NFS<Network_File_System>`
 
 client |rarr| ``mount`` |rarr| server |rarr| ``rpcbind`` |rarr| ``nfsd`` |rarr| ``mountd``
 
-.. warning::
-
-   Use NFSv3 instead of NFSv4
-
 .. include:: escalate.txt
 
 `append to /etc/exports <https://wiki.archlinux.org/title/Diskless_system#NFS>`__ ::
 
    F=/etc/exports
-   BAK=/etc/exports.pacnew
+   BAK="$F.pacnew"
 
    S="$(sha256sum $F | cut -d' ' -f 1)"
    S0="$(zcat /var/lib/pacman/local/nfs-utils-2.5.4-1/mtree \
@@ -532,13 +516,11 @@ client |rarr| ``mount`` |rarr| server |rarr| ``rpcbind`` |rarr| ``nfsd`` |rarr| 
    )"
 
    function M {
-   # echo | sudo tee -a "$F"
-     echo >>"$F"
-   # sudo tee -a "$F" <<EOP
-     cat  >>"$F" <<EOP
+   echo >>"$F"
+   cat  >>"$F" <<EOF
    /srv                               *(rw,no_root_squash,no_subtree_check)
    /home/darren/beaglebone/alarm_root *(rw,no_root_squash,no_subtree_check)
-   EOP
+   EOF
    }
 
    if [ "$S0" == "$S" ]; then
@@ -559,8 +541,6 @@ client |rarr| ``mount`` |rarr| server |rarr| ``rpcbind`` |rarr| ``nfsd`` |rarr| 
 :aw:`NFS#Restricting_NFS_to_interfaces/IPs` ::
 
    # sed -i.pacnew -e 's/^# host=$/host=10.0.0.64/g'
-
-install :pkg:`community/rng-tools`
 
 start nfs ::
 
@@ -603,37 +583,37 @@ test mounting ::
       echo
    done
 
+:raw-html:`<details><summary><s> <a href="https://www.denx.de/wiki/view/DULG/UseNTPToSynchronizeSystemTimeAgainstRTC">ntp server</a> </s></summary>`
 
-| `ntp server <https://www.denx.de/wiki/view/DULG/UseNTPToSynchronizeSystemTimeAgainstRTC>`__
-| |b| :file:`/etc/systemd/timesyncd.conf`
+:file:`/etc/systemd/timesyncd.conf`
 
 ::
 
    # With -w, client can't sync from us
    # Without -w, systemd-timesyncd.service is interefered
-   # printf "\033]0;NTP\007"
-   # sudo busybox ntpd \
-   #    -dd \
-   #    -n \
-   #    -w \
-   #    -p 0.arch.pool.ntp.org \
-   #    -p 1.arch.pool.ntp.org \
-   #    -p 2.arch.pool.ntp.org \
-   #    -p 3.arch.pool.ntp.org \
-   #    -l \
-   #    -I enp0s31f6
+   printf "\033]0;NTP\007"
+   sudo busybox ntpd \
+      -dd \
+      -n \
+      -w \
+      -p 0.arch.pool.ntp.org \
+      -p 1.arch.pool.ntp.org \
+      -p 2.arch.pool.ntp.org \
+      -p 3.arch.pool.ntp.org \
+      -l \
+      -I enp0s31f6
+
+:raw-html:`</details>`
 
 
-|S0| TFTP
-=========
-
-.. tip::
-
-   When in trouble, ask :pkg:`community/wireshark-qt`
+|S0|\ [0]_ TFTP
+===============
 
 .. tip::
 
-   Verify integrity of received files with u-boot ``sha1sum``
+   Debug with :pkg:`community/wireshark-qt`
+
+`README.usb <https://github.com/u-boot/u-boot/blob/master/doc/README.usb>`__
 
 u-boot `drivers/net <https://github.com/u-boot/u-boot/tree/master/drivers/net>`__/e1000
 
@@ -642,15 +622,14 @@ u-boot `drivers/net <https://github.com/u-boot/u-boot/tree/master/drivers/net>`_
 | \
   :file:`.dtb` blob file |equiv| FDT (:el:`Flattened Device Tree <Device_Tree_What_It_Is#The_Flattened_Device_Tree_is...>`)
 | \
-  :file:`.dts` :file:`.dtsi` |rarr| :pkg:`community/dtc` |rarr| FDT |rarr| kernel internal EDT (:el:`Expanded Device Tree <Device_Tree_What_It_Is#Introduction>`)
+  :file:`.dts`/:file:`.dtsi` |rarr| :pkg:`community/dtc` |rarr| FDT |rarr| kernel internal EDT (:el:`Expanded Device Tree <Device_Tree_What_It_Is#Introduction>`)
 
+:ref:`connect serial <reference_label_section_connect_serial>`
 
-1/2 :ref:`connect serial <reference_label_section_connect_serial>`
+| connect ethernet
+| BBGW\:\:USB - USB\:\:AX88179\:\:RJ45 - :wp:`ethernet over twisted pair` - RJ45\:\:820g3
 
-| 2/2 connect ethernet :pr:`box-drawing character`
-| BBGW\:\:USB - USB\:\:AX88179\:\:RJ45 - :wp:`Ethernet over twisted pair` - RJ45\:\:820g3
-
-|S0| bring up ethernet
+u-boot bring up ethernet
 
 .. code:: text
 
@@ -660,28 +639,29 @@ u-boot `variables <https://github.com/u-boot/u-boot/blob/7a4ff7c41bab8b43767eacc
 
 .. code:: text
 
+   echo
    if test $eth4addr = '00:0e:c6:d3:2d:5f'; then
-     # ax88179_eth
-     setenv ethprime eth4
-     setenv ethact eth4
-     setenv ethrotate yes
-     setenv netretry  no
-     echo OK
+      echo ok
+      # ax88179_eth
+      setenv ethprime  eth4
+      setenv ethact    eth4
+      setenv ethrotate yes
+      setenv netretry  no
+      printenv ethprime ethact ethrotate netretry
+      echo
+      setenv ipaddr    10.0.0.64
+      setenv clientip  10.0.0.64
+      setenv serverip  10.0.0.89
+      setenv gwip      10.0.0.89
+      setenv netmask   255.255.255.0
+      setenv hostname  alarm
+      setenv rootdir   /home/darren/beaglebone/alarm_root
+      printenv ipaddr clientip serverip gwip netmask hostname rootdir
+      echo
    else
-     echo "FAIL"
+     echo "err"
+     echo
    fi
-   printenv ethprime ethact ethrotate netretry
-
-.. code:: text
-
-   setenv ipaddr   10.0.0.64
-   setenv clientip 10.0.0.64
-   setenv serverip 10.0.0.89
-   setenv gwip     10.0.0.89
-   setenv netmask  255.255.255.0
-   setenv hostname alarm
-   setenv rootdir  /home/darren/beaglebone/alarm_root
-   printenv ipaddr clientip serverip gwip netmask hostname rootdir 
 
 ping
 
@@ -744,15 +724,10 @@ set tftp vars
 |S0|\ [0]_ -> |S1|\ [1]_ -> |S2|\ [2]_
 ======================================
 
-.. warning::
+.. tip::
 
-   Use NFSv3 instead of NFSv4
-
-.. warning::
-
-   Shut down USB in U-Boot before booting Linux [#down]_
-
-ethernet force ``autonegotiation`` [#tcp]_
+   | Debug with :pkg:`community/wireshark-qt`
+   | :aw:`NFS/Troubleshooting`
 
 | ArchWiki - :aw:`Working with the serial console`
 | kernal doc - `Linux Serial Console <https://www.kernel.org/doc/html/latest/admin-guide/serial-console.html>`__
@@ -772,7 +747,6 @@ ethernet force ``autonegotiation`` [#tcp]_
 | ArchWiki - `cmdline <https://wiki.archlinux.org/title/Kernel_parameters#Parameter_list>`__
 | DULG - `LinuxNfsRoot <https://www.denx.de/wiki/DULG/LinuxNfsRoot>`__
 
-
 | setenv `bootargs <https://www.denx.de/wiki/view/DULG/LinuxKernelArgs>`__
 | |b| ``ramdisk_size=``\ [#rdsz]_
 | |b| for ``<nfs-options>`` see :manpage:`nfs(5)`
@@ -782,27 +756,71 @@ ethernet force ``autonegotiation`` [#tcp]_
 
 .. code:: text
 
-   # setenv bootargs $bootargs nfsroot=${serverip}:${rootdir},nfsvers=3,proto=tcp,mountproto=tcp
+   setenv bootargs
 
 .. code:: text
 
-   setenv bootargs
    setenv bootargs $bootargs console=tty0 console=ttyS0,115200n8
+
+.. code:: text
+
    setenv bootargs $bootargs ip=${clientip}:${serverip}:${gwip}:${netmask}:${hostname}:eth0:none
+
+.. code:: text
+
+   # setenv bootargs $bootargs nfsroot=${serverip}:${rootdir},nfsvers=3,proto=tcp,mountproto=tcp
    setenv bootargs $bootargs nfsroot=${serverip}:${rootdir}
+
+.. code:: text
+
    setenv bootargs $bootargs rw rootwait
+
+.. code:: text
+
    printenv bootargs
 
 .. warning::
    
    | Make sure no container is running
-   | ``sudo machinectl list``
+   | ``$ sudo machinectl list``
+
+.. warning::
+
+   | Shut down USB in U-Boot before booting Linux [#down]_
+   | ``=> usb stop``
+
+| boot
+| bootd
+| :pr:`bootefi`
+| :pr:`bootelf`
+| bootm
+| :pr:`bootp`
+| :pr:`bootvx`
+| bootz
+
+`fdt <https://www.denx.de/wiki/DULG/UBootCmdFDT>`__
 
 .. code:: text
 
    # iminfo ${kernel_addr_r}
+   fdt list /cpus
+   fdt print /cpus
+   setenv silent_linux no
    # bootm ${kernel_addr_r} ${ramdisk_addr_r}:${ramdisk_size} ${fdt_addr_r}
      bootz ${kernel_addr_r} ${ramdisk_addr_r}:${ramdisk_size} ${fdt_addr_r}
+
+
+|S2|\ [2]_ Install
+==================
+
+| :aw:`Installation guide`
+| `alarm wiki <https://archlinuxarm.org/platforms/armv7/ti/beaglebone-green-wireless>`__
+  |rarr| ``Installation``
+
+::
+
+   dmesg -D
+   export TERM=xterm-256color
 
 ::
 
@@ -817,63 +835,68 @@ ethernet force ``autonegotiation`` [#tcp]_
    busybox ping -4 -c 10 -I eth0      10.0.0.89
    busybox ping -4 -c 10 -I 10.0.0.64 10.0.0.89
 
-| boot
-| bootd
-| :pr:`bootefi`
-| :pr:`bootelf`
-| bootm
-| :pr:`bootp`
-| :pr:`bootvx`
-| bootz
+check if container and host time matches ::
 
-`=> fdt <https://www.denx.de/wiki/DULG/UBootCmdFDT>`__
+::
 
-.. tip::
+   timedatectl show
 
-   wireshark?
+erase eMMC
 
-:aw:`NFS/Troubleshooting`
+.. danger::
 
-misc ::
+   **ALL DATA ON BBGW WILL BE LOST**
 
-   dmesg -D
-   export TERM=xterm-256color
+::
 
-Install
-=======
+   wipefs -af /dev/mmcblk1p1
+   wipefs -af /dev/mmcblk1
+   sync; partprobe
+   blkdiscard -v /dev/mmcblk1
+   sync; partprobe
+   cmp /dev/zero /dev/mmcblk1
+      # Expect EOF
 
-.. warning::
+| partitioning
+| |b| partition table ``MBR`` :pr:`GPT`
+| |b| single partition
+|     |b| type ``Linux``
+|     |b| first sector ``2048``
 
-   Check eMMC partition alignment!
+::
 
-| :aw:`Installation guide`
-| `alarm wiki <https://archlinuxarm.org/platforms/armv7/ti/beaglebone-green-wireless>`__
-  |rarr| ``Installation``
+   fdisk
+      # ...
 
+populate filesystem ::
 
-Tune
-====
+   mke2fs -n -t ext4 -v /dev/mmcblk1p1
 
-| `UBootCmdGroupExec`__
-| |b| ``$ mkinage -T script`` -
-      ``=> tftp`` -
-      ``=> source`` -
-      ``=> bootm``
-| |b| `ALARM <https://archlinuxarm.org/packages/armv7h/uboot-beaglebone/files/uboot-beaglebone.install>`__ -
-      `boot.txt <https://archlinuxarm.org/packages/armv7h/uboot-beaglebone/files/boot.txt>`__ -
-      `mkscr`__
+::
 
-.. __: https://www.denx.de/wiki/DULG/UBootCmdGroupExec
-.. __: https://archlinuxarm.org/packages/armv7h/uboot-beaglebone/files/mkscr
+   mke2fs    -t ext4 -v /dev/mmcblk1p1
+   mount -v /dev/mmcblk1p1 /mnt
+   bsdtar -xpf /ArchLinuxARM-am33x-latest.tar.gz -C /mnt
+   sync
 
-`linux dev major minor <https://www.kernel.org/doc/html/latest/admin-guide/devices.html>`__
+write u-boot in boot sector before the first partition ::
 
-:aw:`fake-hwclock <System_time#fake-hwclock>`
+   head -c $((2048*512)) /dev/mmcblk1
+   dd if=mnt/boot/MLO        of=/dev/mmcblk1 count=1 seek=1 conv=notrunc bs=128k
+   dd if=mnt/boot/u-boot.img of=/dev/mmcblk1 count=2 seek=1 conv=notrunc bs=384k
+   sync； partprobe
+   head -c $((2048*512)) /dev/mmcblk1
+
+power off ::
+
+   umount -v /mnt
+   systemctl poweroff
+
 
 .. _reference_label_section_clean_up:
 
-Clean up
-========
+Host Cleanup
+============
 
 |:dart:|
 
@@ -893,6 +916,135 @@ Clean up
    ip address flush dev enp0s31f6
    ip link    set   dev enp0s31f6 down
 
+
+|S3|\ [3]_ :aw:`Post-Installation <installation_guide#Post-installation>`
+=========================================================================
+
+| `UBootCmdGroupExec`__
+| |b| ``$ mkinage -T script`` -
+      ``=> tftp`` -
+      ``=> source`` -
+      ``=> bootm``
+| |b| `ALARM <https://archlinuxarm.org/packages/armv7h/uboot-beaglebone/files/uboot-beaglebone.install>`__ -
+      `boot.txt <https://archlinuxarm.org/packages/armv7h/uboot-beaglebone/files/boot.txt>`__ -
+      `mkscr`__
+
+.. __: https://www.denx.de/wiki/DULG/UBootCmdGroupExec
+.. __: https://archlinuxarm.org/packages/armv7h/uboot-beaglebone/files/mkscr
+
+`linux dev major minor <https://www.kernel.org/doc/html/latest/admin-guide/devices.html>`__
+
+log in as root
+
+manual time without internet ::
+
+   timedatectl set-ntp false
+   systemctl stop systemd-timesyncd.service
+   rm -fv /etc/adjtime
+   timedatectl set-timezone Asia/Makassar
+
+::
+
+   timedatectl set-time <YYYY-mm-DD HH:MM:SS>
+
+| :aw:`wireless#Manual/automatic_setup`
+| |b| :aw:`network managers <network configuration#Network_managers>` (:aw:`category <category:Network_managers>`)
+| |b| :aw:`iw vs wireless_tools <network configuration/Wireless#iw_and_wireless_tools_comparison>`
+| |b| :aw:`iproute2 vs net-tools <network_configuration#net-tools>`
+| |b| \
+      |:ballot_box_with_check:| - pre-installed in tarball
+
+.. table::
+   :align: left
+   :widths: auto
+
+   +------------+---------------------------------------------------------------------------+---------------------------------------+
+   | high-level | :pr:`networkmanager`                                                                                              |
+   |            +---------------------------------------------------------------------------+---------------------------------------+
+   |            | :pr:`wicd`                                                                                                        |
+   |            +---------------------------------------------------------------------------+---------------------------------------+
+   |            | :aw:`connman` (intel)                                                     | :manpage:`connman-service.config(5)`  |
+   |            +---------------------------------------------------------------------------+---------------------------------------+
+   |            | :aw:`iwd` (intel)                                                                                                 |
+   |            +---------------------------------------------------------------------------+---------------------------------------+
+   |            | :aw:`netctl` (arch) |:ballot_box_with_check:|                             | :manpage:`netctl.profile(5)`          |
+   |            +---------------------------------------------------------------------------+---------------------------------------+
+   |            | :aw:`systemd-networkd` |:ballot_box_with_check:|                                                                  |
+   +------------+---------------------------------------------------------------------------+---------------------------------------+
+   | low-level  | :aw:`iproute2 <network_configuration#iproute2>` |:ballot_box_with_check:| | :manpage:`ifstat(8)` |br|             |
+   |            |                                                                           | :manpage:`ip(8)`     |br|             |
+   |            |                                                                           | :manpage:`ss(8)`     |br|             |
+   |            |                                                                           | :manpage:`tc(8)`     |br|             |
+   |            +---------------------------------------------------------------------------+---------------------------------------+
+   |            | :aw:`iw <network configuration/Wireless#iw>` |:ballot_box_with_check:|    | :manpage:`iw(8)`                      |
+   |            +---------------------------------------------------------------------------+---------------------------------------+
+   |            | :pkg:`core/net-tools` |:ballot_box_with_check:|                           | :manpage:`arp(8)`      |br|           |
+   |            |                                                                           | :manpage:`ifconfig(8)` |br|           |
+   |            |                                                                           | :manpage:`netstat(8)`  |br|           |
+   |            |                                                                           | :manpage:`route(8)`    |br|           |
+   |            +---------------------------------------------------------------------------+---------------------------------------+
+   |            | :pkg:`core/wireless_tools` |:ballot_box_with_check:|                      | :manpage:`ifrename(8)` |br|           |
+   |            |                                                                           | :manpage:`iwconfig(8)` |br|           |
+   |            |                                                                           | :manpage:`iwlist(8)`   |br|           |
+   |            +---------------------------------------------------------------------------+---------------------------------------+
+   |            | :aw:`wpa_supplicant` |:ballot_box_with_check:|                                                                    |
+   +------------+---------------------------------------------------------------------------+---------------------------------------+
+
+::
+
+  # Network configuration
+  # Wi-Fi auto connect
+  # ?
+
+::
+
+   resolvectl flush-caches
+   resolvectl query example.org.
+   ping -c4 example.org
+   curl http://example.org
+
+there should be no rtc at all ::
+
+   find /sys/class/rtc/
+
+| sntp time with internet
+| |b| :aw:`system time`
+| |b| :aw:`systemd-timesyncd`
+| |b| kernel doc - `timers <https://www.kernel.org/doc/html/latest/timers/index.html>`__
+
+::
+
+   export SYSTEMD_COLORS=1
+   systemctl enable systemd-timesyncd.service
+   systemctl start  systemd-timesyncd.service
+   timedatectl set-ntp false
+   timedatectl set-time '1989-06-04 00:00:00'
+   timedatectl set-ntp true
+   echo
+   timedatectl show
+   echo
+   timedatectl status
+   echo
+   hwclock --show
+   echo
+   timedatectl show-timesync -a
+   echo
+   timedatectl timesync-status
+   echo
+
+:pkg:`AUR/fake-hwclock-git`
+
+::
+
+   # git clone https://aur.archlinux.org/fake-hwclock-git.git
+   # makepkg -si
+
+::
+
+   systemctl enable fake-hwclock.service
+
+
+
 Footnotes
 =========
 
@@ -902,9 +1054,11 @@ Footnotes
 
 .. [0] |S0| - The state where U-Boot with built-in NIC driver is running
 
-.. [1] |S1| - The state where Linux with only initramfs is running
+.. [1] |S1| - The state where Linux with only initramfs is running (both are TFTP'd)
 
-.. [2] |S2| - The state where a fully functional Linux is running
+.. [2] |S2| - The state where a fully functional Linux through NFS is running
+
+.. [3] |S3| - The state where BBGW is running on its own w/o NFS and accepting commands from serial/SSH
 
 ----
 

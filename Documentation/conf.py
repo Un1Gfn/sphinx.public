@@ -199,7 +199,8 @@ html_favicon = 'favicon.ico'
 html_static_path = ['rtd_linux']
 
 # Mon Jul 26 21:12:31 WITA 2021
-html_last_updated_fmt = '%a %b %d %H:%M:%S UTC%z %Y'
+html_last_updated_fmt = '%a %b %d %H:%M:%S WITA %Y'
+# html_last_updated_fmt = '%a %b %d %H:%M:%S UTC%z %Y'
 # html_last_updated_fmt = '%Y %m %d %H:%M:%S %z %a %A %b %B %c %I %p'
 # html_last_updated_fmt = '%c'
 # html_last_updated_fmt = ''

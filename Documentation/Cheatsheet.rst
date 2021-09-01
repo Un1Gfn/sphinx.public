@@ -202,6 +202,7 @@ lambda macro
      return ((Edge*)x)->weight - ((Edge*)y)->weight ;
    }));
 
+
 Git
 ===
 
@@ -218,6 +219,64 @@ convert shallow clone to full
 .. code:: bash
 
    git restore -SW -- FILE
+
+
+ImageMagick
+===========
+
+misc (please split this blob)
+
+.. code:: bash
+
+   #!/dev/null
+
+   convert -size 4096x2048 xc:#0000AA Blue.png
+
+   convert -size 4096x4096 -background 'rgb(0,0,170)' Emblem_of_the_Kuomintang.svg Emblem_of_the_Kuomintang.png
+   convert -size 1024x1024 -background 'rgb(0,0,170)' -blur 0x64 Emblem_of_the_Kuomintang.svg Emblem_of_the_Kuomintang.blurred.png
+
+   cd /tmp
+   convert -size 1024x1024 -background 'rgb(255,255,255)' Network-e72c038278.svg Network-e72c038278.png
+   convert -size 1024x1024 -background 'rgb(255,255,255)' Network-8f37df9f10.svg Network-8f37df9f10.png
+
+   rm -fv Emblem_of_Okinawa_County*
+   P="Emblem_of_Okinawa_Prefecture"
+   C1="Emblem_of_Okinawa_County1"
+   C2="Emblem_of_Okinawa_County2"
+   cat "$T.svg" \
+     | sed -e "s/fill:#ffffff/fill:#0000AA/g" \
+     | sed -e "s/fill:#c90037/fill:#ffffff/g" \
+     > "$C1.svg"
+   cat "$T.svg" \
+     | sed -e "s/fill:#c90037/fill:#0000AA/g" \
+     > "$C2.svg"
+   convert -size 2048x2048 -background 'rgb(  0,  0,170)' "$C1.svg" "$C1.png"
+   convert -size 2048x2048 -background 'rgb(255,255,255)' "$C2.svg" "$C2.png"
+
+   Hsiao-Feng_Yin
+   Hiu-Fung_Wan ♂️ ♂
+   尹曉風 ♂️ ♂
+   尹曉風 ♂️
+   1949年17歲 生日1932-02-18
+   https://home.gamer.com.tw/creationDetail.php?sn=3670959
+   https://truth.bahamut.com.tw/s01/201708/8148c7ea0e4fd05a31d1b39875709bf5.JPG?w=1000
+   convert -define jpeg:size=401x696 Hiu-Fung_Wan.jpeg -thumbnail 401x401^ -gravity North -extent 401x401 Hiu-Fung_Wan.png
+
+crop and resize
+
+.. code:: bash
+
+   W=$((360*2))
+   H=$((480*2))
+   I="$HOME/Telegram Desktop/photo_2021-09-01_14-17-35.jpg"
+   O="/tmp/resize.jpg"
+   echo
+   magick convert "$F" -gravity center -crop 3:4 -resize "${W}x${H}" "$O"
+   echo
+   file "$O"
+   echo
+   ls -lh "$O"
+   echo
 
 
 Makefile

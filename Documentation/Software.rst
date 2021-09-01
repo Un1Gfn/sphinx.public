@@ -108,6 +108,13 @@ standalone app
      -L ~/beaglebone/alarm_root/ \
      usr/bin/uname -a
 
+:pkg:`community/libguestfs`
+
+::
+
+   gunzip -l ArchLinuxARM-am33x-latest.tar.gz | tail -1 | tr -s ' ' | cut -d' ' -f3 | numfmt --suffix=MiB --to-unit=1Mi
+   # 1055MiB
+   virt-make-fs -s 1280M -F raw -t ext2 -v ArchLinuxARM-am33x-latest.tar.gz ArchLinuxARM-am33x-latest.ext2.img
 
 `Binfmt`__
 ----------

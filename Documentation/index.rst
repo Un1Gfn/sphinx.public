@@ -48,6 +48,10 @@
    Hentai
    Holonews
    Router
+   Clash
+   Job
+   JLPT
+   iOS
    hr
 
 Indices and tables
