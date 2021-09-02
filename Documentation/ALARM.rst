@@ -74,6 +74,7 @@ download from `mirrors <https://archlinuxarm.org/about/mirrors>`__ ::
 
 verify ::
 
+   cd ~/beaglebone
    md5sum -c ArchLinuxARM-am33x-latest.tar.gz.md5
    gpg --verify ArchLinuxARM-am33x-latest.tar.gz{.sig,}
 
@@ -94,8 +95,8 @@ extract
    # sudo -u darren /usr/bin/bsdtar -x --no-same-permissions -f ../ArchLinuxARM-am33x-latest.tar.gz
    if [ "No machines." = "$(machinectl)" ] && ! mount | grep beaglebone; then
       cd ~darren/beaglebone &&
-         rm -rf ~/beaglebone/alarm_root &&
-         mkdir -pv alarm_root &&
+         rm -rf alarm_root/ &&
+         mkdir -pv alarm_root/ &&
          chmod -v 777 alarm_root &&
          cd alarm_root/ &&
          /usr/bin/bsdtar -xpf ../ArchLinuxARM-am33x-latest.tar.gz &&
@@ -106,7 +107,7 @@ extract
 
 copy tarball for installation ::
 
-   cp -v ~darren/beaglebone/ArchLinuxARM-am33x-latest.tar.gz darren/beaglebone/alarm_root/
+   cp -v ~darren/beaglebone/{ArchLinuxARM-am33x-latest.tar.gz,alarm_root/}
 
 proxy for pacman ::
 
@@ -114,7 +115,10 @@ proxy for pacman ::
 
 change password ::
 
-   chpasswd -R ~darren/beaglebone/alarm_root <<<"root:root"$'\n'"alarm:alarm"
+   # chpasswd -R ~darren/beaglebone/alarm_root <<<"root:root"$'\n'"alarm:alarm"
+   mount -v --bind ~darren/beaglebone/alarm_root ~darren/beaglebone/alarm_root
+   arch-chroot ~darren/beaglebone/alarm_root chpasswd <<<"root:root"$'\n'"alarm:alarm"
+   umount -v ~darren/beaglebone/alarm_root
 
 workaround :aw:`systemd-nspawn#Root_login_fails` ::
 
@@ -199,13 +203,13 @@ check hardware random number generator (TRNG) ::
 
 ::
 
-   systemctl start rngd.service # (-B)
+   systemctl start rngd.service # (A)
 
 wait for approx 7s until harvest rate reaches at least :file:`[ 48KiB/s]` [#si]_
 
 ::
 
-   pv -prb </dev/random >/dev/null
+   pv -prb /dev/random >/dev/null
 
 
 Modify Initramfs
@@ -269,7 +273,10 @@ log in as :file:`root:root`, wait approx 25s (max 60s) for bash prompt
          :kbd:`<CTRL+]><CTRL+]><CTRL+]>` or
          :kbd:`<CTRL+5><CTRL+5><CTRL+5>` within one second
 
-make sure no units harmful to nfs are enabled ::
+| our nfs setup relies on vulnerable static network
+| make sure no network-related units are enabled
+
+::
 
    env SYSTEMD_COLORS=0 systemctl --no-pager --legend=0 list-unit-files \
       | rev \
@@ -277,7 +284,7 @@ make sure no units harmful to nfs are enabled ::
       | rev \
       | less -SRM +%
 
-check rng ::
+bench rng ::
 
    # We have already started rngd.service in host
    # No /usr/bin/pv available in container
@@ -290,19 +297,25 @@ check rng ::
 
    # Check CPU usage of "gpg-agent" to make sure it ain't blocked
    pacman-key --init
+
+::
+
    # Avoid downloading keys again
    #  downloading required keys...
    #  :: Import PGP key 77193F152BDBE6A6, "Arch Linux ARM Build System <builder+xu6@archlinuxarm.org>"? [Y/n] y
-   pacman-key --populate archlinux
+   pacman-key --populate archlinuxarm
 
 | install packages
-| :pkg:`core/nfs-utils`
-|  |b| /usr/bin/mount.nfs4
-| :pkg:`core/mkinitcpio-nfs-utils`
-|  |b| /usr/lib/initcpio/hooks/net
-|  |b| /usr/lib/initcpio/install/net
-| :aw:`Mkinitcpio#Using_net`
-| :aw:`Diskless_system#NFS_2`
+| |b| :pkg:`extra/pv`
+| |b| :pkg:`extra/parted`
+|             /usr/bin/partprobe
+| |b| :pkg:`core/nfs-utils`
+|             /usr/bin/mount.nfs4
+| |b| :pkg:`core/mkinitcpio-nfs-utils`
+|             /usr/lib/initcpio/hooks/net
+|             /usr/lib/initcpio/install/net
+| |b| :aw:`Mkinitcpio#Using_net`
+| |b| :aw:`Diskless_system#NFS_2`
 
 .. table::
    :align: left
@@ -318,13 +331,13 @@ check rng ::
 ::
 
    source /proxy.bashrc
-   pacman -Syu nfs-utils mkinitcpio-nfs-utils
+   pacman -Syu pv parted nfs-utils mkinitcpio-nfs-utils
    pacman -Ql mkinitcpio-nfs-utils
    mkinitcpio -L
    mkinitcpio -H net
 
 | use ``mount.nfs4`` instead of ``nfsmount`` in hook ``net``
-| |b| :pkg:`AUR/mkinitcpio-nfs4-hooks`
+| |b| altenatively, install :pkg:`AUR/mkinitcpio-nfs4-hooks`
 | |b| :aw:`Diskless_system#NFS_2`
 
 ::
@@ -360,15 +373,16 @@ check rng ::
       -i.orig \
       -e 's,^MODULES=\(\)$,MODULES=(ax88179_178a nfsv4),g' \
       -e 's,^BINARIES=\(\)$,BINARIES=(/usr/bin/mount.nfs4),g' \
-      -e 's,^HOOKS=\((.*)\)$,HOOKS=(\1 netnfs4),g' \
+      -e 's,^HOOKS=\((.*)\)$,HOOKS=(\1 net),g' \
       /etc/mkinitcpio.conf
    diff --color=always -u /etc/mkinitcpio.conf{.orig,}
 
 .. tip::
 
-   | Remove mouse USB receiver to avoid copying
-   | |b| :file:`hid-logitech-dj.ko`
-   | |b| :file:`hid-logitech-hidpp.ko`
+   | hide from autodetect
+   | |b| remove mouse USB receiver ( :file:`hid-logitech-dj.ko` :file:`hid-logitech-hidpp.ko` )
+   | |b| remove PL2303
+   | |b| remove ...
 
 mkinitcpio ::
 
@@ -382,13 +396,26 @@ inspect initramfs ::
 
    lsinitcpio -a /boot/initramfs-linux.img
 
+| stop gpg-agent
+| workaround
+| ``systemctl poweroff`` stuck after ``Finished Generate shutdown-ramfs``
+
+::
+
+   ps aux | grep qemu-arm-static | grep gpg
+   # kill <N>
+
 exit ::
 
    if [ "$(uname -m)" == armv7l ]; then
-      systemctl poweroff
+      printf "\n\e[32m  %s\e[0m\n\n" "ok"
    else
       printf "\n\e[31m  %s\e[0m\n\n" "err"
    fi
+
+::
+
+   systemctl poweroff
 
 ::
 
@@ -487,7 +514,7 @@ submit to ArchWiki :aw:`BusyBox` and link from :aw:`TFTP#Server`
    sha1sum \
       zImage \
       dtbs/am335x-bonegreen-wireless.dtb \
-      initramfs-linux-net.img
+      initramfs-linux.img
    echo
    busybox udpsvd -E -l 820g3 10.0.0.89 69 tftpd -r -l "$PWD"
 
@@ -538,38 +565,72 @@ client |rarr| ``mount`` |rarr| server |rarr| ``rpcbind`` |rarr| ``nfsd`` |rarr| 
    unset -v F BAK S S0
    unset -f M
 
-:aw:`NFS#Restricting_NFS_to_interfaces/IPs` ::
+| |:warning:| :aw:`NFS#Restricting_NFS_to_interfaces/IPs`
+| :manpage:`rpc.nfsd(8)`
 
-   # sed -i.pacnew -e 's/^# host=$/host=10.0.0.64/g'
+::
+
+   mv -fv /etc/nfs.conf{.pacnew,} 2>/dev/null
+   # [nfsd]
+   sed -i.pacnew -e 's|^# host=$|host=10.0.0.89,10.0.0.64|g' /etc/nfs.conf # lo test
+   diff -u --color /etc/nfs.conf{.pacnew,}
+   systemctl restart nfs-server.service
+
+| make sure kernel ip forwarding is disabled for security
+| kernel doc - `ip sysctl <https://www.kernel.org/doc/html/latest/networking/ip-sysctl.html>`__
+
+::
+
+   if
+      [ 0 -eq "$(sysctl -n net.ipv4.ip_forward)" ] &&
+      [ 0 -eq "$(sysctl -n sysctl -n net.ipv6.conf.all.forwarding)" ];
+   then
+      printf "\n\e[32m  %s\e[0m\n\n" "ok"
+   else
+      printf "\n\e[31m  %s\e[0m\n\n" "err"
+   fi
 
 start nfs ::
 
    # ln -sfv "$(realpath ~darren/beaglebone/alarm_root)" /srv/alarm
+   echo
    exportfs -arv
+   echo
+   systemctl start rngd.service # (B)
+   systemctl start nfs-idmapd.service # (C)
+   systemctl start nfs-mountd.service # (D)
+   systemctl start nfs-server.service # (E)
+
+::
+
+   echo
    exportfs -v
-   systemctl start rngd.service # (-A)
-   systemctl start nfs-idmapd.service # (A)
-   systemctl start nfs-mountd.service # (B)
-   systemctl start nfs-server.service # (C)
-
-check listening ports ::
-
-   rpcinfo -p | grep nfs
-   ss -tlnp | grep -e 111 -e 2049 -e 20048
-   ss -ulnp | grep -e 111 -e 2049 -e 20048
+   echo
+   systemctl --no-pager status \
+      rngd.service \
+      nfs-idmapd.service \
+      nfs-mountd.service \
+      nfs-server.service
+   echo
 
 check api fs ::
 
+   echo; findmnt nfsd
+   echo; findmnt sunrpc
    echo
-   for FS in nfsd sunrpc; do
-      findmnt "$FS"
-      echo
-   done
+
+check listening ports ::
+
+   echo; rpcinfo -p | grep nfs
+   echo; ss -tlnp | grep -e 111 -e 2049 -e 20048
+   echo; ss -ulnp | grep -e 111 -e 2049 -e 20048
+   echo
 
 test mounting ::
 
    echo
-   for H in 820g3 10.0.0.89; do
+   # for H in 820g3 10.0.0.89; do
+     for H in       10.0.0.89; do
       showmount -e "$H"
       echo
       # mount -v -t nfs -o vers=3 "$H":/home/darren/beaglebone/alarm_root /mnt
@@ -609,10 +670,6 @@ test mounting ::
 |S0|\ [0]_ TFTP
 ===============
 
-.. tip::
-
-   Debug with :pkg:`community/wireshark-qt`
-
 `README.usb <https://github.com/u-boot/u-boot/blob/master/doc/README.usb>`__
 
 u-boot `drivers/net <https://github.com/u-boot/u-boot/tree/master/drivers/net>`__/e1000
@@ -635,17 +692,26 @@ u-boot bring up ethernet
 
    usb start
 
-u-boot `variables <https://github.com/u-boot/u-boot/blob/7a4ff7c41bab8b43767eacc0b30ca1573ab6acb1/README#L3314>`__
+.. code:: text
+
+   usb info
+
+net `variables <https://github.com/u-boot/u-boot/blob/7a4ff7c41bab8b43767eacc0b30ca1573ab6acb1/README#L3314>`__
 
 .. code:: text
 
-   echo
    if test $eth4addr = '00:0e:c6:d3:2d:5f'; then
+      echo
       echo ok
+      echo
       # ax88179_eth
-      setenv ethprime  eth4
-      setenv ethact    eth4
-      setenv ethrotate yes
+      # setenv ethprime usb_ether
+      # setenv ethact   usb_ether
+      # setenv ethprime eth4
+      # setenv ethact   eth4
+      setenv ethprime ax88179_eth
+      setenv ethact   ax88179_eth
+      setenv ethrotate no
       setenv netretry  no
       printenv ethprime ethact ethrotate netretry
       echo
@@ -669,7 +735,7 @@ ping
 
    ping ${serverip}
 
-check tftp vars
+tftp `variables <https://github.com/u-boot/u-boot/blob/7a4ff7c41bab8b43767eacc0b30ca1573ab6acb1/README#L3359>`__
 
 .. code:: text
 
@@ -682,40 +748,50 @@ check tftp vars
      -a ${fdt_addr_r}     -eq 0x88000000       \
      -a ${ramdisk_addr_r} -eq 0x88080000       \
    ; then
+     echo
      echo OK
+     echo
+     setenv tftpdstp 69
+     # setenv tftpblocksize
+     setenv tftptimeout 5000
+     setenv tftptimeoutcountmax 0
+     # setenv tftpwindowsize
+     printenv tftpdstp tftptimeout tftptimeoutcountmax
+     echo
    else
+     echo
      echo ERR
+     echo
    fi
 
-set tftp vars
-
-.. code:: text
-
-   setenv tftpdstp 69
-   # setenv tftpblocksize
-   setenv tftptimeout 5000
-   setenv tftptimeoutcountmax 0
-   # setenv tftpwindowsize
-   printenv tftpdstp tftptimeout tftptimeoutcountmax
-
 | tftp download files
-| compare sha1sum against those in ``xdotool windowfocus "$(xdotool search --name TFTP)"``
+| compare sha1sum against those in
+|  ``xdotool windowfocus "$(xdotool search --name TFTP)"``
 
 .. code:: text
 
-   tftpboot ${kernel_addr_r} zImage
-   sha1sum  ${kernel_addr_r} ${filesize}
+   if test 0 -eq 0; then
+      tftpboot ${kernel_addr_r}  zImage                             ; setenv kernel_size  ${filesize}
+      tftpboot ${fdt_addr_r}     dtbs/am335x-bonegreen-wireless.dtb ; setenv fdt_size     ${filesize}
+      tftpboot ${ramdisk_addr_r} initramfs-linux.img                ; setenv ramdisk_size ${filesize}
+      echo
+      sha1sum ${kernel_addr_r}  ${kernel_size}
+      sha1sum ${fdt_addr_r}     ${fdt_size}
+      sha1sum ${ramdisk_addr_r} ${ramdisk_size}
+      echo
+   fi
 
-.. code:: text
+.. tip::
 
-   tftpboot ${fdt_addr_r} "dtbs/am335x-bonegreen-wireless.dtb"
-   sha1sum  ${fdt_addr_r} ${filesize}
+   Debug with :pkg:`community/wireshark-qt`
 
-.. code:: text
+`fdt <https://www.denx.de/wiki/DULG/UBootCmdFDT>`__ ::
 
-   tftpboot ${ramdisk_addr_r} initramfs-linux-net.img
-   sha1sum  ${ramdisk_addr_r} ${filesize}
-   setenv     ramdisk_size    ${filesize}
+   if true; then
+      fdt addr ${fdt_addr_r}
+      fdt list /
+      fdt print /cpus
+   fi
 
 
 .. \:raw-html:`<strike>S<sub>0</sub> -> S<sub>1</sub></strike>`
@@ -724,10 +800,11 @@ set tftp vars
 |S0|\ [0]_ -> |S1|\ [1]_ -> |S2|\ [2]_
 ======================================
 
-.. tip::
+make sure no container is running ::
 
-   | Debug with :pkg:`community/wireshark-qt`
-   | :aw:`NFS/Troubleshooting`
+   sudo machinectl list
+   sudo ps aux | grep qemu
+   sudo ps aux | grep systemd-nspawn
 
 | ArchWiki - :aw:`Working with the serial console`
 | kernal doc - `Linux Serial Console <https://www.kernel.org/doc/html/latest/admin-guide/serial-console.html>`__
@@ -756,38 +833,25 @@ set tftp vars
 
 .. code:: text
 
-   setenv bootargs
+   if true; then
+      setenv bootargsapp
+      setenv bootargs
+      echo
+      setenv bootargsapp console=tty0 console=ttyS0,115200n8                                 ; printenv bootargsapp; setenv bootargs $bootargs $bootargsapp
+      setenv bootargsapp ip=${clientip}:${serverip}:${gwip}:${netmask}:${hostname}:eth0:none ; printenv bootargsapp; setenv bootargs $bootargs $bootargsapp
+    # setenv bootargsapp  nfsroot=${serverip}:${rootdir},nfsvers=3,proto=tcp,mountproto=tcp  ; printenv bootargsapp; setenv bootargs $bootargs $bootargsapp
+      setenv bootargsapp nfsroot=${serverip}:${rootdir}                                      ; printenv bootargsapp; setenv bootargs $bootargs $bootargsapp
+      setenv bootargsapp rw rootwait                                                         ; printenv bootargsapp; setenv bootargs $bootargs $bootargsapp
+      echo
+      printenv bootargs
+      echo
+   fi
+
+shut down USB in U-Boot before booting Linux [#down]_
 
 .. code:: text
 
-   setenv bootargs $bootargs console=tty0 console=ttyS0,115200n8
-
-.. code:: text
-
-   setenv bootargs $bootargs ip=${clientip}:${serverip}:${gwip}:${netmask}:${hostname}:eth0:none
-
-.. code:: text
-
-   # setenv bootargs $bootargs nfsroot=${serverip}:${rootdir},nfsvers=3,proto=tcp,mountproto=tcp
-   setenv bootargs $bootargs nfsroot=${serverip}:${rootdir}
-
-.. code:: text
-
-   setenv bootargs $bootargs rw rootwait
-
-.. code:: text
-
-   printenv bootargs
-
-.. warning::
-   
-   | Make sure no container is running
-   | ``$ sudo machinectl list``
-
-.. warning::
-
-   | Shut down USB in U-Boot before booting Linux [#down]_
-   | ``=> usb stop``
+   usb stop
 
 | boot
 | bootd
@@ -798,16 +862,17 @@ set tftp vars
 | :pr:`bootvx`
 | bootz
 
-`fdt <https://www.denx.de/wiki/DULG/UBootCmdFDT>`__
-
 .. code:: text
 
    # iminfo ${kernel_addr_r}
-   fdt list /cpus
-   fdt print /cpus
    setenv silent_linux no
    # bootm ${kernel_addr_r} ${ramdisk_addr_r}:${ramdisk_size} ${fdt_addr_r}
      bootz ${kernel_addr_r} ${ramdisk_addr_r}:${ramdisk_size} ${fdt_addr_r}
+
+.. tip::
+
+   | Debug with :pkg:`community/wireshark-qt`
+   | :aw:`NFS/Troubleshooting`
 
 
 |S2|\ [2]_ Install
@@ -832,41 +897,86 @@ set tftp vars
 
 ::
 
-   busybox ping -4 -c 10 -I eth0      10.0.0.89
-   busybox ping -4 -c 10 -I 10.0.0.64 10.0.0.89
-
-check if container and host time matches ::
+   # busybox ping -4 -c 4 -I eth0      -w 7 10.0.0.89
+             ping -4 -c 4 -I eth0      -w 7 10.0.0.89
 
 ::
 
-   timedatectl show
+   # busybox ping -4 -c 4 -I 10.0.0.64 -w 7 10.0.0.89
+             ping -4 -c 4 -I 10.0.0.64 -w 7 10.0.0.89
+
+why is there an rtc? ::
+
+   find /sys/class/rtc/
+
+show time ::
+
+   systemctl stop systemd-timesyncd.service &&
+   timedatectl set-ntp false &&
+   rm -fv /etc/adjtime &&
+   timedatectl set-timezone Asia/Makassar &&
+   timedatectl status
+
+| sync time
+| make sure no stray command in minicom
+| execute this command outside minicom
+| |troll|
+
+::
+
+   # Lag!
+   # printf 'timedatectl set-time "%s"\n' "$(date "+%F %T")" | pv -L8 >/dev/ttyUSB0
+     printf 'timedatectl set-time "%s"\n' "$(date "+%F %T")"          >/dev/ttyUSB0
+
+check "synced" time ::
+
+   timedatectl status
+
+write rtc ::
+
+   hwclock --systohc &&
+   timedatectl status
 
 erase eMMC
 
 .. danger::
 
-   **ALL DATA ON BBGW WILL BE LOST**
+   | **All data on the device will be lost forever**
+   | **Make sure you are executing on the correct device**
 
-::
+execute one by one, with caution ::
 
+   lsblk
    wipefs -af /dev/mmcblk1p1
    wipefs -af /dev/mmcblk1
    sync; partprobe
-   blkdiscard -v /dev/mmcblk1
+   date; blkdiscard -sv /dev/mmcblk1; date
    sync; partprobe
-   cmp /dev/zero /dev/mmcblk1
+   date; cmp /dev/zero /dev/mmcblk1; date
+   # date; pv -prb /dev/zero | cmp - /dev/mmcblk1; date
+     date; dd if=/dev/zero of=/dev/stdout status=progress | cmp - /dev/mmcblk1; date
       # Expect EOF
+
+`4k align <https://www.diskgenius.com/how-to/4k-alignment.php>`__ in :manpage:`fdisk(8)`
+
+.. code:: text
+
+   fdisk is able to optimize the disk layout for
+   a 4K-sector size and use an alignment offset on modern devices for MBR and GPT. It is always a good idea to follow
+   fdisk's defaults as the default values (e.g., first and last partition sectors) and partition sizes specified by the
+   +/-<size>{M,G,...} notation are always aligned according to the device properties.
 
 | partitioning
 | |b| partition table ``MBR`` :pr:`GPT`
 | |b| single partition
-|     |b| type ``Linux``
 |     |b| first sector ``2048``
+|     |b| type ``Linux``
 
 ::
 
-   fdisk
-      # ...
+   fdisk -l
+   fdisk /dev/mmcblk1
+   # ...
 
 populate filesystem ::
 
@@ -876,19 +986,20 @@ populate filesystem ::
 
    mke2fs    -t ext4 -v /dev/mmcblk1p1
    mount -v /dev/mmcblk1p1 /mnt
-   bsdtar -xpf /ArchLinuxARM-am33x-latest.tar.gz -C /mnt
-   sync
+   date; bsdtar -xpf /ArchLinuxARM-am33x-latest.tar.gz -C /mnt; sync; date
 
 write u-boot in boot sector before the first partition ::
 
-   head -c $((2048*512)) /dev/mmcblk1
-   dd if=mnt/boot/MLO        of=/dev/mmcblk1 count=1 seek=1 conv=notrunc bs=128k
-   dd if=mnt/boot/u-boot.img of=/dev/mmcblk1 count=2 seek=1 conv=notrunc bs=384k
-   sync； partprobe
-   head -c $((2048*512)) /dev/mmcblk1
+   # head -c $((2048*512)) /dev/mmcblk1 | od
+     head -c $((2048*512)) /dev/mmcblk1 | hexdump
+   dd if=/mnt/boot/MLO        of=/dev/mmcblk1 count=1 seek=1 conv=notrunc bs=128k
+   dd if=/mnt/boot/u-boot.img of=/dev/mmcblk1 count=2 seek=1 conv=notrunc bs=384k
+   sync; partprobe
+     head -c $((2048*512)) /dev/mmcblk1 | hexdump | head -100
 
 power off ::
 
+   sync
    umount -v /mnt
    systemctl poweroff
 
@@ -905,11 +1016,11 @@ Host Cleanup
 ::
 
    mv -v /etc/exports.pacnew /etc/exports
-   systemctl stop nfs-server.service # (C)
-   systemctl stop nfs-mountd.service # (B)
-   systemctl stop nfs-idmapd.service # (A)
-   systemctl is-enabled rngd.service || systemctl stop rngd.service # (-A)
-   systemctl stop rngd.service # (-B)
+   systemctl stop nfs-server.service # (E)
+   systemctl stop nfs-mountd.service # (D)
+   systemctl stop nfs-idmapd.service # (C)
+   systemctl is-enabled rngd.service || systemctl stop rngd.service # (B)
+   systemctl stop rngd.service # (A)
 
 ::
 

@@ -31,6 +31,10 @@
 .. |ZC|      unicode:: U+17D .. &Zcaron;
 .. |zc|      unicode:: U+17E .. &Zcaron;
 
+.. emoticon
+.. https://emoticoncentral.com/category/troll
+.. |troll| replace:: ( ͡° ͜ʖ ͡°)
+
 .. Favicon
    https://icon-icons.com/downloadimage.php?id=142017&root=2313/ICO/32/&file=chip_computer_hardware_memory_electronic_device_icon_142017.ico
 .. |ico| image:: favicon.ico

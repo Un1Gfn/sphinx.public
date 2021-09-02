@@ -114,70 +114,15 @@ buildroot - `build beaglebone+am335x-evm image <https://git.busybox.net/buildroo
    OMAP SD/MMC: 0
    OMAP SD/MMC: 1
 
+
 Get U-Boot
 ==========
-
-|alpha|. from `ALARM`__
------------------------
-
-.. error::
-     
-   | With :pkg:`alarm/uboot-beaglebone`\ ``2017.07-1``, sending :file:`emmc.img` (>2Mib), either
-   |  |b| right after :file:`u-boot-spl.bin`, or
-   |  |b| with\ ``loadx``/\ ``loady``\ when U-Boot is running,
-   |  I get NAK at approx. 500K.
-   | Anything other than
-     :file:`u-boot-spl.bin` (80KiB) and
-     :file:`u-boot.img` (400KiB)
-     is not realy possible to send.
-
-.. __: https://archlinuxarm.org/platforms/armv7/ti/beaglebone-green-wireless
-
-download :pkg:`alarm/uboot-beaglebone` ::
-
-   pacman -Qqlp uboot-beaglebone-2017.07-1-armv7h.pkg.tar.xz
-
-.. | :manpage:`tar(1)` emits ``tar: Ignoring unknown extended header keyword 'SCHILY.fflags'``
-.. | use :manpage:`bsdtar(1)`\ [#]_
-
-extract with :manpage:`bsdtar(1)`
-instead of :manpage:`tar(1)`
-in case of ``tar: Ignoring unknown extended header keyword 'SCHILY.fflags'``\
-[#]_\ ::
-
-   # sha1sum -c ArchLinuxARM-am33x-latest.tar.gz.sha1sum
-   # tar -x -v --no-xattrs --strip-components 1 -f ArchLinuxARM-am33x-latest.tar.gz "./boot"
-   rm -rfv /tmp/MINICOM_RES
-   mkdir -pv /tmp/MINICOM_RES
-   bsdtar -x \
-      -C "/tmp/MINICOM_RES" \
-      -f uboot-beaglebone-2017.07-1-armv7h.pkg.tar.xz \
-      --no-xattrs \
-      --strip-components 1 \
-      -v
-   # tar -x \
-   #    -v \
-   #    --no-xattrs \
-   #    --strip-components 1 \
-   #    -f uboot-beaglebone-2017.07-1-armv7h.pkg.tar.xz \
-   #    -C "/tmp/MINICOM_RES"
-
-``MLO``
-|rarr| `strip 520-byte header <https://e2e.ti.com/support/processors/f/processors-forum/321500/serial-boot-on-am3359-mlo-does-not-give-prompt>`__ |rarr|
-u-boot-spl.bin ::
-
-   # dd if=MLO of=u-boot-spl.bin bs=1 skip=520
-   { [ -f /tmp/MINICOM_RES/u-boot-spl.bin ] && echo error; } \
-      || tail -c +521 /tmp/MINICOM_RES/MLO >/tmp/MINICOM_RES/u-boot-spl.bin
-   diff -u10 \
-      <(xxd -c 8 -u /tmp/MINICOM_RES/MLO            | cut -d':' -f2-) \
-      <(xxd -c 8 -u /tmp/MINICOM_RES/u-boot-spl.bin | cut -d':' -f2-)
 
 .. https://docs.readthedocs.io/en/stable/guides/cross-referencing-with-sphinx.html
 .. _reference_label_u-boot_build_manually:
 
-|beta|. build Manually [R]_
----------------------------
+|alpha|. build Manually [R]_
+----------------------------
 
 .. :prlink:`history <https://github.com/u-boot/u-boot/commits/master/configs/am335x_boneblack_vboot_defconfig>\ `\ :pr:`of configs/am335x_boneblack_vboot_defconfig`
 
@@ -234,6 +179,7 @@ get key [#gSR]_ ::
 
 verify tarball wigh signature [#gV]_ ::
 
+   cd ~/beaglebone
    gpg --verify u-boot-2021.07.tar.bz2{.sig,}
 
 .. _ref_label_already_built_BACKREF:
@@ -246,7 +192,7 @@ verify tarball wigh signature [#gV]_ ::
 
 .. warning::
 
-   Previous builds will be lost
+   Previous build will be lost
 
 tools/`genboardscfg.py <https://github.com/u-boot/u-boot/blob/master/tools/genboardscfg.py>`__
 
@@ -407,6 +353,7 @@ qt5 xconfig
 .. code:: text
 
      - Memory commands        - sha1sum  - ✓
+     - Memory commands        - sha1sum  - sha1sum -v - ✓
      - Device access commands - gpio     - ✓ # Command 'gpio' failed: Error -19
    # - Device access commands - poweroff - ✓ # lib/efi_loader/efi_runtime.c:217: undefined reference to `do_poweroff'
 
@@ -440,7 +387,8 @@ qt5 xconfig
 build ::
 
    # In tmux
-   /usr/bin/time --format="\n  wall clock time - %E\n" make -j4 W=1 all
+   # /usr/bin/time --format="\n  wall clock time - %E\n" make -j4 all
+     /usr/bin/time --format="\n  wall clock time - %E\n" make -j4 W=1 all
 
 reset vars ::
 
@@ -498,6 +446,61 @@ collect artifacts ::
       mkdir -pv /tmp/MINICOM_RES && echo && \
       cp -iv "${TS[@]}" /tmp/MINICOM_RES/ && echo
    unset -v TS
+
+:pr:`β. from ALARM`
+-------------------
+
+.. error::
+
+   | With :pkg:`alarm/uboot-beaglebone`\ ``2017.07-1``, sending :file:`emmc.img` (>2Mib), either
+   |  |b| right after :file:`u-boot-spl.bin`, or
+   |  |b| with\ ``loadx``/\ ``loady``\ when U-Boot is running,
+   |  I get NAK at approx. 500K.
+   | Anything other than
+     :file:`u-boot-spl.bin` (80KiB) and
+     :file:`u-boot.img` (400KiB)
+     is not realy possible to send.
+
+
+download :pkg:`alarm/uboot-beaglebone` ::
+
+   pacman -Qqlp uboot-beaglebone-2017.07-1-armv7h.pkg.tar.xz
+
+.. | :manpage:`tar(1)` emits ``tar: Ignoring unknown extended header keyword 'SCHILY.fflags'``
+.. | use :manpage:`bsdtar(1)`\ [#]_
+
+extract with :manpage:`bsdtar(1)`
+instead of :manpage:`tar(1)`
+in case of ``tar: Ignoring unknown extended header keyword 'SCHILY.fflags'``\
+[#]_\ ::
+
+   # sha1sum -c ArchLinuxARM-am33x-latest.tar.gz.sha1sum
+   # tar -x -v --no-xattrs --strip-components 1 -f ArchLinuxARM-am33x-latest.tar.gz "./boot"
+   rm -rfv /tmp/MINICOM_RES
+   mkdir -pv /tmp/MINICOM_RES
+   bsdtar -x \
+      -C "/tmp/MINICOM_RES" \
+      -f uboot-beaglebone-2017.07-1-armv7h.pkg.tar.xz \
+      --no-xattrs \
+      --strip-components 1 \
+      -v
+   # tar -x \
+   #    -v \
+   #    --no-xattrs \
+   #    --strip-components 1 \
+   #    -f uboot-beaglebone-2017.07-1-armv7h.pkg.tar.xz \
+   #    -C "/tmp/MINICOM_RES"
+
+``MLO``
+|rarr| `strip 520-byte header <https://e2e.ti.com/support/processors/f/processors-forum/321500/serial-boot-on-am3359-mlo-does-not-give-prompt>`__ |rarr|
+u-boot-spl.bin ::
+
+   # dd if=MLO of=u-boot-spl.bin bs=1 skip=520
+   { [ -f /tmp/MINICOM_RES/u-boot-spl.bin ] && echo error; } \
+      || tail -c +521 /tmp/MINICOM_RES/MLO >/tmp/MINICOM_RES/u-boot-spl.bin
+   diff -u10 \
+      <(xxd -c 8 -u /tmp/MINICOM_RES/MLO            | cut -d':' -f2-) \
+      <(xxd -c 8 -u /tmp/MINICOM_RES/u-boot-spl.bin | cut -d':' -f2-)
 
 |gamma|. build w/ buildroot
 ---------------------------
@@ -641,8 +644,8 @@ collect artifacts ::
          cp -iv /tmp/genimage_outputpath/emmc.img "$_" && echo && \
       ls -Alh /tmp/MINICOM_RES/ && echo
 
-|beta|. manually
-----------------
+|alpha|. manually
+-----------------
 
 | :aw:`Partitioning#Tools`
 | |b| :manpage:`sfdisk(8)` [#]_ [#]_
@@ -977,24 +980,24 @@ verify 512B-alignment of eMMC image in another terminal
 .. code-block:: text
    :emphasize-lines: 8
 
-   => mmc info
-   Device: OMAP SD/MMC
-   Manufacturer ID: 13
-   OEM: 14e
-   Name: Q2J54
-   Bus Speed: 48000000
-   Mode: MMC High Speed (52MHz)
-   Rd Block Len: 512
-   MMC version 5.0
-   High Capacity: Yes
-   Capacity: 3.6 GiB
-   Bus Width: 8-bit
-   Erase Group Size: 512 KiB
-   User Capacity: 3.6 GiB WRREL
-   Boot Capacity: 2 MiB ENH
-   RPMB Capacity: 512 KiB ENH
-   Boot area 0 is not write protected
-   Boot area 1 is not write protected
+   mmc info
+      # Device: OMAP SD/MMC
+      # Manufacturer ID: 13
+      # OEM: 14e
+      # Name: Q2J54
+      # Bus Speed: 48000000
+      # Mode: MMC High Speed (52MHz)
+      # Rd Block Len: 512
+      # MMC version 5.0
+      # High Capacity: Yes
+      # Capacity: 3.6 GiB
+      # Bus Width: 8-bit
+      # Erase Group Size: 512 KiB
+      # User Capacity: 3.6 GiB WRREL
+      # Boot Capacity: 2 MiB ENH
+      # RPMB Capacity: 512 KiB ENH
+      # Boot area 0 is not write protected
+      # Boot area 1 is not write protected
 
 .. code:: text
 
@@ -1033,6 +1036,10 @@ erase the first 10MiB from eMMC
 .. __: https://github.com/u-boot/u-boot/blob/master/include/configs/am335x_evm.h
 .. __: https://stackoverflow.com/a/35348068
 
+.. code:: text
+
+   if test ${loadaddr} -eq 0x82000000; then echo ok; else echo err; fi
+
 .. tip::
    | |b| RAM block size is ``1B``
    | |b| ``0xa00000blk * 1B/blk = 0xa00000B = 10485760B = 10240 * 1024B = 10MiB``
@@ -1049,23 +1056,19 @@ erase the first 10MiB from eMMC
 .. code:: text
 
    # Error prone, don't try accessing 0x100000 any more
-   # cmp.b 0x82000000   0x100000 0xa00000
-      mw.b 0x82000000          0 0xa00000
+   # cmp.b ${loadaddr}  0x100000 0xa00000
+      mw.b ${loadaddr}         0 0xa00000
 
 get ready for ``ymodem`` transfer
 
 .. code:: text
 
-   # printenv loadaddr
-   #    # loadaddr=0x82000000
-   # env default -f loadaddr
-   # env print loadaddr
-   #    # loadaddr=0x82000000
-   echo; echo -n "  "; if test ${loadaddr} -eq 0x82000000 -a ${baudrate} -eq 115200; then echo ok; else echo err; fi; echo
-
-.. code:: text
-
-   loady ${loadaddr} ${baudrate}
+   if test ${baudrate} -eq 115200; then
+      echo ok
+      loady ${loadaddr} ${baudrate}
+   else
+      echo err
+   fi
 
 minicom |rarr| :kbd:`<CTRL+A>` |rarr| :kbd:`<S>` |rarr| ymodem |rarr| ``[MINICOM_RES]/`` |rarr| ``emmc.img``
 
@@ -1080,7 +1083,7 @@ minicom |rarr| :kbd:`<CTRL+A>` |rarr| :kbd:`<S>` |rarr| ymodem |rarr| ``[MINICOM
 
 .. code:: text
 
-   md.b 0x82000000 0x200
+   md.b ${loadaddr} 0x200
 
 | verify checksum [#]_
 | |:eyes:| expect ``<SHA1SUM>`` to be the same value as ``$sha1sum``
