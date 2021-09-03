@@ -120,7 +120,7 @@ Ongoing Transition from GitHub Flavored Markdown to reStructuredText ...
 .. https://www.sphinx-doc.org/en/master/usage/extensions/extlinks.html#confval-extlinks
 
 | Unicode
-| |b| :tree:`Documentation/substitution.txt`
+| |b| :tree:`substitution.txt`
 | |b| `<http://www.amp-what.com/>`__
 | |b| `<https://www.toptal.com/designers/>`__
 

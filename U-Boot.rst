@@ -606,7 +606,7 @@ genimage.cfg `syntax <https://github.com/pengutronix/genimage/blob/master/README
 
 .. https://pygments.org/docs/lexers/#pygments.lexers.configs.IniLexer
 .. https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html#directive-literalinclude
-.. literalinclude:: ../../beaglebone/cfg.sh
+.. literalinclude:: ../beaglebone/cfg.sh
    :language: cfg
    :lines: 2-
 
@@ -923,7 +923,7 @@ Wait for at most 30 seconds until ``CCC...`` appears in minicom console
 
 :raw-html:`<details><summary>bdinfo</summary>`
 
-.. literalinclude:: ../../beaglebone/bdinfo.txt
+.. literalinclude:: ../beaglebone/bdinfo.txt
    :language: text
 
 :raw-html:`</details>`
@@ -932,7 +932,7 @@ Wait for at most 30 seconds until ``CCC...`` appears in minicom console
 
 .. https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html#directive-literalinclude
 .. literalinclude cannot reach outside doc tree
-.. literalinclude:: ../../beaglebone/printenv.txt
+.. literalinclude:: ../beaglebone/printenv.txt
    :language: text
 
 :raw-html:`</details>`

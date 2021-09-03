@@ -3,11 +3,11 @@
 
 .. include:: substitution.txt
 
-=============================
-|ico| Index of `beaglebone`__
-=============================
+================================
+|ico| Index of `sphinx.public`__
+================================
 
-.. __: http://www.github.com/Un1Gfn/beaglebone
+.. __: http://www.github.com/Un1Gfn/sphinx.public
 
 .. https://sphinxemojicodes.readthedocs.io/en/stable/#supported-codes
 

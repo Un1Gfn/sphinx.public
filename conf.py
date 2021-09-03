@@ -19,7 +19,7 @@ del os, sys
 
 # -- Project information -----------------------------------------------------
 
-project = 'beaglebone'
+project = 'sphinx.public'
 author = 'Darren Ng'
 import time
 copyright = time.strftime("%Y")
