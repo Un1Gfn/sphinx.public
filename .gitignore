@@ -1,40 +1,4 @@
-# ALARM
-/?*-armv7h.pkg.tar.xz
-/ArchLinuxARM-am33x-latest.tar.gz
-/alarm_root
-
-# systemd-nspawn
-/.#alarm_root.lck
-
-# U-Boot - v - https://source.denx.de/u-boot/u-boot/-/tags
-/u-boot-v202?.??-rc?.tar.bz2
-/u-boot-v202?.??-rc?/
-/u-boot-v202?.??.tar.bz2
-/u-boot-v202?.??/
-
-# U-Boot - non-v - https://ftp.denx.de/pub/u-boot/
-/u-boot-202?.??.tar.bz2
-/u-boot-202?.??/
-
-# U-Boot - dev
-/u-boot.git/
-
-# Other distros
-# /bone-debian-9.9-iot-armhf-*.img*
-# /void-beaglebone-musl-*.img.xz
-# /void-beaglebone-musl-PLATFORMFS-*.tar.xz
-
-# Buildroot
-# /buildroot-202?.??.?.tar.bz2.sign
-# /buildroot-202?.??.?.tar.bz2
-# /buildroot-202?.??.?/
-
-# https://askubuntu.com/a/661
-/usbreset.out
-
 # Sphinx
-/Documentation/_build
 /Documentation/extension/__pycache__/
-
-
-# ?
+/_build
+/extension/__pycache__/

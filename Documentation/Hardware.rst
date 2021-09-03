@@ -147,7 +147,7 @@ USB
 ===
 
 | `<http://wiki.seeedstudio.com/BeagleBone_Green_Wireless/#step2-install-drivers>`__
-| |b| ``./mkudevrule.sh``
+| |b| ``~/beaglebone/mkudevrule.sh``
 
 
 Wi-Fi

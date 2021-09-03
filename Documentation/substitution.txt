@@ -15,6 +15,7 @@
 .. |rarr|      unicode:: U+2192 .. https://www.toptal.com/designers/htmlarrows/
 .. |tm|        unicode:: U+2122 .. Mot to be confused with sphinxemojicodes |:tm:|
 .. |nbsp|      unicode:: U+A0   .. https://en.wikipedia.org/wiki/Non-breaking_space
+.. |equiv|     unicode:: U+2261
 
 .. https://unicode-search.net/unicode-namesearch.pl?term=ASTERISK
 .. https://www.toptal.com/designers/htmlarrows/math/asterisk-operator/
