@@ -219,7 +219,7 @@ Syntax.Others
 | |b| uppercase Roman numerals: I, II, III, IV, ..., MMMMCMXCIX (4999)
 | |b| lowercase Roman numerals: i, ii, iii, iv, ..., mmmmcmxcix (4999)
 
-:emlink:`Field List <https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#field-lists>`
+:emlink:`(F/FOD) Field List <https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#field-lists>`
 
 :Date: 2001-08-16
 :Version: 1
@@ -232,7 +232,7 @@ Syntax.Others
    field name marker, and they must line up with each other.
 :Parameter i: integer
 
-:emlink:`Option List <https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#option-lists>`
+:emlink:`(O/FOD) Option List <https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#option-lists>`
 
 -a      Output all.
 -b      Output both (this description is
@@ -287,7 +287,7 @@ Syntax.\ `Roles`__\ :raw-html:`<br />`\ Inline Elements
 
 raw html style :raw-html:`<span style="text-align: center; color: green;">green</span>`
 
-(The following is a :emlink:`Definition List <https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#definition-lists>`)
+:emlink:`(D/FOD) Definition List <https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#definition-lists>`
 
 \:doc:\`Hardware`
    `Direct link to documents <https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html#role-doc>`__

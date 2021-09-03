@@ -4,8 +4,16 @@
 PkgMgmt
 =======
 
+arch linux package management
 
-Expac
+
+AUR
+===
+
+see :ref:`makepkg <reference_label_section_makepkg>`
+
+
+expac
 =====
 
 expac dictionary ::
@@ -25,6 +33,29 @@ expac dictionary ::
      # shellcheck disable=SC2086
      dict $line
    done
+
+
+.. _reference_label_section_makepkg:
+
+makepkg
+=======
+
+.. code:: bash
+
+   history | grep makepkg | cut -c 8- | sort | uniq
+
+| :manpage:`makepkg(8)`
+|  :file:`-e, --noextract`
+|  :file:`--holdver`
+|  :file:`-i, --install`
+|  :file:`-R, --repackage`
+|  :file:`-s, --syncdeps`
+
+proceed with failed build
+
+.. code:: bash
+
+   makepkg -e --holdver -s
 
 
 paru chroot
