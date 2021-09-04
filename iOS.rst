@@ -1,4 +1,4 @@
-.. include:: substitution.txt
+.. include:: include/substitution.txt
 
 ===
 iOS
@@ -29,7 +29,7 @@ Misc
   |rarr| Display & Brightness
   |rarr| ``Auto-Lock = Never``
 
-.. include:: escalate.txt
+.. include:: include/escalate.txt
 
 attach/connect device to pc ::
 

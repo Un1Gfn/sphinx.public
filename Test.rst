@@ -1,5 +1,5 @@
-.. include:: substitution.txt
-.. include:: link.txt
+.. include:: include/substitution.txt
+.. include:: include/link.txt
 
 ==========
 |ico| Test

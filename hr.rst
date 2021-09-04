@@ -1,6 +1,6 @@
 .. \:orphan:
 
-.. include:: substitution.txt
+.. include:: include/substitution.txt
 
 ========================================================================
 :raw-html:`<del>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<del>`

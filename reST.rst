@@ -1,4 +1,4 @@
-.. include:: substitution.txt
+.. include:: include/substitution.txt
 
 ==========
 |ico| reST
@@ -432,4 +432,4 @@ The numbering is determined by the order of the footnotes (here), not by the ord
 
 ----
 
-.. include:: link.txt
+.. include:: include/link.txt

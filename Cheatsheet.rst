@@ -1,4 +1,4 @@
-.. include:: substitution.txt
+.. include:: include/substitution.txt
 
 ==========
 Cheatsheet
@@ -131,6 +131,59 @@ reverse video time stamp ::
       foo
       bar
    }; exit
+
+test symbolic link
+
+.. code:: bash
+
+   echo
+   cd /tmp
+   rm -rf /tmp/x
+   mkdir $_
+   cd $_
+   mkdir dir
+   ln -sv "dir" lnk
+   function test2 {
+      printf -- "%5s " "$1"
+      for o in -d -e -f -L; do
+         if [ "$o" "$1" ]; then
+            printf -- "$o true  ";
+         else
+            printf -- "$o false ";
+         fi
+      done
+      echo
+   }
+   test2 dir
+   test2 lnk
+   echo
+   rmdir -v dir
+   test2 lnk
+   echo
+
+.. table::
+   :align: left
+   :widths: auto
+
+   ================================= ================== ================== ================== ==================
+    type                              -d                 -e                 -f                 -L
+   ================================= ================== ================== ================== ==================
+    \
+    file                              |:red_circle:|     |:green_circle:|   |:green_circle:|   |:red_circle:|
+    dir                               |:green_circle:|   |:green_circle:|   |:red_circle:|     |:red_circle:|
+    \
+    symlink2file                      |:red_circle:|     |:green_circle:|   |:green_circle:|   |:green_circle:|
+    symlink2dir                       |:green_circle:|   |:green_circle:|   |:red_circle:|     |:green_circle:|
+    \
+    deadlink2file |br| deadlink2dir   |:red_circle:|     |:red_circle:|     |:red_circle:|     |:green_circle:|
+    \
+    nonexist                          |:red_circle:|     |:red_circle:|     |:red_circle:|     |:red_circle:|
+   ================================= ================== ================== ================== ==================
+
+
+
+
+sdf
 
 C
 ===
@@ -283,6 +336,8 @@ Makefile
 ========
 
 `Appendix A Quick Reference <https://www.gnu.org/software/make/manual/html_node/Quick-Reference.html>`__
+
+`Special Built-in Target Names <https://www.gnu.org/software/make/manual/html_node/Special-Targets.html>`__
 
 `Functions for String Substitution and Analysis
 <https://www.gnu.org/software/make/manual/html_node/Text-Functions.html#Text-Functions>`__

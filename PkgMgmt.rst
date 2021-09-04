@@ -1,4 +1,4 @@
-.. include:: substitution.txt
+.. include:: include/substitution.txt
 
 =======
 PkgMgmt
@@ -199,4 +199,4 @@ Pull GPG Key
 
 ----
 
-.. include:: link.txt
+.. include:: include/link.txt

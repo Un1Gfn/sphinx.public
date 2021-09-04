@@ -1,4 +1,4 @@
-.. include:: substitution.txt
+.. include:: include/substitution.txt
 
 ================
 |ico| `U-Boot`__
@@ -689,7 +689,7 @@ partition (sfdisk)
    # $WRITE          -A emmc.img 1
    # $WRITE --part-type emmc.img 1 FAT12 # sfdisk -T | grep -i -e fat -e dos -e bios -e win -e w9
 
-.. include:: escalate.txt
+.. include:: include/escalate.txt
 
 loop device
 (`kpartx? <https://unix.stackexchange.com/questions/94103/how-can-i-partition-a-volume-in-a-regular-file-without-loop>`__)
@@ -822,7 +822,7 @@ lists.denx.de - `minicom+kermit <https://lists.denx.de/pipermail/u-boot/2003-Jun
 .. warning::
    Make sure :pkg:`community/lrzsz` is installed.
 
-.. include:: escalate.txt
+.. include:: include/escalate.txt
 
 convenience symlink for minicom ::
 
@@ -1172,4 +1172,4 @@ Footnotes
        `hash.c <https://github.com/u-boot/u-boot/blob/master/common/hash.c>`__:\
        ``hash_command()``
 
-.. include:: link.txt
+.. include:: include/link.txt

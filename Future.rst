@@ -1,4 +1,4 @@
-.. include:: substitution.txt
+.. include:: include/substitution.txt
 
 ============
 |ico| Future
@@ -23,4 +23,4 @@ instead of downloading alarm's tarball
 
 ----
 
-.. include:: link.txt
+.. include:: include/link.txt

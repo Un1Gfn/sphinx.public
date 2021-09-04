@@ -1,4 +1,4 @@
-.. include:: substitution.txt
+.. include:: include/substitution.txt
 
 ===========
 `Archiso`__
@@ -397,7 +397,7 @@ qemu ::
 
 .. __: https://gitlab.archlinux.org/archlinux/archiso/-/blob/master/docs/README.transfer
 
-.. include:: escalate.txt
+.. include:: include/escalate.txt
 
 plug in removable drive ::
 

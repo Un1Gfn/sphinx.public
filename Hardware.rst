@@ -1,4 +1,4 @@
-.. include:: substitution.txt
+.. include:: include/substitution.txt
 
 ==============
 |ico| Hardware
@@ -195,4 +195,4 @@ Wi-Fi
 .. [#c_f_s] https://www.cyberciti.biz/faq/find-out-linux-serial-ports-with-setserial
 .. [#c_h_s] https://www.cyberciti.biz/hardware/5-linux-unix-commands-for-connecting-to-the-serial-console
 
-.. include:: link.txt
+.. include:: include/link.txt

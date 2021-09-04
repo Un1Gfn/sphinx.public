@@ -19,11 +19,12 @@ del os, sys
 
 # -- Project information -----------------------------------------------------
 
-project = 'sphinx.public'
+# os.path.realpath(__file__)
+# import os; project = os.path.dirname(__file__); del os
+# import os; project = os.path.basename(os.path.dirname(__file__)); del os
+import os; project = os.path.basename(os.getcwd()); del os
 author = 'Darren Ng'
-import time
-copyright = time.strftime("%Y")
-del time
+import time; copyright = time.strftime("%Y"); del time
 assert str == type(copyright)
 assert copyright
 copyright += ', '
@@ -117,7 +118,12 @@ templates_path = ['_templates']
 # assert rst_epilog
 # f.close(); del f
 # del os
+rst_epilog = """
+.. |project| replace:: %s
+.. _project: https://github.com/Un1Gfn/%s
+"""%(project,project)
 
+# Caveat: sphinxemoji.sphinxemoji does not work if rst_prolog is set
 # import os
 # f = open('rst_prolog.rst', "r")
 # # f = open('rst_prolog.txt', "r")

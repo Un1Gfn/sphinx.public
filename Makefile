@@ -9,22 +9,17 @@ SOURCEDIR     := $(realpath .)
 BUILDDIR      := $(HOME)/cgi/cgi-tmp/sphinx
 # BUILDDIR      := _build
 
-
 # .PHONY: default help clean html entr # make[1]: Nothing to be done for 'html'.
 .PHONY: default help clean entr
 
-
 default: html
-
 
 help:
 	@$(SPHINXBUILD) -M help "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
-
 clean:
 # 	-rm -r "$(BUILDDIR)"
 	rm -rf "$(BUILDDIR)"
-
 
 # Catch-all target: route all unknown targets to Sphinx using the new
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
@@ -41,10 +36,7 @@ html:
 	@printf "  http://%s/cgi-tmp/sphinx/index.html\n" \
 		"$(shell ip -4 addr show wlp2s0 | awk '/inet / {print $$2}' | cut -d/ -f1)"
 	@echo
-	
 
 entr:
 	@echo
 	ls -d1 -- conf.py *rst *txt extension/* | entr $(MAKE) html
-
-

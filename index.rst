@@ -1,13 +1,15 @@
 .. Created by sphinx-quickstart
    The root `toctree` directive is mandatory
 
-.. include:: substitution.txt
+.. include:: include/substitution.txt
 
-================================
-|ico| Index of `sphinx.public`__
-================================
+=========================
+|ico| Index of |project|_
+=========================
 
-.. __: http://www.github.com/Un1Gfn/sphinx.public
+ico
+- `Chip computer hardware memory electronic device Icon <https://icon-icons.com/icon/chip-computer-hardware-memory-electronic-device/142017>`__
+- :download:`download <https://icon-icons.com/downloadimage.php?id=142017&root=2313/ICO/32/&file=chip_computer_hardware_memory_electronic_device_icon_142017.ico>`
 
 .. https://sphinxemojicodes.readthedocs.io/en/stable/#supported-codes
 
@@ -45,12 +47,9 @@
    Cheatsheet
    Framebuffer
    Archiso
-   Hentai
    Holonews
    Router
    Clash
-   Job
-   JLPT
    iOS
    hr
 
@@ -61,4 +60,4 @@ Indices and tables
 * :ref:`modindex`
 * :ref:`search`
 
-.. include:: link.txt
+.. include:: include/link.txt

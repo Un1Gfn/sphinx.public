@@ -1,4 +1,4 @@
-.. include:: substitution.txt
+.. include:: include/substitution.txt
 
 .. |S0| replace:: S\ :subscript:`0`
 .. |S1| replace:: S\ :subscript:`1`
@@ -78,7 +78,7 @@ verify ::
    md5sum -c ArchLinuxARM-am33x-latest.tar.gz.md5
    gpg --verify ArchLinuxARM-am33x-latest.tar.gz{.sig,}
 
-.. include:: escalate.txt
+.. include:: include/escalate.txt
 
 extract
 
@@ -188,7 +188,7 @@ Entrophy
 
 `820g3 has TPM 1.2 <https://support.hp.com/us-en/document/c04913012#:~:text=Trusted%20Platform%20Module%20(TPM%20)%201.2%20Embedded%20Security%20Chip%20(Common%20Criteria%20EAL4%2B%20Certified)>`__
 
-.. include:: escalate.txt
+.. include:: include/escalate.txt
 
 load tpm drivers ::
 
@@ -497,7 +497,7 @@ PC TFTP
 
 submit to ArchWiki :aw:`BusyBox` and link from :aw:`TFTP#Server`
 
-.. include:: escalate.txt
+.. include:: include/escalate.txt
 
 ::
 
@@ -528,7 +528,7 @@ PC :wp:`NFS<Network_File_System>`
 
 client |rarr| ``mount`` |rarr| server |rarr| ``rpcbind`` |rarr| ``nfsd`` |rarr| ``mountd``
 
-.. include:: escalate.txt
+.. include:: include/escalate.txt
 
 `append to /etc/exports <https://wiki.archlinux.org/title/Diskless_system#NFS>`__ ::
 
@@ -1011,7 +1011,7 @@ Host Cleanup
 
 |:dart:|
 
-.. include:: escalate.txt
+.. include:: include/escalate.txt
 
 ::
 
@@ -1193,4 +1193,4 @@ Footnotes
 
 ----
 
-.. include:: link.txt
+.. include:: include/link.txt

@@ -1,4 +1,4 @@
-.. include:: substitution.txt
+.. include:: include/substitution.txt
 
 ==============
 |ico| Software
@@ -187,4 +187,4 @@ inspect
 .. [#kdocbinfmt] https://www.kernel.org/doc/html/latest/admin-guide/binfmt-misc.html
 .. [#kdocbinfmtjava] https://www.kernel.org/doc/html/latest/admin-guide/java.html
 
-.. include:: link.txt
+.. include:: include/link.txt
