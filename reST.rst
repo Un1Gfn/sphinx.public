@@ -14,6 +14,7 @@
 .. warning::
    A plain text ``README`` in ``$(git rev-parse --show-toplevel)`` points here. There is **NO** ``readme.rst.``
 
+
 Contacts
 ========
 
@@ -21,6 +22,7 @@ Contacts
 | |b| `Developing extensions <https://docutils.sourceforge.io/docs/user/mailing-lists.html#docutils-develop>`__
 
 `Bugs <https://docutils.sourceforge.io/BUGS.html>`__
+
 
 Readings
 ========
@@ -59,6 +61,7 @@ Readings
 | |b| `Roles <https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html>`__
 | |b| `Directives <https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html>`__
 | |b| `Domains <https://www.sphinx-doc.org/en/master/usage/restructuredtext/domains.html>`__
+
 
 `Extensions`__
 ==============
@@ -105,6 +108,7 @@ Readings
 
 `extend the HTML writer to produce a proper <del> tag <https://stackoverflow.com/a/62493316/>`__
 
+
 Misc
 ====
 
@@ -133,6 +137,39 @@ Ongoing Transition from GitHub Flavored Markdown to reStructuredText ...
 .. __: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/sphinx-static/theme_overrides.css
 .. __: https://www.kernel.org/doc/html/latest/doc-guide/sphinx.html#specific-guidelines-for-the-kernel-documentation
 
+that damn hr
+
+.. code:: reStructuredText
+
+   .. \:orphan:
+
+   .. include:: include/substitution.txt
+
+   ========================================================================
+   :raw-html:`<del>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<del>`
+   ========================================================================
+
+   `Close #8201: Emit a warning if toctree contains duplicated entries #8203 <https://github.com/sphinx-doc/sphinx/pull/8203>`__
+
+   .. horizontal line for navbar
+   .. float:
+   .. line-height:
+   .. margin:
+   .. padding:
+   .. height:
+   .. width:
+   .. \|hrop|  replace:: :raw-html:`<span style="background:#777777;float:left;height:2px;width:100%;">&nbsp;</span>`
+   .. \|hred|  replace:: :raw-html:`<span style="background:#777777;float:left;height:2px;width:100%;">&nbsp;</span>`
+   .. \|hrmid| replace:: :raw-html:`<span style="float:left;width:100%;"><s>xxxx</s></span>`
+   .. \|hrmid| replace:: :raw-html:`<hr display=inline />`
+   .. :raw-html:`<s><span style="background:#888888;width:100%;float:left;">&nbsp;</span></s><br />Hardware`
+   .. :raw-html:`<s>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</s><br />Hardware`
+   .. :raw-html:`<span style="text-decoration:overline">Hardware</span>`
+   .. :raw-html:`<hr />` Hardware
+   .. :raw-html:`<span style="float:left;text-decoration:overline;width:100%;">Hardware</span>`
+   .. https://codepen.io/ericrasch/pen/Irlpm
+
+
 h2 Chapters
 ===========
 
@@ -160,6 +197,7 @@ h9 ?
 .. = - ` : ' " ~ ^ _ * + # < >
 
 |
+
 
 Building
 ========
@@ -397,6 +435,7 @@ Reorder Footnotes
      | egrep -e '^.*id="id[0-9]+".*$|$'
    echo
    unset -v GREP_COLORS
+
 
 `Footnotes`__
 =============

@@ -4,7 +4,6 @@
 |ico| Hardware
 ==============
 
-
 Specs
 =====
 

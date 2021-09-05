@@ -4,6 +4,7 @@ SPHINXBUILD   ?= sphinx-build
 SOURCEDIR     := $(realpath .)
 BUILDDIR      := /tmp/un1gfn.github.io
 LINK          := $(HOME)/cgi/cgi-tmp/$(shell basename $(BUILDDIR))
+LINK_REL      :=             cgi-tmp/$(shell basename $(BUILDDIR))
 IP            := $(shell ip -4 addr show wlp2s0 | awk '/inet / {print $$2}' | cut -d/ -f1)
 
 # .PHONY: default help clean html entr # make[1]: Nothing to be done for 'html'.
@@ -18,9 +19,12 @@ default: clean lnk_and_httpd entr
 help:
 	$(SPHINXBUILD) -M help "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
+# Recreate thing and never get 404,
+# since outputs are in a subdirectory below HTTP root
 clean:
+	# shopt -s dotglob; rm -rf "$(BUILDDIR)"/*
 	@rm -fv '$(LINK)'
-	shopt -s dotglob; rm -rf "$(BUILDDIR)"/*
+	rm -rf "$(BUILDDIR)"
 
 .SILENT: entr
 entr:
@@ -37,7 +41,7 @@ html:
 	[ -e "$(BUILDDIR)/.nojekyll" ]
 	echo
 	printf "  file://%s\n" "$(BUILDDIR)/index.html"
-	printf "  http://%s/cgi-tmp/sphinx/index.html\n" "$(IP)"
+	printf "  http://%s/%s/index.html\n" "$(IP)" "$(LINK_REL)"
 	echo
 
 # .SILENT: lnk_and_httpd

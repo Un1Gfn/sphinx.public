@@ -5,7 +5,6 @@
 .. |S2| replace:: S\ :subscript:`2`
 .. |S3| replace:: S\ :subscript:`3`
 
-
 ==============
 |ico| `ALARM`_
 ==============

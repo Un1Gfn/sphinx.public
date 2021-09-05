@@ -31,27 +31,32 @@ ico
 .. the first line of the content must be indented to the same level as the options are.
    test_page.rst -> test_page
 .. toctree::
-   :maxdepth: 99
-   :caption: Contents:
+   :maxdepth: 0
+   :caption: BBGW
 
-   reST
-   Test
    Hardware
    Software
    U-Boot
    ALARM
+
+.. toctree::
+   :maxdepth: 1
+   :caption: MISC
+
+   820G3
+   Archiso
+   Cheatsheet
+   Clash
+   Framebuffer
    Future
    GPU_hang
-   PkgMgmt
-   820G3
-   Cheatsheet
-   Framebuffer
-   Archiso
    Holonews
-   Router
-   Clash
    iOS
-   hr
+   PkgMgmt
+   reST
+   Router
+   Test
+
 
 Indices and tables
 ==================
