@@ -7,13 +7,13 @@ Cheatsheet
 Bash
 ====
 
+.. highlight:: bash
+
 WIP move everything from :file:`~/cheatsheet.sh`
 
 `sysfs <https://www.kernel.org/doc/html/latest/filesystems/sysfs.html>`__ kernal doc - :manpage:`sysfs(5)`
 
-assertion or error handling
-
-.. code:: bash
+assertion or error handling ::
 
    # trap 'echo "SIGINT"; exit 0' SIGINT
    [ ] || { notify-send "${BASH_SOURCE[0]}" "${FUNCNAME[0]}${LF}line ${BASH_LINENO[0]}"; return 1; }
@@ -21,7 +21,7 @@ assertion or error handling
    [ ] || { echo "${BASH_SOURCE[0]}:$LINENO:${FUNCNAME[0]}: err"; exit 1; }
    # ${BASH_COMMAND}
 
-.. code:: bash
+::
 
    [ ] || @ABRTEXIT@
    [ ] || @ABRTRET@
@@ -43,15 +43,11 @@ when you have no choice but to pass executable as ``$1``
    $ /usr/lib/ld-linux-x86-64.so.2 "$(which uname)" -r
    Linux
 
-change terminal emulator title
-
-.. code:: bash
+change terminal emulator title ::
 
    printf "\033]0;TITLE\007"
 
-horizontal separator ruler / transition line / <hr>
-
-.. code:: bash
+horizontal separator ruler / transition line / <hr> ::
 
    for _ in $(seq 1 "$(tput cols)"); do
      echo -n '-'
@@ -60,18 +56,16 @@ horizontal separator ruler / transition line / <hr>
    unset -v _
 
 | :manpage:`console_codes(4)`
-| |:red_circle:|
-| :file:`printf "\\n\\e[31m%s\\e[0m\\n\\n" "  err"`
-| |:green_circle:|
-| :file:`printf "\\n\\e[32m%s\\e[0m\\n\\n" "  ok"`
-| |:brown_circle:|
-| :file:`printf "\\n\\e[33m%s\\e[0m\\n\\n" "  warning"`
-| |:blue_circle:|
-| :file:`printf "\\n\\e[34m%s\\e[0m\\n\\n" "  info"`
+| |:red_circle:| :
+| ``printf "\n\e[31m  %s\e[0m\n\n" "err"``
+| |:green_circle:| :
+| ``printf "\n\e[32m  %s\e[0m\n\n" "ok"``
+| |:brown_circle:| :
+| ``printf "\n\e[33m  %s\e[0m\n\n" "warning"``
+| |:blue_circle:| :
+| ``printf "\n\e[34m  %s\e[0m\n\n" "info"``
 
-zip archive mojibake
-
-.. code:: bash
+zip archive mojibake ::
 
    unzip -O sjis SHIFTJIS.ZIP
    unzip -O cp936 GBK.ZIP
@@ -113,9 +107,7 @@ reverse video time stamp ::
      | sed -E -e 's/^([^:]+):(.+)$/\1:\n  \2\n/g' \
      | less -F +X -S
 
-`How to read the whole shell script before executing it? <https://unix.stackexchange.com/q/331837/>`__
-
-.. code:: bash
+`How to read the whole shell script before executing it? <https://unix.stackexchange.com/q/331837/>`__ ::
 
    #!/bin/bash
    function main {
@@ -124,7 +116,7 @@ reverse video time stamp ::
    }
    main "$@"; exit
 
-.. code:: bash
+::
 
    #!/bin/bash
    {
@@ -132,9 +124,7 @@ reverse video time stamp ::
       bar
    }; exit
 
-test symbolic link
-
-.. code:: bash
+test symbolic link ::
 
    echo
    cd /tmp
@@ -184,6 +174,8 @@ test symbolic link
 C
 ===
 
+.. highlight:: C
+
 WIP move everything from :file:`~/cheatsheet.c`
 
 :wp:`C11 extensions <C11_(C_standard_revision)#Changes_from_C99>`
@@ -195,22 +187,16 @@ WIP move everything from :file:`~/cheatsheet.c`
 | gcc `-fanalyzer <https://developers.redhat.com/blog/2020/03/26/static-analysis-in-gcc-10>`__
 | `splint <https://github.com/splintchecker/splint>`__
 
-compile flags
-
-.. code:: text
+compile flags ::
 
    -std=gnu11 -g -O0 -Wextra -Wall -Winline -Wshadow -fanalyzer
 
-stringify macro
-
-.. code:: C
+stringify macro ::
 
    #define STR0(x) #x
    #define STR(x) STR0(x)
 
-range-based for loop macro
-
-.. code:: C
+range-based for loop macro ::
 
    #define for_range_int(var,range) for(size_t var=0;var<sizeof(range)/sizeof(int);++var)
    int arr[]={19,89,6,4}
@@ -219,9 +205,7 @@ range-based for loop macro
    }
    puts("");
 
-instant linked list
-
-.. code:: C
+instant linked list ::
 
    typedef struct _Node{
      int ele;
@@ -235,17 +219,12 @@ instant linked list
    ).next=(Node){3,M}
    ).next=(Node){4,M};
 
-eprintf macro
-
-.. code:: C
+eprintf macro ::
 
    #define eprintf(...) fprintf(stderr,__VA_ARGS__)
 
-lambda macro
+lambda macro ::
 
-.. code:: C
-
-   
    #define LAMBDA(X) ({ X f;})
    g_array_sort(edges,LAMBDA(gint f(const void *x,const void *y){
      return ((Edge*)x)->weight - ((Edge*)y)->weight ;
@@ -255,27 +234,196 @@ lambda macro
 Git
 ===
 
-convert shallow clone to full
+.. highlight:: bash
 
-.. code:: bash
+convert shallow clone to full ::
 
    git clone --depth=1 https://github.com/libgit2/libgit2
    cd libgit2
    git fetch --unshallow
 
-`drop changes from staging area <https://stackoverflow.com/q/66465810#comment121377736_66470532>`__
-
-.. code:: bash
+`drop changes from staging area <https://stackoverflow.com/q/66465810#comment121377736_66470532>`__ ::
 
    git restore -SW -- FILE
 
+diff
+
+.. table::
+   :align: left
+   :widths: auto
+
+   +-------------+----------+---------------------------------------+
+   | worktree vs | commit   | :file:`git diff -R <commit>`          |
+   |             +----------+---------------------------------------+
+   |             | staging  | :file:`git diff -R`                   |
+   +-------------+----------+---------------------------------------+
+   | staging vs  | worktree | :file:`git diff`                      |
+   |             +----------+---------------------------------------+
+   |             | commit   | :file:`git diff -R --staged <commit>` |
+   +-------------+----------+---------------------------------------+
+   | commit vs   | staging  | :file:`git diff --staged <commit>`    |
+   |             +----------+---------------------------------------+
+   |             | worktree | :file:`git diff <commit>`             |
+   |             +----------+---------------------------------------+
+   |             | commit   | :file:`git diff <commit> <commit>`    |
+   +-------------+----------+---------------------------------------+
+
+submodules.full.oneshot ::
+
+   git clone --recurse-submodules URL
+
+submodules.full.2step ::
+
+   git clone URL
+   cd REPO
+   git submodule update --init --progress --recursive
+
+submodules.shallow.oneshot ::
+
+   git clone --depth 1 --recurse-submodules --shallow-submodules URL
+
+submodules.update ::
+
+   git submodule update --progress --depth 1
+   git submodule status --recursive
+
+delete remote branch
+
+.. code:: bash
+
+   git push -u origin ':main'
+
+Filter-Repo
+-----------
+
+.. warning::
+
+   | Once ``git filter-repo`` is run, any matched files are removed forever |:wastebasket:| |:fire:| |:put_litter_in_its_place:|
+   | For backing up locally, modify is easily and catastrophically `confused with <https://www.reddit.com/r/grammar/comments/39yc0i/>`__ orig,
+   |  |:o:| ``rm -rf modify; cp -a orig   modify``
+   |  |:x:| ``rm -rf orig;   cp -a modify orig`` |:radioactive:| |:boom:|
+   | Recommended SOP
+   |  1\. sync all branches, make sure local and remote are at the exact same state
+   |  2\. (remote) move repo to :file:`repo.private.archived`
+   |  3\. (remote) recreate blank repo
+   |  4\. (local) do the housekeeping
+   |  5\. (local) push to the recreated blank remote
+   |  6\. leave :file:`repo.private.archived` unattended for a sufficient period of time
+   | Benefits
+   |  |b| possible to recover from readonly :file:`repo.private.archived` at any time
+   |  |b| drops `blobs only accessible via their SHA-1 hashes in cached views <https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository>`__
+
+| `removing sensitive data from a repository <https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository>`__
+| `git tools - rewriting history <https://git-scm.com/book/en/v2/Git-Tools-Rewriting-History>`__
+
+| :manpage:`git-filter-branch(1)`
+| |b| recommended **against** in :manpage:`git-filter-branch(1)`
+| |b| ``-d /tmp``
+
+| `bfg-repo-cleaner <https://rtyley.github.io/bfg-repo-cleaner/>`__
+| |b| ask :pkg:`AUR/bfg` to rename to :pkg:`AUR/bfg-bin`
+| |b| create :pkg:`AUR/bfg` according to :pkg:`AUR/bfg-git`
+| |b| :aw:`scala` - `sbt <https://www.scala-sbt.org/>`__ - /`build.sbt <https://github.com/rtyley/bfg-repo-cleaner/blob/master/build.sbt>`__
+
+| :pkg:`community/git-filter-repo` - `github repo <https://github.com/newren/git-filter-repo>`__
+| |b| arch :manpage:`git-filter-repo(1)`
+| |b| official `git-filter-repo.1 <https://www.mankier.com/1/git-filter-repo>`__
+| |b| recommended in :manpage:`git-filter-branch(1)`
+| |b| `repo-filter vs bfg <https://github.com/newren/git-filter-repo/blob/main/Documentation/converting-from-bfg-repo-cleaner.md#deleting-files>`__
+| |b| `<https://git.github.io/rev_news/2019/08/21/edition-54/#an-introduction-to-git-filter-repo--written-by-elijah-newren>`__
+
+find deleted files ::
+
+   env COLUMNS=99 git --no-pager log --oneline --compact-summary --diff-filter='DTUXB' | grep Bin
+   env COLUMNS=99 git --no-pager log --oneline --stat            --diff-filter='DTUXB' | grep Bin
+   git log --oneline --stat --diff-filter='DTUXB'
+   git log --oneline --name-status --diff-filter='DTUXB'
+   git log --oneline --name-status --diff-filter='DRTUXB'
+   git log --oneline --name-status --diff-filter='DTUXB*'
+
+local fresh clone ::
+
+   cd /tmp
+   git clone --no-local PATH_TO_ORIG_REPO /tmp/REPO.filter
+   cd REPO.filter
+
+remove leftovers ::
+
+   rm -rfv .git/filter-repo
+
+analyze ::
+
+   git filter-repo --analyze
+   subl .git/filter-repo/analysis/path-deleted-sizes.txt
+   # subl .git/filter-repo/analysis/path-all-sizes.txt
+   # subl .git/filter-repo/analysis/extensions-deleted-sizes.txt
+   # subl .git/filter-repo/analysis/extensions-all-sizes.txt
+   # for i in .git/filter-repo/analysis/*; do
+   #    printf "\n  %s\n\n" "$i"
+   #    cat "$i"
+   # done
+
+| strip everything other than filenames from :file:`path-deleted-sizes.txt`
+| sort the filenames
+| paste to :manpage:`meld(1)`
+
+discard files from git history ::
+
+   git filter-repo --invert-paths \
+      --path-match Hentai.rst \
+      --path-match JLPT.rst \
+      --path-match Job.rst \
+      --use-base-name
+
+view change logs ::
+
+   for i in .git/filter-repo/*; do printf "\n  %s\n\n" "$i"; cat "$i"; done
+
+remove change logs ::
+
+   rm -rv .git/filter-repo
+
+gc ::
+
+   git gc --aggressive --prune=now
+
+analyze, strip and paste again, then compare in meld
+
+remove leftovers ::
+
+   rm -rfv .git/filter-repo
+
+add remote ::
+
+   git remote add origin "$(git -C PATH_TO_ORIG_REPO remote get-url origin)"
+   git remote -v
+
+force push, track all ::
+
+   git push -u origin --all
+
+check remote on web
+
+`quote <https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository>`__
+
+.. code:: text
+
+   make commits with sensitive data unreachable from any branches or tags in your GitHub repository
+   however ... may still be accessible ... clones or forks .. SHA-1 hashes in cached views[1] .. pull requests
+   [1]: https://github.com/Un1Gfn/sphinx.public/tree/[0-9a-z]{40}
+
+| to drop them from github, either
+| |b| delete and recreate repo, then adjust the default branch; or
+| |b| contact `GitHub Support <https://support.github.com/contact?tags=docs-generic>`__
+
+remove PATH_TO_ORIG_REPO
 
 ImageMagick
 ===========
 
-misc (please split this blob)
+.. highlight:: bash
 
-.. code:: bash
+misc (please split this blob) ::
 
    #!/dev/null
 
@@ -311,9 +459,7 @@ misc (please split this blob)
    https://truth.bahamut.com.tw/s01/201708/8148c7ea0e4fd05a31d1b39875709bf5.JPG?w=1000
    convert -define jpeg:size=401x696 Hiu-Fung_Wan.jpeg -thumbnail 401x401^ -gravity North -extent 401x401 Hiu-Fung_Wan.png
 
-crop and resize
-
-.. code:: bash
+crop and resize ::
 
    W=$((360*2))
    H=$((480*2))
@@ -331,29 +477,25 @@ crop and resize
 Makefile
 ========
 
+.. highlight:: Makefile
+
 `Appendix A Quick Reference <https://www.gnu.org/software/make/manual/html_node/Quick-Reference.html>`__
 
 `Special Built-in Target Names <https://www.gnu.org/software/make/manual/html_node/Special-Targets.html>`__
 
 `Functions for String Substitution and Analysis
-<https://www.gnu.org/software/make/manual/html_node/Text-Functions.html#Text-Functions>`__
-
-.. code:: Makefile
+<https://www.gnu.org/software/make/manual/html_node/Text-Functions.html#Text-Functions>`__ ::
 
    $(word 2,$^)
    $(filter-out $<,$^)
    $(filter-out $(word 3,$^),$^)
 
-recursively remove binary
+recursively remove binary ::
 
-.. code:: Makefile
-   
    clean:
    	find . -type f -a \( -name "*.o" -o -name "*.out" \) -exec rm -v {} \;
 
-`PlantUML <https://plantuml.com/>`__
-
-.. code:: Makefile
+`PlantUML <https://plantuml.com/>`__ ::
 
    clean:
    	@find .                                          \
@@ -381,6 +523,9 @@ recursively remove binary
 `MediaWiki`__
 =============
 
+.. No support for MediaWiki syntax in pygments
+.. highlight:: text
+
 .. __: https://www.mediawiki.org/
 
 `Manual:Date_formatting <https://www.mediawiki.org/wiki/Manual:Date_formatting>`__
@@ -389,19 +534,16 @@ recursively remove binary
 
 `zh_xx conversion <https://zh.wikipedia.org/wiki/Wikipedia:%E7%B9%81%E7%AE%80%E5%A4%84%E7%90%86>`__
 
-`force rename title <https://zh.wikipedia.org/wiki/Help:%E4%B8%AD%E6%96%87%E7%BB%B4%E5%9F%BA%E7%99%BE%E7%A7%91%E7%9A%84%E7%B9%81%E7%AE%80%E3%80%81%E5%9C%B0%E5%8C%BA%E8%AF%8D%E5%A4%84%E7%90%86#%E6%8E%A7%E5%88%B6%E8%87%AA%E5%8A%A8%E8%BD%AC%E6%8D%A2%E7%9A%84-{zh-cn:%E4%BB%A3%E7%A0%81;zh-tw:%E7%A8%8B%E5%BC%8F%E7%A2%BC}->`__
-
-.. WARNING: Pygments lexer name 'mediawiki' is not known
-.. code:: text
+`force rename title <https://zh.wikipedia.org/wiki/Help:%E4%B8%AD%E6%96%87%E7%BB%B4%E5%9F%BA%E7%99%BE%E7%A7%91%E7%9A%84%E7%B9%81%E7%AE%80%E3%80%81%E5%9C%B0%E5%8C%BA%E8%AF%8D%E5%A4%84%E7%90%86#%E6%8E%A7%E5%88%B6%E8%87%AA%E5%8A%A8%E8%BD%AC%E6%8D%A2%E7%9A%84-{zh-cn:%E4%BB%A3%E7%A0%81;zh-tw:%E7%A8%8B%E5%BC%8F%E7%A2%BC}->`__ ::
 
    -{T|New Title}-
 
 Verilog
 =======
 
-`assertion <https://stackoverflow.com/a/31302223>`__
+.. highlight:: verilog
 
-.. code:: verilog
+`assertion <https://stackoverflow.com/a/31302223>`__ ::
 
    `define assert(signal,value) \
    if(signal!==value)begin \
@@ -416,16 +558,12 @@ Verilog
      $finish();
    end
 
-timeout
-
-.. code:: verilog
+timeout ::
 
    initial begin #100 $finish;
 
-conditional VCD dump
+conditional VCD dump ::
 
-.. code:: verilog
-   
    `ifdef VCD
      initial begin
        $dumpfile(`VCD);

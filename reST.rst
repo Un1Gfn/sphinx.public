@@ -408,7 +408,31 @@ Syntax.\ `Directives`__\ :raw-html:`<br />`\ Block Elements
 .. note::
    note
 
-.. https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#transitions
+`showing code examples <https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html#showing-code-examples>`__
+
+.. highlight:: text
+
+::
+
+   echo "$((date))" >/dev/null
+
+.. code-block::
+   
+   echo "$((date))" >/dev/null
+
+.. literalinclude:: include/test.txt
+
+.. highlight:: bash
+
+::
+
+   echo "$((date))" >/dev/null
+
+.. code-block::
+   
+   echo "$((date))" >/dev/null
+
+.. literalinclude:: include/test.txt
 
 
 Reorder Footnotes
