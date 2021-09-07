@@ -43,9 +43,7 @@ extensions = [
     'sphinxemoji.sphinxemoji',
     'sphinxcontrib.youtube',        # /usr/lib/python3*/site-packages/sphinxcontrib/youtube/
     'sphinxcontrib.programoutput',  # https://pythonhosted.org/sphinxcontrib-programoutput/
-    'archlinux',
-    'xxlink',  # emlink stlink
-    'wikilink'  # wp:Wikipedia aw:ArchWiki
+    'myextension',
 ]
 
 # sphinxemoji_style = 'twemoji' # Too large

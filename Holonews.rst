@@ -10,9 +10,74 @@
 Misc
 ====
 
+in a new terminal ::
+
+   make -C ~/sphinx.public/
+
+in i3 scratchpad git terminal ::
+
+   # source ~/git.bashrc
+   cd ~/holonews
+   subl \
+      ~/sphinx.public/Holonews.rst \
+      ~/holonews/download.sh
+
 | filter by flair
 | |b| `EN Issue  <https://www.reddit.com/r/HoloNews/?f=flair_name:"EN%20Issue">`__
 | |b| `News Post <https://www.reddit.com/r/HoloNews/?f=flair_name:"News%20Post">`__
+
+| :manpage:`tree(1)`
+| :manpage:`vidir(1)`
+
+
+Download
+========
+
+::
+
+   cd ~
+   tree --charset=ascii -C holonews
+
+.. code:: text
+
+   holonews
+   |-- download.sh
+   |-- news
+   |   |-- 2021_0802_0808_p1pn6c
+   |   |   |-- 01.png
+   |   |   |-- [...]
+   |   |   |-- 2021_0802_0808_p1pn6c.pdf
+   |   |   `-- 20.png
+   |   |-- [...]
+   |-- special
+   |   |-- 2021_0818_p6rlkt_Live-Events-Special
+   |   |   |-- 01.png
+   |   |   |-- [...]
+   |   |   |-- 15.png
+   |   |   `-- 22021_0818_p6rlkt_Live-Events-Special.pdf
+   |   |-- 2021_0826_pbkt4a_HoloCouncil-Debut-Special
+   |   |   |-- 01.png
+   |   |   |-- [...]
+   |   |   |-- 18.png
+   |   |   `-- 2021_0826_pbkt4a_HoloCouncil-Debut-Special.pdf
+   |   |-- [...]
+   ... ... ...
+
+.. todo:: Adapt :file:`download.sh` to changes
+
+::
+
+   cd ~/holonews
+   source ~/proxy.bashrc
+   ./download.sh news    2021 0802 0808 p1pn6c
+   ./download.sh special 2021 0818      p6rlkt Live-Events-Special
+   ./download.sh special 2021 0826      pbkt4a HoloCouncil-Debut-Special
+
+
+Comment
+=======
+
+.. todo:: Adapt template to changes
 
 reddit comment template
 
@@ -39,21 +104,6 @@ reddit comment template
 ::
 
    reddit_comment_template 2021 0816 0822 pant15
-
-
-download.sh
-===========
-
-::
-
-   cd ~/holonews
-   source ~/proxy.bashrc
-
-.. code:: text
-
-   ./download.sh 2021 0802 0808 p1pn6c
-   ./download.sh 2021 0809 0815 p64ave
-   ./download.sh 2021 0816 0822 pant15
 
 
 Manually

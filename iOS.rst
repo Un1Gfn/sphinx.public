@@ -19,6 +19,58 @@ Misc
 |
 
 
+`checkra1n`__
+=============
+
+.. __: https://checkra.in/
+
+checksum ::
+
+   cd ~/ios
+   sha256sum -c - <<EOS
+   63282886157dd08079c8e41522fdc6d58cfecda783ea8cca79ffc1116f13c355  ./checkra1n_0.12.1
+   4bf2f7e1dd201eda7d6220350db666f507d6f70e07845b772926083a8a96cd2b  ./checkra1n_0.12.2
+   845bd19fb857e5546ba312e768ab42e8aeab7a34470b07f60a9892e92fe8273e  ./checkra1n_0.12.3
+   dac9968939ea6e6bfbdedeb41d7e2579c4711dc2c5083f91dced66ca397dc51d  ./checkra1n_0.12.4
+   EOS
+
+.. table::
+   :align: left
+   :widths: auto
+
+   =========== ===============================================================================
+    checkra1n   D20AP
+   =========== ===============================================================================
+    0.12.1      |:green_circle:|
+    0.12.2      :file:`Error getting passcode state (parsing error)`
+    0.12.3      :file:`Sorry, iPhone 8 (Global) is not supported on iOS 14.4.2 at this point`
+    0.12.4      :file:`Sorry, iPhone 8 (Global) is not supported on iOS 14.4.2 at this point`
+   =========== ===============================================================================
+
+
+ideviceinfo
+===========
+
+`gist <https://gist.github.com/adamawolf/3048717>`__ | theiphonewiki
+- :tw:`models`
+- :tw:`list of iPads`
+- :tw:`list of iPhones`
+
+:raw-html:`<details><summary><code>D20AP</code></summary>`
+
+.. literalinclude:: ../ios/ideviceinfo_D20AP
+   :language: text
+
+:raw-html:`</details>`
+
+:raw-html:`<details><summary><code>J96AP</code></summary>`
+
+.. literalinclude:: ../ios/ideviceinfo_J96AP
+   :language: text
+
+:raw-html:`</details>`
+
+
 `ifuse`__
 =========
 
@@ -122,7 +174,7 @@ unmount ::
 detatch idevice
 
 
-:wp:`HEIF <High_Efficiency_Image_File_Format>`/HEIC
+HEIC/:wp:`HEIF <High_Efficiency_Image_File_Format>`
 ===================================================
 
 .. warning::

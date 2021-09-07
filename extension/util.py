@@ -8,6 +8,7 @@ import sys  # sys.stderr
 import termcolor  # termcolor.colored
 import typing
 import urllib.parse  # urllib.parse.urlparse()
+import define
 
 
 # https://stackoverflow.com/questions/5067604/determine-function-name-from-within-that-function-without-using-traceback
@@ -61,11 +62,8 @@ def verifyapp(app: sphinx.application.Sphinx):
 
 
 def wikiprepend(n: str, t: str) -> str:
-    if   n == 'wp': t = "https://en.wikipedia.org/wiki/"    + t
-    elif n == 'aw': t = "https://wiki.archlinux.org/title/" + t
-    elif n == 'el': t = "https://elinux.org/"               + t
-    elif n == 'dw': t = "https://wiki.debian.org/"          + t
-    elif n == 'gw': t = "https://wiki.gentoo.org/wiki/"     + t
+    if n in define.wikiprepend_dict.keys():
+        t = define.wikiprepend_dict[n] + t
     else:
         assert re.match('^[a-z]{2}link$', n)
     _verifyurl(t)
