@@ -1,50 +1,43 @@
+MAKEFLAGS := $(MAKEFLAGS) --no-print-directory
+
 # https://serverfault.com/a/1042167
-SPHINXOPTS    ?=
-SPHINXBUILD   ?= sphinx-build
-SOURCEDIR     := $(realpath .)
 BUILDDIR      := /tmp/un1gfn.github.io
 LINK          := $(HOME)/cgi/cgi-tmp/$(shell basename $(BUILDDIR))
 LINK_REL      :=             cgi-tmp/$(shell basename $(BUILDDIR))
 IP            := $(shell ip -4 addr show wlp2s0 | awk '/inet / {print $$2}' | cut -d/ -f1)
-
-# .PHONY: default help clean html entr # make[1]: Nothing to be done for 'html'.
-.PHONY:   default help clean      entr
 
 # Don't run in parallel,
 # otherwise clean can remove newly-built pages because of race
 .NOTPARALLEL:
 default: clean lnk_and_httpd entr
 
-.SILENT: help
-help:
-	$(SPHINXBUILD) -M help "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
+# .SILENT: help
+# help:
+# 	sphinx-build -M help . "$(BUILDDIR)"
 
-# Recreate thing and never get 404,
-# since outputs are in a subdirectory below HTTP root
 clean:
-	# shopt -s dotglob; rm -rf "$(BUILDDIR)"/*
-	@rm -fv '$(LINK)'
-	rm -rf "$(BUILDDIR)"
+	@rm -fv $(LINK)
+	rm -rf $(BUILDDIR)
 
 .SILENT: entr
 entr:
 	echo
-	ls -d1 -- conf.py *.rst extension/* include/* rtd_linux/* | entr $(MAKE) html
+	ls -d1 -- conf.py *.rst extension/* include/* static/* | entr $(MAKE) html
 
 # Catch-all target: route all unknown targets to Sphinx using the new
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
 .SILENT: html
 html:
 %:
-	# $(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O) # $(BUILDDIR)/html
-	$(SPHINXBUILD) -b $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O) # $(BUILDDIR)
+	# sphinx-build -M $@ . "$(BUILDDIR)"
+	sphinx-build -b $@ . $(BUILDDIR)
 	[ -e "$(BUILDDIR)/.nojekyll" ]
 	echo
 	printf "  file://%s\n" "$(BUILDDIR)/index.html"
 	printf "  http://%s/%s/index.html\n" "$(IP)" "$(LINK_REL)"
 	echo
 
-# .SILENT: lnk_and_httpd
+.SILENT: lnk_and_httpd
 lnk_and_httpd:
 	mkdir -pv $(BUILDDIR)
 	if [ ! -e "$(LINK)" ] && [ ! -L "$(LINK)" ]; then ln -sv '$(BUILDDIR)' '$(LINK)'; fi

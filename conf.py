@@ -142,7 +142,7 @@ assert ('suppress_warnings' not in locals()) and ('suppress_warnings' not in glo
 
 import sphinx
 needs_sphinx = '4.1.2'
-assert (4, 1, 2) == sphinx.version_info[:3]
+# assert (4, 1, 2) == sphinx.version_info[:3]
 del sphinx
 
 # :manpage:`uname(1)`
@@ -174,6 +174,7 @@ html_theme = 'sphinx_rtd_theme'
 # https://stackoverflow.com/a/27767165
 # https://sphinx-rtd-theme.readthedocs.io/en/latest/configuring.html
 html_theme_options = {
+    'collapse_navigation': False,
     'navigation_depth': -1,
     # 'titles_only': True,
     'display_version': True,
@@ -186,13 +187,6 @@ html_theme_options = {
 # CNAME
 # html_baseurl = 'https://Un1Gfn.github.io/beaglebone'
 
-html_context = {'css_files': [
-    '_static/code.css',
-    '_static/narrow_nav.css',
-    '_static/problematic.css',
-    '_static/theme_overrides.css',
-]}
-
 # https://icon-icons.com/icon/chip-computer-hardware-memory-electronic-device/142017
 # html_logo = 'favicon.ico'
 html_favicon = 'favicon.ico'
@@ -200,7 +194,10 @@ html_favicon = 'favicon.ico'
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['rtd_linux']
+html_static_path = ['static']
+html_css_files = [
+    'css/custom.css',
+]
 
 # Mon Jul 26 21:12:31 WITA 2021
 html_last_updated_fmt = '%a %b %d %H:%M:%S WITA %Y'

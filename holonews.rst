@@ -29,9 +29,26 @@ in i3 scratchpad git terminal ::
 | :manpage:`tree(1)`
 | :manpage:`vidir(1)`
 
+| pdf thumbnail preview
+| |b| /usr/local/share/thumbnailers/imagemagick-pdf.thumbnailer [#pdfthumb]_
+| |b| :pr:`nautilus <- evince`
+
+| http
+| `filebrowser <https://github.com/filebrowser/filebrowser>`__ (go+vue) (`site <https://filebrowser.org/>`__)
+| `miniserve <https://github.com/svenstaro/miniserve>`__ (rust)
+|  ``sudo miniserve -D -g -H -l -q -r -v -z -i 192.168.0.223 -p 80 -- ~/cgi/``
+
+| disable delta compression
+| |b| `<https://confluence.atlassian.com/stashkb/how-to-disable-delta-compression-on-stash-server-for-a-particular-file-type-761242185.html>`__
+| |b| `<https://stackoverflow.com/questions/7102053/git-pull-without-remotely-compressing-objects>`__
+| |b| `<https://public-inbox.org/git/20100514051049.GF6075@coredump.intra.peff.net/>`__
+| |b| `<https://git-scm.com/docs/gitattributes>`__
+
 
 Download
 ========
+
+`YouTube Metadata <https://mattw.io/youtube-metadata/>`__
 
 ::
 
@@ -42,42 +59,30 @@ Download
 
    holonews
    |-- download.sh
-   |-- news
-   |   |-- 2021_0802_0808_p1pn6c
-   |   |   |-- 01.png
-   |   |   |-- [...]
-   |   |   |-- 2021_0802_0808_p1pn6c.pdf
-   |   |   `-- 20.png
-   |   |-- [...]
-   |-- special
-   |   |-- 2021_0818_p6rlkt_Live-Events-Special
-   |   |   |-- 01.png
-   |   |   |-- [...]
-   |   |   |-- 15.png
-   |   |   `-- 22021_0818_p6rlkt_Live-Events-Special.pdf
-   |   |-- 2021_0826_pbkt4a_HoloCouncil-Debut-Special
-   |   |   |-- 01.png
-   |   |   |-- [...]
-   |   |   |-- 18.png
-   |   |   `-- 2021_0826_pbkt4a_HoloCouncil-Debut-Special.pdf
-   |   |-- [...]
-   ... ... ...
-
-.. todo:: Adapt :file:`download.sh` to changes
+   |-- 20210802_20210808_p1pn6c_News.d
+   |-- 20210802_20210808_p1pn6c_News.pdf
+   |-- 20210809_20210815_p64ave_News.d
+   |-- 20210809_20210815_p64ave_News.pdf
+   |-- 20210809_20210816_p6rlkt_Special-Live-Events.d
+   |-- 20210809_20210816_p6rlkt_Special-Live-Events.pdf
+   |-- 20210816_20210822_pant15_News.d
+   |-- 20210816_20210822_pant15_News.pdf
+   |-- 20210822_20210823_pbkt4a_Special-HoloCouncil-Debut.d
+   |-- 20210822_20210823_pbkt4a_Special-HoloCouncil-Debut.pdf
+   |-- 20210823_20210829_pf7kx8_News.d
+   |-- 20210823_20210829_pf7kx8_News.pdf
+   |-- ...
 
 ::
 
-   cd ~/holonews
    source ~/proxy.bashrc
-   ./download.sh news    2021 0802 0808 p1pn6c
-   ./download.sh special 2021 0818      p6rlkt Live-Events-Special
-   ./download.sh special 2021 0826      pbkt4a HoloCouncil-Debut-Special
+   ~/holonews/holonews.sh 20210823 20210829 pf7kx8 News
+   ~/holonews/holonews.sh 20210809 20210816 p6rlkt Special-Live-Events
+   ~/holonews/holonews.sh 20210822 20210823 pbkt4a Special-HoloCouncil-Debut
 
 
 Comment
 =======
-
-.. todo:: Adapt template to changes
 
 reddit comment template
 
@@ -126,3 +131,9 @@ To download images from reddit/twitter post
 6. Copy all URLs (extension?)
 7. Construct wget oneliners with text editor, and add output filename
 8. Copy, paste to terminal, and execute
+
+
+Footnotes
+=========
+
+.. [#pdfthumb] :aw:`file manager functionality#Use_PCManFM_to_get_thumbnails_for_other_file_types`

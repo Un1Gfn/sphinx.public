@@ -55,7 +55,7 @@ def hint(*argv):
 
 
 def verifyapp(app: sphinx.application.Sphinx):
-    assert sphinx.version_info == (4, 1, 2, 'final', 0)
+    # assert sphinx.version_info == (4, 1, 2, 'final', 0)
     assert type(app) == sphinx.application.Sphinx
     # https://www.sphinx-doc.org/en/master/_modules/sphinx/application.html
     app.require_sphinx(version='4.1')

@@ -1,0 +1,26 @@
+/*https://docs.readthedocs.io/en/stable/guides/adding-custom-css.html*/
+
+/*https://www.w3schools.com/cssref/css3_pr_mediaquery.asp*/
+/*@media only screen and (min-width: 480px){*/
+@media only screen and (min-width: 720px){
+  .wy-nav-content { max-width: none; }
+  /*https://www.w3schools.com/css/css3_variables.asp*/
+  /*https://www.w3schools.com/cssref/func_calc.asp*/
+  :root { --narrow: 200px; }
+  .wy-nav-content-wrap { margin-left: var(--narrow); }
+  .wy-nav-side, .wy-side-nav-search, .wy-menu.wy-menu-vertical { width: var(--narrow); }
+  .wy-side-scroll { width: calc(var(--narrow) + 20px); }
+}
+
+
+span.problematic { text-decoration: line-through; }
+
+code.docutils.literal.notranslate:not(.file) { background-color: #f0f0f0!important; }
+
+/* https://stackoverflow.com/a/16552398 */
+code.docutils.literal.notranslate:not(.file):before,
+code.docutils.literal.notranslate:not(.file):after {
+  content: "\00a0 ";
+}
+
+/** { display: none; }*/
