@@ -1,8 +1,8 @@
 .. include:: include/substitution.txt
 
-==========
-|ico| reST
-==========
+==============
+|ico| Docutils
+==============
 
 .. image:: https://img.shields.io/badge/%F0%9F%9B%A1%EF%B8%8F-shield-success
    :target: https://shields.io/
@@ -27,8 +27,6 @@ Contacts
 Readings
 ========
 
-`awesome-sphinxdoc <https://github.com/yoloseem/awesome-sphinxdoc>`__
-
 .. | |b| ` <>`__
 
 | Tutorials from `Docutils`_
@@ -37,17 +35,8 @@ Readings
 | |b| `reStructuredText Cheat Sheet <https://docutils.sourceforge.io/docs/user/rst/cheatsheet.txt>`__
 | |b| `Docutils FAQ <https://docutils.sourceforge.io/FAQ.html>`__
 
-| Tutorials from `Sphinx`_
-| |b| `Getting Started <https://www.sphinx-doc.org/en/master/usage/quickstart.html>`__
-| |b| `reStructuredText <https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html>`__
-| |b| `reStructuredText Primer <https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html>`__
-| |b| `Sphinx tutorial <https://www.sphinx-doc.org/en/master/tutorial/index.html>`__
-
 | Tutorials from others
-| |b| `Read the Docs - Getting Started with Sphinx <https://docs.readthedocs.io/en/stable/intro/getting-started-with-sphinx.html>`__
-| |b| `TYPO3 - Writing documentation <https://docs.typo3.org/m/typo3/docs-how-to-document/master/en-us/Index.html>`__
 | |b| `Publishing sphinx-generated docs on github <https://daler.github.io/sphinxdoc-test/includeme.html>`__
-| |b| `RST | Sphinx | Sublime | GitHub <https://sublime-and-sphinx-guide.readthedocs.io/en/latest/index.html>`__
 | |b| `Sampledoc <https://matplotlib.org/sampledoc/>`__
 | |b| `Sample reStructuredText PEP Template <https://www.python.org/dev/peps/pep-0012/>`__
 
@@ -56,58 +45,6 @@ Readings
 | |b| `reStructuredText Interpreted Text Roles <https://docutils.sourceforge.io/docs/ref/rst/roles.html>`__
 | |b| `reStructuredText Directives <https://docutils.sourceforge.io/docs/ref/rst/directives.html>`__
 
-| Documentations from `Sphinx`_
-| |b| `Sphinx documentation <https://www.sphinx-doc.org/en/master/contents.html>`__
-| |b| `Roles <https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html>`__
-| |b| `Directives <https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html>`__
-| |b| `Domains <https://www.sphinx-doc.org/en/master/usage/restructuredtext/domains.html>`__
-
-
-`Extensions`__
-==============
-
-.. __: https://www.sphinx-doc.org/en/master/usage/extensions/index.html
-
-`The Python Language Reference <https://docs.python.org/3/reference/>`__ -
-:wp:`BNF <Backus–Naur_form>`
-
-| `sphinx-toolbox <https://github.com/sphinx-toolbox/sphinx-toolbox>`__
-
-| `sphinx.ext.todo <https://www.sphinx-doc.org/en/master/usage/extensions/todo.html>`__
-| `sphinxcontrib-emojicodes <https://github.com/sphinx-contrib/emojicodes>`__
-
-| `sphinx.ext.ifconfig <https://www.sphinx-doc.org/en/master/usage/extensions/ifconfig.html>`__
-| `sphinx.ext.graphviz <https://www.sphinx-doc.org/en/master/usage/extensions/graphviz.html>`__
-| `sphinxcontrib-plantuml <https://github.com/sphinx-contrib/plantuml>`__
-| `sphinxcontrib-tikz <https://github.com/sphinx-contrib/tikz>`__
-
-| `sphinxcontrib-video <https://github.com/sphinx-contrib/video>`__
-| `sphinxcontrib-youtube <https://github.com/sphinx-contrib/youtube>`__
-
-| `sphinxcontrib-doxylink <https://github.com/sphinx-contrib/doxylink>`__
-| `sphinxcontrib-examplecode <https://github.com/sphinx-contrib/examplecode>`__
-
-| Create [#]_ [#]_ [#]_ [#]_ [#]_ [#]_ [#]_ an `extension`__
-| |b| Define a custom role ``:emlink:``, similar to `\:download\:`__
-| |b| Render |emlink_role| to |emlink_html|
-| |b| Post to `SO/q/9645321`__
-
-.. |emlink_role| replace:: :code:`:emlink:`x <y>``
-.. |emlink_html| replace:: :code:`<em><a style="font-style:italic;" href="y">x</em>`
-
-.. __: https://www.sphinx-doc.org/en/master/usage/extensions/index.html
-.. __: https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html#role-download
-.. __: https://stackoverflow.com/questions/9645321/insert-a-link-into-bold-text-in-restructuredtext
-
-.. https://stackoverflow.com/q/44376893/selectively-disable-readthedocs-syntax-highlighting
-
-.. code:: text
-
-   :raw-html:`<a style="font-style:italic;" href="([^"]+)">([^<]+)</a>`
-   :emlink:`\2 <\1>`
-
-`extend the HTML writer to produce a proper <del> tag <https://stackoverflow.com/a/62493316/>`__
-
 
 Misc
 ====
@@ -115,8 +52,6 @@ Misc
 Ongoing Transition from GitHub Flavored Markdown to reStructuredText ...
 
 `Open links in new window <https://stackoverflow.com/a/57733265>`__
-
-:download:`Sphinx Favicon (SVG)<https://raw.githubusercontent.com/sphinx-doc/sphinx/master/doc/_static/favicon.svg>`.
 
 `live reST online <http://rst.ninjs.org>`__
 
@@ -127,15 +62,6 @@ Ongoing Transition from GitHub Flavored Markdown to reStructuredText ...
 | |b| :tree:`substitution.txt`
 | |b| `<http://www.amp-what.com/>`__
 | |b| `<https://www.toptal.com/designers/>`__
-
-| rtd_linux
-| |b| `conf.py`__
-| |b| `theme_overrides.css`__
-| |b| `Specific guidelines for the kernel documentation`__
-
-.. __: https://github.com/torvalds/linux/blob/master/Documentation/conf.py
-.. __: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/sphinx-static/theme_overrides.css
-.. __: https://www.kernel.org/doc/html/latest/doc-guide/sphinx.html#specific-guidelines-for-the-kernel-documentation
 
 that damn hr
 
@@ -197,28 +123,6 @@ h9 ?
 .. = - ` : ' " ~ ^ _ * + # < >
 
 |
-
-
-Building
-========
-
-| Build to ``~/beaglebone.gh-pages`` and push to ``gh-pages`` branch
-| |b| `GitHub Pages with Python Sphinx <https://www.docslikecode.com/articles/github-pages-python-sphinx>`__
-| |b| `sphinx.ext.githubpages <https://www.sphinx-doc.org/en/master/usage/extensions/githubpages.html>`__
-
-.. conf.py .. highlight_language = 'bash'
-
-.. code::
-
-   cd ~/beaglebone/Documentation
-   sphinx-quickstart
-
-`sphinx-build(1) <https://www.sphinx-doc.org/en/master/man/sphinx-build.html>`__
-
-.. code:: bash
-
-   cd ~/beaglebone/Documentation
-   make clean; make --no-print-directory entr
 
 
 Syntax.Others
@@ -310,9 +214,6 @@ Syntax.\ `Roles`__\ :raw-html:`<br />`\ Inline Elements
 
 .. __: https://docutils.sourceforge.io/docs/ref/rst/roles.html
 
-| :emlink:`Cross-reference manpage <https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-manpages_url>`
-| Man page of :manpage:`uname(1)`
-
 | :emlink:`Implicit Hyperlink Target <https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#implicit-hyperlink-targets>`
 | Go to `Misc`_
 | Go to `#Misc`_
@@ -372,69 +273,6 @@ raw html style :raw-html:`<span style="text-align: center; color: green;">green<
   \[\*\]\_ [*]_
 
 
-Syntax.\ `Directives`__\ :raw-html:`<br />`\ Block Elements
-===========================================================
-
-.. __: https://docutils.sourceforge.io/docs/ref/rst/directives.html
-
-`Admonitions <https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html#directives>`__
-
-.. | `directives`_ - block elements
-
-.. danger::
-   danger
-
-.. error::
-   error
-
-.. warning::
-   warning
-
-.. caution::
-   caution
-
-.. attention::
-   attention
-
-.. important::
-   important
-
-.. hint::
-   hint
-
-.. tip::
-   tip
-
-.. note::
-   note
-
-`showing code examples <https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html#showing-code-examples>`__
-
-.. highlight:: text
-
-::
-
-   echo "$((date))" >/dev/null
-
-.. code-block::
-   
-   echo "$((date))" >/dev/null
-
-.. literalinclude:: include/test.txt
-
-.. highlight:: bash
-
-::
-
-   echo "$((date))" >/dev/null
-
-.. code-block::
-   
-   echo "$((date))" >/dev/null
-
-.. literalinclude:: include/test.txt
-
-
 Reorder Footnotes
 =================
 
@@ -467,14 +305,6 @@ Reorder Footnotes
 .. __: https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#footnotes
 
 ----
-
-.. [#] https://www.sphinx-doc.org/en/master/extdev/index.html
-.. [#] https://www.sphinx-doc.org/en/master/extdev/appapi.html
-.. [#] https://www.sphinx-doc.org/en/master/extdev/markupapi.html
-.. [#] https://www.sphinx-doc.org/en/master/development/index.html
-.. [#] https://docutils.sourceforge.io/docs/howto/rst-roles.html
-.. [#] https://protips.readthedocs.io/link-roles.html
-.. [#] https://doughellmann.com/posts/defining-custom-roles-in-sphinx/
 
 .. [#] https://docutils.sourceforge.io/docs/user/rst/quickref.html#indirect-hyperlink-targets
 

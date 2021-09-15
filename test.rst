@@ -5,6 +5,24 @@
 |ico| Test
 ==========
 
+
+Test
+====
+
+.. highlight:: bash
+
+:pr:`problematic`
+
+``ls -al``
+
+:file:`file`
+
+
+:kbd:`<key>`
+
+normal
+
+
 Tmp
 ===
 
@@ -31,11 +49,8 @@ Tmp
 
    sudo tree -a -I 'ca-certificates|certs' -F -C
 
-
-
-
-
 :raw-html:`<br /><br />`
+
 
 Extension Showcase
 ==================

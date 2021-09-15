@@ -32,30 +32,36 @@ ico
    test_page.rst -> test_page
 .. toctree::
    :maxdepth: 0
+   :caption: RESTRUCTUREDTEXT
+
+   docutils
+   sphinx
+   test
+
+.. toctree::
+   :maxdepth: 0
    :caption: BBGW
 
-   Hardware
-   Software
-   U-Boot
-   ALARM
+   hardware
+   software
+   u-boot
+   alarm
 
 .. toctree::
    :maxdepth: 1
    :caption: MISC
 
-   820G3
-   Archiso
-   Cheatsheet
-   Clash
-   Framebuffer
-   Future
-   GPU_hang
-   Holonews
-   iOS
-   PkgMgmt
-   reST
-   Router
-   Test
+   820g3
+   archiso
+   cheatsheet
+   clash
+   framebuffer
+   future
+   gpu_hang
+   holonews
+   ios
+   pkgmgmt
+   router
 
 
 Indices and tables

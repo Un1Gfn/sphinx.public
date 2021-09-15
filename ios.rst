@@ -38,14 +38,14 @@ checksum ::
    :align: left
    :widths: auto
 
-   =========== ===============================================================================
-    checkra1n   D20AP
-   =========== ===============================================================================
-    0.12.1      |:green_circle:|
-    0.12.2      :file:`Error getting passcode state (parsing error)`
-    0.12.3      :file:`Sorry, iPhone 8 (Global) is not supported on iOS 14.4.2 at this point`
-    0.12.4      :file:`Sorry, iPhone 8 (Global) is not supported on iOS 14.4.2 at this point`
-   =========== ===============================================================================
+   =========== ============================================================== ==========================================================================================
+    checkra1n   J96AP                                                          D20AP                                                                                    
+   =========== ============================================================== ==========================================================================================
+    0.12.1                                                                     |:green_circle:|                                                                         
+    0.12.2                                                                     |:x:|\ |br|:file:`Error getting passcode state (parsing error)`                          
+    0.12.3                                                                     |:x:|\ |br|:file:`Sorry, iPhone 8 (Global) is not supported on iOS 14.4.2 at this point` 
+    0.12.4      |:green_circle:|\ |br|:file:`USBMUX Error (Error code: -92)`   |:x:|\ |br|:file:`Sorry, iPhone 8 (Global) is not supported on iOS 14.4.2 at this point` 
+   =========== ============================================================== ==========================================================================================
 
 
 ideviceinfo
