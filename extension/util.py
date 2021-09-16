@@ -175,7 +175,7 @@ def pr_fn(
 
     root = docutils.nodes.problematic(rawsource=rawtext, text='')
 
-    root += docutils.nodes.literal(rawsource=rawtext, text=docutils.nodes.unescape(text)) if name == 'prlt' else (
+    root += docutils.nodes.literal(rawsource=rawtext, text=docutils.nodes.unescape(text)) if name in [ 'ltpr', 'prlt' ] else (
             None)
 
     return [root], []

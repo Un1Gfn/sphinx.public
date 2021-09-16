@@ -48,18 +48,27 @@ ico
    alarm
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 0
+   :caption: NETWORK
+
+   clash
+   http_ws
+
+.. toctree::
+   :maxdepth: 0
    :caption: MISC
 
+   todo
    820g3
    archiso
+   bash
    cheatsheet
-   clash
+   chrome
    framebuffer
-   future
    gpu_hang
    holonews
    ios
+   music
    pkgmgmt
    router
 

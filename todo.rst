@@ -1,8 +1,23 @@
 .. include:: include/substitution.txt
 
-============
-|ico| Future
-============
+=============
+Todo |:memo:|
+=============
+
+:raw-html:`<details><summary>emoji</summary>`
+
+| |:bookmark_tabs:| |:book:|
+| |:notebook:| |:notebook_with_decorative_cover:|
+| |:notepad_spiral:| |:spiral_note_pad:| |:spiral_notepad:|
+| |:orange_book:| |:closed_book:| |:green_book:| |:blue_book:|
+| |:pencil:| |:memo:|
+
+:raw-html:`</details>`
+
+`aws ec2 <https://console.aws.amazon.com/ec2>`__
++ `certbot <https://certbot.eff.org/>`__
++ `letsencrypt <https://letsencrypt.org/>`__
++ `no-ip <https://www.noip.com/>`__
 
 Buildroot Linux on Lattice ECP5 via yosys+prjtrellis+nextpnr
 

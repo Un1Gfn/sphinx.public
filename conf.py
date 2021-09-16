@@ -36,6 +36,7 @@ copyright += author
 # https://www.sphinx-doc.org/en/master/usage/extensions/index.html
 extensions = [
     # 'sphinx.ext.duration',
+    'sphinx.ext.autosectionlabel',
     'sphinx.ext.extlinks',
     'sphinx.ext.githubpages',       # https://www.sphinx-doc.org/en/master/usage/extensions/githubpages.html
     'sphinx.ext.todo',
@@ -45,7 +46,9 @@ extensions = [
     'myextension',
 ]
 
-# sphinxemoji_style = 'twemoji' # Too large
+# https://www.sphinx-doc.org/en/master/usage/extensions/autosectionlabel.html
+autosectionlabel_prefix_document = True
+autosectionlabel_maxdepth = 2
 
 # https://www.sphinx-doc.org/en/master/usage/extensions/extlinks.html#confval-extlinks
 extlinks = {
@@ -83,6 +86,8 @@ extlinks = {
 # https://www.sphinx-doc.org/en/master/usage/extensions/todo.html#configuration
 todo_include_todos = True
 todo_emit_warnings = True
+
+# sphinxemoji_style = 'twemoji' # Too large
 
 source_suffix = {'.rst': 'restructuredtext'}
 

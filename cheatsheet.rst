@@ -7,6 +7,8 @@ Cheatsheet
 Bash
 ====
 
+|:link:| :doc:`bash`
+
 .. highlight:: bash
 
 WIP move everything from :file:`~/cheatsheet.sh`
@@ -69,21 +71,6 @@ zip archive mojibake ::
 
    unzip -O sjis SHIFTJIS.ZIP
    unzip -O cp936 GBK.ZIP
-
-`fd abuse HTTP <https://unix.stackexchange.com/q/436200#comment788048_436200>`__ ::
-
-   { \
-      echo -e "GET / HTTP/1.0\r\nHost: www.example.com\r\n\r" >&3; \
-      cat <&3 ; \
-   } 3<> /dev/tcp/www.example.org/80
-
-:aw:`fd abuse tcping <NFS#Automatic_mount_handling>` ::
-
-   if timeout 1 bash -c ": < /dev/tcp/${SERVER}/80"; then
-      printf "\n\e[32m  %s\e[0m\n\n" "reached"
-   else
-      printf "\n\e[31m  %s\e[0m\n\n" "timeout"
-   fi
 
 `process tree better than pstree <https://unix.stackexchange.com/a/436579>`__ ::
 

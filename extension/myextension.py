@@ -36,6 +36,7 @@ def setup(app: sphinx.application.Sphinx):
     ]: app.add_role(name=n, role=util.link_fn, override=False)
 
     for n in [
+        'ltpr',
         'prlt',
     ]: app.add_role(name=n, role=util.pr_fn, override=False)
 

@@ -106,6 +106,16 @@ Building
    make clean; make --no-print-directory entr
 
 
+Doctree
+=======
+
+`pickle <https://docs.python.org/3/library/pickle.html>`__
+
+list all labels ::
+
+   ./label.py | grep -i devtools
+
+
 Syntax.Roles\ :raw-html:`<br />`\ Inline Elements
 =================================================
 
@@ -118,7 +128,11 @@ Syntax.\ `Directives`__\ :raw-html:`<br />`\ Block Elements
 
 .. __: https://docutils.sourceforge.io/docs/ref/rst/directives.html
 
-`Admonitions <https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html#directives>`__
+
+`Admonitions`__
+---------------
+
+.. __: https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html#directives
 
 .. | `directives`_ - block elements
 
@@ -149,7 +163,16 @@ Syntax.\ `Directives`__\ :raw-html:`<br />`\ Block Elements
 .. note::
    note
 
-`showing code examples <https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html#showing-code-examples>`__
+`Showing Code Examples`__
+-------------------------
+
+.. __: https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html#showing-code-examples
+
+| |b| `.. highlight::      <https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html#directive-highlight>`__
+| |b| `.. code-block::     <https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html#directive-code-block>`__
+|     `:emphasize-lines:   <https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html#directive-option-code-block-emphasize-lines>`__
+|     `:caption:           <https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html#directive-option-code-block-caption>`__
+| |b| `.. literalinclude:: <https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html#directive-literalinclude>`__
 
 .. highlight:: text
 
