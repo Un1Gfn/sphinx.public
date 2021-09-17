@@ -55,12 +55,12 @@ buildroot - `build beaglebone+am335x-evm image <https://git.busybox.net/buildroo
    :align: left
    :widths: auto
 
-   ================ ================= ============
-    File             `Use Case`__      `Header`__
-   ================ ================= ============
-    u-boot-spl.bin   peripheral boot   520 bytes
-    MLO\ [#]_        `MMC loader`__
-   ================ ================= ============
+   =================================== ================= ================
+    File                                `Use Case`__      `Header`__     
+   =================================== ================= ================
+    u-boot-spl.bin                      peripheral boot   520 bytes      
+    :abbr:`MLO (Memory LOader)`\ [#]_                     `MMC loader`__ 
+   =================================== ================= ================
 
 .. __: https://e2e.ti.com/support/processors/f/processors-forum/367260/what-is-the-difference-between-mlo-and-spl
 .. __: https://stackoverflow.com/a/60880147

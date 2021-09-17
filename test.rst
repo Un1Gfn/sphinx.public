@@ -9,18 +9,23 @@
 Test
 ====
 
-.. highlight:: bash
+| :file:`/sys/proc/{foo}/{bar}/api`
+| :samp:`print 1+{variable}`
+| :regexp:`[_a-zA-Z][_0-9a-zA-Z]*`
+| :code:`print 1+$var`
+| ``print 1+$var``
 
-:pr:`problematic`
+| :command:`abc abcde`
+| :program:`abc abcde`
+| :program:`abc abcde`
+| :makevar:`abc abcde`
 
-``ls -al``
+| :guilabel:`Save e&xit`
+| :guilabel:`&Cancel`
+| :menuselection:`Start --> Pro&grams`
 
-:file:`file`
 
-
-:kbd:`<key>`
-
-normal
+|today|
 
 
 Tmp

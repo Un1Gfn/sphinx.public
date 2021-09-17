@@ -30,7 +30,9 @@ Misc
 | ``wss://`` (WebSocket Secure)
 
 | bash
-|  [#40907888]_
+|  \
+   [#40907888]_ |vv|
+   `tldp <https://tldp.org/LDP/abs/html/devref1.html>`__
 | curl
 |  \
    `gist <https://gist.github.com/htp/fbce19069187ec1cc486b594104f01d0>`__ |vv|
