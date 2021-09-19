@@ -470,6 +470,33 @@ Makefile
 
 `Special Built-in Target Names <https://www.gnu.org/software/make/manual/html_node/Special-Targets.html>`__
 
+| `Automatic Variables <https://www.gnu.org/software/make/manual/html_node/Automatic-Variables.html>`__
+| \
+  :makevar:`$@`
+  :makevar:`$<`
+  :makevar:`$^`
+  :makevar:`$(@D)`
+  :makevar:`$(<D)`
+  :makevar:`$(^D)`
+  :makevar:`$(@F)`
+  :makevar:`$(<F)`
+  :makevar:`$(^F)`
+| \
+  :makevar:`$%`
+  :makevar:`$?`
+  :makevar:`$+`
+  :makevar:`$*`
+  :makevar:`$(%D)`
+  :makevar:`$(?D)`
+  :makevar:`$(+D)`
+  :makevar:`$(*D)`
+  :makevar:`$(%F)`
+  :makevar:`$(?F)`
+  :makevar:`$(+F)`
+  :makevar:`$(*F)`
+| \
+  :makevar:`$|`
+
 `Functions for String Substitution and Analysis
 <https://www.gnu.org/software/make/manual/html_node/Text-Functions.html#Text-Functions>`__ ::
 

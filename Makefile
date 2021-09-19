@@ -27,6 +27,7 @@ clean:
 
 .SILENT: entr
 entr:
+	@printf "\e]0;%s\a" $(shell basename $(shell pwd))
 	echo
 	ls -d1 -- conf.py *.rst extension/* include/* static/* | entr $(MAKE) html
 
