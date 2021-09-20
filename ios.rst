@@ -39,7 +39,7 @@ checksum ::
    :widths: auto
 
    =========== ============================================================== ==========================================================================================
-    checkra1n   J96AP                                                          D20AP                                                                                    
+    checkra1n   :tiw:`J96AP`                                                   :tiw:`D20AP`                                                                             
    =========== ============================================================== ==========================================================================================
     0.12.1                                                                     |:green_circle:|                                                                         
     0.12.2                                                                     |:x:|\ |br|:file:`Error getting passcode state (parsing error)`                          
@@ -207,3 +207,67 @@ based on :wp:`HEVC <High_Efficiency_Video_Coding>` (H.265) (MPEG-H Part 2)
 | |b| :manpage:`ffmpeg(1)`
 | |b| :manpage:`heif-info(1)` :manpage:`heif-convert(1)`
 | |b| :pkg:`AUR/tifig-git` :pkg:`AUR/tifig-bin` :pr:`AUR/tifig`
+
+
+`RebornAgain`__
+===============
+
+.. __: https://altcatalog.meghrathod.tech/
+
+version
+- `1.5   <https://www.reddit.com/r/sideloaded/comments/p9ml5f/>`__
+- `1.6.1 <https://www.reddit.com/r/sideloaded/comments/pfgxpd/>`__
+- `1.7   <https://www.reddit.com/r/sideloaded/comments/pjttfj/>`__
+
+:`uYou <https://www.reddit.com/user/MiRO92/posts/>`__:
+   (`readme <https://github.com/MiRO92/uYou-for-YouTube>`__)
+   download remove_ad background_play
+   (proprietrary)
+
+:`iSponsorBlock <https://github.com/Galactic-Dev/iSponsorBlock>`__:
+   implementation of `SponsorBlock API  <https://sponsor.ajay.app/>`__
+
+:YTDisableUglySuggestions:
+   `cydia <http://cydia.saurik.com/package/com.crazymind90.disableuglysuggestions/>`__
+   `ios-repo-updates <https://www.ios-repo-updates.com/repository/bigboss/package/com.crazymind90.disableuglysuggestions/>`__
+   remove suggested videos showing at end of Youtube videos
+
+:`YTUHD                 <https://poomsmart.github.io/repo/depictions/ytuhd.html>`__:
+   (`github             <https://github.com/PoomSmart/YTUHD>`__)
+   unlock 1440p 2160p VP9
+
+:`YTClassicVideoQuality <https://poomsmart.github.io/repo/depictions/ytclassicvideoquality.html>`__:
+   (`github             <https://github.com/PoomSmart/YTClassicVideoQuality>`__)
+   revert to the original video quality selector
+
+:`YouAreThere           <https://poomsmart.github.io/repo/depictions/youarethere.html>`__:
+   (`github             <https://github.com/PoomSmart/YouAreThere>`__)
+   no "Video paused. Continue watching?" popup
+
+:`YouPiP                <https://poomsmart.github.io/repo/depictions/youpip.html>`__:
+   (`github             <https://github.com/PoomSmart/YouPiP>`__)
+   enable native PiP in YouTube app.
+
+| others
+| |b| `cercube <https://apt.alfhaily.me/depictions/FDXO5R>`__
+| |b| `YTNoShorts <https://github.com/MiRO92/YTNoShorts>`__
+|     `PoomSmart <https://github.com/PoomSmart?tab=repositories&q=you>`__ (`ios-repo-updates <https://www.ios-repo-updates.com/repository/poomsmart/>`__)
+|     |b| `IAmYouTube <https://github.com/PoomSmart/IAmYouTube>`__
+|     |b| `NoYTPremium <https://github.com/PoomSmart/NoYTPremium>`__
+
+
+IPA
+===
+
+cytus ii
+|vv| `history <https://cytus.fandom.com/wiki/Update_History>`__
+|vv| `appcake <https://iphonecake.com/app_1290687550_.html>`__
+|vv| `appdb <https://appdb.to/app/ios/1290687550>`__
+
+`AppSync <https://cydia.akemi.ai/?page/net.angelxwind.appsyncunified>`__
+
+| download with curl
+|  1. visit download page
+|  2. :menuselection:`Ctrl+Shift+I --> Network`
+|  3. click :guilabel:`download`
+|  4. :menuselection:`(RightClick) --> Copy --> Copy as cURL`

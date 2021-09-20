@@ -118,6 +118,17 @@ Prog.World - `eMMC 5.0 sequential write 90MB/s <https://prog.world/nvme-vs-ufs-3
   `datasheet <https://www.micron.com/products/managed-nand/emmc/part-catalog/mtfc8gakajcn-1m-wt>`__)
 
 
+RTC
+===
+
+| :file:`/sys/class/rtc/rtc0`
+| :file:`/sys/devices/platform/ocp/44c00000.interconnect/44c00000.interconnect:segment@200000/44e3e074.target-module/44e3e000.rtc/rtc/rtc0`
+
+| rtc is dummy
+| time survives across ``systemctl reboot``
+| but gets lost right after ``systemctl reboot`` even if the power is still attached
+
+
 Serial
 ======
 

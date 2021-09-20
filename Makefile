@@ -9,6 +9,7 @@ PORT          :=  $(shell \
 	echo $$((1024+HASH%(65535-1024+1))); \
 )
 URL           := http://$(IP):$(PORT)/
+PROJ          := $(shell basename $(shell pwd))
 
 # port:
 # 	@echo '$(PORT)'
@@ -27,7 +28,7 @@ clean:
 
 .SILENT: entr
 entr:
-	@printf "\e]0;%s\a" $(shell basename $(shell pwd))
+	@printf "\e]0;%s\a" $(PROJ)
 	echo
 	ls -d1 -- conf.py *.rst extension/* include/* static/* | entr $(MAKE) html
 
@@ -38,8 +39,18 @@ html:
 %:
 	# sphinx-build -M $@ . "$(BUILDDIR)"
 	sphinx-build -b $@ . $(BUILDDIR)
-	[ -e "$(BUILDDIR)/.nojekyll" ]
 	echo
+	:; \
+		WSURL="$$(curl -s http://127.0.0.1:9222/json | jq -r '.[]|select(.title|test(". — $(PROJ) documentation$$")).webSocketDebuggerUrl')"; \
+		n=0; \
+		for u in $$WSURL; do \
+			[[ $$u =~ ^ws://127.0.0.1:9222/devtools/page/[A-Z0-9]{32}$$ ]] || exit 1; \
+			((n=n+1)); \
+			jq -c 0<<<'{"id":2,"method":"Page.reload","params":{"ignoreCache":true,"scriptToEvaluateOnLoad":""}}' | websocat $$u & \
+		done; \
+		echo $$n pages reloaded;
+	echo
+	[ -e "$(BUILDDIR)/.nojekyll" ]
 	echo "  file://$(BUILDDIR)/index.html"
 	echo "  $(URL)"
 	echo

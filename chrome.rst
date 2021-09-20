@@ -14,7 +14,9 @@ Misc
 | :file:`~/.local/share/applications/chromium.desktop.sh`
 | ``chrome://version``
 
-:pr:`reload with xdotool` [#xdotool]_
+:prlink:`reload with xdotool <https://unix.stackexchange.com/q/37258/>`
+
+`my answer <https://stackoverflow.com/a/69250807/>`__ on stackoverflow
 
 
 Cache
@@ -46,7 +48,6 @@ DevTools\ |br|\ Remote Debugging
 |    `PyChromeDevTools <https://github.com/marty90/PyChromeDevTools>`__
 |    `python-chrome-devtools-protocol <https://github.com/hyperiongray/python-chrome-devtools-protocol>`__
 |    `python-chrome-devtools-protocol <https://github.com/hyperiongray/python-chrome-devtools-protocol>`__
-
 
 `Chrome DevTools Protocol <https://chromedevtools.github.io/devtools-protocol/>`__
 - `stable 1.3 protocol (1-3) <https://chromedevtools.github.io/devtools-protocol/1-3/>`__
@@ -101,7 +102,21 @@ DevTools\ |br|\ Remote Debugging
 ::
 
    # https://stackoverflow.com/a/48955936/
-   jq -c <<EOF | websocat "$(curl -s http://127.0.0.1:9222/json | jq -r .[0].webSocketDebuggerUrl)"
+   jq -c 0<<EOF | websocat "$(curl -s http://127.0.0.1:9222/json | jq -r .[0].webSocketDebuggerUrl)"
+   {
+      "id": 2,
+      "method": "Page.reload",
+      "params": {
+         "ignoreCache": true,
+         "scriptToEvaluateOnLoad": ""
+      }
+   }
+   EOF
+
+::
+
+   WSURL="$(curl -s http://127.0.0.1:9222/json | jq -r '.[]|select(.title|test(".+ — sphinx.public documentation$")).webSocketDebuggerUrl')"
+   [ x"$WSURL" != x ] && jq -c 0<<EOF | websocat "$WSURL"
    {
       "id": 2,
       "method": "Page.reload",
@@ -115,6 +130,3 @@ DevTools\ |br|\ Remote Debugging
 
 Footnotes
 =========
-
-.. [#xdotool] | https://stackoverflow.com/q/28132070
-              | https://unix.stackexchange.com/q/37258/

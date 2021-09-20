@@ -222,3 +222,93 @@ Whishlist
    done
 
 :wp:`Arpeggio` (cegc'ge)
+
+
+Lyrics
+======
+
+.. highlight:: text
+
+`Ievan Polkka - Loituma`
+\| YouTube <https://www.youtube.com/watch?v=7yh9i0PAjck>`__
+\| `genius <https://genius.com/Loituma-ievan-polkka-lyrics>`__
+
+::
+
+   0 min 10.5 s
+
+   [Verse 1]
+   Nuapurista kuulu-se polokan tahti jalakani pohjii kutku_ _tti
+   Ievan äiti-se tyttöösä vahti-vaan kyllähän Ieva-sen jutku_ _tti-Sillä
+   ei-meitä silloin kiellot haittaa
+   Kun-myö tanssimme laiasta laitaan
+
+   [Refrain]
+   Salivili hipput tupput täppy_ _t-äppyt tipput hilija_ _lleen [1]
+
+   [Verse 2]
+   Ievan suu-oli vehnä_ _sellä-ko immeise_ _t-onnee toevotti
+   Peä-oli märkänä jokai_ _sella-ja viulu-se vinku-ja voevotti (si)
+   Ei-tätä poikoo märkyy_ _s-haittaa
+   Sillon-ko laskoo laiasta laitaan
+
+   [Refrain]
+   Salivili hipput tupput täppy t-äppyt tipput hilija_ _lleen [1]
+
+   [Verse 3]
+   Ievan äiti se kammarissa virsiä veisata huijjuutti
+   Kun tämä poika naapurissa ämmän tyttöä nuijjuutti
+   Eikä tätä poikoo ämmät haittaa
+   Sillon ko laskoo laiasta laitaan
+
+   [Refrain]
+   Salivili hipput tupput täppyt äppyt tipput hilijalleen
+   [Bridge]
+   Hilipati hilipati hilipati hillaa
+   Hilipati hilipati hilipampaa
+   Jalituli jallaa talituli jallaa
+   Tilitali tilitali tilitantaa
+   Hilipati hillaa hilipati hillaa
+   Hilipati hilipati jalituli jallaa
+   Tilitali tallaa, tulituli jallaa
+   Hilipati hilipati hilipampaa
+   Rimpatirillaa ripirapirullaa
+   Rumpatirumpa tiripirampuu
+   Jamparingaa rimpatiraparan
+   Tsupantupiran dillandu
+   Japat stilla dipudupu dullaa
+   Dumpatidupa lipans dullaa
+   Dipidapi dullaa rimpati rukan
+   Ribitit stukan dillandu
+   Jatsatsa barillas dilla lapadeian dullan deian doo
+   Joparimba badabadeia stulla
+   Laba daba daba dujan dillandu
+   Barillas dilla deiaduu badaba daga daga daga daga dujaduu
+   Badu dubi dubi dubi dejaduu
+   Badaba dillas dillan dejaduu
+
+   [Verse 4]
+   Siellä oli lystiä soiton jäläkeen sain minä kerran sytkyyttee
+   Kottiin ko mäntii ni ämmä se riitelj ja Ieva jo alako nyyhkyytteek
+   Minä sanon Ievalle mitäpä se haittaa
+   Laskemma vielähi laiasta laitaa
+   [Refrain]
+   Salivili hipput tupput täppyt äppyt tipput hilijalleen
+
+   [Verse 5]
+   Muorille sanon jotta tukkee suusi en ruppee sun terveyttäs takkoomaa
+   Terveenä peäset ku korjoot luusi ja määt siitä murjuus makkoomaa
+   Ei tätä poikoo hellyys haittaa
+   Ko akkoja huhkii laiasta laitaan
+
+   [Refrain]
+   Salivili hipput tupput täppyt äppyt tipput hilijalleen
+
+   [Verse 6]
+   Sen minä sanon jotta purra pittää ei mua niin voan nielasta
+   Suat männä ite vaikka lännestä ittään vaan minä en luovu Ievasta
+   Sillä ei tätä poikoo kainous haittaa
+   Sillon ko tanssii laiasta laitaan
+
+   [Refrain]
+   Salivili hipput tupput täppyt äppyt tipput hilijalleen

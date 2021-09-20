@@ -45,7 +45,7 @@ ico
    hardware
    software
    u-boot
-   alarm
+   installalarm
 
 .. toctree::
    :maxdepth: 0
