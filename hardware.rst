@@ -83,6 +83,46 @@ Communication Tutorials
 CPU
 ===
 
+`45nm <https://www.ti.com/lit/ug/tidua96/tidua96.pdf>`__
+
+.. code:: console
+
+   $ lscpu
+   Architecture:           armv7l
+     Byte Order:           Little Endian
+   CPU(s):                 1
+     On-line CPU(s) list:  0
+   Vendor ID:              ARM
+     Model name:           Cortex-A8
+       Model:              2
+       Thread(s) per core: 1
+       Core(s) per socket: 1
+       Socket(s):          1
+       Stepping:           r3p2
+       CPU max MHz:        1000.0000
+       CPU min MHz:        300.0000
+       BogoMIPS:           995.32
+       Flags:              half thumb fastmult vfp edsp thumbee neon vfpv3 tls vfpd
+                           32
+
+.. code:: console
+
+   $ cat /proc/cpuinfo
+   processor       : 0
+   model name      : ARMv7 Processor rev 2 (v7l)
+   BogoMIPS        : 995.32
+   Features        : half thumb fastmult vfp edsp thumbee neon vfpv3 tls vfpd32
+   CPU implementer : 0x41
+   CPU architecture: 7
+   CPU variant     : 0x3
+   CPU part        : 0xc08
+   CPU revision    : 2
+
+   Hardware        : Generic AM33XX (Flattened Device Tree)
+   Revision        : 0000
+   Serial          : 0000000000000000
+
+
 `AM3358 <https://www.ti.com/product/AM3358>`__ =
 `Cortex-A8 <https://en.wikipedia.org/wiki/ARM_Cortex-A8>`__ =
 `ARMv7-A <https://en.wikipedia.org/wiki/Comparison_of_ARMv7-A_cores>`__ =
@@ -188,6 +228,9 @@ Wi-Fi
 | |b| `latest-images <https://github.com/beagleboard/Latest-Images>`__
   |larr| `wl18xx_fw <https://git.ti.com/cgit/wilink8-wlan/wl18xx_fw/>`__
   |larr| `WiLink™ 8 Wi-Fi Driver for Linux OS <https://www.ti.com/tool/WILINK8-WIFI-NLCP>`__
+
+`existing Linux Wireless drivers <https://wireless.wiki.kernel.org/en/users/drivers>`__
+- `wl18xx <https://wireless.wiki.kernel.org/en/users/drivers/wl18xx>`__
 
 
 ----

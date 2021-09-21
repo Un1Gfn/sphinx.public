@@ -1,0 +1,13 @@
+.. include:: include/substitution.txt
+
+====
+X200
+====
+
+.. warning::
+
+   CMOS battery is lost
+
+squeeze and discard
+|vv| `bios.md <https://github.com/Un1Gfn/x200/blob/master/bios.md>`__
+|vv| `readme.md <https://github.com/Un1Gfn/x200/blob/master/readme.md>`__

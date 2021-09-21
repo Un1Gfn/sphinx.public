@@ -46,6 +46,8 @@ ico
    software
    u-boot
    installalarm
+   alarm
+   x200
 
 .. toctree::
    :maxdepth: 0

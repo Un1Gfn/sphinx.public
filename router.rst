@@ -130,6 +130,22 @@ The Unbrickable
 | :wp:`nat <network address translation>`
 | iptables - :wp:`wikipedia <iptables>` - :aw:`archwiki <iptables>`
 | `netfilter <https://netfilter.org/>`__ - :wp:`wikipedia <netfilter>`
+| http://linuxwireless.sipsolutions.net/en/developers/Documentation/cfg80211/
+| https://alamot.github.io/nl80211/
+| https://en.wikipedia.org/wiki/Comparison_of_open-source_wireless_drivers
+| https://en.wikipedia.org/wiki/Wireless_network_interface_controller#FullMAC_and_SoftMAC_devices
+| https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/include/uapi/linux/nl80211.h
+| https://stackoverflow.com/questions/21456235/how-nl80211-library-cfg80211-work
+| https://wireless.wiki.kernel.org/en/developers/documentation/glossary
+| https://wireless.wiki.kernel.org/en/developers/documentation/nl80211
+| https://wireless.wiki.kernel.org/en/users/documentation
+| https://wireless.wiki.kernel.org/en/users/documentation/faq
+| https://wireless.wiki.kernel.org/en/users/documentation/iw
+| https://wireless.wiki.kernel.org/en/users/documentation/modes
+| https://wireless.wiki.kernel.org/en/users/documentation/module-parameters
+| https://wireless.wiki.kernel.org/en/users/documentation/rfkill
+| https://wireless.wiki.kernel.org/en/users/documentation/wpa_supplicant
+
 
 | gns3
 | :pkg:`AUR/ubridge`

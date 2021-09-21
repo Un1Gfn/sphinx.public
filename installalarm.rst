@@ -5,12 +5,9 @@
 .. |S2| replace:: S\ :subscript:`2`
 .. |S3| replace:: S\ :subscript:`3`
 
-==============
-|ico| `ALARM`_
-==============
-
-`alarm.md <https://github.com/Un1Gfn/beaglebone/blob/markdown/alarm.md>`__
-
+======================
+|ico| Install `ALARM`_
+======================
 
 Contacts
 ========
@@ -1027,134 +1024,6 @@ Host Cleanup
    ip link    set   dev enp0s31f6 down
 
 
-|S3|\ [3]_ :aw:`Post-Installation <installation_guide#Post-installation>`
-=========================================================================
-
-| `UBootCmdGroupExec`__
-| |b| ``$ mkinage -T script`` -
-      ``=> tftp`` -
-      ``=> source`` -
-      ``=> bootm``
-| |b| `ALARM <https://archlinuxarm.org/packages/armv7h/uboot-beaglebone/files/uboot-beaglebone.install>`__ -
-      `boot.txt <https://archlinuxarm.org/packages/armv7h/uboot-beaglebone/files/boot.txt>`__ -
-      `mkscr`__
-
-.. __: https://www.denx.de/wiki/DULG/UBootCmdGroupExec
-.. __: https://archlinuxarm.org/packages/armv7h/uboot-beaglebone/files/mkscr
-
-`linux dev major minor <https://www.kernel.org/doc/html/latest/admin-guide/devices.html>`__
-
-log in as root
-
-manual time without internet ::
-
-   timedatectl set-ntp false
-   systemctl stop systemd-timesyncd.service
-   rm -fv /etc/adjtime
-   timedatectl set-timezone Asia/Makassar
-
-::
-
-   timedatectl set-time <YYYY-mm-DD HH:MM:SS>
-
-| :aw:`wireless#Manual/automatic_setup`
-| |b| :aw:`network managers <network configuration#Network_managers>` (:aw:`category <category:Network_managers>`)
-| |b| :aw:`iw vs wireless_tools <network configuration/Wireless#iw_and_wireless_tools_comparison>`
-| |b| :aw:`iproute2 vs net-tools <network_configuration#net-tools>`
-| |b| \
-      |:ballot_box_with_check:| - pre-installed in tarball
-
-.. table::
-   :align: left
-   :widths: auto
-
-   +------------+---------------------------------------------------------------------------+---------------------------------------+
-   | high-level | :pr:`networkmanager`                                                                                              |
-   |            +---------------------------------------------------------------------------+---------------------------------------+
-   |            | :pr:`wicd`                                                                                                        |
-   |            +---------------------------------------------------------------------------+---------------------------------------+
-   |            | :aw:`connman` (intel)                                                     | :manpage:`connman-service.config(5)`  |
-   |            +---------------------------------------------------------------------------+---------------------------------------+
-   |            | :aw:`iwd` (intel)                                                                                                 |
-   |            +---------------------------------------------------------------------------+---------------------------------------+
-   |            | :aw:`netctl` (arch) |:ballot_box_with_check:|                             | :manpage:`netctl.profile(5)`          |
-   |            +---------------------------------------------------------------------------+---------------------------------------+
-   |            | :aw:`systemd-networkd` |:ballot_box_with_check:|                                                                  |
-   +------------+---------------------------------------------------------------------------+---------------------------------------+
-   | low-level  | :aw:`iproute2 <network_configuration#iproute2>` |:ballot_box_with_check:| | :manpage:`ifstat(8)` |br|             |
-   |            |                                                                           | :manpage:`ip(8)`     |br|             |
-   |            |                                                                           | :manpage:`ss(8)`     |br|             |
-   |            |                                                                           | :manpage:`tc(8)`     |br|             |
-   |            +---------------------------------------------------------------------------+---------------------------------------+
-   |            | :aw:`iw <network configuration/Wireless#iw>` |:ballot_box_with_check:|    | :manpage:`iw(8)`                      |
-   |            +---------------------------------------------------------------------------+---------------------------------------+
-   |            | :pkg:`core/net-tools` |:ballot_box_with_check:|                           | :manpage:`arp(8)`      |br|           |
-   |            |                                                                           | :manpage:`ifconfig(8)` |br|           |
-   |            |                                                                           | :manpage:`netstat(8)`  |br|           |
-   |            |                                                                           | :manpage:`route(8)`    |br|           |
-   |            +---------------------------------------------------------------------------+---------------------------------------+
-   |            | :pkg:`core/wireless_tools` |:ballot_box_with_check:|                      | :manpage:`ifrename(8)` |br|           |
-   |            |                                                                           | :manpage:`iwconfig(8)` |br|           |
-   |            |                                                                           | :manpage:`iwlist(8)`   |br|           |
-   |            +---------------------------------------------------------------------------+---------------------------------------+
-   |            | :aw:`wpa_supplicant` |:ballot_box_with_check:|                                                                    |
-   +------------+---------------------------------------------------------------------------+---------------------------------------+
-
-::
-
-  # Network configuration
-  # Wi-Fi auto connect
-  # ?
-
-::
-
-   resolvectl flush-caches
-   resolvectl query example.org.
-   ping -c4 example.org
-   curl http://example.org
-
-there should be no rtc at all ::
-
-   find /sys/class/rtc/
-
-| sntp time with internet
-| |b| :aw:`system time`
-| |b| :aw:`systemd-timesyncd`
-| |b| kernel doc - `timers <https://www.kernel.org/doc/html/latest/timers/index.html>`__
-
-::
-
-   export SYSTEMD_COLORS=1
-   systemctl enable systemd-timesyncd.service
-   systemctl start  systemd-timesyncd.service
-   timedatectl set-ntp false
-   timedatectl set-time '1989-06-04 00:00:00'
-   timedatectl set-ntp true
-   echo
-   timedatectl show
-   echo
-   timedatectl status
-   echo
-   hwclock --show
-   echo
-   timedatectl show-timesync -a
-   echo
-   timedatectl timesync-status
-   echo
-
-:pkg:`AUR/fake-hwclock-git`
-
-::
-
-   # git clone https://aur.archlinux.org/fake-hwclock-git.git
-   # makepkg -si
-
-::
-
-   systemctl enable fake-hwclock.service
-
-
-
 Footnotes
 =========
 
@@ -1167,8 +1036,6 @@ Footnotes
 .. [1] |S1| - The state where Linux with only initramfs is running (both are TFTP'd)
 
 .. [2] |S2| - The state where a fully functional Linux through NFS is running
-
-.. [3] |S3| - The state where BBGW is running on its own w/o NFS and accepting commands from serial/SSH
 
 ----
 
