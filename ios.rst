@@ -127,6 +127,8 @@ mount ::
 
    ``umount -v ~darren/mnt`` before detatching!
 
+:file:`~/mnt/Downloads` is in fact :file:`/private/var/mobile/Media/Downloads`
+
 :aw:`iOS#Importing_videos_and_pictures`
 
 .. warning::
@@ -264,6 +266,12 @@ cytus ii
 |vv| `appcake <https://iphonecake.com/app_1290687550_.html>`__
 |vv| `appdb <https://appdb.to/app/ios/1290687550>`__
 
+::
+
+   cd /Applications/cytus2.app
+   ldid cytus2
+   chmod +x cytus2
+
 `AppSync <https://cydia.akemi.ai/?page/net.angelxwind.appsyncunified>`__
 
 | download with curl
@@ -271,3 +279,10 @@ cytus ii
 |  2. :menuselection:`Ctrl+Shift+I --> Network`
 |  3. click :guilabel:`download`
 |  4. :menuselection:`(RightClick) --> Copy --> Copy as cURL`
+
+
+Path
+====
+
+:Files:       /private/var/mobile/Containers/Shared/AppGroup/\*/\*/Downloads
+

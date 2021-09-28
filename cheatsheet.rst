@@ -157,6 +157,10 @@ test symbolic link ::
     nonexist                          |:red_circle:|     |:red_circle:|     |:red_circle:|     |:red_circle:|
    ================================= ================== ================== ================== ==================
 
+xdotool ::
+
+   xdotool search --desktop 0 Chromium windowactivate
+
 
 C
 ===
@@ -551,6 +555,9 @@ recursively remove binary ::
 `force rename title <https://zh.wikipedia.org/wiki/Help:%E4%B8%AD%E6%96%87%E7%BB%B4%E5%9F%BA%E7%99%BE%E7%A7%91%E7%9A%84%E7%B9%81%E7%AE%80%E3%80%81%E5%9C%B0%E5%8C%BA%E8%AF%8D%E5%A4%84%E7%90%86#%E6%8E%A7%E5%88%B6%E8%87%AA%E5%8A%A8%E8%BD%AC%E6%8D%A2%E7%9A%84-{zh-cn:%E4%BB%A3%E7%A0%81;zh-tw:%E7%A8%8B%E5%BC%8F%E7%A2%BC}->`__ ::
 
    -{T|New Title}-
+
+| `March 2020 <https://en.wikipedia.org/wiki/Wikipedia_talk:IP_block_exemption/log#March_10>`__ - 1OH2 IPBE
+| `User rights log <https://en.wikipedia.org/w/index.php?title=Special%3AUserRights&user=Un1Gfn>`__
 
 Verilog
 =======

@@ -168,6 +168,11 @@ RTC
 | time survives across ``systemctl reboot``
 | but gets lost right after ``systemctl reboot`` even if the power is still attached
 
+| (a) rtc nonexist in /sys
+| (b) rtc dummy, zero on boot unless set by system |:ballot_box_with_check:|
+| (c) rtc static, non-volative but frozen
+| (d) rtc active, goes forward when system is off
+
 
 Serial
 ======

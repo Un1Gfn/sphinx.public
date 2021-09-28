@@ -1,13 +1,136 @@
 .. include:: include/substitution.txt
+.. highlight:: text
 
 ====
 X200
 ====
 
-.. warning::
+.. note::
 
-   CMOS battery is lost
+   | |:shopping_cart:|\ |:shopping:|
+   | |b| solid\ :pr:`/stranded` duplex wire of a certain diameter
+   | |b| 47 ohm resistor, at least 4 pcs
+   | |b| more SOIC-8 clips
+   | |b| several W25Q32BVSIG for practice
+   | |b| :ref:`CH341 with 3 jumpers <ref_ch341>` |:dart:|
 
 squeeze and discard
 |vv| `bios.md <https://github.com/Un1Gfn/x200/blob/master/bios.md>`__
 |vv| `readme.md <https://github.com/Un1Gfn/x200/blob/master/readme.md>`__
+
+::
+
+   ERROR
+   0271: Check date and time settings
+   ERROR
+   0251: System CMOS checksum bad - Default configuration used
+
+
+W25Q32BVSIG
+===========
+
+| connect to SOIC 208-mil W25Q32BVSIG
+| `default is D0 as input and D1 as output <https://github.com/beagleboard/bb.org-overlays/blob/7bd2eb20448be5e2916b6ffda08d6ab0ec17e741/src/arm/BB-SPIDEV1-00A0.dts#L54>`__
+| IEC 60757 `2-letter color code <https://www.kollmorgen.com/en-us/developer-network/wire-color-coding/>`__
+| :file:`~/x200/W25Q32BV.pdf` p10 *4.2 Serial Data Input, Output and IOs (DI, DO and IO0, IO1, IO2, IO3)*
+|     DI (input) pin to serially write instructions, addresses or data to the device
+|     DO (output) to read data or status from the device
+
+::
+
+               +---------------+
+          [BU] |1 /CS     VCC 8| [RD] (connect everything else, check again, then connect VCC)
+   (MISO) [WH] |2  DO   /HOLD 7|
+               |3 /WP     CLK 6| [YE]
+          [BK] |4 GND      DI 5| [GN] (MOSI)
+               +---------------+
+
+
+SPI
+===
+
+flashrom - `FT2232SPI_Programmer <https://flashrom.org/FT2232SPI_Programmer>`__
+
+| `C232HM-DDHSL (3.3V) <https://ftdichip.com/products/c232hm-ddhsl-0-2/>`__
+| :prlink:`C232HM-EDHSL (5V) <https://ftdichip.com/products/c232hm-edhsl-0/>`
+
+`FT2232H Mini-Module <https://ftdichip.com/products/ft2232h-mini-module/>`__
+
+.. _ref_ch341:
+
+| `CH341 <http://www.wch.cn/products/CH341.html>`__
+  with 3 :wp:`jumpers <jumper (computing)>`
+  |:dart:|
+| `584926806782 <https://item.taobao.com/item.htm?id=584926806782>`__ (`img <https://gd1.alicdn.com/imgextra/i1/44390641/O1CN017SjtRI1GbcMnRjeuf_!!44390641.jpg>`__)
+| `595835010606 <https://item.taobao.com/item.htm?id=595835010606>`__ (`img <https://gd4.alicdn.com/imgextra/i4/4112832130/O1CN01Got6Sd1Rba9YqMnSO_!!4112832130.jpg>`__)
+| `616744148415 <https://item.taobao.com/item.htm?id=616744148415>`__ (`img <https://gd1.alicdn.com/imgextra/i1/2658592015/O1CN01Q53EjM1QkufS4F2K6_!!2658592015.jpg>`__)
+
+::
+
+   +---+---+
+   | O   O | O                             +-----+
+   +---+---+                      VCC [RD] |01 ..| NC
+                                  GND [BK] |02 ..| NC
+          __AMS1117  WCH_CH341A   CS0 [BU] |03 ..| NC
+   USB-A  3.3_2129C  _202386A40   CS1      |04 ..| NC
+                                  CS2      |05 ..| NC
+       +---+---+                  SCK [YE] |06 ..| NC
+     O | O   O |                 MOSI [GN] |07 ..| NC
+       +---+---+                 MISO [WH] |08 ..| NC
+     O | O   O |                           +-----+
+       +---+---+
+
+.. warning::
+
+   | Check (1) clip pinout (2) connection between clip and CH341A
+   | before plugging CH341A to PC
+
+.. danger::
+
+   | For online voltage test
+   |  |b| Plug CH341A to a USB wall adapter instead of a PC
+   |  |b| **VCC and GND pins on SPI side are too close, be cautious not shorting them** |:skull:|
+   | Attach jump wires and test on the other side of the wires, or don't test voltage at all
+
+.. code:: console
+
+   ## flashrom -r /dump.bin -V --flash-name --flash-size -p ch341a_spi
+
+   # flashrom --flash-name -p ch341a_spi
+   flashrom v1.2 on Linux 5.11.2-1-ARCH (armv7l)
+   Using clock_gettime for delay loops (clk_id: 1, resolution: 1ns).
+   Found Winbond flash chip "W25Q32.V" (4096 kB, SPI) on ch341a_spi.
+   vendor="Winbond" name="W25Q32.V"
+
+   # flashrom --flash-size -p ch341a_spi
+   flashrom v1.2 on Linux 5.11.2-1-ARCH (armv7l)
+   Using clock_gettime for delay loops (clk_id: 1, resolution: 1ns).
+   Found Winbond flash chip "W25Q32.V" (4096 kB, SPI) on ch341a_spi.
+   4194304
+
+::
+
+   # "$(date +%4Y%m%d-%H:%M:%S.bios)"
+   # "$(date +%4Y%m%d-%H:%M:%S.fd)"
+   # "$(date +%4Y%m%d-%H:%M:%S.gbe)"
+   # "$(date +%4Y%m%d-%H:%M:%S.me)"
+   # "$(date +%4Y%m%d-%H:%M:%S.pd)"
+   # "$(date +%4Y%m%d-%H:%M:%S.rom)"
+   echo; cd ~darren/x200 && {
+      FILE="$(date +%4Y%m%d-%H:%M:%S.rom)"
+      echo "$FILE"
+      echo
+      date; flashrom -r "$FILE" -p ch341a_spi; date
+      echo
+      id darren &>/dev/null && chown darren:darren "$FILE"
+   }
+
+::
+
+   rm -v 2021????-??:??:??.hex
+   ls -l *.rom
+   sha512sum *.rom
+   for i in *.rom; do
+      echo "${i%.rom}.hex"
+      hexdump "$i" 1>"${i%.rom}.hex"
+   done

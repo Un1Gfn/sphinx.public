@@ -192,6 +192,9 @@ Whishlist
           `Notation Reference <http://lilypond.org/doc/stable/Documentation/notation/>`__ |vv|
           `Usage              <http://lilypond.org/doc/stable/Documentation/usage/>`__
 
+| `<http://lilypond.org/doc/v2.22/Documentation/usage/troubleshooting>`__
+| `<http://lilypond.org/doc/v2.22/Documentation/usage/common-errors>`__
+
 :aw:`FluidSynth`
 
 :ltlink:`--no-pause <https://github.com/mpv-player/mpv/issues/4641#issuecomment-320532181>`
@@ -205,13 +208,16 @@ Whishlist
       cd ~/music
       lilypond pvz_roof.ly || break
       echo
+      ln -sfv "$(realpath pvz_roof.pdf)" /tmp/un1gfn.github.io/pvz_roof.pdf
+      echo
       rm -f /tmp/pvz_root_*.wav
       fluidsynth \
+         -F $F \
+         -g 0.4 \
          -l \
+         -o synth.cpu-cores=4 \
          -r $R \
          -T wav \
-         -o synth.cpu-cores=4 \
-         -F $F \
          /usr/share/soundfonts/FluidR3_GM.sf2 \
          pvz_roof.midi \
          || break
@@ -220,6 +226,8 @@ Whishlist
       mpv --no-pause $F
       # aplay -t wav $F
    done
+
+`pvz_roof.pdf </pvz_roof.pdf>`__
 
 :wp:`Arpeggio` (cegc'ge)
 

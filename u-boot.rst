@@ -831,15 +831,18 @@ convenience symlink for minicom ::
 
 | run minicom
 | |b| :ltlink:`busybox microcom <https://www.busybox.net/downloads/BusyBox.html#microcom>`?
+| `stty cols/rows <https://unix.stackexchange.com/q/473599/>`__
+| `tput cols/lines <https://stackoverflow.com/q/263890/>`__
 
 ::
 
    # --metakey
    minicom \
-     -c off \
-     -b 115200 \
-     -8 \
-     --device /dev/ttyUSB0
+      -w \
+      -c on \
+      -b 115200 \
+      -D /dev/ttyUSB0 \
+      -8
 
 .. code:: text
 

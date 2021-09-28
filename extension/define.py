@@ -7,6 +7,7 @@ wikiprepend_dict = {
     'gw': 'https://wiki.gentoo.org/wiki/',
     'tw': 'https://www.theiphonewiki.com/wiki/',
     'wp': 'https://en.wikipedia.org/wiki/',
+    'ja': 'https://ja.wikipedia.org/wiki/',
     'egw': 'https://emulation.gametechwiki.com/index.php/',
     'tiw': 'https://www.theiphonewiki.com/wiki/',
 }

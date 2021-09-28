@@ -297,10 +297,26 @@ install, install, install (no tmux yet, execute in minicom) ::
 :raw-html:`</details>`
 
 
-GPIO
-====
+:wp:`GPIO`/:wp:`SPI <Serial Peripheral Interface>`
+==================================================
 
-kernel doc - `gpio <https://www.kernel.org/doc/html/v5.11/driver-api/gpio/index.html>`__
+.. attention::
+
+   | SPIDEV0/**SPI0 won't work** - not exposed on P8 P9 expansion headers at all!
+   | SPIDEV1/**SPI1 won't work** - conflicts
+   |    :menuselection:`AM3358BZCZ100.A13/SPI1_SCLK --> SPI1_SCLK --> TXS0108E_U.B1`
+   |    :menuselection:`AM3358BZCZ100.B13/SPI1_D0   --> SPI1_D0   --> TXS0108E_U.B2`
+   |    :menuselection:`AM3358BZCZ100.D12/SPI1_D1   --> SPI1_D1   --> TXS0108E_U.B3`
+
+:abbr:`bit banging (data transmission with software instead of dedicated hardware)`
+(:wp:`wikipedia <bit banging>`)
+
+| :wp:`pull-up resistor`
+| :wp:`open collector`
+| :wp:`push-pull output`
+| :wp:`push-pull converter`
+| https://forum.allaboutcircuits.com/threads/on-the-8051-what-is-a-quasi-bi-directional-port.102601/
+| https://www.electrodragon.com/w/IO
 
 `bbb-pin-utils <https://github.com/mvduin/bbb-pin-utils>`__ (showpins)
 `iobb <https://github.com/shabaz123/iobb>`__
@@ -315,14 +331,199 @@ kernel doc - `gpio <https://www.kernel.org/doc/html/v5.11/driver-api/gpio/index.
 | `<https://libreboot.org/docs/install/spi.html#hardware-configuration>`__
 | `<https://www.coreboot.org/Board:lenovo/x200#Dumping_the_original_firmware>`__
 
+| u-boot
+| |b| `fdt <https://www.denx.de/wiki/DULG/UBootCmdFDT>`__
+| |b| `device tree overlays <https://u-boot.readthedocs.io/en/latest/usage/fdt_overlays.html>`__
 
-`Flashrom`__
-============
+| e2e forum
+| |b| `name_overlays <https://e2e.ti.com/support/processors-group/processors/f/processors-forum/1006886/am6548-how-do-we-use-dtbo-in-uenv-txt>`__
+| |b| `fdt apply <https://e2e.ti.com/support/processors-group/processors/f/processors-forum/1016579/tda4vm-overlay-dtb-files-in-u-boot>`__
 
-.. __: https://www.flashrom.org/Flashrom
+| kernel doc html
+| `gpio <https://www.kernel.org/doc/html/v5.11/driver-api/gpio/index.html>`__
 
-:wp:`wp <Flashrom>`
+| kernel doc txt
+| `spidev <https://www.kernel.org/doc/Documentation/spi/spidev>`__
+| `gpio sysfs deprecated <https://www.kernel.org/doc/Documentation/gpio/sysfs.txt>`__
+
+| alarm wiki - `bbgw <https://archlinuxarm.org/platforms/armv7/ti/beaglebone-green-wireless>`__ - installation
+| :pkg:`alarm/uboot-beaglebone`
+
+`/proc/device-tree <https://unix.stackexchange.com/questions/265890>`__
+
+`linux and the devicetree <https://www.kernel.org/doc/html/latest/devicetree/usage-model.html>`__
+
+:prlink:`capemgr <https://elinux.org/Capemgr>` obselete?
+
+flashrom - `BBB <https://www.flashrom.org/BBB>`__
+
+`BBB gpio pinout <https://www.element14.com/community/community/designcenter/single-board-computers/next-genbeaglebone/blog/2019/08/15/beaglebone-black-bbb-io-gpio-spi-and-i2c-library-for-c-2019-edition>`__
+
+(PC) `compile dts files to dtb <https://github.com/beagleboard/bb.org-overlays/issues/216#issuecomment-851028406>`__ ::
+
+   cd ~/beaglebone
+   source ~/proxy.bashrc
+   git clone https://github.com/beagleboard/bb.org-overlays
+   cd bb.org-overlays && {
+      git clean -dfx
+      PATH="$PATH:/opt/x-tools7h/arm-unknown-linux-gnueabihf/bin/"
+      hash -r
+      make -j4 ARCH=arm CROSS_COMPILE=armv7l-unknown-linux-gnueabihf- # V=1
+      file src/arm/BB-SPIDEV0-00A0*
+      scp src/arm/BB-SPIDEV0-00A0.dtbo bbgw:/boot/BB-SPIDEV0-00A0.dtbo
+      # scp src/arm/BB-SPIDEV1-00A0.dtbo bbgw:/boot/BB-SPIDEV1-00A0.dtbo
+   }
 
 ::
 
-   pacman -Syu --needed dmidecode flashrom
+   0x82000000 kernel_addr_r
+              5961976 (0x5af8f8) bytes read
+   0x825af8f7 kernel_end
+   0x825af8f8
+
+   0x88000000 fdt_addr_r
+              88862 (0x15b1e) bytes read
+   0x88015b1d fdt_end
+   0x88015b1e
+
+   0x88070000 overlayaddr
+              1515 (0x5eb) bytes read
+   0x880705ea overlayaddr_end
+   0x880705eb
+
+   0x88080000 ramdisk_addr_r
+
+:manpage:`kernel-command-line(7)` - systemd.mask
+
+::
+
+   if test 0 -eq 0 \
+      -a  kernel_addr_r -eq 0x82000000 \
+      -a     fdt_addr_r -eq 0x88000000 \
+      -a ramdisk_addr_r -eq 0x88080000;
+   then
+
+      # setenv disable_uboot_overlay_emmc     1
+      # setenv disable_uboot_overlay_video    1
+      # setenv disable_uboot_overlay_audio    1
+      # setenv disable_uboot_overlay_wireless 1
+      # setenv disable_uboot_overlay_adc      1
+
+      load mmc 1:1 ${kernel_addr_r}  /boot/zImage
+
+      # /boot/dtbs/am335x-bone.dtb
+      # /boot/dtbs/am335x-boneblack-uboot.dtb
+      # /boot/dtbs/am335x-boneblack-wireless.dtb
+      # /boot/dtbs/am335x-boneblack.dtb
+      # /boot/dtbs/am335x-boneblue.dtb
+      # /boot/dtbs/am335x-bonegreen-gateway.dtb
+      # /boot/dtbs/am335x-bonegreen-wireless.dtb
+      # /boot/dtbs/am335x-bonegreen.dtb
+      load mmc 1:1 ${fdt_addr_r}     /boot/dtbs/am335x-bonegreen.dtb
+      fdt addr $fdt_addr_r
+
+      # /boot/BB-SPIDEV0-00A0.dtbo
+      # /boot/BB-SPIDEV1-00A0.dtbo
+      setenv overlayaddr 0x88070000
+      load mmc 1:1 ${overlayaddr}    /boot/BB-SPIDEV1-00A0.dtbo
+      fdt resize 102400
+      fdt apply ${overlayaddr}
+
+      load mmc 1:1 ${ramdisk_addr_r} /boot/initramfs-linux.img
+      setenv ramdisk_size ${filesize}
+
+      part uuid mmc 1:1 uuid
+      setenv bootargs "console=tty0 console=${console} root=PARTUUID=${uuid} rw rootwait"
+      setenv bootargs $bootargs systemd.mask=wpa_supplicant@wlan0.service systemd.mask=dhcpcd@wlan0.service
+      bootz ${kernel_addr_r} ${ramdisk_addr_r}:${ramdisk_size} ${fdt_addr_r}
+
+   fi
+
+page 9/11 P9 expansion headers ::
+
+                         P9
+                       +-----+
+             DGND [BK] |01 02| [BK] DGND
+         VDD_3V3B [RD] |03 04| [RD] VDD_3V3B
+       (x) VDD_5V      |05 06|      VDD_5V (x)
+       (x) SYS_5V      |07 08|      SYS_5V (x)
+                       |.. ..|
+                       |   28| [BU] SPI1_CS0
+   (MISO) SPI1_D0 [WH] |29 30| [GN] SPI1_D1 (MOSI)
+        SPI1_SCLK [YE] |31 32|      VDD_ADC
+                       |.. 34|      GDNA_ADC
+                       |.. ..|
+             DGND [BK] |43 44| [BK] DGND
+             DGND [BK] |45 46| [BK] DGND
+                       +-----+
+
+::
+
+   modprobe spidev
+
+bb.org-overlays `#221 <https://github.com/beagleboard/bb.org-overlays/issues/221>`__
+
+::
+
+   cd ~/beaglebone
+   # wget https://mirrors.kernel.org/pub/linux/kernel/v5.x/linux-5.11.2.tar.sign
+   gunzip -k linux-5.11.2.tar.gz
+   gpg --verify linux-5.11.2.tar{.sign,}
+   tar -xf linux-5.11.2.tar
+   cd linux-5.11.2/arch/arm/boot/dts/ && {
+      rm -v !(am33*bone*)
+
+      grep -nri \
+         -e P9_22 -e spi0_sclk \
+         -e P9_21 -e spi0_d0 \
+         -e P9_18 -e spi0_d1 \
+         -e P9_17 -e spi0_cs0 \
+         -e spi0
+
+      grep -nri \
+         -e P9_31 -e spi1_sclk \
+         -e P9_29 -e spi1_d0 \
+         -e P9_30 -e spi1_d1 \
+         -e P9_28 -e spi1_cs0 \
+         -e spi1
+
+   }
+
+
+`pinctrl/am33xx.h <https://github.com/torvalds/linux/blob/v5.11/include/dt-bindings/pinctrl/am33xx.h>`__
+
+BBG\ :pr:`W`\ +SPIDEV1 ok
+
+.. code:: console
+
+   # dmesg | grep -i pin
+   [    0.000000] Built 1 zonelists, mobility grouping on.  Total pages: 129666
+   [    0.073109] pinctrl core: initialized pinctrl subsystem
+   [    2.959422] pinctrl-single 44e10800.pinmux: 142 pins, size 568
+
+   # flashrom -p linux_spi:dev=/dev/spidev1.0
+   flashrom v1.2 on Linux 5.11.2-1-ARCH (armv7l)
+   flashrom is free software, get the source code at https://flashrom.org
+
+   Using clock_gettime for delay loops (clk_id: 1, resolution: 1ns).
+   Using default 2000kHz clock. Use 'spispeed' parameter to override.
+   No EEPROM/flash device found.
+   Note: flashrom can never write if the flash chip isn't found automatically.
+
+   # flashrom -p linux_spi:dev=/dev/spidev1.1
+   flashrom v1.2 on Linux 5.11.2-1-ARCH (armv7l)
+   flashrom is free software, get the source code at https://flashrom.org
+
+   Using clock_gettime for delay loops (clk_id: 1, resolution: 1ns).
+   Using default 2000kHz clock. Use 'spispeed' parameter to override.
+   No EEPROM/flash device found.
+   Note: flashrom can never write if the flash chip isn't found automatically.
+
+`<https://groups.google.com/g/beagleboard/c/LbqaSGJjvnw>`__
+
+| `<https://electronics.stackexchange.com/questions/258112/reflection-on-spi-clock-signal-termination-or-stub-issue>`__
+| `<https://www.avrfreaks.net/forum/reflection-spi-bus>`__
+| `<https://electronics.stackexchange.com/questions/33372/spi-bus-termination-considerations>`__
+| `<https://www.mail-archive.com/search?l=flashrom@flashrom.org&q=subject:%22%5C%5Bflashrom%5C%5D+Failure+using+flashrom+and+BusPirate+to+flash+Macronix+MX25L3206E+bios+chip%22&o=newest&f=1>`__
+| `<https://groups.google.com/g/beagleboard/c/LbqaSGJjvnw>`__
+
