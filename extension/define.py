@@ -8,6 +8,7 @@ wikiprepend_dict = {
     'tw': 'https://www.theiphonewiki.com/wiki/',
     'wp': 'https://en.wikipedia.org/wiki/',
     'ja': 'https://ja.wikipedia.org/wiki/',
+    'zh': 'https://zh.wikipedia.org/wiki/',
     'egw': 'https://emulation.gametechwiki.com/index.php/',
     'tiw': 'https://www.theiphonewiki.com/wiki/',
 }

@@ -327,10 +327,6 @@ install, install, install (no tmux yet, execute in minicom) ::
 | |b| `tools/beaglebone-universal-io/config-pin <https://github.com/beagleboard/bb.org-overlays/blob/master/tools/beaglebone-universal-io/config-pin>`__
 | |b| `tools/pmunts_muntsos/config-pin.c <https://github.com/beagleboard/bb.org-overlays/blob/master/tools/pmunts_muntsos/config-pin.c>`__
 
-| BBGW <-> X200 pinout
-| `<https://libreboot.org/docs/install/spi.html#hardware-configuration>`__
-| `<https://www.coreboot.org/Board:lenovo/x200#Dumping_the_original_firmware>`__
-
 | u-boot
 | |b| `fdt <https://www.denx.de/wiki/DULG/UBootCmdFDT>`__
 | |b| `device tree overlays <https://u-boot.readthedocs.io/en/latest/usage/fdt_overlays.html>`__

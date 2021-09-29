@@ -11,8 +11,7 @@ X200
    | |b| solid\ :pr:`/stranded` duplex wire of a certain diameter
    | |b| 47 ohm resistor, at least 4 pcs
    | |b| more SOIC-8 clips
-   | |b| several W25Q32BVSIG for practice
-   | |b| :ref:`CH341 with 3 jumpers <ref_ch341>` |:dart:|
+   | |b| :wp:`helping hand <helping hand (tool)>` / :wp:`jig <jig (tool)>` / :zh:`夾具`
 
 squeeze and discard
 |vv| `bios.md <https://github.com/Un1Gfn/x200/blob/master/bios.md>`__
@@ -97,13 +96,11 @@ flashrom - `FT2232SPI_Programmer <https://flashrom.org/FT2232SPI_Programmer>`__
    ## flashrom -r /dump.bin -V --flash-name --flash-size -p ch341a_spi
 
    # flashrom --flash-name -p ch341a_spi
-   flashrom v1.2 on Linux 5.11.2-1-ARCH (armv7l)
    Using clock_gettime for delay loops (clk_id: 1, resolution: 1ns).
    Found Winbond flash chip "W25Q32.V" (4096 kB, SPI) on ch341a_spi.
    vendor="Winbond" name="W25Q32.V"
 
    # flashrom --flash-size -p ch341a_spi
-   flashrom v1.2 on Linux 5.11.2-1-ARCH (armv7l)
    Using clock_gettime for delay loops (clk_id: 1, resolution: 1ns).
    Found Winbond flash chip "W25Q32.V" (4096 kB, SPI) on ch341a_spi.
    4194304
@@ -120,10 +117,26 @@ flashrom - `FT2232SPI_Programmer <https://flashrom.org/FT2232SPI_Programmer>`__
       FILE="$(date +%4Y%m%d-%H:%M:%S.rom)"
       echo "$FILE"
       echo
-      date; flashrom -r "$FILE" -p ch341a_spi; date
+      printf "\n\e[7m  %s  \e[0m\n\n" "$(date)"
+      flashrom -r "$FILE" -p ch341a_spi
+      printf "\n\e[7m  %s  \e[0m\n\n" "$(date)"
       echo
       id darren &>/dev/null && chown darren:darren "$FILE"
    }
+
+::
+
+   Using clock_gettime for delay loops (clk_id: 1, resolution: 1ns).
+   Found Winbond flash chip "W25Q32.V" (4096 kB, SPI) on ch341a_spi.
+   Block protection could not be disabled!
+   Reading flash... done.
+
+verify ::
+
+   FILE=""
+   flashrom -v "$FILE" -p ch341a_spi
+
+:raw-html:`<details><summary>hex diff</summary>`
 
 ::
 
@@ -134,3 +147,95 @@ flashrom - `FT2232SPI_Programmer <https://flashrom.org/FT2232SPI_Programmer>`__
       echo "${i%.rom}.hex"
       hexdump "$i" 1>"${i%.rom}.hex"
    done
+
+:raw-html:`</details>`
+
+| `<https://libreboot.org/docs/install/spi.html#hardware-configuration>`__
+| `<https://www.coreboot.org/Board:lenovo/x200#Dumping_the_original_firmware>`__
+
+| `drivers/usb/serial/ch341.c <https://github.com/torvalds/linux/blob/df7b16d1c00ecb3da3a30c999cdb39f273c99a2f/drivers/usb/serial/ch341.c#L12>`__
+| *This driver only supports the asynchronous serial interface.*
+
+CH341PAR_LINUX.ZIP -
+`wch.cn <http://www.wch.cn/downloads/CH341PAR_LINUX_ZIP.html>`__
+|vv| `CH341-Store <https://github.com/boseji/CH341-Store/blob/master/CH341-Linux-SPI-I2C-Driver+SDK-library/>`__
+- identical
+
+`usb-module association <https://unix.stackexchange.com/q/60078>`__ ::
+
+   echo
+   pushd /sys/bus/usb/devices/ 1>/dev/null && {
+      shopt -s nullglob
+      for i in !(*:*); do
+         printf "%-7s %s:%s\n" "$i" "$(0< "$i"/idVendor)" "$(0< "$i"/idProduct)"
+         for j in "$i:"*; do
+            ALA="$(0< "$j"/modalias)"
+            echo "$j $ALA $(modinfo $ALA | grep filename | cut -d' ' -f8- | uniq)"
+         done
+         echo
+      done
+      shopt -u nullglob
+   } && popd 1>/dev/null
+
+:raw-html:`<details><summary>ch341-i2c-spi-gpio(-dkms-git)</summary>`
+
+| AUR - `\*ch34\* <https://aur.archlinux.org/packages/?O=0&K=ch34>`__
+|    :pkg:`AUR/spi-ch341-usb-dkms`
+|    :pkg:`AUR/ch341-i2c-spi-gpio-dkms-git` (`frank-zago/ch341-i2c-spi-gpio <https://github.com/frank-zago/ch341-i2c-spi-gpio>`__)
+| :aw:`DKMS` - :aw:`package guidelines <DKMS package guidelines>` - :manpage:`dkms(8)`
+| :file:`/usr/src/ch341-i2c-spi-gpio-*/` - installed source
+| :file:`/var/lib/dkms/ch341-i2c-spi-gpio/` - generated module
+
+::
+
+   flashrom -p linux_spi:dev=/dev/spidev0.0 --flash-name
+   flashrom -p linux_spi:dev=/dev/spidev0.0 --flash-size
+
+:raw-html:`</details>`
+
+:raw-html:`<details><summary>ch341prog</summary>`
+
+:pkg:`AUR/ch341prog-git`
+
+::
+
+   for i in 1; do
+      cd ~darren/x200 || break
+      FILE="$(date +%4Y%m%d-%H:%M:%S.rom)"
+      echo "$FILE"
+      echo
+      printf "\n\e[7m  %s  \e[0m\n\n" "$(date)"
+      ch341prog -r "$(date +%4Y%m%d-%H:%M:%S.rom)" || break
+      printf "\n\e[7m  %s  \e[0m\n\n" "$(date)"
+      echo
+      id darren &>/dev/null || break
+      chown darren:darren "$FILE"
+   done
+
+::
+
+   Device reported its revision [4.03]
+   Manufacturer ID: ef
+   Memory Type: 4016
+   No CFI structure found, trying to get capacity from device ID. Set manually if detection fails.
+   Capacity: 16
+   Chip capacity is 4194304 bytes
+   Read started!
+
+:raw-html:`</details>`
+
+CH341A black 5V (`CH341-Store <https://github.com/boseji/CH341-Store#ch341-store>`__) |:zap:| ::
+
+   +----------+---------+
+   | 5 6 7 8  |         |
+   |  25 SPI  | 24 I2C  |
+   |   BIOS  (  EEPROM (
+   | 4 3 2 1  |         |
+   +----------+---------+
+
+.. hint::
+   | 5V data lines are necessary, clues:
+   | |b| ``Found Winbond flash chip "W25Q32.V" (4096 kB, SPI) on ch341a_spi.`` not showing up on the first flashrom attempt
+   | |b| ``Block protection could not be disabled!`` every now and then
+   | |b| `interference from other on-board circuits that are connected to W25Q32BVSIG as well <http://www.diybcq.com/thread-145078-1-1.html>`__
+   | Better desolder W25Q32BVSIG and use SMT test socket!

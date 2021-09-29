@@ -2,17 +2,29 @@ MAKEFLAGS := $(MAKEFLAGS) --no-print-directory
 
 # https://serverfault.com/a/1042167
 BUILDDIR      := /tmp/un1gfn.github.io
-IP            := $(shell ip -4 addr show wlp2s0 | awk '/inet / {print $$2}' | cut -d/ -f1)
+
 # [1024,65535] are unprivileged
 PORT          :=  $(shell \
 	HASH="$$(cksum <<<"$(shell basename $(BUILDDIR))" | cut -d' ' -f 1)"; \
 	echo $$((1024+HASH%(65535-1024+1))); \
 )
-URL           := http://$(IP):$(PORT)/
-PROJ          := $(shell basename $(shell pwd))
+IP := $(shell ip -4 addr show wlp2s0 | awk '/inet / {print $$2}' | cut -d/ -f1)
+ifeq (x$(IP),x)
+	IP := $(shell \
+		HASH="$$(cksum <<<"$(PROJ)" | cut -d' ' -f 1)"; \
+		RET="$$((HASH%254+1))"; \
+		((HASH=HASH/254)); RET="$${RET/#/$$((HASH%254+1)).}"; \
+		((HASH=HASH/254)); RET="$${RET/#/$$((HASH%254+1)).}"; \
+		RET="$${RET/#/127.}"; \
+		echo $${RET}; \
+	)
+endif
+URL := http://$(IP):$(PORT)/
 
-# port:
-# 	@echo '$(PORT)'
+PROJ := $(shell basename $(shell pwd))
+
+# default_test:
+# 	@echo '$(IP)'
 
 # Don't run in parallel,
 # otherwise clean can remove newly-built pages because of race

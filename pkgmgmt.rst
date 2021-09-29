@@ -10,7 +10,25 @@ arch linux package management
 AUR
 ===
 
-see :ref:`makepkg <reference_label_section_makepkg>`
+submit a new package ::
+
+   P="ch341-i2c-spi-gpio-dkms-git"
+   cd ~darren/.cache/paru/clone
+   [ -e "$P" ] || {
+      echo
+      proxychains /bin/git clone ssh://aur@aur.archlinux.org/"$P".git
+      echo
+      cd "$P" && {
+         cp -v /usr/share/pacman/.gitignore ./
+         echo
+         subl /usr/share/pacman/PKGBUILD.proto
+         [[ $P =~ -git$ ]] && subl /usr/share/pacman/PKGBUILD-vcs.proto
+         grep --color=never PACKAGER /etc/makepkg.conf
+         echo
+         touch ./PKGBUILD
+         subl ./PKGBUILD
+      }
+   }
 
 
 expac

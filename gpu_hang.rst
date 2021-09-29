@@ -7,6 +7,12 @@ GPU_hang
 Readings
 ========
 
+::
+
+   modinfo -p ahci
+   modinfo -p i915
+   modinfo -p intel_idle
+
 `The kernel’s command-line parameters`__
 
 | linuxreviews
