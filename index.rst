@@ -60,7 +60,6 @@ ico
    :maxdepth: 0
    :caption: MISC
 
-   todo
    820g3
    archiso
    bash
@@ -73,6 +72,7 @@ ico
    music
    pkgmgmt
    router
+   todo
 
 
 Indices and tables

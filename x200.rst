@@ -5,13 +5,35 @@
 X200
 ====
 
+| `<https://en.wikipedia.org/wiki/Chipset>`__
+| `<https://en.wikipedia.org/wiki/I/O_Controller_Hub>`__
+| `<https://en.wikipedia.org/wiki/Northbridge_(computing)>`__
+| `<https://en.wikipedia.org/wiki/Platform_Controller_Hub>`__
+| `<https://en.wikipedia.org/wiki/Southbridge_(computing)>`__
+| `<https://thinkpads.com/forum/viewtopic.php?f=43&p=845241>`__
+| `<https://www.flashrom.org/Arduino_flasher_3.3v>`__
+| `<https://www.flashrom.org/Board_Testing_HOWTO>`__
+| `<https://www.flashrom.org/Common_problems>`__
+| `<https://www.flashrom.org/FAQ>`__
+| `<https://www.flashrom.org/ISP>`__
+| `<https://www.flashrom.org/Serprog>`__
+| `<https://www.flashrom.org/Serprog/Arduino_flasher>`__
+| `<https://www.reddit.com/r/coreboot/comments/8b5m8g/ch341a_usb_flasher_and_335v/>`__
+
+Misc
+====
+
 .. note::
 
    | |:shopping_cart:|\ |:shopping:|
-   | |b| solid\ :pr:`/stranded` duplex wire of a certain diameter
+   | |b| :pr:`stranded` solid :pr:`duplex` copper wire (單股銅線)
    | |b| 47 ohm resistor, at least 4 pcs
-   | |b| more SOIC-8 clips
    | |b| :wp:`helping hand <helping hand (tool)>` / :wp:`jig <jig (tool)>` / :zh:`夾具`
+   | |b| USB tester
+   | |b| :wp:`jumpers <jumper (computing)>`
+   | |b| :wp:`magnifying glass`
+         - `33038367511 <https://www.aliexpress.com/i/33038367511.html>`__
+         - :tmall:`619962129533`
 
 squeeze and discard
 |vv| `bios.md <https://github.com/Un1Gfn/x200/blob/master/bios.md>`__
@@ -24,64 +46,138 @@ squeeze and discard
    ERROR
    0251: System CMOS checksum bad - Default configuration used
 
+:raw-html:`<details><summary>CH341A devices overview (photograph)</summary>`
+
+.. image:: https://1.bp.blogspot.com/-RFzfABqVamg/WlEZ-s0FkxI/AAAAAAAAIqg/3L0JBCCQN9sNm4e7ST9Csczwwu7tO1OzgCLcBGAs/s1600/ch341a_products.png
+   :target: https://github.com/boseji/CH341-Store
+   :alt: [CH341-Store]
+
+:raw-html:`</details>`
+
+
+DKMS
+====
+
+.. warning::
+
+   | Try again with /WP and /HOLD pulled HIGH before pushing to AUR
+
+:aw:`DKMS`
+- :manpage:`dkms(8)`
+- :aw:`package guidelines <DKMS package guidelines>`
+
+AUR - `\*ch34\* <https://aur.archlinux.org/packages/?O=0&K=ch34>`__
+
+:pkg:`AUR/spi-ch341-usb-dkms`
+
+| :pkg:`AUR/ch341-i2c-spi-gpio-dkms-git` (`frank-zago/ch341-i2c-spi-gpio <https://github.com/frank-zago/ch341-i2c-spi-gpio>`__)
+| :file:`/usr/src/ch341-i2c-spi-gpio-*/` - installed source
+| :file:`/var/lib/dkms/ch341-i2c-spi-gpio/` - generated module
+
+::
+
+   flashrom -p linux_spi:dev=/dev/spidev0.0 ...
+   flashrom -p linux_spi:dev=/dev/spidev0.0 ...
+
 
 W25Q32BVSIG
 ===========
 
 | connect to SOIC 208-mil W25Q32BVSIG
-| `default is D0 as input and D1 as output <https://github.com/beagleboard/bb.org-overlays/blob/7bd2eb20448be5e2916b6ffda08d6ab0ec17e741/src/arm/BB-SPIDEV1-00A0.dts#L54>`__
 | IEC 60757 `2-letter color code <https://www.kollmorgen.com/en-us/developer-network/wire-color-coding/>`__
-| :file:`~/x200/W25Q32BV.pdf` p10 *4.2 Serial Data Input, Output and IOs (DI, DO and IO0, IO1, IO2, IO3)*
-|     DI (input) pin to serially write instructions, addresses or data to the device
-|     DO (output) to read data or status from the device
+| :file:`~/x200/W25Q32BV.pdf` - p10 - *4.2 Serial Data Input, Output and IOs (DI, DO and IO0, IO1, IO2, IO3)*
+|     DI (input) ...  to serially write instructions, addresses or data to the device
+|     DO (output) ... to read data or status from the device
 
 ::
 
-               +---------------+
-          [BU] |1 /CS     VCC 8| [RD] (connect everything else, check again, then connect VCC)
-   (MISO) [WH] |2  DO   /HOLD 7|
-               |3 /WP     CLK 6| [YE]
-          [BK] |4 GND      DI 5| [GN] (MOSI)
-               +---------------+
+                                    +---------------+
+                               [BU] |1 /CS     VCC 8| [RD] (connect everything else, check again, then connect VCC)
+                        (MISO) [WH] |2  DO   /HOLD 7| [RD] (aL, H=don't hold?) <???>
+   <???> (aL, L=writeprotect?) [BK] |3 /WP     CLK 6| [YE]
+                               [BK] |4 GND      DI 5| [GN] (MOSI)
+                                    +---------------+
 
 
-SPI
-===
+FTDI
+====
 
-flashrom - `FT2232SPI_Programmer <https://flashrom.org/FT2232SPI_Programmer>`__
+| flashrom - `FT2232SPI_Programmer <https://flashrom.org/FT2232SPI_Programmer>`__
+| |b| `C232HM-DDHSL (3.3V) <https://ftdichip.com/products/c232hm-ddhsl-0-2/>`__
+      :prlink:`C232HM-EDHSL (5V) <https://ftdichip.com/products/c232hm-edhsl-0/>`
+| |b| `FT2232H Mini-Module <https://ftdichip.com/products/ft2232h-mini-module/>`__
 
-| `C232HM-DDHSL (3.3V) <https://ftdichip.com/products/c232hm-ddhsl-0-2/>`__
-| :prlink:`C232HM-EDHSL (5V) <https://ftdichip.com/products/c232hm-edhsl-0/>`
 
-`FT2232H Mini-Module <https://ftdichip.com/products/ft2232h-mini-module/>`__
+CH341A\ |br|\ MiniProgrammer
+============================
+
+:wp:`ZIF <zero insertion force>` socket
+
+::
+
+   front
+   +----------+---------+
+   | 5 6 7 8  |         |
+   |          |         |
+   |          |         |
+   | 4 3 2 1  |         |
+   +----------+---------+
+
+   back
+   +----------+---------+
+   | 5 6 7 8  |         |   MISO  5v  ⚡
+   |  25 SPI  | 24 I2C  |   MOSI  5v  ⚡
+   |   BIOS  (  EEPROM (    VCC  3.3v .
+   | 4 3 2 1  |         |
+   +----------+---------+
+
+.. hint::
+   | 5V data might be necessary, clues:
+   | |b| ``Found Winbond flash chip "W25Q32.V" (4096 kB, SPI) on ch341a_spi.`` not showing up on the first flashrom attempt
+   | |b| ``Block protection could not be disabled!`` every now and then
+   | |b| \
+         `ISP <https://www.flashrom.org/ISP>`__ -
+         `interference from other on-board circuits that are connected to W25Q32BVSIG as well <http://www.diybcq.com/thread-145078-1-1.html>`__
+   | Better desolder W25Q32BVSIG and use SMT test socket!
+
+
+CH341A\ |br|\ LC-Technology [R]_
+================================
+
+.. warning::
+
+   | Try again with /WP and /HOLD pulled HIGH
 
 .. _ref_ch341:
 
 | `CH341 <http://www.wch.cn/products/CH341.html>`__
   with 3 :wp:`jumpers <jumper (computing)>`
   |:dart:|
-| `584926806782 <https://item.taobao.com/item.htm?id=584926806782>`__ (`img <https://gd1.alicdn.com/imgextra/i1/44390641/O1CN017SjtRI1GbcMnRjeuf_!!44390641.jpg>`__)
-| `595835010606 <https://item.taobao.com/item.htm?id=595835010606>`__ (`img <https://gd4.alicdn.com/imgextra/i4/4112832130/O1CN01Got6Sd1Rba9YqMnSO_!!4112832130.jpg>`__)
-| `616744148415 <https://item.taobao.com/item.htm?id=616744148415>`__ (`img <https://gd1.alicdn.com/imgextra/i1/2658592015/O1CN01Q53EjM1QkufS4F2K6_!!2658592015.jpg>`__)
+| :taobao:`584926806782` (`img <https://gd1.alicdn.com/imgextra/i1/44390641/O1CN017SjtRI1GbcMnRjeuf_!!44390641.jpg>`__)
+| :taobao:`595835010606` (`img <https://gd4.alicdn.com/imgextra/i4/4112832130/O1CN01Got6Sd1Rba9YqMnSO_!!4112832130.jpg>`__)
+| :taobao:`616744148415` (`img <https://gd1.alicdn.com/imgextra/i1/2658592015/O1CN01Q53EjM1QkufS4F2K6_!!2658592015.jpg>`__)
 
 ::
 
-   +---+---+
-   | O   O | O                             +-----+
-   +---+---+                      VCC [RD] |01 ..| NC
-                                  GND [BK] |02 ..| NC
-          __AMS1117  WCH_CH341A   CS0 [BU] |03 ..| NC
-   USB-A  3.3_2129C  _202386A40   CS1      |04 ..| NC
-                                  CS2      |05 ..| NC
-       +---+---+                  SCK [YE] |06 ..| NC
-     O | O   O |                 MOSI [GN] |07 ..| NC
-       +---+---+                 MISO [WH] |08 ..| NC
-     O | O   O |                           +-----+
-       +---+---+
+   (SPI)  +---+---+   (TTL)
+   (I2C)  | O   O | O (UART)                      +-----+
+   (GPIO) +---+---+                      VCC [RD] |01 ..| NC
+              +---------+  +----------+  GND [BK] |02 ..| NC
+   --------+  | AMS1117 |  |WCH CH341A|  CS0 [BU] |03 ..| NC
+      USB-A|  |3.3 2129C|  |202386A40 |  CS1      |04 ..| NC
+   --------+  +---------+  +----------+  CS2      |05 ..| NC
+              +---+---+                  SCK [YE] |06 ..| NC
+            O | O   O |                 MOSI [GN] |07 ..| NC
+              +---+---+                 MISO [WH] |08 ..| NC
+            O | O   O |                           +-----+
+              +---+---+
+          (5v)     (3v3)
 
 .. warning::
 
-   | Check (1) clip pinout (2) connection between clip and CH341A
+   | Check
+   |  (1) clip pinout
+   |  (2) connection between clip and CH341A
    | before plugging CH341A to PC
 
 .. danger::
@@ -89,11 +185,44 @@ flashrom - `FT2232SPI_Programmer <https://flashrom.org/FT2232SPI_Programmer>`__
    | For online voltage test
    |  |b| Plug CH341A to a USB wall adapter instead of a PC
    |  |b| **VCC and GND pins on SPI side are too close, be cautious not shorting them** |:skull:|
-   | Attach jump wires and test on the other side of the wires, or don't test voltage at all
+   | Attach female-female jump wires and perform test on the other side of the wires
+
+
+Flashrom
+========
+
+:raw-html:`<details><summary>ch341prog</summary>`
+
+:pkg:`AUR/ch341prog-git`
+
+::
+
+   for i in 1; do
+      cd ~darren/x200 || break
+      FILE="$(date +%4Y%m%d-%H:%M:%S.rom)"
+      echo "$FILE"
+      echo
+      printf "\n\e[7m  %s  \e[0m\n\n" "$(date)"
+      ch341prog -r "$(date +%4Y%m%d-%H:%M:%S.rom)" || break
+      printf "\n\e[7m  %s  \e[0m\n\n" "$(date)"
+      echo
+      id darren &>/dev/null || break
+      chown darren:darren "$FILE"
+   done
+
+::
+
+   Device reported its revision [4.03]
+   Manufacturer ID: ef
+   Memory Type: 4016
+   No CFI structure found, trying to get capacity from device ID. Set manually if detection fails.
+   Capacity: 16
+   Chip capacity is 4194304 bytes
+   Read started!
+
+:raw-html:`</details>`
 
 .. code:: console
-
-   ## flashrom -r /dump.bin -V --flash-name --flash-size -p ch341a_spi
 
    # flashrom --flash-name -p ch341a_spi
    Using clock_gettime for delay loops (clk_id: 1, resolution: 1ns).
@@ -136,20 +265,6 @@ verify ::
    FILE=""
    flashrom -v "$FILE" -p ch341a_spi
 
-:raw-html:`<details><summary>hex diff</summary>`
-
-::
-
-   rm -v 2021????-??:??:??.hex
-   ls -l *.rom
-   sha512sum *.rom
-   for i in *.rom; do
-      echo "${i%.rom}.hex"
-      hexdump "$i" 1>"${i%.rom}.hex"
-   done
-
-:raw-html:`</details>`
-
 | `<https://libreboot.org/docs/install/spi.html#hardware-configuration>`__
 | `<https://www.coreboot.org/Board:lenovo/x200#Dumping_the_original_firmware>`__
 
@@ -177,65 +292,52 @@ CH341PAR_LINUX.ZIP -
       shopt -u nullglob
    } && popd 1>/dev/null
 
-:raw-html:`<details><summary>ch341-i2c-spi-gpio(-dkms-git)</summary>`
 
-| AUR - `\*ch34\* <https://aur.archlinux.org/packages/?O=0&K=ch34>`__
-|    :pkg:`AUR/spi-ch341-usb-dkms`
-|    :pkg:`AUR/ch341-i2c-spi-gpio-dkms-git` (`frank-zago/ch341-i2c-spi-gpio <https://github.com/frank-zago/ch341-i2c-spi-gpio>`__)
-| :aw:`DKMS` - :aw:`package guidelines <DKMS package guidelines>` - :manpage:`dkms(8)`
-| :file:`/usr/src/ch341-i2c-spi-gpio-*/` - installed source
-| :file:`/var/lib/dkms/ch341-i2c-spi-gpio/` - generated module
+ROM
+===
 
-::
+strings ::
 
-   flashrom -p linux_spi:dev=/dev/spidev0.0 --flash-name
-   flashrom -p linux_spi:dev=/dev/spidev0.0 --flash-size
+   # https://stackoverflow.com/questions/5917576/sort-a-text-file-by-line-length-including-spaces
+   strings 20210930-01:55:28.rom \
+      | sort \
+      | uniq \
+      | perl -e 'print sort { length($b) <=> length($a) } <>' \
+      | less -SRM +%
 
-:raw-html:`</details>`
+hex diff ::
 
-:raw-html:`<details><summary>ch341prog</summary>`
-
-:pkg:`AUR/ch341prog-git`
-
-::
-
-   for i in 1; do
-      cd ~darren/x200 || break
-      FILE="$(date +%4Y%m%d-%H:%M:%S.rom)"
-      echo "$FILE"
-      echo
-      printf "\n\e[7m  %s  \e[0m\n\n" "$(date)"
-      ch341prog -r "$(date +%4Y%m%d-%H:%M:%S.rom)" || break
-      printf "\n\e[7m  %s  \e[0m\n\n" "$(date)"
-      echo
-      id darren &>/dev/null || break
-      chown darren:darren "$FILE"
+   rm -v 2021????-??:??:??.hex
+   ls -l *.rom
+   sha512sum *.rom
+   for i in *.rom; do
+      echo "${i%.rom}.hex"
+      hexdump "$i" 1>"${i%.rom}.hex"
    done
 
-::
+| `<https://softwarerecs.stackexchange.com/questions/30930/hexadecimal-diff-viewer-for-linux>`__
+| `<https://superuser.com/questions/125376/how-do-i-compare-binary-files-in-linux>`__
+| \
+  ``colordiff --color=always -y <(xxd AAA.rom) <(xxd BBB.rom) | less -SRM +%``
+| `GHex <https://wiki.gnome.org/Apps/Ghex>`__
+| `okteta <https://apps.kde.org/okteta/>`__
+| `wxHexEditor <https://github.com/EUA/wxHexEditor>`__
+| `bless <https://github.com/afrantzis/bless>`__
 
-   Device reported its revision [4.03]
-   Manufacturer ID: ef
-   Memory Type: 4016
-   No CFI structure found, trying to get capacity from device ID. Set manually if detection fails.
-   Capacity: 16
-   Chip capacity is 4194304 bytes
-   Read started!
 
-:raw-html:`</details>`
+Audio/Video/GPU
+===============
 
-CH341A black 5V (`CH341-Store <https://github.com/boseji/CH341-Store#ch341-store>`__) |:zap:| ::
+:amz:`mini pcie to pcie adapter` + low-profile graphics card
 
-   +----------+---------+
-   | 5 6 7 8  |         |
-   |  25 SPI  | 24 I2C  |
-   |   BIOS  (  EEPROM (
-   | 4 3 2 1  |         |
-   +----------+---------+
+LVDS to HDMI adapter
 
-.. hint::
-   | 5V data lines are necessary, clues:
-   | |b| ``Found Winbond flash chip "W25Q32.V" (4096 kB, SPI) on ch341a_spi.`` not showing up on the first flashrom attempt
-   | |b| ``Block protection could not be disabled!`` every now and then
-   | |b| `interference from other on-board circuits that are connected to W25Q32BVSIG as well <http://www.diybcq.com/thread-145078-1-1.html>`__
-   | Better desolder W25Q32BVSIG and use SMT test socket!
+| `4-chipset-family-datasheet.pdf <https://www.intel.com/content/dam/www/public/us/en/documents/datasheets/4-chipset-family-datasheet.pdf>`__
+  (`archive <https://web.archive.org/web/20210807102641/https://www.intel.com/content/dam/www/public/us/en/documents/datasheets/4-chipset-family-datasheet.pdf>`__)
+| *Analog Display* - *Up to 2048x1536 @ 75 Hz refresh*
+| :wp:`SDVO <Serial Digital Video Out>`
+
+
+:wp:`PCIe`
+==========
+

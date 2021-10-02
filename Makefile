@@ -36,7 +36,9 @@ default: clean httpd entr
 # 	sphinx-build -M help . "$(BUILDDIR)"
 
 clean:
-	shopt -s dotglob; rm -rf $(BUILDDIR)/*
+	if [ -f $(BUILDDIR)/index.html ]; then \
+		find $(BUILDDIR)/ -mindepth 1 -maxdepth 1 ! -name current_sheet.pdf | xargs rm -r; \
+	fi;
 
 .SILENT: entr
 entr:
@@ -77,6 +79,7 @@ httpd:
 			echo; \
 			qrencode -tUTF8 $(URL); \
 			echo; \
-			sudo busybox httpd -f -vv -p $(IP):$(PORT) -u $(USER):$(USER) -h $(BUILDDIR) -c /etc/httpd.conf; \
+			set -x; \
+			busybox httpd -f -vv -p $(IP):$(PORT) -h $(BUILDDIR) -c /etc/httpd.conf; \
 		" & ); \
 	fi

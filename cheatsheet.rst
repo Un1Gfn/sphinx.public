@@ -47,7 +47,7 @@ when you have no choice but to pass executable as ``$1``
 
 change terminal emulator title ::
 
-   printf "\033]0;TITLE\007"
+   printf "\e]0;TITLE\a"
 
 horizontal separator ruler / transition line / <hr> ::
 
@@ -160,6 +160,36 @@ test symbolic link ::
 xdotool ::
 
    xdotool search --desktop 0 Chromium windowactivate
+
+unicode to hex escape "\x??" ::
+
+   # https://stackoverflow.com/q/5724761/ascii-hex-convert-in-bash/
+   # https://unix.stackexchange.com/q/467310/how-to-include-a-backslash-in-the-hexdump-output-format-string
+   function s2h {
+     printf "\n"
+     printf %s 'echo -e "'
+     printf %s "$1" \
+       | hexdump -v -e '"\\" 1/1 "x%x"'
+     printf "%s\n" \"
+     printf "\n"
+   }
+
+   s2h "こんにちは"
+
+
+| :manpage:`bash(1)`
+  - Parameter Expansion
+  - ``parameter ... shell parameter ... or an array reference``
+
+::
+
+   # Remove matching prefix pattern
+   ${parameter#word}
+   ${pm_Arr[@]#word}
+
+   # Remove matching suffix pattern
+   ${parameter%word}
+   ${pm_Arr[@]%word}
 
 
 C

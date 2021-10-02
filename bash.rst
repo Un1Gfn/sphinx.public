@@ -211,6 +211,16 @@ approach B ::
 :abbr:`LIFO (last-in, first-out)`
 
 
+Completion
+==========
+
+| `5.2 Bash Variables <https://www.gnu.org/software/bash/manual/html_node/Bash-Variables.html>`__
+  - ``COMP_*``
+| `8.6 Programmable Completion           <https://www.gnu.org/software/bash/manual/html_node/Programmable-Completion.html>`__
+| `8.7 Programmable Completion Builtins  <https://www.gnu.org/software/bash/manual/html_node/Programmable-Completion-Builtins.html>`__
+| `8.8 A Programmable Completion Example <https://www.gnu.org/software/bash/manual/html_node/A-Programmable-Completion-Example.html>`__
+
+
 Footnotes
 =========
 

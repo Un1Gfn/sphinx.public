@@ -83,6 +83,14 @@ Misc
 
 `extend the HTML writer to produce a proper <del> tag <https://stackoverflow.com/a/62493316/>`__
 
+| custom configuration value
+| |b| `developing extensions for Sphinx <https://www.sphinx-doc.org/en/master/extdev/index.html>`__
+| |b| `sphinx.application.Sphinx.add_config_value() <https://www.sphinx-doc.org/en/master/extdev/appapi.html#sphinx.application.Sphinx.add_config_value>`__
+| |b| `sphinx.application.Sphinx.connect() <https://www.sphinx-doc.org/en/master/extdev/appapi.html#sphinx.application.Sphinx.connect>`__
+| |b| `sphinx.config.Config <https://www.sphinx-doc.org/en/master/extdev/appapi.html#sphinx.config.Config>`__
+| |b| `exampleTD <https://www.sphinx-doc.org/en/master/development/tutorials/todo.html>`__
+| |b| `exampleEX <https://github.com/sphinx-doc/sphinx/blob/7682353574e7c8b54330f2ce8f273a16816a6d02/sphinx/ext/extlinks.py#L82>`__
+
 
 Building
 ========

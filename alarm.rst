@@ -435,6 +435,8 @@ flashrom - `BBB <https://www.flashrom.org/BBB>`__
 
    fi
 
+`default is D0 as input and D1 as output <https://github.com/beagleboard/bb.org-overlays/blob/7bd2eb20448be5e2916b6ffda08d6ab0ec17e741/src/arm/BB-SPIDEV1-00A0.dts#L54>`__
+
 page 9/11 P9 expansion headers ::
 
                          P9

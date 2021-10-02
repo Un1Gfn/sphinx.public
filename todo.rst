@@ -1,4 +1,5 @@
 .. include:: include/substitution.txt
+.. highlight:: text
 
 =============
 Todo |:memo:|
@@ -13,6 +14,29 @@ Todo |:memo:|
 | |:pencil:| |:memo:|
 
 :raw-html:`</details>`
+
+----
+
+| submit patch to `bug-bash@gnu.org <https://lists.gnu.org/mailman/listinfo/bug-bash>`__
+  (`example <https://lists.gnu.org/archive/html/bug-bash/2021-09/msg00055.html>`__)
+| fix missing parenthese before ``PARAMETERS`` in
+  `bash.1 <http://git.savannah.gnu.org/cgit/bash.git/tree/doc/bash.1#n3040>`__
+  and
+  `bash.0 <http://git.savannah.gnu.org/cgit/bash.git/tree/doc/bash.0#n3040>`__
+
+::
+
+   The \fIparameter\fP is a shell parameter as described above
+   \fBPARAMETERS\fP) or an array reference (\fBArrays\fP).
+   .PD
+   .PP
+
+`bash-it <https://github.com/Bash-it/bash-it>`__ (oh-my-zsh ripoff)
+
+| PCB
+| |b| digital voltage meter
+| |b| digital alarm
+| |b| `ben eater <https://eater.net/>`__
 
 `aws ec2 <https://console.aws.amazon.com/ec2>`__
 + `certbot <https://certbot.eff.org/>`__
@@ -35,6 +59,8 @@ royalty-free `DisplayPort <https://en.wikipedia.org/wiki/DisplayPort>`__ cap for
 
 assemble latest tarball by pulling from alarm's repo with :manpage:`pacstrap(8)` ``-C``,
 instead of downloading alarm's tarball
+
+:wp:`sound level meter` + :wp:`street performance`
 
 ----
 

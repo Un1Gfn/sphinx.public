@@ -52,35 +52,13 @@ autosectionlabel_maxdepth = 2
 
 # https://www.sphinx-doc.org/en/master/usage/extensions/extlinks.html#confval-extlinks
 extlinks = {
-    'tree': (
-        'https://github.com/Un1Gfn/' + project + '/tree/master/%s',
-        '%s'
-    ),
-    'rtdissue': (
-        'https://github.com/readthedocs/sphinx_rtd_theme/issues/%s',
-        '#%s'
-    ),
-    'r': (
-        'https://www.reddit.com/r/%s',
-        'r/%s'
-    ),
-    # archlinux.py
-    # https://en.wikipedia.org/wiki/Help:Interwiki_linking
-    # 'wp': (
-    #     'https://en.wikipedia.org/wiki/%s',
-    #     'wp:%s'
-    # ),
-    # archlinux.py
-    # https://wiki.archlinux.org/title/Help:Editing#Interwiki_links
-    # 'aw': (
-    #     'https://wiki.archlinux.org/title/%s',
-    #     'aw:%s'
-    # ),
-    # Explicitly Banned in extension/archlinux.py
-    # 'aur': (
-    #     'https://aur.archlinux.org/packages/%s',
-    #     'aur/%s'
-    # ),
+    'tree':     ('https://github.com/Un1Gfn/' + project + '/tree/master/%s',    '%s',),
+    'rtdissue': ('https://github.com/readthedocs/sphinx_rtd_theme/issues/%s',  '#%s',),
+    'r':        ('https://www.reddit.com/r/%s',                               'r/%s',),
+    'amz':      ('https://www.amazon.com/s?k=%s',                               '%s',),
+    'taobao':   ('https://item.taobao.com/item.htm?id=%s',                      '%s',),
+    'tmall':    ('https://detail.tmall.com/item.htm?id=%s',                     '%s',),
+    'yt':       ('https://www.youtube.com/watch?v=%s',                          '%s',),
 }
 
 # https://www.sphinx-doc.org/en/master/usage/extensions/todo.html#configuration
