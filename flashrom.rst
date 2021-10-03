@@ -1,24 +1,16 @@
 .. include:: include/substitution.txt
 .. highlight:: text
 
-====
-X200
-====
+================
+Flashrom |:zap:|
+================
 
 | `<https://en.wikipedia.org/wiki/Chipset>`__
 | `<https://en.wikipedia.org/wiki/I/O_Controller_Hub>`__
 | `<https://en.wikipedia.org/wiki/Northbridge_(computing)>`__
 | `<https://en.wikipedia.org/wiki/Platform_Controller_Hub>`__
 | `<https://en.wikipedia.org/wiki/Southbridge_(computing)>`__
-| `<https://thinkpads.com/forum/viewtopic.php?f=43&p=845241>`__
-| `<https://www.flashrom.org/Arduino_flasher_3.3v>`__
-| `<https://www.flashrom.org/Board_Testing_HOWTO>`__
-| `<https://www.flashrom.org/Common_problems>`__
-| `<https://www.flashrom.org/FAQ>`__
-| `<https://www.flashrom.org/ISP>`__
-| `<https://www.flashrom.org/Serprog>`__
-| `<https://www.flashrom.org/Serprog/Arduino_flasher>`__
-| `<https://www.reddit.com/r/coreboot/comments/8b5m8g/ch341a_usb_flasher_and_335v/>`__
+
 
 Misc
 ====
@@ -34,6 +26,7 @@ Misc
    | |b| :wp:`magnifying glass`
          - `33038367511 <https://www.aliexpress.com/i/33038367511.html>`__
          - :tmall:`619962129533`
+   | |b| female header (keep spare jumper wires neat)
 
 squeeze and discard
 |vv| `bios.md <https://github.com/Un1Gfn/x200/blob/master/bios.md>`__
@@ -60,7 +53,8 @@ DKMS
 
 .. warning::
 
-   | Try again with /WP and /HOLD pulled HIGH before pushing to AUR
+   | Unable to test
+   | See flashrom\:\ :ref:`CH341A MiniProgrammer <flashrom:CH341A\\ \|br\|\\ MiniProgrammer>`
 
 :aw:`DKMS`
 - :manpage:`dkms(8)`
@@ -83,6 +77,9 @@ AUR - `\*ch34\* <https://aur.archlinux.org/packages/?O=0&K=ch34>`__
 W25Q32BVSIG
 ===========
 
+`official datasheet <https://www.winbond.com/resource-files/w25q32bv_revi_100413_wo_automotive.pdf>`__
+(`archive <http://web.archive.org/web/*/https://www.winbond.com/resource-files/w25q32bv_revi_100413_wo_automotive.pdf>`__)
+
 | connect to SOIC 208-mil W25Q32BVSIG
 | IEC 60757 `2-letter color code <https://www.kollmorgen.com/en-us/developer-network/wire-color-coding/>`__
 | :file:`~/x200/W25Q32BV.pdf` - p10 - *4.2 Serial Data Input, Output and IOs (DI, DO and IO0, IO1, IO2, IO3)*
@@ -91,21 +88,12 @@ W25Q32BVSIG
 
 ::
 
-                                    +---------------+
+                                    O---------------+
                                [BU] |1 /CS     VCC 8| [RD] (connect everything else, check again, then connect VCC)
                         (MISO) [WH] |2  DO   /HOLD 7| [RD] (aL, H=don't hold?) <???>
    <???> (aL, L=writeprotect?) [BK] |3 /WP     CLK 6| [YE]
                                [BK] |4 GND      DI 5| [GN] (MOSI)
                                     +---------------+
-
-
-FTDI
-====
-
-| flashrom - `FT2232SPI_Programmer <https://flashrom.org/FT2232SPI_Programmer>`__
-| |b| `C232HM-DDHSL (3.3V) <https://ftdichip.com/products/c232hm-ddhsl-0-2/>`__
-      :prlink:`C232HM-EDHSL (5V) <https://ftdichip.com/products/c232hm-edhsl-0/>`
-| |b| `FT2232H Mini-Module <https://ftdichip.com/products/ft2232h-mini-module/>`__
 
 
 CH341A\ |br|\ MiniProgrammer
@@ -141,12 +129,15 @@ CH341A\ |br|\ MiniProgrammer
    | Better desolder W25Q32BVSIG and use SMT test socket!
 
 
-CH341A\ |br|\ LC-Technology [R]_
-================================
+:pr:`CH341A`\ |br|\ :pr:`LC-Technology`
+=======================================
 
-.. warning::
+.. error::
 
-   | Try again with /WP and /HOLD pulled HIGH
+   | CH341A.LC-Technology does NOT work even if /WP grounded and /HOLD pulled HIGH
+   | Dump differs each time
+   | 5v MOSI/MISO along with 3.3v VCC turns out to be necessary
+   | Try desoldered offline programming instead of `ISP <https://flashrom.org/ISP>`__
 
 .. _ref_ch341:
 
@@ -188,6 +179,17 @@ CH341A\ |br|\ LC-Technology [R]_
    | Attach female-female jump wires and perform test on the other side of the wires
 
 
+Other\ |br|\ programmers
+========================
+
+| `FT2232SPI_Programmer <https://flashrom.org/FT2232SPI_Programmer>`__
+| |b| `C232HM-DDHSL (3.3V) <https://ftdichip.com/products/c232hm-ddhsl-0-2/>`__
+      :prlink:`C232HM-EDHSL (5V) <https://ftdichip.com/products/c232hm-edhsl-0/>`
+| |b| `FT2232H Mini-Module <https://ftdichip.com/products/ft2232h-mini-module/>`__
+
+| `serprog <https://www.flashrom.org/Serprog>`__
+| |b| `Urja Rannikko <https://www.flashrom.org/Arduino_flasher_3.3v>`__
+
 Flashrom
 ========
 
@@ -222,6 +224,12 @@ Flashrom
 
 :raw-html:`</details>`
 
+`flashrom <https://www.flashrom.org/Flashrom>`__
+|vv| `Common_problems <https://www.flashrom.org/Common_problems>`__
+|vv| `FAQ <https://www.flashrom.org/FAQ>`__
+|vv| `Board_Testing_HOWTO (-p internal) <https://www.flashrom.org/Board_Testing_HOWTO>`__
+
+
 .. code:: console
 
    # flashrom --flash-name -p ch341a_spi
@@ -232,7 +240,7 @@ Flashrom
    # flashrom --flash-size -p ch341a_spi
    Using clock_gettime for delay loops (clk_id: 1, resolution: 1ns).
    Found Winbond flash chip "W25Q32.V" (4096 kB, SPI) on ch341a_spi.
-   4194304
+   4194304 (4*1024*1024)
 
 ::
 

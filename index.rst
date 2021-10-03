@@ -40,6 +40,13 @@ ico
 
 .. toctree::
    :maxdepth: 0
+   :caption: X200
+
+   flashrom
+   corebootlibreboot
+
+.. toctree::
+   :maxdepth: 0
    :caption: BBGW
 
    hardware
@@ -47,7 +54,6 @@ ico
    u-boot
    installalarm
    alarm
-   x200
 
 .. toctree::
    :maxdepth: 0

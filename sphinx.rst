@@ -43,9 +43,6 @@ Misc
 
 .. __: https://www.sphinx-doc.org/en/master/usage/extensions/index.html
 
-`The Python Language Reference <https://docs.python.org/3/reference/>`__ -
-:wp:`BNF <Backus–Naur_form>`
-
 | `sphinx-toolbox <https://github.com/sphinx-toolbox/sphinx-toolbox>`__
 
 | `sphinx.ext.todo <https://www.sphinx-doc.org/en/master/usage/extensions/todo.html>`__
@@ -62,7 +59,9 @@ Misc
 | `sphinxcontrib-doxylink <https://github.com/sphinx-contrib/doxylink>`__
 | `sphinxcontrib-examplecode <https://github.com/sphinx-contrib/examplecode>`__
 
-| Create [#]_ [#]_ [#]_ [#]_ [#]_ [#]_ [#]_ an `extension`__
+`The Python Language Reference <https://docs.python.org/3/reference/>`__ -
+:wp:`BNF <Backus–Naur_form>`
+
 | |b| Define a custom role ``:emlink:``, similar to `\:download\:`__
 | |b| Render |emlink_role| to |emlink_html|
 | |b| Post to `SO/q/9645321`__
@@ -70,7 +69,6 @@ Misc
 .. |emlink_role| replace:: :code:`:emlink:`x <y>``
 .. |emlink_html| replace:: :code:`<em><a style="font-style:italic;" href="y">x</em>`
 
-.. __: https://www.sphinx-doc.org/en/master/usage/extensions/index.html
 .. __: https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html#role-download
 .. __: https://stackoverflow.com/questions/9645321/insert-a-link-into-bold-text-in-restructuredtext
 
@@ -90,6 +88,13 @@ Misc
 | |b| `sphinx.config.Config <https://www.sphinx-doc.org/en/master/extdev/appapi.html#sphinx.config.Config>`__
 | |b| `exampleTD <https://www.sphinx-doc.org/en/master/development/tutorials/todo.html>`__
 | |b| `exampleEX <https://github.com/sphinx-doc/sphinx/blob/7682353574e7c8b54330f2ce8f273a16816a6d02/sphinx/ext/extlinks.py#L82>`__
+
+| more
+| |b| `sphinx- extending sphinx <https://www.sphinx-doc.org/en/master/development/index.html>`__
+| |b| `sphinx API - create markup elements (i.e. roles & directives) <https://www.sphinx-doc.org/en/master/extdev/markupapi.html>`__
+| |b| `docutils API - create roles <https://docutils.sourceforge.io/docs/howto/rst-roles.html>`__
+| |b| `readthedocs - create link roles <https://protips.readthedocs.io/link-roles.html>`__
+| |b| `doughellmann - create roles <https://doughellmann.com/posts/defining-custom-roles-in-sphinx/>`__
 
 
 Building
@@ -212,15 +217,3 @@ sphinx_rtd_theme
 
 `doc <https://sphinx-rtd-theme.readthedocs.io>`__
 - `changelog <https://sphinx-rtd-theme.readthedocs.io/en/stable/changelog.html>`__
-
-
-Footnotes
-=========
-
-.. [#] https://www.sphinx-doc.org/en/master/extdev/index.html
-.. [#] https://www.sphinx-doc.org/en/master/extdev/appapi.html
-.. [#] https://www.sphinx-doc.org/en/master/extdev/markupapi.html
-.. [#] https://www.sphinx-doc.org/en/master/development/index.html
-.. [#] https://docutils.sourceforge.io/docs/howto/rst-roles.html
-.. [#] https://protips.readthedocs.io/link-roles.html
-.. [#] https://doughellmann.com/posts/defining-custom-roles-in-sphinx/
