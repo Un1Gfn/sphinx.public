@@ -304,14 +304,50 @@ CH341PAR_LINUX.ZIP -
 ROM
 ===
 
-strings ::
+| identical
+| **dump.bin**
+| 20210930-01:49:29.rom (removed)
+| 20210930-01:51:02.rom (removed)
+| 20210930-01:52:14.rom (removed)
+| 20210930-01:54:13.rom (removed)
+| 20210930-01:55:28.rom (removed)
+| 20211002-23:40:51.rom (removed)
+| 20211002-23:41:26.rom (removed)
+| 20211002-23:42:20.rom (removed)
+| 20211002-23:42:54.rom (removed)
+
+.. table::
+
+   ====================== ======================================================================================================================================
+    :command:`md5sum`      ``526a880af8eea59d21b4ff3c0174a737``
+    :command:`sha1sum`     ``c6a8af98223b22b6020cdf671af4fac2a834a309``
+    :command:`sha224sum`   ``8bcf7a55dda7e670f548b2a0c5fe835f5472606421944980ee8f12ed``
+    :command:`sha256sum`   ``a9489a49f0d4e1b5841b0c9c7b08253de2f64903ab3d795496dcfad27002b57d``
+    :command:`sha384sum`   ``55c0fa6116711f71925af411a8625573baed789667f6c195a418adbc397d27ad22dca711d29f266b18b46500fac76549``
+    :command:`sha512sum`   ``7776a2d4dfe51771e14b0b2475a89d616d850ba5e22cb95eb2d0fe1188e867a422b990645387a30c097b66d2d9ecc38bd3d7b154dbf32a631cc24ff93f8787e6``
+    :command:`b2sum`       ``1cd2eaecd0aab60783f69d74b72c8e0d970066a42feb555e73d3017702dd4f14d7dd8c3f6928333c752164117aa3b40d08be45eec1c78ae6ca4828ca29245cfb``
+   ====================== ======================================================================================================================================
+
+strings
+
+::
 
    # https://stackoverflow.com/questions/5917576/sort-a-text-file-by-line-length-including-spaces
-   strings 20210930-01:55:28.rom \
+   strings dump.bin \
       | sort \
       | uniq \
       | perl -e 'print sort { length($b) <=> length($a) } <>' \
       | less -SRM +%
+
+::
+
+   meld <(
+      strings dump.bin \
+         | grep -i -e TCPABIOS -e 7v -e 83
+   ) <(
+      strings reddit_r_SLASH_libreboot_SLASH_comments_SLASH_o2ygo1...Broccoli-Smooth_4MB.bin \
+         | grep -i -e TCPABIOS -e 7x -e 72
+   )
 
 hex diff ::
 

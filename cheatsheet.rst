@@ -66,6 +66,12 @@ horizontal separator ruler / transition line / <hr> ::
 | ``printf "\n\e[33m  %s\e[0m\n\n" "warning"``
 | |:blue_circle:| :
 | ``printf "\n\e[34m  %s\e[0m\n\n" "info"``
+| console_codes(4)
+|    - `Linux console controls <https://man.archlinux.org/man/console_codes.4#Linux_console_controls>`__
+|       - ECMA-48 Select Graphic Rendition
+|          - *2 set half-bright (simulated with color on a color display)*
+| ``printf "\e[2;37m  %s\e[0m\n\n" "hint"``
+| ``printf "\e[2m  %s\e[0m\n\n" "hint"``
 
 zip archive mojibake ::
 
@@ -161,7 +167,7 @@ xdotool ::
 
    xdotool search --desktop 0 Chromium windowactivate
 
-unicode to hex escape "\x??" ::
+unicode to hex escape ``\x??`` ::
 
    # https://stackoverflow.com/q/5724761/ascii-hex-convert-in-bash/
    # https://unix.stackexchange.com/q/467310/how-to-include-a-backslash-in-the-hexdump-output-format-string
@@ -191,9 +197,24 @@ unicode to hex escape "\x??" ::
    ${parameter%word}
    ${pm_Arr[@]%word}
 
+| find
+  `recently modified <https://unix.stackexchange.com/q/33850/>`__
+  C source file,
+  `excluding dir <https://stackoverflow.com/q/4210042/>`__
+| |:warning:| ``-o`` after -prune
+
+::
+
+   find /home/darren \
+     -path /home/darren/.cache/paru/clone -prune -o \
+     -type f \
+     -name '*.c' \
+     -mtime -30 \
+     |& fgrep -v '’: Permission denied'
+
 
 C
-===
+=
 
 .. highlight:: C
 
@@ -210,7 +231,7 @@ WIP move everything from :file:`~/cheatsheet.c`
 
 compile flags ::
 
-   -std=gnu11 -g -O0 -Wextra -Wall -Winline -Wshadow -fanalyzer
+   -std=gnu11 -g -O0 -Wextra -Wall -Winline -Wshadow -fanalyzer -o a.out
 
 stringify macro ::
 
@@ -250,6 +271,35 @@ lambda macro ::
    g_array_sort(edges,LAMBDA(gint f(const void *x,const void *y){
      return ((Edge*)x)->weight - ((Edge*)y)->weight ;
    }));
+
+dump contents of ``FILE *stdin`` to ``char *buf`` ::
+
+   #include <stdio.h>
+   assert(
+     0==fseek(stdin,0,SEEK_END) &&
+     0==feof(stdin) &&
+     0==ferror(stdin)
+   );
+   const long l=ftell(stdin);
+   char *buf=calloc(1,l+1);
+   assert(buf);
+   rewind(stdin);
+   assert((long long)l==(long long)fread(buf,1,l,stdin));
+   assert(0==fclose(stdin));
+   // ...
+   free(buf);buf=NULL;
+
+gperf gprof valgrind kcachegrind flamegraph ...
+`1 <https://daiwk.github.io/posts/knowledge-gperftools.html>`__
+`2 <https://gernotklingler.com/blog/gprof-valgrind-gperftools-evaluation-tools-application-level-cpu-profiling-linux/>`__
+`3 <https://github.com/brendangregg/FlameGraph>`__
+`4 <https://oprofile-list.sf.narkive.com/tdvTGecS/oprofile-vs-perf-vs-gperf>`__
+
+`temporarily suppress a warning <https://stackoverflow.com/questions/3378560/how-to-disable-gcc-warnings-for-a-few-lines-of-code>`__ ::
+
+   #pragma GCC diagnostic push
+   #pragma GCC diagnostic ignored "-Wsequence-point"
+   #pragma GCC diagnostic pop
 
 
 Git
@@ -319,7 +369,7 @@ Filter-Repo
 
 .. warning::
 
-   | Once ``git filter-repo`` is run, any matched files are removed forever |:wastebasket:| |:fire:| |:put_litter_in_its_place:|
+   | Once ``git filter-repo`` is run, any matched files are removed forever |dumpster_fire|
    | For backing up locally, modify is easily and catastrophically `confused with <https://www.reddit.com/r/grammar/comments/39yc0i/>`__ orig,
    |  |:o:| ``rm -rf modify; cp -a orig   modify``
    |  |:x:| ``rm -rf orig;   cp -a modify orig`` |:radioactive:| |:boom:|

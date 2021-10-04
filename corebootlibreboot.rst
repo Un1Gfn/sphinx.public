@@ -93,10 +93,95 @@ before removal)
    '00f5fa0'
 
 
-BMP
-===
+:wp:`BMP`
+=========
 
-multithreading (divide into 4 parts)
+:raw-html:`<details><summary><s>increase performance</s></summary>`
 
-| :pr:`mmap()`
-| :menuselection:`read rom buffer from file --> open bmp buffer --> fill bmp buffer --> write bmp buffer to file`
+| |b| multithreading (divide into 4 parts)
+| |b| :wp:`GPGPU <general-purpose computing on graphics processing units>` - :aw:`archwiki <GPGPU>`
+| |b| `__builtin_expect <https://gcc.gnu.org/onlinedocs/gcc/Other-Builtins.html#index-_005f_005fbuiltin_005fexpect>`__
+
+:raw-html:`</details>`
+
+:raw-html:`<details><summary>/dev/fb0</summary>`
+
+::
+
+   echo
+   F=/tmp/test.$(uuidgen).sh
+   cat <<EOF >$F
+   cd ~/x200 && {
+      clear; cat dump.bin >/dev/fb0
+      read -r
+      clear; cat reddit_r_SLASH_libreboot_SLASH_comments_SLASH_o2ygo1...Broccoli-Smooth_4MB.bin >/dev/fb0
+      # clear; cat x200_4mb/seabios_grubfirst_x200_4mb_libgfxinit_txtmode_usqwerty.rom >/dev/fb0
+   }
+   EOF
+   chmod +x $F
+   echo "run '$F' in linux console"
+   echo
+
+:raw-html:`</details>`
+
+decode ::
+
+   wget $'\x68\x74\x74\x70\x73'://lmcnulty.gitlab.io/blog/bmp-output/1x1.bmp
+   hexdump -v -e '1/1 "%02x "' 1x1.bmp; echo
+   bash -c "$(head -1 bmp_r.c | cut -d' ' -f2-)"
+   rm 1x1.bmp
+
+:pkg:`extra/eog` = |dumpster_fire|
+
+| feh
+| :guilabel:`r` [reload_image] :guilabel:`w` [size_to_image] :guilabel:`x` [close]
+| :guilabel:`Up` [zoom_in] :guilabel:`Down` [zoom_out]
+
+::
+
+   cd ~/x200 && bash -c "$(head -1 bmp_ombre.c | cut -d' ' -f2-)"
+
+bmp_bin.c ::
+
+    argv
+   --------> h ----+       bpp
+                   +--> w ----> pixarr --> filesz
+   ------> binsz --+
+    ftell
+
+:aw:`list of applications#Image_viewers`
+
+| okular
+| |b| :menuselection:`Settings --> Configure Okular... --> Performance --> Enable graphics antialias = ☐`
+
+| GIMP
+| |b| factory reset
+|        ``rm -rv ~/.cache/gimp ~/.config/GIMP``
+| |b| focus
+|        :menuselection:`Edit --> Preferences --> Image Windows --> Appearance -> Default Appearance in Fullscreen Mode`
+|        background
+         :raw-html:`<span style="background-color:#FFBF80;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>`
+         ``#FFBF80``
+| |b| reload
+|        :menuselection:`File --> Revert --> Revert`
+|        :menuselection:`File --> Open Recent --> garbage.bmp` :guilabel:`Ctrl+1`
+| |b| combine
+|        :menuselection:`File --> New --> 8192x(512*2)`
+|        :menuselection:`Image --> Guides --> New Guide...`
+|        :menuselection:`File --> Open as Layers... [Ctrl+Alt+O]`
+|        :menuselection:`Tools --> Transform Tools --> Move [M]`
+
+final product ::
+
+   (
+      gcc -std=gnu11 -g -O0 -Wextra -Wall -Winline -Werror=shadow -fanalyzer -o bmp_bin.out bmp_bin.c || exit 1
+      echo
+      valgrind -s ./bmp_bin.out 512 0<dump.bin                                                   1>|dump_mine.bmp   || exit 1
+      valgrind -s ./bmp_bin.out 512 0<reddit.com_r_libreboot_comments_o2ygo1_comment_hf7r4z1.bin 1>|dump_reddit.bmp || exit 1
+      echo
+      ls -l garbage.bmp
+      echo
+      file garbage.bmp || exit 1
+      echo
+      background gimp dump_{mine,reddit}.bmp
+   )
