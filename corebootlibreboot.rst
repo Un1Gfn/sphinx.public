@@ -14,24 +14,18 @@ coreboot/Libreboot
    :align: left
    :widths: auto
 
-   ======= ============================== ======================================
-    \       BIOS Version                   3.13 (7VET83WW)
-    \       BIOS Date                      2010-03-12
-    \       Embedded Controller Version    1.06
-    \       System-unit serial number      745533ALV0039R
-    \       System board serial number     1ZGMD28DFB6
-    \       CPU Type                       Intel(R) Core(TM)2 Duo CPU P8600
-    \       CPU Speed                      2.40GHz
-    \       Installed Memory               8192MB
-    \       UUID                           95e196a0-0b28-11dd-806e-c93a11fb16fb
-    \       MAC Address (Internal LAN)     88 88 88 88 87 88
-   ------- ------------------------------ --------------------------------------
-   ------- ------------------------------ --------------------------------------
-    AMT     Active Management Technology
-    FSP     Firmware Support Package
-    ME      Management Engine
-    vBIOS   Video BIOS
-   ======= ============================== ======================================
+   ============================== ======================================
+    BIOS Version                   3.13 (7VET83WW)
+    BIOS Date                      2010-03-12
+    Embedded Controller Version    1.06
+    System-unit serial number      745533ALV0039R
+    System board serial number     1ZGMD28DFB6
+    CPU Type                       Intel(R) Core(TM)2 Duo CPU P8600
+    CPU Speed                      2.40GHz
+    Installed Memory               8192MB
+    UUID                           95e196a0-0b28-11dd-806e-c93a11fb16fb
+    MAC Address (Internal LAN)     88 88 88 88 87 88
+   ============================== ======================================
 
 :raw-html:`<details><summary>[IMG_0146.JPG] photograph of BIOS settings page</summary>`
 
@@ -155,6 +149,7 @@ bmp_bin.c ::
 | |b| :menuselection:`Settings --> Configure Okular... --> Performance --> Enable graphics antialias = ☐`
 
 | GIMP
+| |b| `user manual <https://docs.gimp.org/en/>`__
 | |b| factory reset
 |        ``rm -rv ~/.cache/gimp ~/.config/GIMP``
 | |b| focus
@@ -166,22 +161,60 @@ bmp_bin.c ::
 |        :menuselection:`File --> Revert --> Revert`
 |        :menuselection:`File --> Open Recent --> garbage.bmp` :guilabel:`Ctrl+1`
 | |b| combine
-|        :menuselection:`File --> New --> 8192x(512*2)`
+|        :menuselection:`File --> New --> 10000x1536`
 |        :menuselection:`Image --> Guides --> New Guide...`
-|        :menuselection:`File --> Open as Layers... [Ctrl+Alt+O]`
-|        :menuselection:`Tools --> Transform Tools --> Move [M]`
+|        :menuselection:`File --> Open as Layers...` :guilabel:`Ctrl+Alt+O`
+|        :menuselection:`Tools --> Transform Tools --> Move` :guilabel:`M`
+| |b| script-fu
+|        :menuselection:`Filters --> Script-Fu --> Console`
+|        :menuselection:`Help --> Search and Run a Command` :guilabel:`/`
 
 final product ::
 
-   (
+   cd ~/x200 && (
       gcc -std=gnu11 -g -O0 -Wextra -Wall -Winline -Werror=shadow -fanalyzer -o bmp_bin.out bmp_bin.c || exit 1
       echo
-      valgrind -s ./bmp_bin.out 512 0<dump.bin                                                   1>|dump_mine.bmp   || exit 1
-      valgrind -s ./bmp_bin.out 512 0<reddit.com_r_libreboot_comments_o2ygo1_comment_hf7r4z1.bin 1>|dump_reddit.bmp || exit 1
+      ./bmp_bin.out 0<un1gfn.rom  -h512  1>|un1gfn_512.bmp       &&
+      ./bmp_bin.out 0<un1gfn.rom -uh512  1>|un1gfn_512_flip.bmp  &&
+      ./bmp_bin.out 0<un1gfn.rom  -h1024 1>|un1gfn_1024.bmp      &&
+      ./bmp_bin.out 0<un1gfn.rom -uh1024 1>|un1gfn_1024_flip.bmp &&
+      printf "\e[32m%s\e[0m\n" done
       echo
-      ls -l garbage.bmp
-      echo
-      file garbage.bmp || exit 1
-      echo
-      background gimp dump_{mine,reddit}.bmp
+   )
+
+
+.. _ref_label_imagemagick_bin2bmp_diff:
+
+imagemagick bin2bmp rotate flip compare
+
+.. code::
+
+     +---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+
+     |                            un1gfn                             |
+     +---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+
+   >------------------------------#FFBF80------------------------------<
+     +---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+
+     |                            reddit                             |
+     +---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+
+
+::
+
+   cd ~/x200 && (
+      [ 4194304 -eq "$(stat -c %s reddit.rom)" ] || exit
+
+      [ 4194304 -eq "$((8192*512))" ] || exit
+      D=/tmp/im
+      rm -rf $D
+      mkdir $D
+      magick convert \( -depth 8 -size 512x8192+0 gray:un1gfn.rom \) -rotate 270       $D/un1gfn.bmp
+      magick convert \( -depth 8 -size 512x8192+0 gray:reddit.rom \) -rotate 270 -flip $D/reddit_flip.bmp
+      magick convert \(          -size   1x8192+0   xc:#FFBF80    \) -rotate 270       $D/split.bmp
+      magick convert -append $D/{un1gfn,split,reddit_flip,diff}.bmp
+      printf "\e[32m  %s\e[0m\n" "done"
+
+      [ 4194304 -eq "$((4096*1024))" ] || exit
+      # ...
+
+      background gimp $D/diff.bmp
+
    )

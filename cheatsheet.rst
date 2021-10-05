@@ -301,6 +301,38 @@ gperf gprof valgrind kcachegrind flamegraph ...
    #pragma GCC diagnostic ignored "-Wsequence-point"
    #pragma GCC diagnostic pop
 
+:manpage:`getopt(3)`
+
+.. table:: argv
+   :align: left
+   :widths: auto
+
+   ======= ===================
+    -abc    option element
+    a b c   option characters
+   ======= ===================
+
+.. table:: optstring
+   :align: left
+   :widths: auto
+
+   ============== =======================
+    \...x...       switch
+    \...x:...      requires an argument
+    \...x\:\:...   takes an optional arg
+    +...           $POSIXLY_CORRECT
+   ============== =======================
+
+
+GDB
+===
+
+.. highlight:: text
+
+break at label ::
+
+   b [<file>:]<function>:<label>
+
 
 Git
 ===
@@ -543,6 +575,9 @@ crop and resize ::
    echo
    ls -lh "$O"
    echo
+
+| `view binary data as image <https://superuser.com/q/294270/>`__
+| |b| refer to corebootlibreboot\:\ :ref:`BMP <ref_label_imagemagick_bin2bmp_diff>`
 
 
 Makefile

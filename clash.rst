@@ -19,3 +19,10 @@
 
 | `What is the Best IP Geolocation API <https://medium.com/@ipdata_co/what-is-the-best-commercial-ip-geolocation-api-d8195cda7027>`__
 | |b| `<https://ipdata.co/>`__
+
+| vendor
+| |b| `ntt-co-jp.club <https://ntt-co-jp.club/>`__
+| |b| `ユーザーパネル.ぜんにっぽんくうゆ.com <https://ユーザーパネル.ぜんにっぽんくうゆ.com/>`__
+| |b| `宛平南路600号.com <https://宛平南路600号.com/>`__
+| |b| `很有精神.com <https://很有精神.com/>`__
+| |b| `管人痴.com <https://管人痴.com/>`__
