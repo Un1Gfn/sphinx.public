@@ -59,6 +59,7 @@ extlinks = {
     'taobao':   ('https://item.taobao.com/item.htm?id=%s',                      '%s',),
     'tmall':    ('https://detail.tmall.com/item.htm?id=%s',                     '%s',),
     'yt':       ('https://www.youtube.com/watch?v=%s',                          '%s',),
+    'eol':      ('https://download.lenovo.com/ibmdl/pub/pc/pccbbs/mobiles/%s',  '%s',),
 }
 
 # https://www.sphinx-doc.org/en/master/usage/extensions/todo.html#configuration
