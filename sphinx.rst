@@ -141,6 +141,12 @@ Syntax.\ `Directives`__\ :raw-html:`<br />`\ Block Elements
 
 .. __: https://docutils.sourceforge.io/docs/ref/rst/directives.html
 
+Tables
+------
+
+| `.. tabularcolumns:: <https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html#directive-tabularcolumns>`__
+| `.. csv-table:: <https://docutils.sourceforge.io/docs/ref/rst/directives.html#csv-table-1>`__
+| `.. list-table:: <https://docutils.sourceforge.io/docs/ref/rst/directives.html#list-table>`__
 
 `Admonitions`__
 ---------------

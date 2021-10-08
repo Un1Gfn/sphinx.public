@@ -19,6 +19,19 @@ Misc
 
 | `<https://thinkpads.com/forum/viewtopic.php?f=43&p=845241>`__
 | `<https://www.thinkpads.com/forum/viewtopic.php?t=132686>`__
+| `<https://forum.thinkpads.com/viewtopic.php?t=107098>`__
+| `<https://forum.thinkpads.com/viewtopic.php?f=2&t=100075>`__
+| `<https://github.com/notthebee/revertcoreboot>`__
+| `<https://stackoverflow.com/questions/295135/turn-a-string-into-a-valid-filename>`__
+| `<https://serverfault.com/questions/348482/how-to-remove-invalid-characters-from-filenames>`__
+| `<https://stackoverflow.com/questions/18282929/how-to-validate-filename-in-bash-script>`__
+| `<https://linuxhint.com/bash_append_array/>`__
+| `<https://stackoverflow.com/questions/1951506/add-a-new-element-to-an-array-without-specifying-the-index-in-bash>`__
+| `<https://www.google.com.hk/search?q=fl1+to+wph&newwindow=1&sxsrf=AOaemvJ_5ClHdlwfzh0S1YpYSSW7qZHj1w%3A1633535980905&ei=7MddYdnONpeGr7wPp_awmAI&ved=0ahUKEwjZ9Pnek7bzAhUXw4sBHSc7DCMQ4dUDCA4&uact=5&oq=fl1+to+wph&gs_lcp=Cgdnd3Mtd2l6EAMyBAgjECc6BAgAEEM6BQgAEJECOgsIABCABBCxAxCDAToOCC4QgAQQsQMQxwEQowI6DQgAEIAEEIcCELEDEBQ6BwgAELEDEEM6BQgAEIAEOhAILhCABBCHAhDHARCvARAUOgsILhCABBDHARCvAToNCC4QxwEQrwEQQxCTAjoKCC4QxwEQrwEQQzoKCAAQgAQQhwIQFEoECEEYAFDP9gNY-5QEYISXBGgBcAJ4AIAB6QGIAfAOkgEFMC45LjKYAQCgAQHAAQE&sclient=gws-wiz>`__
+| `<https://www.partsnotincluded.com/flashing-the-bios-to-fix-a-bricked-lenovo-laptop/>`__
+| `<https://github.com/osresearch/heads/issues/307>`__
+| `<https://github.com/m4rc0linux/thinkpad-x200-coreboot>`__
+| `<https://github.com/theopolis/uefi-firmware-parser/issues/77>`__
 
 | `coreboot <https://www.coreboot.org/>`__
   - :wp:`wp:coreboot <coreboot>`
@@ -325,8 +338,20 @@ detatch ::
 ROM
 ===
 
-un1gfn.rom
-----------
+schemx.rom |:green_circle:|
+---------------------------
+
+`schematic-x <https://schematic-x.blogspot.com/2018/04/bios-download.html>`__ - Lenovo Thinkpad X200.rar
+
+chop off trailing bytes before writing ::
+
+   head -c $((4*1024*1024)) ~/x200/schemx.rom >~/x200/schemx_chop.rom
+   ls -l ~/x200/schemx_chop.rom
+   sudo flashrom -p ch341a_spi -w ~/x200/schemx_chop.rom
+
+
+un1gfn.rom |:warning:|
+-------------------------
 
 .. warning::
 
@@ -343,7 +368,6 @@ un1gfn.rom
     :eol:`6fuj46uc.txt` (T500/W500)    [|alpha|] 7VET83WW\ :sup:`ood`                 [|epsilon|] 7VHT16WW\ :sup:`latest`
     :eol:`6duj48uc.txt` (X200/X200s)   [|delta|] 6DET72WW/7XET72WW\ :sup:`latest`     [|gamma|] 7XHT25WW\ :sup:`latest` |br| [|beta|]  7XHT24WW\ :sup:`ood`
    ================================== ============================================== =============================================================
-
 
 :raw-html:`<details><summary>identical dumps (removed)</summary>`
 
@@ -403,13 +427,254 @@ BIOS UI
 
 :raw-html:`</details>`
 
-schemx.rom
-----------
+:pr:`reddit.rom` |:x:|
+----------------------
 
-`schematic-x <https://schematic-x.blogspot.com/2018/04/bios-download.html>`__ - Lenovo Thinkpad X200.rar
+.. error::
 
-reddit.rom
-----------
+   Black screen of death (applying external light source does not reveal anything)
 
 reddit `comment <https://www.reddit.com/r/libreboot/comments/o2ygo1/comment/hf7r4z1/>`__
 by `Broccoli-Smooth <https://www.reddit.com/u/Broccoli-Smooth/>`__
+
+
+`coreboot`__
+============
+
+.. __: https://www.coreboot.org/
+
+`Tutorial, part 1: Starting from scratch <https://doc.coreboot.org/tutorial/part1.html>`__
+
+install packages ::
+
+   DEPS=(gcc-ada acpica)
+   sudo pacman -Syu --needed "${DEPS[@]}"
+   sudo pacman -D --asdeps "${DEPS[@]}"
+   unset -v DEPS
+
+`download <https://www.coreboot.org/downloads.html>`__
+
+::
+
+   cd ~/x200 && gpg --verify coreboot-4.14.tar.xz{.sig,}
+   cd ~/x200 && gpg --verify coreboot-blobs-4.14.tar.xz{.sig,}
+
+.. warning::
+
+   Previous build will be lost
+
+combined extract ::
+
+   cd ~/x200 && {
+      rm -rf coreboot-4.14
+      tar xf coreboot-4.14.tar.xz
+      tar xf coreboot-blobs-4.14.tar.xz
+   }
+
+::
+
+   cd ~/x200/coreboot-4.14
+
+help - ``make help``
+
+clean ::
+
+   # make: *** No rule to make target 'mrproper'.  Stop.
+   make -k V=1 clean distclean
+
+recover previously download source ::
+
+   mkdir -pv ~/x200/coreboot-4.14/util/crossgcc/tarballs/
+   cp -vn ~/x200/crossgcc_tarballs/* ~/x200/coreboot-4.14/util/crossgcc/tarballs/
+
+:raw-html:`<details><summary><s>patch</s></summary>`
+
+[#why_not_sys_toolchain]_
+
+::
+
+   mv -v util/genbuild_h/genbuild_h.sh{.orig,}
+   sed -i.orig -e 's,IASL=util/crossgcc/xgcc/bin/iasl,IASL=/usr/bin/iasl,g' util/genbuild_h/genbuild_h.sh
+   diff -u --color=always util/genbuild_h/genbuild_h.sh{.orig,}
+
+:raw-html:`</details>`
+
+tmux ::
+
+   tmux attach || tmux
+
+toolchain |:clock12:|\ 15min ::
+
+   source ~/proxy.bashrc
+   /usr/bin/time --format="\n  wall clock time - %E\n" \
+      make CPUS=$(nproc) crossgcc-i386 iasl
+
+back up downloaded source ::
+
+   cp -vn ~/x200/coreboot-4.14/util/crossgcc/tarballs/* ~/x200/crossgcc_tarballs/
+
+configure ::
+
+   make xconfig
+
+.. https://en.wikipedia.org/wiki/Radio_button
+.. ☐ ☑ ✓ ⊙
+
+| options
+|    :pr:`General setup --> Allow building with any toolchain ☑` [##why_not_sys_toolchain]_
+|    :menuselection:`Mainboard --> Mainboard vendor   --> ⊙ Lenovo`
+|    :menuselection:`Mainboard --> Mainboard model    --> ⊙ ThinkPad X200 / X200s / X200t`
+|    :menuselection:`Mainboard --> ROM chip size      --> ⊙ 4096 KB (4 MB)`
+|    :menuselection:`Payload   --> Add a Payload      --> ⊙ SeaBIOS`
+|    :menuselection:`Payload   --> Secondary Payloads --> ☑ Load Memtest86+ as a secondary payload`
+|    :menuselection:`File --> Save` :guilabel:`Ctrl+S`
+|    :menuselection:`File --> Quit` :guilabel:`Ctrl+Q`
+
+`create defconfig ... stripping out symbols left as default values <https://doc.coreboot.org/getting_started/kconfig.html#targets-that-update-config-files>`__
+
+.. code:: console
+
+   $ make savedefconfig
+   $ cat defconfig
+   CONFIG_VENDOR_LENOVO=y
+   CONFIG_BOARD_LENOVO_X200=y
+   CONFIG_COREBOOT_ROMSIZE_KB_4096=y
+   CONFIG_MEMTEST_SECONDARY_PAYLOAD=y
+
+:raw-html:`<details><summary><s>coreinfo</s></summary>`
+
+::
+
+   make -C payloads/coreinfo xconfig
+   make -C payloads/coreinfo
+
+:raw-html:`</details>`
+
+build coreboot |:clock12:|\ 2min ::
+
+   /usr/bin/time --format="\n  wall clock time - %E\n" \
+      make CPUS=$(nproc) all
+
+:raw-html:`<details><summary>CBFS</summary>`
+
+.. code:: text
+
+       CBFSPRINT  coreboot.rom
+
+   FMAP REGION: COREBOOT
+   Name                           Offset     Type           Size   Comp
+   cbfs master header             0x0        cbfs header        32 none
+   fallback/romstage              0x80       stage           56632 none
+   cpu_microcode_blob.bin         0xde40     microcode       49152 none
+   fallback/ramstage              0x19e80    stage          109992 LZMA (241688 decompressed)
+   vgaroms/seavgabios.bin         0x34c80    raw             28160 none
+   config                         0x3bac0    raw               171 none
+   revision                       0x3bbc0    raw               705 none
+   build_info                     0x3bec0    raw                94 none
+   fallback/dsdt.aml              0x3bf80    raw             14861 none
+   cmos_layout.bin                0x3f9c0    cmos_layout      1696 none
+   fallback/postcar               0x400c0    stage           20388 none
+   data_ccfl.vbt                  0x450c0    raw              1501 LZMA (3854 decompressed)
+   data_led.vbt                   0x45700    raw              1439 LZMA (3863 decompressed)
+   fallback/payload               0x45d00    simple elf      69209 none
+   payload_config                 0x56bc0    raw              1728 none
+   payload_revision               0x572c0    raw               217 none
+   img/memtest                    0x57400    simple elf      47497 none
+   etc/ps2-keyboard-spinup        0x62dc0    raw                 8 none
+   (empty)                        0x62e00    null          1673060 none
+   bootblock                      0x1fb580   bootblock       18464 none
+       HOSTCC     cbfstool/ifwitool.o
+       HOSTCC     cbfstool/ifwitool (link)
+
+:raw-html:`</details>`
+
+output ::
+
+   binwalk -B build/coreboot.rom
+   sha1sum build/coreboot.rom
+      # 7a430234b4390fb30b9de4c884b14c7fa5112f40
+
+.. code:: console
+
+   $ find . -type f -perm /u+x | less -SRM +%
+   ./build/cbfstool
+   ./build/ifwitool
+   ./build/rmodtool
+   ./build/util/cbfstool/cbfstool
+   ./build/util/cbfstool/fmaptool
+   ./build/util/cbfstool/ifittool
+   ./build/util/cbfstool/ifwitool
+   ./build/util/cbfstool/rmodtool
+   ./build/util/nvramtool/nvramtool
+   ./util/crossgcc/xgcc/bin/iasl
+   ./util/me_cleaner/me_cleaner.py
+   ./util/me_cleaner/setup.py
+   ...
+
+`x200 layout <https://doc.coreboot.org/mainboard/lenovo/montevina_series.html#modifying-flash-descriptor-using-ifdtool>`__ ::
+
+   echo \
+   "00000000:00000fff fd"   \
+   "00001000:00002fff gbe"  \
+   "00003000:003fffff bios" \
+   "00fff000:00000fff pd"   \
+   "00fff000:00000fff me"   \
+   >new_layout.txt
+
+
+`Libreboot`__
+=============
+
+.. __: https://libreboot.org/
+
+| `Where can I learn more about electronics <https://libreboot.org/faq.html#where-can-i-learn-more-about-electronics>`__
+| `ich9utils <https://libreboot.org/docs/install/ich9utils.html>`__
+| `Changing the MAC address <https://libreboot.org/docs/hardware/mac_address.html>`__
+| `Installation instructions <https://libreboot.org/docs/install/>`__
+|    /dev/mem error - cmdline ``iomem=relaxed``
+|    *... MUST use SeaBIOS if ... use the add-on (PCI) cards*
+|    `About ROM image file names <https://libreboot.org/docs/install/#about-rom-image-file-names>`__
+|       :file:`seabios_withgrub_x200_4mb_libgfxinit_corebootfb_usqwerty.rom`
+
+
+::
+
+   gpg --verify libreboot-20210522_x200_4mb.tar.xz{.sig,}
+
+erase broken ::
+
+   sudo flashrom -p ch341a_spi -E
+   sudo flashrom -p ch341a_spi -r /tmp/zero.rom
+   sudo hexdump /tmp/zero.rom
+
+inspect ::
+
+   cmp -l ~/x200/un1gfn{,_bootagain}.rom
+   IFDTOOL=/home/darren/x200/coreboot-4.14/util/ifdtool/ifdtool
+   meld \
+      <($IFDTOOL -d ~/x200/schemx.rom) \
+      <($IFDTOOL -d ~/x200/un1gfn.rom) \
+      <($IFDTOOL -d ~/x200/reddit.rom) \
+   ;
+   $IFDTOOL -d ~/x200/x200_4mb/seabios_withgrub_x200_4mb_libgfxinit_corebootfb_usqwerty.rom
+
+.. table::
+   :align: left
+   :widths: auto
+
+   ============ =================================
+    un1gfn.rom   BIOS EC mismatch, cannot update
+    reddit.rom   black screen
+    schemx.rom   ?
+   ============ =================================
+
+
+Footnotes
+=========
+
+.. [#why_not_sys_toolchain]
+
+   ::
+
+          LINK       cbfs/fallback/bootblock.debug
+      ld.bfd: Error: unable to disambiguate: -nostartfiles (did you mean --nostartfiles ?)
