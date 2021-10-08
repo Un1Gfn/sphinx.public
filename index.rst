@@ -42,6 +42,7 @@ ico
    :maxdepth: 0
    :caption: X200
 
+   x200
    flashrom
    corebootlibreboot
 

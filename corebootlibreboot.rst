@@ -40,6 +40,7 @@ Misc
 | |b| `payloads <https://doc.coreboot.org/payloads.html>`__
 | |b| `releases <https://doc.coreboot.org/releases/index.html>`__
 | |b| `flashing firmware tutorial <https://doc.coreboot.org/flash_tutorial/index.html>`__
+| |b| `x200 <https://doc.coreboot.org/mainboard/lenovo/montevina_series.html>`__
 
 | `Libreboot <https://libreboot.org/>`__
   - :wp:`wp:Libreboot <Libreboot>`
@@ -335,8 +336,8 @@ detatch ::
    sudo losetup -l -a
 
 
-ROM
-===
+ROMs
+====
 
 schemx.rom |:green_circle:|
 ---------------------------
@@ -349,9 +350,34 @@ chop off trailing bytes before writing ::
    ls -l ~/x200/schemx_chop.rom
    sudo flashrom -p ch341a_spi -w ~/x200/schemx_chop.rom
 
+:raw-html:`<details><summary>photograph of BIOS UI [IMG_0147.JPG]</summary>`
+
+.. image:: ../x200/IMG_0147.JPG
+   :alt: [IMG_0147.JPG]
+
+:raw-html:`</details>`
+
+schupd.rom |:green_circle:|\ |:arrow_up:|
+-----------------------------------------
+
+1. write schemx.rom into W25Q32BVSIG
+#. :ref:`update <corebootlibreboot:Update>` both BIOS and EC with :eol:`6duj48us.iso`
+#. save W25Q32BVSIG into schemx.rom
+
+.. code:: console
+
+   $ sha512sum <schupd.rom
+   f4d348508dd0e223425085ad71f34d76fe1120220306ec7584ffc0d53f39039003c1ac7656bb45a8809bf19541023e5b2223755e02c97dbb8ccb9ab78da3bf41  -
+
+:raw-html:`<details><summary>photograph of BIOS UI [IMG_0148.JPG]</summary>`
+
+.. image:: ../x200/IMG_0148.JPG
+   :alt: [IMG_0148.JPG]
+
+:raw-html:`</details>`
 
 un1gfn.rom |:warning:|
--------------------------
+----------------------
 
 .. warning::
 
@@ -383,6 +409,8 @@ un1gfn.rom |:warning:|
 
 :raw-html:`</details>`
 
+:raw-html:`<details><summary>checksum</summary>`
+
 .. table::
 
    ====================== ======================================================================================================================================
@@ -395,9 +423,18 @@ un1gfn.rom |:warning:|
     :command:`b2sum`       ``1cd2eaecd0aab60783f69d74b72c8e0d970066a42feb555e73d3017702dd4f14d7dd8c3f6928333c752164117aa3b40d08be45eec1c78ae6ca4828ca29245cfb``
    ====================== ======================================================================================================================================
 
+:raw-html:`</details>`
+
 :raw-html:`<details><summary>full contents of ~/x200/7VET83WW.dmidecode</summary>`
 
 .. literalinclude:: ../x200/7VET83WW.dmidecode
+
+:raw-html:`</details>`
+
+:raw-html:`<details><summary>photograph of BIOS UI [IMG_0146.JPG]</summary>`
+
+.. image:: ../x200/IMG_0146.JPG
+   :alt: [IMG_0146.JPG]
 
 :raw-html:`</details>`
 
@@ -420,22 +457,106 @@ BIOS UI
     MAC Address (Internal LAN)     88 88 88 88 87 88
    ============================== ======================================
 
-:raw-html:`<details><summary>[IMG_0146.JPG] photograph of BIOS UI</summary>`
-
-.. image:: ../x200/IMG_0146.JPG
-   :alt: [IMG_0146.JPG]
-
-:raw-html:`</details>`
-
 :pr:`reddit.rom` |:x:|
 ----------------------
 
 .. error::
 
-   Black screen of death (applying external light source does not reveal anything)
+   | Black screen of death |:skull:|
+   | Applying external light source does not reveal anything either
 
 reddit `comment <https://www.reddit.com/r/libreboot/comments/o2ygo1/comment/hf7r4z1/>`__
 by `Broccoli-Smooth <https://www.reddit.com/u/Broccoli-Smooth/>`__
+
+
+Update
+======
+
+.. warning::
+
+   Use syslinx 4.x instead of 6.x
+
+| `bios.md#Upgrade <https://github.com/Un1Gfn/x200/blob/master/bios.md#upgrade>`__
+| :tw:`BIOS_Upgrade#Booting_image_with_GRUB2`
+
+`download <https://mirrors.kernel.org/pub/linux/utils/boot/syslinux/>`__
+syslinux-4.07.zip and syslinux-4.07.zip.sign
+
+install grub2 ::
+
+   sudo pacman -Syu --needed core/grub
+   sudo pacman -D --asdeps grub
+
+Intel SSD <-> Norelsys NS1066 <-> USB
+
+| :aw:`GRUB#Master_Boot_Record_(MBR)_specific_instructions`
+| |b| gap ``2MiB  = 4096sectors * 512B/sector``
+
+1. $ lsblk -f
+#. |:warning:| make sure there is no important data
+#. $ sudo wipefs -af <intel_parts>
+#. $ sudo wipefs -af <intel>
+#. $ lsblk -f
+
+#. $ sudo fdisk <intel> ``| gpt | 4MiB BIOS boot | 512MiB Linux | free space |`` :pr:`gpt`
+#. $ sudo sync
+#. $ sudo partprobe
+#. $ sudo mkfs.ext4 -v <Linux>
+#. $ sudo sync
+#. $ sudo partprobe
+
+#. $ lsblk -f
+#. $ sudo mount -v <intel> /mnt
+#. $ sudo grub-install -v --boot-directory=/mnt --target=i386-pc <intel>
+
+:pkg:`AUR/geteltorito`
+
+`13.1 How to specify devices <https://www.gnu.org/software/grub/manual/grub/html_node/Device-syntax.html>`__
+
+.. table::
+   :align: left
+   :widths: auto
+
+   ========= =========== ============ ==========
+    first     hd0         msdos1       gpt1     
+    second    hd1         msdos2       gpt2     
+    ...       ...         ...          ...      
+    *N*\ th   hd\ *N-1*   msdos\ *N*   gpt\ *N* 
+   ========= =========== ============ ==========
+
+::
+
+   geteltorito.pl -o 6duj48us.img 6duj48us.iso
+
+   gpg --verify syslinux-4.07.zip{.sign,}
+   unzip -j syslinux-4.07.zip memdisk/memdisk
+   sudo cp -iv memdisk 6duj48us.img /mnt/
+
+   # Make sure /etc/grub.d/40_custom isn't modified
+   [ -z "$(expac -Q %M grub)" ] && [ 2 -eq "$(expac -Q %B grub | wc -w)" ] && {
+   sudo cp -v /etc/grub.d/40_custom{,.pacnew}
+   # "-a" as of 'not to change "keep exec" tail line above'
+   echo | sudo tee -a /etc/grub.d/40_custom
+   sudo tee -a /etc/grub.d/40_custom <<'EOF'
+   menuentry "X200 BIOS 3.22-1.07 7XET72WW-7XHT25WW) 2013/07/03 " {
+     insmod part_msdos
+     insmod ext2
+     # gpt1 - BIOS boot
+     # gpt2 - Linux
+     set root='hd0,gpt2'
+     linux16 /memdisk
+     initrd16 /6duj48us.img
+   }
+   EOF
+   echo | sudo tee -a /etc/grub.d/40_custom
+   cat /etc/grub.d/40_custom
+   sudo grub-mkconfig -o /mnt/grub/grub.cfg
+   sudo tree -aCL 2 /mnt
+   sudo umount -v /mnt
+
+   }
+
+$ sudo udisksctl power-off -b <intel>
 
 
 `coreboot`__
@@ -658,16 +779,30 @@ inspect ::
    ;
    $IFDTOOL -d ~/x200/x200_4mb/seabios_withgrub_x200_4mb_libgfxinit_corebootfb_usqwerty.rom
 
-.. table::
-   :align: left
-   :widths: auto
+clone notabug/libreboot/\ `ich9utils <https://notabug.org/libreboot/ich9utils>`__ ::
 
-   ============ =================================
-    un1gfn.rom   BIOS EC mismatch, cannot update
-    reddit.rom   black screen
-    schemx.rom   ?
-   ============ =================================
+   make -C ~/x200/ich9utils
 
+| MAC address - `read the white label that is often found on the motherboard under the memory sticks <https://libreboot.org/docs/hardware/mac_address.html>`__
+| `ich9gen <https://libreboot.org/docs/install/ich9utils.html>`__ + `install <https://libreboot.org/docs/install/>`__ + `spi <https://libreboot.org/docs/install/spi.html>`__
+
+::
+
+   cd ~/x200
+   cp -vi x200_4mb/seabios_withgrub_x200_4mb_libgfxinit_corebootfb_usqwerty.rom libreboot.rom
+   ./ich9utils/ich9gen --macaddress 00:1F:16:08:F0:10
+   dd if=ich9fdgbe_4m.bin of=libreboot.rom bs=12k count=1 conv=notrunc
+   rm -v ich9fd{,no}gbe_{4,8,16}m{,_ro}.bin mkgbe.{c,h}
+   ./magick_diff.sh x200_4mb/seabios_withgrub_x200_4mb_libgfxinit_corebootfb_usqwerty.rom libreboot.rom
+   sha1sum          x200_4mb/seabios_withgrub_x200_4mb_libgfxinit_corebootfb_usqwerty.rom libreboot.rom
+
+::
+
+   sudo flashrom -p ch341a_spi -w libreboot.rom
+
+:aw:`Wake-on-LAN#On_the_same_LAN` (not working) ::
+
+   wol 00:1F:16:08:F0:10
 
 Footnotes
 =========

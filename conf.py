@@ -52,6 +52,7 @@ autosectionlabel_maxdepth = 2
 
 # https://www.sphinx-doc.org/en/master/usage/extensions/extlinks.html#confval-extlinks
 extlinks = {
+
     'tree':     ('https://github.com/Un1Gfn/' + project + '/tree/master/%s',    '%s',),
     'rtdissue': ('https://github.com/readthedocs/sphinx_rtd_theme/issues/%s',  '#%s',),
     'r':        ('https://www.reddit.com/r/%s',                               'r/%s',),
@@ -60,6 +61,19 @@ extlinks = {
     'tmall':    ('https://detail.tmall.com/item.htm?id=%s',                     '%s',),
     'yt':       ('https://www.youtube.com/watch?v=%s',                          '%s',),
     'eol':      ('https://download.lenovo.com/ibmdl/pub/pc/pccbbs/mobiles/%s',  '%s',),
+
+    # extension/define.py:wikiprepend_dict
+    'aw':  ('https://wiki.archlinux.org/title/%s',             '%s',),
+    'dw':  ('https://wiki.debian.org/%s',                      '%s',),
+    'el':  ('https://elinux.org/%s',                           '%s',),
+    'gw':  ('https://wiki.gentoo.org/wiki/%s',                 '%s',),
+    'wp':  ('https://en.wikipedia.org/wiki/%s',                '%s',),
+    'ja':  ('https://ja.wikipedia.org/wiki/%s',                '%s',),
+    'zh':  ('https://zh.wikipedia.org/wiki/%s',                '%s',),
+    'egw': ('https://emulation.gametechwiki.com/index.php/%s', '%s',),
+    'tw':  ('https://www.thinkwiki.org/wiki/%s',               '%s',),
+    'tiw': ('https://www.theiphonewiki.com/wiki/%s',           '%s',),
+
 }
 
 # https://www.sphinx-doc.org/en/master/usage/extensions/todo.html#configuration

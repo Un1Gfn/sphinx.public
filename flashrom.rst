@@ -300,22 +300,3 @@ CH341PAR_LINUX.ZIP -
       done
       shopt -u nullglob
    } && popd 1>/dev/null
-
-
-
-Audio/Video/GPU
-===============
-
-:amz:`mini pcie to pcie adapter` + low-profile graphics card
-
-LVDS to HDMI adapter
-
-| `4-chipset-family-datasheet.pdf <https://www.intel.com/content/dam/www/public/us/en/documents/datasheets/4-chipset-family-datasheet.pdf>`__
-  (`archive <https://web.archive.org/web/20210807102641/https://www.intel.com/content/dam/www/public/us/en/documents/datasheets/4-chipset-family-datasheet.pdf>`__)
-| *Analog Display* - *Up to 2048x1536 @ 75 Hz refresh*
-| :wp:`SDVO <Serial Digital Video Out>`
-
-
-:wp:`PCIe`
-==========
-

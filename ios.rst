@@ -52,9 +52,9 @@ ideviceinfo
 ===========
 
 `gist <https://gist.github.com/adamawolf/3048717>`__ | theiphonewiki
-- :tw:`models`
-- :tw:`list of iPads`
-- :tw:`list of iPhones`
+- :tiw:`models`
+- :tiw:`list of iPads`
+- :tiw:`list of iPhones`
 
 :raw-html:`<details><summary><code>D20AP</code></summary>`
 

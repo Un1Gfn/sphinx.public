@@ -323,6 +323,25 @@ gperf gprof valgrind kcachegrind flamegraph ...
     +...           $POSIXLY_CORRECT
    ============== =======================
 
+`encrypt text with ssh rsa public key <https://superuser.com/questions/576506/how-to-use-ssh-rsa-public-key-to-encrypt-a-text>`__ ::
+
+   ssh-keygen -f ~/.ssh/id_rsa.pub -e -m PKCS8 >~/.ssh/id_rsa.pub.pem
+   cat <<EOF | openssl rsautl -encrypt -pubin -inkey ~/.ssh/id_rsa.pub.pem -ssl | base64 -w0
+
+::
+
+   This is a secret.
+   EOF
+
+decrypt ::
+
+   base64 -d <<EOF | openssl rsautl -decrypt -inkey ~/.ssh/id_rsa
+
+::
+
+   ...
+   EOF
+
 
 GDB
 ===
