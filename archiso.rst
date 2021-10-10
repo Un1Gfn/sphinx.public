@@ -23,10 +23,6 @@ list files ::
    cd ~/archiso
    exa -T -a -s extension -I '.git|.gitignore|archlive'
 
-sqeeze everything out of readme.sh
-
-:pr:`Cheatsheet - Bash - assertion or error handling - sed ... @ABRTEXIT@ ... @ABRTRET@ ...`
-
 :aw:`Full_system_backup_with_SquashFS`
 
 Check mkfs timestamp of PaaFS (Partition-as-a-Filesystem) (mkfs.ext4 /dev/sdXN) ::
@@ -39,8 +35,8 @@ Check mkfs timestamp of DaaFS (Drive-as-a-Filesystem) (mksquashfs ... /dev/sdX) 
    sudo unsquashfs -stat /dev/sdX
 
 
-Swipe
-=====
+Filelight
+=========
 
 | /root/.config/filelightrc
 | \
@@ -71,11 +67,10 @@ Prepare
 
 .. warning::
 
-   | Don't escalate yet
-   | |:no_entry_sign:| su
-   | |:no_entry_sign:| sudo
+   | Don't escalate yet |:no_entry_sign:| su |:no_entry_sign:| sudo
 
-default umask in :pkg:`core/filesystem`\ `etc/profile`__ is ``022`` [#profilelog]_
+default umask in `etc/profile <https://github.com/archlinux/svntogit-packages/blob/ed2da51a91162eaa0916dc3d9725fb2b574fb901/trunk/profile#L4>`__
+(:pkg:`core/filesystem`) is ``022`` [#profilelog]_
 
 .. table::
    :align: left
@@ -87,8 +82,6 @@ default umask in :pkg:`core/filesystem`\ `etc/profile`__ is ``022`` [#profilelog
     file        :file:`0666 = rwxrwxrwx`   :file:`0022`   :file:`0666 - 0022 = 0644 = rw-r--r--`
     directory   :file:`0777 = rwxrwxrwx`   :file:`0022`   :file:`0777 - 0022 = 0755 = rwxr-xr-x`
    =========== ========================== ============== ============================================================
-
-.. __: https://github.com/archlinux/svntogit-packages/blob/ed2da51a91162eaa0916dc3d9725fb2b574fb901/trunk/profile#L4
 
 upgrade ::
 
@@ -164,17 +157,27 @@ make sure baseline is a strict subset of releng ::
       printf "\n\e[31m%s\e[0m\n\n" "  err"
    fi
 
+copy releng
+
 .. warning::
 
    Previous customizations will be lost
 
-copy releng ::
+::
 
    cd "$PROJ"
    rm -rf "$ARCHLIVE"
    cp -r "$RELENG" "$ARCHLIVE"
 
-write canonicalized package list ::
+write canonicalized package list
+
+:raw-html:`<details><summary>contents of pkgarr.bashrc</summary>`
+
+.. literalinclude:: ../archiso/pkgarr.bashrc
+
+:raw-html:`</details>`
+
+::
 
    source "$PROJ/pkgarr.bashrc"
    printf "%s\n" ${PKGARR[@]} | env LC_ALL=C sort | uniq >"$ARCHLIVEPKG"
@@ -218,30 +221,44 @@ copytoram ::
 
 convenience mountpoints ::
 
-   mkdir -v "$AIROOTFS"/mnt.{nvme,usb}
+   mkdir -pv "$AIROOTFS"/mnt.{nvme,usb}
 
 timezone ::
 
-   rm -fv "$AIROOTFS/etc/localtime"
-   ln -sfv "/usr/share/zoneinfo/Asia/Makassar" "$_"
-   file "$_"
+   rm -fv $AIROOTFS/etc/localtime
+   ln -sfv '/usr/share/zoneinfo/Asia/Makassar' $_
+   file $_
+
+:aw:`Archiso#Prepare_an_ISO_for_an_installation_via_SSH` ::
+
+   install -Dm600 -v ~/.ssh/id_rsa.pub $AIROOTFS/root/.ssh/authorized_keys
+
+mksquashfs.sh ::
+
+   install -Dm755 -v $PROJ/mksquashfs.sh $AIROOTFS/
+   ln -sfv '/mksquashfs.sh' $AIROOTFS/usr/local/bin/mksquashfs.sh
 
 :manpage:`motd(5)` :manpage:`issue(5)` ::
 
-   if [ -e "$AIROOTFS/etc/motd.orig" ]; then
-      printf "\n\e[31m%s\e[0m\n\n" "  err"
-   else
-      cp -v "$AIROOTFS/etc/motd"{,.orig}
-      {
-         echo "/etc/motd"
-         echo
-         cat "$AIROOTFS/etc/motd"
-      } | sponge "$AIROOTFS/etc/motd"
+   mv -v $AIROOTFS/etc/motd{.orig,}
+   cp -v "$AIROOTFS/etc/motd"{,.orig}
+   {
+      echo "/etc/motd"
       echo
       cat "$AIROOTFS/etc/motd"
-   fi
+   } | sponge "$AIROOTFS/etc/motd"
+   echo
+   cat "$AIROOTFS/etc/motd"
 
-:file:`exclude_file` for :file:`mksquashfs.sh` ::
+:file:`exclude_file` for :file:`mksquashfs.sh`
+
+:raw-html:`<details><summary>contents of ignarr.bashrc</summary>`
+
+.. literalinclude:: ../archiso/ignarr.bashrc
+
+:raw-html:`</details>`
+
+::
 
    source "$PROJ/ignarr.bashrc"
    builtin printf '%s\n' "${IGNARR_MKSQUASHFS[@]}" >"$AIROOTFS/exclude_file"
@@ -250,27 +267,10 @@ timezone ::
    echo
    unset -v IGNARR_MKSQUASHFS
 
-| :file:`mksquashfs.sh`
-| `README.profile.rst <https://gitlab.archlinux.org/archlinux/archiso/-/blob/master/docs/README.profile.rst>`__ - #airootfs
-| :manpage:`sed(1)`
-| |b| Zero- or One- address commands |rarr| ``a \ text`` |rarr| Append text
-| |b| Addresses |rarr| ``/regexp/`` |rarr| Match  lines  matching  the regular expression regexp
-
-::
-
-   echo
-   install -m755 -v "$PROJ/mksquashfs.sh" "$AIROOTFS/"
-   ln -sfv "/mksquashfs.sh" "$AIROOTFS/usr/local/bin/mksquashfs.sh"
-   exa -l "$_"
-   echo
-   sed -e '/^file_permissions=(/a \ \ ["/mksquashfs.sh"]="0:0:755"' "$RELENG/profiledef.sh" >"$ARCHLIVE/profiledef.sh"
-   diff -u --color {"$RELENG","$ARCHLIVE"}/profiledef.sh
-   echo
-
 enable gpm ::
 
-   ln -sv "/usr/lib/systemd/system/gpm.service" "$ARCHLIVE/airootfs/etc/systemd/system/multi-user.target.wants/gpm.service"
-   exa -l "$_"
+   ln -sv '/usr/lib/systemd/system/gpm.service' $ARCHLIVE/airootfs/etc/systemd/system/multi-user.target.wants/gpm.service
+   exa -l $_
 
 no accidental suspend ::
 
@@ -289,39 +289,62 @@ no accidental suspend ::
    EOC
    fi
 
-**kill da madafakin dhc\***
+| :pr:`kill da madafakin dhc*`
+| disable services
 
 ::
 
-   find "$ARCHLIVE" -iname '*udev*'
+   # find "$ARCHLIVE" -iname '*udev*'
    # rm -fv "$ARCHLIVE/airootfs/etc/udev/rules.d/81-dhcpcd.rules"
 
-::
-
+   # Before
    # env SYSTEMD_COLORS=1 systemctl --root="$AIROOTFS" --no-pager list-unit-files
-   echo
-   exa -aT "$AIROOTFS/etc/systemd/system"/*.wants
-   echo
-
-::
+   # echo
+   # exa -aT "$AIROOTFS/etc/systemd/system"/*.wants
+   # echo
 
    pushd "$AIROOTFS/etc/systemd/system/"
-   rm    -r -v cloud-init.target.wants
-   rm       -v multi-user.target.wants/choose-mirror.service
-   rm       -v multi-user.target.wants/iwd.service
-   rm       -v multi-user.target.wants/livecd-talk.service
-   rm       -v multi-user.target.wants/ModemManager.service
-   rm       -v multi-user.target.wants/reflector.service
-   rm       -v multi-user.target.wants/sshd.service             # Vulnerable
-   rm       -v multi-user.target.wants/systemd-networkd.service
-   rm    -r -v network-online.target.wants
+     rm -rv cloud-init.target.wants
+     rm  -v multi-user.target.wants/choose-mirror.service
+     rm  -v multi-user.target.wants/iwd.service
+     rm  -v multi-user.target.wants/livecd-talk.service
+     rm  -v multi-user.target.wants/ModemManager.service
+     rm  -v multi-user.target.wants/reflector.service
+   # rm  -v multi-user.target.wants/sshd.service             # Vulnerable
+   # rm  -v multi-user.target.wants/systemd-networkd.service
+   # rm -rv network-online.target.wants
    popd
 
-::
-
+   # After
    # env SYSTEMD_COLORS=1 systemctl --root="$AIROOTFS" --no-pager list-unit-files
    echo
    exa -aT "$AIROOTFS/etc/systemd/system"/*.wants
+   echo
+
+permissions
+-----------
+
+| `README.profile.rst <https://gitlab.archlinux.org/archlinux/archiso/-/blob/master/docs/README.profile.rst>`__ - #airootfs
+| :manpage:`sed(1)`
+| |b| Zero- or One- address commands |rarr| ``a \ text`` |rarr| Append text
+| |b| Addresses |rarr| ``/regexp/`` |rarr| Match  lines  matching  the regular expression regexp
+
+::
+
+   A=''
+   A+='\ \ #\n'
+   A+='\ \ ["/mksquashfs.sh"]="0:0:0755"\n'
+   A+='\ \ #\n'
+   A+='\ \ ["/root"]="0:0:0750"\n'
+   A+='\ \ ["/root/.ssh"]="0:0:0700"\n'
+   A+='\ \ ["/root/.ssh/authorized_keys"]="0:0:0600"\n'
+   A+='\ \ #\n'
+   A="${A%\\n}"
+   echo $A
+   sed -e "/^file_permissions=(/a $A" \
+      "$RELENG/profiledef.sh" \
+      >"$ARCHLIVE/profiledef.sh"
+   diff -u --color {"$RELENG","$ARCHLIVE"}/profiledef.sh
    echo
 
 
@@ -350,32 +373,33 @@ drop caches & discard ::
 
 build the ISO as root ::
 
-   sudo \
-     /usr/bin/time --format="\n  wall clock time - %E\n" \
-     mkarchiso \
+   DM="$(date +%Y.%m.%d)-$(uname -m)"; \
+   sudo /usr/bin/time --format="\n  wall clock time - %E\n" mkarchiso \
       -v \
       -w /tmp/archiso-tmp/ \
       -o "$PROJ" \
-      "$ARCHLIVE"
-   sudo chown -v darren:darren "$PROJ/archlinux-$(date +%Y.%m.%d)-x86_64.iso"
-   file "$PROJ/archlinux-$(date +%Y.%m.%d)-x86_64.iso"
+      "$ARCHLIVE"; \
+   sudo chown -v darren:darren "$PROJ/archlinux-$DM.iso"; \
+   file "$PROJ/archlinux-$DM.iso"
 
-record checksum manually ::
+checksum ::
 
-   cd "$PROJ"
-   sha256sum "archlinux-$(date +%Y.%m.%d)-x86_64.iso"
-   subl "archlinux-$(date +%Y.%m.%d)-x86_64.iso.sha256sum"
-   # Paste hash alone, w/o filename, newline-terminated
+   sha512sum archlinux-????.??.??-"$(uname -m)".iso
 
-.. tip::
+.. table::
+   :align: left
+   :widths: auto
 
-   | To verify checksum later
-   | \
-     ``F="archlinux-$(date +%Y.%m.%d)-x86_64.iso"; echo "$(cat "$F.sha256sum")  $F" | sha256sum -c --strict -w; unset -v F``
+   ================================= ======================================================================================================================================
+    iso                               sha512sum
+    archlinux-2021.03.31-x86_64.iso   ``54439f4b052e5e0b2b317c6e5c644fc521fc58608033dbbc322fa0991a60d42869b05668013d617c434c69bc5017728b8736a9f2e4b0c430e5d931afe1992ec9``
+    archlinux-2021.08.26-x86_64.iso   ``3fa59b82908da25ed57d676a8b59bd000ea74b49d7e65e1520f61e202346f2787afa545fbbd2fc5fe6e0e5b622f7e5fb350b3e1a44cf8846e2366f6a24b71d32``
+    archlinux-2021.10.09-x86_64.iso   ``fca799e80f0e4d8fdd44e3eaffa56c18f89aff123351e064755e50550fe6bdd3b49caece0f2f787499ed0b5f8b54ea7c965339da17a2e647fd9e8e193777e089``
+   ================================= ======================================================================================================================================
 
 .. warning::
 
-   Make sure there are no mount binds before removing work directory ::
+   Make sure there are no stray bind mounts before removing work directory ::
 
       if su -c 'diff -u /tmp/findmnt.before_mkarchiso <(findmnt -A)'
       then printf "\n\e[32m%s\e[0m\n\n" "  ok"
@@ -391,6 +415,7 @@ remove work directory ::
 qemu ::
 
    run_archiso -d -i "$PROJ/archlinux-$(date +%Y.%m.%d)-x86_64.iso" -u
+      # Probing EDD (edd=off to disable)
 
 `Transfer`__
 ============
@@ -445,10 +470,18 @@ reattach ::
    | What about a health check before writing?
    | :file:`~/archiso/disk_health.bashrc`
 
+.. warning::
+
+   | If the last bytes don't fill up a 512B sector
+   | :command:`dd` might zero out the rest
+   | :command:`cat` doesn't
+
 write ::
 
    date
-   cat "archlinux-$(date +%Y.%m.%d)-x86_64.iso" >/dev/sdX
+   cd ~darren/archiso
+   # Change "null" to the correct device
+   dd if=archlinux-$(date +%Y.%m.%d)-$(uname -m).iso of=/dev/null status=progress
    date
 
 sync ::

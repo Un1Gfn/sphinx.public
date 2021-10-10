@@ -166,6 +166,7 @@ html_theme = 'sphinx_rtd_theme'
 # https://sphinx-rtd-theme.readthedocs.io/en/latest/configuring.html
 html_theme_options = {
     'collapse_navigation': False,
+    'sticky_navigation': False,
     'navigation_depth': -1,
     'display_version': True,
     'prev_next_buttons_location': 'None',
