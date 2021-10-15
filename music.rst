@@ -90,6 +90,9 @@ Misc
 
 piano stores - :file:`/sphinx.private/places.rst`
 
+| `compressor <https://askubuntu.com/questions/31580/is-there-a-way-of-leveling-compressing-the-sound-system-wide>`__
+| :wp:`EQ <equalization (audio)>` - boost bass with :wp:`LPF <low-pass filter>` for recognizing :wp:`accompaniment`
+
 
 Codec/Container
 ===============
@@ -108,6 +111,7 @@ Whishlist |:memo:|
 | piano - Tokyo Hot
 | `Amelia Watson BGM <https://chordify.net/chords/amelia-watson-s-bgm-piano-kotailri>`__
 | :zh:`高嘉瑜`\ x\ :zh:`隱形的翅膀` :yt:`bhZZVmAdpt8` :yt:`hOo3JX93Op8`
+| 夢を\ :pr:`かなえて`\ かなえないドラえもん - `YTShorts <https://www.youtube.com/shorts/sqoy5qkxuWE>`__
 
 
 8bit

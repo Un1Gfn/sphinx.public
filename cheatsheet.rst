@@ -342,6 +342,13 @@ decrypt ::
    ...
    EOF
 
+awesome-c
+|vv| `oz123 <https://github.com/oz123/awesome-c>`__
+|vv| `inputsh <https://github.com/inputsh/awesome-c>`__
+|vv| `uhub <https://github.com/uhub/awesome-c>`__
+|vv| `Bfgeshka <https://github.com/Bfgeshka/awesome-c#json>`__
+|vv| `mazurov <https://notabug.org/mazurov/awesome-c>`__
+
 
 GDB
 ===
@@ -414,6 +421,18 @@ delete remote branch
 .. code:: bash
 
    git push -u origin ':main'
+
+| `checking out pull requests locally <https://docs.github.com/en/github/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/checking-out-pull-requests-locally>`__
+| `clone from pull request <https://stackoverflow.com/questions/14947789>`__
+
+::
+
+   mkdir -pv /tmp/genimage
+   cd /tmp/genimage
+   git init
+   git remote add origin git@github.com:pengutronix/genimage.git
+   git fetch origin pull/166/head --depth=1
+   git checkout -b pr166 FETCH_HEAD
 
 Filter-Repo
 -----------

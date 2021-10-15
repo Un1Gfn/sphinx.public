@@ -43,6 +43,10 @@ CPU
 GPU/Video
 =========
 
+.. hint::
+
+   HDR for TV?
+
 .. tip::
 
    | GM45 is \*\*very\*\* old
@@ -64,7 +68,9 @@ GPU/Video
    | `Don't <https://superuser.com/q/112309/>`__ hot plug VGA
    | Attatch it before a cold boot
 
-:aw:`EDID <kernel mode setting#Forcing_modes_and_EDID>`
+| EDID
+| |b| :aw:`kernel mode setting#Forcing_modes_and_EDID`
+| |b| `reddit <https://www.reddit.com/r/archlinux/comments/oujnxs/>`__
 
 :taobao:`LVDS to HDMI adapter <525562175840>`
 
@@ -350,3 +356,5 @@ send :pkg:`community/clash` configs ::
    scp -r /tmp/yacd-gh-pages/ darren@x200:/home/darren/yacd-gh-pages/; \
    ssh darren@x200 ln -sv /{home/darren,tmp}/clash; \
    ssh darren@x200 ln -sv /{home/darren,tmp}/yacd-gh-pages
+
+edit remote file with :file:`/usr/local/bin/subr`

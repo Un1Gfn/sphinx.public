@@ -24,7 +24,6 @@ Test
 | :guilabel:`&Cancel`
 | :menuselection:`Start --> Pro&grams`
 
-
 |today|
 
 

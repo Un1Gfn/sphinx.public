@@ -17,6 +17,8 @@ Contacts
 Misc
 ====
 
+:r:`m?rc0linux <coreboot/comments/kgfue2/>`
+
 | `<https://thinkpads.com/forum/viewtopic.php?f=43&p=845241>`__
 | `<https://www.thinkpads.com/forum/viewtopic.php?t=132686>`__
 | `<https://forum.thinkpads.com/viewtopic.php?t=107098>`__

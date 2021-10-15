@@ -17,6 +17,9 @@ Todo |:memo:|
 
 ----
 
+| :aw:`official repositories#Testing_repositories`
+| :aw:`Arch Testing Team`
+
 | submit patch to `bug-bash@gnu.org <https://lists.gnu.org/mailman/listinfo/bug-bash>`__
   (`example <https://lists.gnu.org/archive/html/bug-bash/2021-09/msg00055.html>`__)
 | fix missing parenthese before ``PARAMETERS`` in

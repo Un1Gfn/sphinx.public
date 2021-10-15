@@ -78,6 +78,7 @@ ico
    ios
    music
    pkgmgmt
+   recipe
    router
    todo
 

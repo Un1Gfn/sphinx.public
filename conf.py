@@ -39,10 +39,11 @@ extensions = [
     'sphinx.ext.autosectionlabel',
     'sphinx.ext.extlinks',
     'sphinx.ext.githubpages',       # https://www.sphinx-doc.org/en/master/usage/extensions/githubpages.html
+    'sphinx.ext.graphviz',
     'sphinx.ext.todo',
-    'sphinxemoji.sphinxemoji',
-    'sphinxcontrib.youtube',        # /usr/lib/python3*/site-packages/sphinxcontrib/youtube/
     'sphinxcontrib.programoutput',  # https://pythonhosted.org/sphinxcontrib-programoutput/
+    'sphinxcontrib.youtube',        # /usr/lib/python3*/site-packages/sphinxcontrib/youtube/
+    'sphinxemoji.sphinxemoji',
     'myextension',
 ]
 

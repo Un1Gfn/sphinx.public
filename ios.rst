@@ -18,6 +18,14 @@ Misc
 
 |
 
+AirPlay
+|vv| :pkg:`AUR/uxplay`
+|vv| :pkg:`AUR/rpiplay-git`
+
+:pkg:`AUR/tsschecker-git`
+
+:pkg:`AUR/futurerestore-git`
+
 
 `checkra1n`__
 =============
@@ -211,10 +219,10 @@ based on :wp:`HEVC <High_Efficiency_Video_Coding>` (H.265) (MPEG-H Part 2)
 | |b| :pkg:`AUR/tifig-git` :pkg:`AUR/tifig-bin` :pr:`AUR/tifig`
 
 
-`RebornAgain`__
-===============
+YouTube
+=======
 
-.. __: https://altcatalog.meghrathod.tech/
+`RebornAgain <https://altcatalog.meghrathod.tech/>`__
 
 version
 - `1.5   <https://www.reddit.com/r/sideloaded/comments/p9ml5f/>`__
@@ -281,8 +289,147 @@ cytus ii
 |  4. :menuselection:`(RightClick) --> Copy --> Copy as cURL`
 
 
-Path
-====
+Paths
+=====
 
 :Files:       /private/var/mobile/Containers/Shared/AppGroup/\*/\*/Downloads
 
+
+`idevicerestore`__
+==================
+
+.. __: https://github.com/libimobiledevice/idevicerestore
+
+`<https://github.com/libimobiledevice/idevicerestore/issues/402>`__
+
+:manpage:`tsort(1)` - perform :wp:`topological sort <topological sorting>`
+
+|b| consider makepkg ``--nodeps`` for some packages
+
+| get PKGBUILDs
+| |b| :manpage:`git-config(1)`
+
+::
+
+   # git clone https://github.com/octocat/Hello-World.git --config "http.proxy=http://127.0.0.1:8080"
+   git config --system http.proxy http://127.0.0.1:8080
+   cat /etc/gitconfig
+
+::
+
+   function get {
+      [ x"$(whoami)" = x"darren" ] || return 1
+      { (($#==1)) && [[ $1 =~ [a-z][a-z-]+ ]]; } || return 1
+      pushd /home/darren/.cache/paru/clone || return 1
+      if [ -d "$1" ]; then
+         cd "$1"
+         # https://remarkablemark.org/blog/2017/10/12/check-git-dirty/
+         {
+            # --staged is a synonym of --cached
+            /usr/bin/git diff --cached --exit-code --quiet &&
+            /usr/bin/git diff          --exit-code --quiet &&
+            [ -z "$(/usr/bin/git status -s)" ];
+         } || return 1
+         /usr/bin/git pull || return 1
+      else
+         /usr/bin/git clone https://aur.archlinux.org/"$1".git || return 1
+      fi
+      popd
+   }
+
+.. warning::
+
+   |:no_entry_sign:| root
+
+| :aw:`DeveloperWiki:Building_in_a_clean_chroot`
+| |b| clean chroot matrix in :file:`/var/lib/archbuild`
+
+either sysupgrade an existing one: ::
+
+   cd /home/darren/chroot/; \
+   rm -rf /home/darren/chroot/root; \
+   ln -sv root_0 /home/darren/chroot/root; \
+   arch-nspawn /home/darren/chroot/root pacman -Syu; \
+   rm -v /home/darren/chroot/root; \
+   cd -
+
+, or build a new one: ::
+
+   pushd /home/darren; \
+   sudo rm -rf chroot/; \
+   mkdir -pv chroot/; \
+   cd chroot; \
+   /usr/bin/time --format="\n  wall clock time - %E\n" mkarchroot \
+     -C /etc/pacman.conf \
+     -M /etc/makepkg.conf \
+     root \
+     base base-devel \
+   ; \
+   mv -v root{,_0}; \
+   popd
+   # sudo tar -cf - root_0 | sha1sum
+
+dependency graph
+`according to github <https://github.com/libimobiledevice/usbmuxd/issues/10#issuecomment-39726205>`__
+, not AUR:
+
+:raw-html:`<details><summary>libimobiledevice.dot</summary>`
+
+.. graphviz:: ../ios/libimobiledevice.dot
+   :alt: [graphviz]
+
+:raw-html:`</details>`
+
+build package
+
+::
+
+   # subr /usr/local/bin/makechrootpkg.sh # Run on 820g3
+
+   glue="libimobiledevice-glue-git"
+   libimdev="libimobiledevice-git"
+   libusb="libusb-git"
+   lmux="libusbmuxd-git"
+   plist="libplist-git"
+   recov="libirecovery-git"
+   rsto="idevicerestore-git"
+   umux="usbmuxd-git"
+
+   # L0
+   makechrootpkg.sh $plist -- autoconf-archive cython git python python-setuptools
+
+   # L1
+   # makechrootpkg.sh $libimdev -- git # Failed successfully
+   # env NODEPS=1 makechrootpkg.sh $libimdev -- git # Failed successfully
+   makechrootpkg.sh $libimdev -- git -- $plist
+   makechrootpkg.sh $libusb   -- git
+
+   # L2
+   makechrootpkg.sh $lmux  -- git -- $libimdev $plist $libusb
+   makechrootpkg.sh $recov -- git readline -- $plist $libimdev $libusb
+
+   # L3
+   env NODEPS=1 makechrootpkg.sh $libimdev -- git autoconf-archive cython git openssl python python-setuptools -- $libimdev $recov $plist $libusb $lmux
+
+   # L4
+   env NODEPS=1 makechrootpkg.sh $umux -- git autoconf-archive cython git openssl python python-setuptools -- $libimdev $libimdev $recov $plist $libusb $lmux
+
+   # makechrootpkg.sh x -- git -- x
+
+   # L3
+
+   # L4
+
+
+`theos`__
+=========
+
+.. __: https://github.com/theos/theos
+
+:file:`~/ios/readme.md`
+
+:raw-html:`<details><summary>theos.dot</summary>`
+
+.. graphviz:: ../ios/theos.dot
+
+:raw-html:`</details>`
