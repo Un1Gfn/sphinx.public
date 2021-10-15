@@ -225,26 +225,24 @@ Dirty Chroot
    ============= =========================== ========
     dir                                       owner
    ============= =========================== ========
-    /chroot       dirty chroot                root
-    /customrepo   custom local repository     darren
     /aur          AUR cache                   darren
+    /customrepo   custom local repository     darren
+    /chroot       dirty chroot                root
    ============= =========================== ========
-
-| |b| install aur package from :file:`customrepo` with ``pacman -Syu``, not ``pacman -U``
 
 initialize empty AUR cache ::
 
-   # Run as darren
-   sudo install -d -gdarren -m755 -odarren -v /aur
+   # Run as root
+   install -d -gdarren -m755 -odarren -v /aur
 
 initialize empty :aw:`custom local repository <pacman/Tips and tricks#Custom_local_repository>` ::
 
-   # Run as darren
-   # sudo install -d -gdarren -m755 -odarren -v /customrepo
-   rm -rf /customrepo/*
-   repo-add /customrepo/customrepo.db.tar /var/cache/pacman/pkg/base-2-2-any.pkg.tar.xz
-   repo-remove /customrepo/customrepo.db.tar base
-   rm -v /customrepo/*.old
+   # Run as root
+   rm -rf /customrepo
+   install -d -gdarren -m755 -odarren -v /customrepo
+   sudo -udarren repo-add /customrepo/customrepo.db.tar /var/cache/pacman/pkg/base-2-2-any.pkg.tar.xz
+   sudo -udarren repo-remove /customrepo/customrepo.db.tar base
+   rm /customrepo/*.old
    tree -aC /customrepo
 
 | initialize dirty chroot
@@ -258,45 +256,32 @@ initialize empty :aw:`custom local repository <pacman/Tips and tricks#Custom_loc
    mkdir /chroot
    pacstrap -C /etc/pacman.conf -c -i /chroot base{,-devel} git
 
-   cd /chroot
-   printf "[http]\n\tproxy = http://127.0.0.1:8080\n" 1>etc/gitconfig
-   printf "%s.UTF-8 UTF-8\n" en_US de_DE 1>etc/locale.gen
-   echo LANG=en_US.UTF-8 1>etc/locale.conf
-   echo pts/0 1>etc/securetty
-
+   # passwordless sudo for darren below
+   # chpasswd -R /chroot 0<<<$'root:root\ndarren:darren'
+   chpasswd -R /chroot 0<<<$'root:root'
+   systemd-machine-id-setup --root=/chroot
    useradd -m -R /chroot -s /bin/bash -u 1000 -U darren
-   chpasswd -R /chroot 0<<<"root:root"$'\n'"darren:darren"
-   systemd-machine-id-setup --root=.
+
+   echo "pts/0" 1>/chroot/etc/securetty
+   echo "darren ALL=(ALL) NOPASSWD: ALL" 1>/chroot/etc/sudoers.d/darren
+   printf "%s.UTF-8 UTF-8\n" en_US de_DE 1>/chroot/etc/locale.gen
+   printf "[http]\n\tproxy = http://127.0.0.1:8080\n" 1>/chroot/etc/gitconfig
+
+   echo "LANG=en_US.UTF-8" 1>/chroot/etc/locale.conf
+   chroot /chroot locale-gen
 
    systemd-nspawn \
       -D /chroot \
       --register=no \
       -b \
       --bind-ro=/etc/pacman.conf \
-      --bind-ro=/etc/pacman.d \
+      --bind=/etc/pacman.d \
       --bind=/var/cache/pacman/pkg \
       --bind=/var/lib/pacman/sync \
       --bind=/customrepo \
       --bind=/aur
 
 log in with root:root
-
-configure dirty chroot ::
-
-   locale-gen
-
-| sweep chroot
-| :aw:`pacman/Tips and tricks#Removing_everything_but_essential_packages`
-
-::
-
-   pacman -Syuu --needed base{,-devel} git
-   pacman -D --asdeps $(pacman -Qq)
-   pacman -D --asexplicit base $(pacman -Sgq base-devel) git
-   # pacman -Qdttq | pacman -Rnsc -
-   pacman -Rns $(pacman -Qdttq)
-
-
 
 ----
 

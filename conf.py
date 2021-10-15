@@ -41,6 +41,7 @@ extensions = [
     'sphinx.ext.githubpages',       # https://www.sphinx-doc.org/en/master/usage/extensions/githubpages.html
     'sphinx.ext.graphviz',
     'sphinx.ext.todo',
+    'sphinx_copybutton',            # https://sphinx-copybutton.readthedocs.io/en/latest/
     'sphinxcontrib.programoutput',  # https://pythonhosted.org/sphinxcontrib-programoutput/
     'sphinxcontrib.youtube',        # /usr/lib/python3*/site-packages/sphinxcontrib/youtube/
     'sphinxemoji.sphinxemoji',

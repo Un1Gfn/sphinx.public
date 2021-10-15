@@ -17,6 +17,26 @@ Todo |:memo:|
 
 ----
 
+.. highlight:: markdown
+
+:pkg:`AUR/libimobiledevice-glue-git` ::
+
+   ```
+   ldd /usr/lib/libimobiledevice-glue-1.0.so.0.0.0
+           ...
+           libplist-2.0.so.3 => not found
+           ...
+   ```
+
+:pkg:`AUR/libirecovery-git` ::
+
+   ```
+   # ldd /usr/lib/libirecovery-1.0.so.3.0.0
+           ...
+           libplist-2.0.so.3 => /usr/lib/libplist-2.0.so.3 (0x00007fa43ce7d000)
+           ...
+   ```
+
 | :aw:`official repositories#Testing_repositories`
 | :aw:`Arch Testing Team`
 

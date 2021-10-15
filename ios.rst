@@ -334,13 +334,16 @@ Paths
             {
                # --staged is a synonym of --cached
                /usr/bin/git diff --cached --exit-code --quiet &&
-               /usr/bin/git diff          --exit-code --quiet &&
-               [ -z "$(/usr/bin/git status -s)" ];
+               /usr/bin/git diff          --exit-code --quiet;
+               # [ -z "$(/usr/bin/git status -s)" ] # Untracked files!
             } || return
             /usr/bin/git pull || return
          else
             /usr/bin/git clone https://aur.archlinux.org/"$i".git || return
+            cd "$i"
          fi
+         rm -rf src pkg *-*-*-x86_64.pkg.*
+         makepkg --verifysource || return
          popd
       done
    }
@@ -358,77 +361,76 @@ Paths
       usbmuxd-git \
    ;
 
-build package
+| build package
+| |b| sweep - :aw:`pacman/Tips and tricks#Removing_everything_but_essential_packages`
 
 ::
 
-   # Run as root
+   # Run as root in nspawn container
 
-   # libimobiledevice-glue-git
-   # libimobiledevice-git
-   # libusb-git
-   # libusbmuxd-git
-   # libplist-git
-   # libirecovery-git
-   # idevicerestore-git
-   # usbmuxd-git
-
-   function sweep {
-      pacman -Syuu --needed base{,-devel} git
+   function sweep {( set -e
+      pacman -Syuu --needed base{,-devel} git time
       pacman -D --asdeps $(pacman -Qq) 1>/dev/null
-      pacman -D --asexplicit base $(pacman -Sgq base-devel) git 1>/dev/null
+      pacman -D --asexplicit base $(pacman -Sgq base-devel) git time 1>/dev/null
       # pacman -Qdttq | pacman -Rnsc -
       pacman -Rns --noconfirm $(pacman -Qdttq) || :
-   }
+   )}
 
    function mk {
-      (($#>=1)) &&
-      sweep &&
-      {
-         if [ x"$NODEPS" = x1 ]; then
-            pacman -Syuudd "${@:2}"
-         else
-            pacman -Syuu "${@:2}"
-         fi
-      } &&
-      cd /aur/"$1" &&
-      rm -fv *-*-*-x86_64.pkg.* &&
-      MAKEPKGARGS=(-L) &&
-      { if [ x"$NODEPS" = x1 ]; then MAKEPKGARGS+=(-d); fi; } &&
-      su -c "makepkg ${MAKEPKGARGS[*]}" -g darren darren &&
-      { repo-remove /customrepo/customrepo.db.tar "$1" 2>/dev/null; :; } &&
-      repo-add /customrepo/customrepo.db.tar *-*-*-x86_64.pkg.* &&
-      mv -v *-*-*-x86_64.pkg.* /customrepo/ &&
-      :
-   }
+      PKG="${@: -1}"
+      cd /aur/"$PKG"
+   (
+      set -e
+      sweep
+      pacman -Syuu
+      if (($#==2)); then
+         printf "\e[34m%s\e[0m\n" "git-apply:"
+         { /usr/bin/git diff --cached --exit-code --quiet && /usr/bin/git diff --exit-code --quiet; } || {
+            printf "\e[1;31m%s\e[0m%s\n" "error: " "not clean"
+            false
+         }
+         /usr/bin/git apply -v /aur/"$PKG".patch
+      fi
+      rm -rf *-*-*-x86_64.pkg.* src/ pkg/
+      sudo -udarren /usr/bin/time --format="\n  wall clock time - %E\n" \
+         makepkg -s -L --holdver
+      pacman -U *-*-*-x86_64.pkg.*
+      if pacman -Syuu namcap; then
+         printf "\e[34m%s\e[0m\n" "namcap:"
+         namcap *-*-*-x86_64.pkg.*
+      fi
+      repo-remove /customrepo/customrepo.db.tar "$1" 2>/dev/null || true
+      repo-add /customrepo/customrepo.db.tar *-*-*-x86_64.pkg.*
+      cp -v *-*-*-x86_64.pkg.* /customrepo/
+      rm -rf *-*-*-x86_64.pkg.* src/ pkg/
+   )}
 
-   function mD {
-      NODEPS=1
-      mk "$@"
-      unset -v NODEPS
-   }
+::
 
-   # function mk2 { ... }
-   # mk2 libimobiledevice-git --ignoredeps                       --deps "libusbmuxd-git autoconf-archive cython libplist-git python-setuptools"
-   # mk2 idevicerestore-git   --forcedeps "libimobiledevice-git" --deps "libirecovery-git libimobiledevice-glue-git libusb-git libplist-git libusbmuxd-git libzip"
+   # Run as root in nspawn container
+
+   tee 0<<EOF 1>/etc/pacman.d/libimobiledevice
+   # libimobiledevice
+   IgnorePkg = libplist libusb libusbmuxd libimobiledevice usbmuxd
+   EOF
 
    # L1
-   mk   libplist-git                autoconf-archive python-setuptools cython
+   mk    libplist-git
 
    # L2
-   mk   libimobiledevice-glue-git   libplist-git
-   mk   libusb-git
+   mk -p libimobiledevice-glue-git
+   mk    libusb-git
 
    # L3
-   mk   libirecovery-git            libimobiledevice-glue-git libusb-git libplist-git
-   mk   libusbmuxd-git              libimobiledevice-glue-git libusb-git libplist-git
+   mk -p libirecovery-git
+   mk    libusbmuxd-git
 
    # L4
-   mD   libimobiledevice-git        libusbmuxd-git autoconf-archive cython libplist-git python-setuptools
+   mk -p libimobiledevice-git
 
    # L5
-   mD   idevicerestore-git          libimobiledevice-git libirecovery-git libimobiledevice-glue-git libusb-git libplist-git libusbmuxd-git libzip
-   mD   usbmuxd-git                 libimobiledevice-git libimobiledevice-glue-git libusb-git
+   mk usbmuxd-git
+   mk idevicerestore-git
 
 
 `theos`__
