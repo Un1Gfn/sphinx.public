@@ -300,6 +300,12 @@ Paths
 
 .. __: https://github.com/libimobiledevice/idevicerestore
 
+| `hint <https://github.com/libimobiledevice/usbmuxd/issues/10#issuecomment-39726205>`__ on github
+| rely on transitive dependency (except for makedepends)
+
+.. graphviz:: ../ios/libimobiledevice.dot
+   :alt: [graphviz]
+
 `<https://github.com/libimobiledevice/idevicerestore/issues/402>`__
 
 :manpage:`tsort(1)` - perform :wp:`topological sort <topological sorting>`
@@ -318,107 +324,111 @@ Paths
 ::
 
    function get {
-      [ x"$(whoami)" = x"darren" ] || return 1
-      { (($#==1)) && [[ $1 =~ [a-z][a-z-]+ ]]; } || return 1
-      pushd /home/darren/.cache/paru/clone || return 1
-      if [ -d "$1" ]; then
-         cd "$1"
-         # https://remarkablemark.org/blog/2017/10/12/check-git-dirty/
-         {
-            # --staged is a synonym of --cached
-            /usr/bin/git diff --cached --exit-code --quiet &&
-            /usr/bin/git diff          --exit-code --quiet &&
-            [ -z "$(/usr/bin/git status -s)" ];
-         } || return 1
-         /usr/bin/git pull || return 1
-      else
-         /usr/bin/git clone https://aur.archlinux.org/"$1".git || return 1
-      fi
-      popd
+      [ x"$(whoami)" = x"darren" ] || return
+      for i in "$@"; do
+         { [[ $i =~ [a-z][a-z-]+ ]]; } || return
+         pushd /aur || return
+         if [ -d "$i" ]; then
+            cd "$i"
+            # https://remarkablemark.org/blog/2017/10/12/check-git-dirty/
+            {
+               # --staged is a synonym of --cached
+               /usr/bin/git diff --cached --exit-code --quiet &&
+               /usr/bin/git diff          --exit-code --quiet &&
+               [ -z "$(/usr/bin/git status -s)" ];
+            } || return
+            /usr/bin/git pull || return
+         else
+            /usr/bin/git clone https://aur.archlinux.org/"$i".git || return
+         fi
+         popd
+      done
    }
 
-.. warning::
+::
 
-   |:no_entry_sign:| root
-
-| :aw:`DeveloperWiki:Building_in_a_clean_chroot`
-| |b| clean chroot matrix in :file:`/var/lib/archbuild`
-
-either sysupgrade an existing one: ::
-
-   cd /home/darren/chroot/; \
-   rm -rf /home/darren/chroot/root; \
-   ln -sv root_0 /home/darren/chroot/root; \
-   arch-nspawn /home/darren/chroot/root pacman -Syu; \
-   rm -v /home/darren/chroot/root; \
-   cd -
-
-, or build a new one: ::
-
-   pushd /home/darren; \
-   sudo rm -rf chroot/; \
-   mkdir -pv chroot/; \
-   cd chroot; \
-   /usr/bin/time --format="\n  wall clock time - %E\n" mkarchroot \
-     -C /etc/pacman.conf \
-     -M /etc/makepkg.conf \
-     root \
-     base base-devel \
-   ; \
-   mv -v root{,_0}; \
-   popd
-   # sudo tar -cf - root_0 | sha1sum
-
-dependency graph
-`according to github <https://github.com/libimobiledevice/usbmuxd/issues/10#issuecomment-39726205>`__
-, not AUR:
-
-:raw-html:`<details><summary>libimobiledevice.dot</summary>`
-
-.. graphviz:: ../ios/libimobiledevice.dot
-   :alt: [graphviz]
-
-:raw-html:`</details>`
+   get \
+      idevicerestore-git \
+      libimobiledevice-git \
+      libimobiledevice-glue-git \
+      libirecovery-git \
+      libplist-git \
+      libusb-git \
+      libusbmuxd-git \
+      usbmuxd-git \
+   ;
 
 build package
 
 ::
 
-   # subr /usr/local/bin/makechrootpkg.sh # Run on 820g3
+   # Run as root
 
-   glue="libimobiledevice-glue-git"
-   libimdev="libimobiledevice-git"
-   libusb="libusb-git"
-   lmux="libusbmuxd-git"
-   plist="libplist-git"
-   recov="libirecovery-git"
-   rsto="idevicerestore-git"
-   umux="usbmuxd-git"
+   # libimobiledevice-glue-git
+   # libimobiledevice-git
+   # libusb-git
+   # libusbmuxd-git
+   # libplist-git
+   # libirecovery-git
+   # idevicerestore-git
+   # usbmuxd-git
 
-   # L0
-   makechrootpkg.sh $plist -- autoconf-archive cython git python python-setuptools
+   function sweep {
+      pacman -Syuu --needed base{,-devel} git
+      pacman -D --asdeps $(pacman -Qq) 1>/dev/null
+      pacman -D --asexplicit base $(pacman -Sgq base-devel) git 1>/dev/null
+      # pacman -Qdttq | pacman -Rnsc -
+      pacman -Rns --noconfirm $(pacman -Qdttq) || :
+   }
+
+   function mk {
+      (($#>=1)) &&
+      sweep &&
+      {
+         if [ x"$NODEPS" = x1 ]; then
+            pacman -Syuudd "${@:2}"
+         else
+            pacman -Syuu "${@:2}"
+         fi
+      } &&
+      cd /aur/"$1" &&
+      rm -fv *-*-*-x86_64.pkg.* &&
+      MAKEPKGARGS=(-L) &&
+      { if [ x"$NODEPS" = x1 ]; then MAKEPKGARGS+=(-d); fi; } &&
+      su -c "makepkg ${MAKEPKGARGS[*]}" -g darren darren &&
+      { repo-remove /customrepo/customrepo.db.tar "$1" 2>/dev/null; :; } &&
+      repo-add /customrepo/customrepo.db.tar *-*-*-x86_64.pkg.* &&
+      mv -v *-*-*-x86_64.pkg.* /customrepo/ &&
+      :
+   }
+
+   function mD {
+      NODEPS=1
+      mk "$@"
+      unset -v NODEPS
+   }
+
+   # function mk2 { ... }
+   # mk2 libimobiledevice-git --ignoredeps                       --deps "libusbmuxd-git autoconf-archive cython libplist-git python-setuptools"
+   # mk2 idevicerestore-git   --forcedeps "libimobiledevice-git" --deps "libirecovery-git libimobiledevice-glue-git libusb-git libplist-git libusbmuxd-git libzip"
 
    # L1
-   # makechrootpkg.sh $libimdev -- git # Failed successfully
-   # env NODEPS=1 makechrootpkg.sh $libimdev -- git # Failed successfully
-   makechrootpkg.sh $libimdev -- git -- $plist
-   makechrootpkg.sh $libusb   -- git
+   mk   libplist-git                autoconf-archive python-setuptools cython
 
    # L2
-   makechrootpkg.sh $lmux  -- git -- $libimdev $plist $libusb
-   makechrootpkg.sh $recov -- git readline -- $plist $libimdev $libusb
+   mk   libimobiledevice-glue-git   libplist-git
+   mk   libusb-git
 
    # L3
-   env NODEPS=1 makechrootpkg.sh $libimdev -- git autoconf-archive cython git openssl python python-setuptools -- $libimdev $recov $plist $libusb $lmux
+   mk   libirecovery-git            libimobiledevice-glue-git libusb-git libplist-git
+   mk   libusbmuxd-git              libimobiledevice-glue-git libusb-git libplist-git
 
    # L4
-   env NODEPS=1 makechrootpkg.sh $umux -- git autoconf-archive cython git openssl python python-setuptools -- $libimdev $libimdev $recov $plist $libusb $lmux
+   mD   libimobiledevice-git        libusbmuxd-git autoconf-archive cython libplist-git python-setuptools
 
-   # makechrootpkg.sh x -- git -- x
-
-   # L3
-
-   # L4
+   # L5
+   mD   idevicerestore-git          libimobiledevice-git libirecovery-git libimobiledevice-glue-git libusb-git libplist-git libusbmuxd-git libzip
+   mD   usbmuxd-git                 libimobiledevice-git libimobiledevice-glue-git libusb-git
 
 
 `theos`__

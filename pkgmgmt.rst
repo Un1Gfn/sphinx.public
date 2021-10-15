@@ -215,6 +215,89 @@ Pull GPG Key
    EOI
 
 
+Dirty Chroot
+============
+
+.. table::
+   :align: left
+   :widths: auto
+
+   ============= =========================== ========
+    dir                                       owner
+   ============= =========================== ========
+    /chroot       dirty chroot                root
+    /customrepo   custom local repository     darren
+    /aur          AUR cache                   darren
+   ============= =========================== ========
+
+| |b| install aur package from :file:`customrepo` with ``pacman -Syu``, not ``pacman -U``
+
+initialize empty AUR cache ::
+
+   # Run as darren
+   sudo install -d -gdarren -m755 -odarren -v /aur
+
+initialize empty :aw:`custom local repository <pacman/Tips and tricks#Custom_local_repository>` ::
+
+   # Run as darren
+   # sudo install -d -gdarren -m755 -odarren -v /customrepo
+   rm -rf /customrepo/*
+   repo-add /customrepo/customrepo.db.tar /var/cache/pacman/pkg/base-2-2-any.pkg.tar.xz
+   repo-remove /customrepo/customrepo.db.tar base
+   rm -v /customrepo/*.old
+   tree -aC /customrepo
+
+| initialize dirty chroot
+| :aw:`systemd-nspawn#Create_and_boot_a_minimal_Arch_Linux_container`
+
+::
+
+   # Run as root
+
+   rm -rf /chroot
+   mkdir /chroot
+   pacstrap -C /etc/pacman.conf -c -i /chroot base{,-devel} git
+
+   cd /chroot
+   printf "[http]\n\tproxy = http://127.0.0.1:8080\n" 1>etc/gitconfig
+   printf "%s.UTF-8 UTF-8\n" en_US de_DE 1>etc/locale.gen
+   echo LANG=en_US.UTF-8 1>etc/locale.conf
+   echo pts/0 1>etc/securetty
+
+   useradd -m -R /chroot -s /bin/bash -u 1000 -U darren
+   chpasswd -R /chroot 0<<<"root:root"$'\n'"darren:darren"
+   systemd-machine-id-setup --root=.
+
+   systemd-nspawn \
+      -D /chroot \
+      --register=no \
+      -b \
+      --bind-ro=/etc/pacman.conf \
+      --bind-ro=/etc/pacman.d \
+      --bind=/var/cache/pacman/pkg \
+      --bind=/var/lib/pacman/sync \
+      --bind=/customrepo \
+      --bind=/aur
+
+log in with root:root
+
+configure dirty chroot ::
+
+   locale-gen
+
+| sweep chroot
+| :aw:`pacman/Tips and tricks#Removing_everything_but_essential_packages`
+
+::
+
+   pacman -Syuu --needed base{,-devel} git
+   pacman -D --asdeps $(pacman -Qq)
+   pacman -D --asexplicit base $(pacman -Sgq base-devel) git
+   # pacman -Qdttq | pacman -Rnsc -
+   pacman -Rns $(pacman -Qdttq)
+
+
+
 ----
 
 .. include:: include/link.txt
