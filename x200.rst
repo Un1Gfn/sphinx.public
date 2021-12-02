@@ -43,10 +43,6 @@ CPU
 GPU/Video
 =========
 
-.. hint::
-
-   HDR for TV?
-
 .. tip::
 
    | GM45 is \*\*very\*\* old
@@ -77,7 +73,7 @@ GPU/Video
 | `4-chipset-family-datasheet.pdf <https://www.intel.com/content/dam/www/public/us/en/documents/datasheets/4-chipset-family-datasheet.pdf>`__
   (`archive <https://web.archive.org/web/20210807102641/https://www.intel.com/content/dam/www/public/us/en/documents/datasheets/4-chipset-family-datasheet.pdf>`__)
 | *Analog Display* - *Up to 2048x1536 @ 75 Hz refresh*
-| :wp:`SDVO <Serial Digital Video Out>`
+| *Digital Display* - *Flat panels up to 2048x1536 @ 60 Hz* - :wp:`SDVO <Serial Digital Video Out>`
 
 :raw-html:`<details><summary>undetected resolutions</summary>`
 
@@ -107,7 +103,7 @@ GPU/Video
          VAProfileMPEG2Simple            :   VAEntrypointVLD
          VAProfileMPEG2Main              :   VAEntrypointVLD
 
-:pkg:`AUR/libva-intel-driver-g45-h264` |dumpster_fire|
+:pkg:`AUR/libva-intel-driver-g45-h264` |dumpster_fire| (|:x:| crashes when playing video)
 
 .. code:: console
 
@@ -121,203 +117,91 @@ GPU/Video
          VAProfileH264Main               : VAEntrypointVLD
          VAProfileH264High               : VAEntrypointVLD
 
-:raw-html:`<details><summary>, however, playing video crashes ❌</summary>`
+`utils <https://doc.coreboot.org/util.html>`__ - `nvramtool <https://www.coreboot.org/Nvramtool>`__
 
-.. code:: text
+`<https://www.coreboot.org/Board:lenovo/x200>`__
 
-   [   14.742815] ==================================================================
-   [   14.742821] BUG: KFENCE: invalid read in connector_bad_edid+0x51/0x170 [drm]
+| :manpage:`mpv(1)` - `manual <https://mpv.io/manual/stable/>`__
+| `--ytdl-format --speed --af <https://www.rockyourcode.com/til-how-to-watch-youtube-videos-with-mpv-and-keyboard-shortcuts/>`__
+| `youtube-viewer <https://github.com/trizen/youtube-viewer>`__
+| :wp:`Dynamic Adaptive Streaming over HTTP <DASH>`/:wp:`HLS <HTTP Live Streaming>`
 
-   [   14.742877] Invalid read at 0x00000000cfce6d0c:
-   [   14.742879]  connector_bad_edid+0x51/0x170 [drm]
-   [   14.742916]  drm_do_get_edid.part.0+0x2b7/0x2d0 [drm]
-   [   14.742953]  drm_get_edid+0xa3/0x100 [drm]
-   [   14.742989]  intel_crt_get_edid+0x68/0x80 [i915]
-   [   14.743116]  intel_crt_get_modes+0x43/0xd0 [i915]
-   [   14.743212]  drm_helper_probe_single_connector_modes+0x1d0/0x860 [drm_kms_helper]
-   [   14.743246]  drm_mode_getconnector+0x405/0x460 [drm]
-   [   14.743284]  drm_ioctl_kernel+0xb2/0x100 [drm]
-   [   14.743317]  drm_ioctl+0x22a/0x3d0 [drm]
-   [   14.743350]  __x64_sys_ioctl+0x82/0xb0
-   [   14.743356]  do_syscall_64+0x5c/0x80
-   [   14.743360]  entry_SYSCALL_64_after_hwframe+0x44/0xae
+--ytdl-format
 
-   [   14.743365] CPU: 0 PID: 326 Comm: Xorg Tainted: G    BU            5.14.10-arch1-1 #1 9d06838ba786d7d1e14e02d8bce81a060de955d0
-   [   14.743369] Hardware name: LENOVO 745533A/745533A, BIOS CBET4000 20210522 05/22/2021
-   [   14.743371] ==================================================================
+.. table::
+   :align: left
+   :widths: auto
 
-   [  180.759216] i915 0000:00:02.0: [drm] GPU HANG: ecode 4:1:f3ffffff, in chromium [780]
-   [  180.760430] i915 0000:00:02.0: [drm] Resetting chip for stopped heartbeat on rcs0
-   [  180.863627] i915 0000:00:02.0: [drm] *ERROR* failed to set rcs0 head to zero ctl 00000400 head 0ca004bc tail 00000000 start 00004000
-   [  180.863646] i915 0000:00:02.0: [drm] chromium[780] context reset due to GPU hang
-   [  181.041852] ==================================================================
-   [  181.041857] BUG: KFENCE: use-after-free read in connector_bad_edid+0x51/0x170 [drm]
+   ========= ============= ========== ============ =================================================================================
+    \         format code   extension  resolution   note
+   ========= ============= ========== ============ =================================================================================
+    audio             140   m4a                     :kbd:`audio only tiny *k , m4a_dash container, mp4a.40.2@*k (44100Hz), *MiB`
+    archive           299   mp4        1920x1080    :kbd:`1080p60 *k , mp4_dash container, avc1.64002a@*k, 60fps, video only, *GiB`
+    live              301   mp4        1920x1080    :kbd:`*k , avc1.4d402a, 60.0fps, mp4a.40.2`
+    live               96   mp4        1920x1080    :kbd:`*k , avc1.640028, 30.0fps, mp4a.40.2`
+   ========= ============= ========== ============ =================================================================================
 
-   [  181.041910] Use-after-free read at 0x00000000b289093e (in kfence-#165):
-   [  181.041912]  connector_bad_edid+0x51/0x170 [drm]
-   [  181.041949]  drm_do_get_edid.part.0+0x2b7/0x2d0 [drm]
-   [  181.041986]  drm_get_edid+0xa3/0x100 [drm]
-   [  181.042022]  intel_crt_get_edid+0x68/0x80 [i915]
-   [  181.042142]  intel_crt_get_modes+0x43/0xd0 [i915]
-   [  181.042238]  drm_helper_probe_single_connector_modes+0x1d0/0x860 [drm_kms_helper]
-   [  181.042268]  drm_mode_getconnector+0x405/0x460 [drm]
-   [  181.042306]  drm_ioctl_kernel+0xb2/0x100 [drm]
-   [  181.042339]  drm_ioctl+0x22a/0x3d0 [drm]
-   [  181.042373]  __x64_sys_ioctl+0x82/0xb0
-   [  181.042377]  do_syscall_64+0x5c/0x80
-   [  181.042382]  entry_SYSCALL_64_after_hwframe+0x44/0xae
 
-   [  181.042386] kfence-#165 [0x00000000d794484b-0x000000005d7efc55, size=88, cache=kmalloc-96] allocated by task 9:
-   [  181.042392]  acpi_evaluate_object+0x5e/0x3ac
-   [  181.042395]  acpi_evaluate_integer+0x73/0x100
-   [  181.042398]  acpi_thermal_get_temperature+0x4a/0xb0
-   [  181.042402]  thermal_get_temp+0x1e/0x50
-   [  181.042405]  thermal_zone_get_temp+0x51/0x80
-   [  181.042408]  thermal_zone_device_update.part.0+0x48/0x3e0
-   [  181.042412]  process_one_work+0x1e3/0x3b0
-   [  181.042415]  worker_thread+0x50/0x3b0
-   [  181.042417]  kthread+0x132/0x160
-   [  181.042419]  ret_from_fork+0x22/0x30
-   [  181.042423]
-                  freed by task 9:
-   [  181.042426]  acpi_evaluate_object+0x2c0/0x3ac
-   [  181.042428]  acpi_evaluate_integer+0x73/0x100
-   [  181.042430]  acpi_thermal_get_temperature+0x4a/0xb0
-   [  181.042433]  thermal_get_temp+0x1e/0x50
-   [  181.042436]  thermal_zone_get_temp+0x51/0x80
-   [  181.042438]  thermal_zone_device_update.part.0+0x48/0x3e0
-   [  181.042441]  process_one_work+0x1e3/0x3b0
-   [  181.042443]  worker_thread+0x50/0x3b0
-   [  181.042445]  kthread+0x132/0x160
-   [  181.042447]  ret_from_fork+0x22/0x30
+| :manpage:`youtube-dl(1)`
+| `faq <https://github.com/ytdl-org/youtube-dl#faq>`__
+| `cookies <https://github.com/ytdl-org/youtube-dl#how-do-i-pass-cookies-to-youtube-dl>`__
+|   ``mpv --ytdl-raw-options=cookies=~/youtube.com_cookies.txt``
+|   ``mpv --cookies --cookies-file=/home/darren/youtube.com_cookies.txt``
+| aria2
+|    ``mpv --ytdl-raw-options=proxy=socks5://127.0.0.1:1080,external-downloader=aria2c,external-downloader-args="-c -j 3 -x 3 -s 3 -k 1M"``
+  `(a) <https://github.com/ytdl-org/youtube-dl/issues/15384#issuecomment-359654155>`__
+  :aw:`(g) <youtube-dl#Faster_downloads>`
 
-   [  181.042451] CPU: 1 PID: 326 Comm: Xorg Tainted: G    BU            5.14.10-arch1-1 #1 9d06838ba786d7d1e14e02d8bce81a060de955d0
-   [  181.042456] Hardware name: LENOVO 745533A/745533A, BIOS CBET4000 20210522 05/22/2021
-   [  181.042457] ==================================================================
-   [  183.740824] i915 0000:00:02.0: [drm] GPU HANG: ecode 4:1:f3ffffff, in Xorg [326]
-   [  183.740955] i915 0000:00:02.0: [drm] Resetting chip for stopped heartbeat on rcs0
-   [  183.843586] i915 0000:00:02.0: [drm] *ERROR* failed to set rcs0 head to zero ctl 00000400 head 00000fe4 tail 00000000 start 00004000
-   [  183.843607] i915 0000:00:02.0: [drm] Xorg[326] context reset due to GPU hang
-   [  186.727633] i915 0000:00:02.0: [drm] GPU HANG: ecode 4:1:f3ffffff, in plasmashell [442]
-   [  186.727750] i915 0000:00:02.0: [drm] Resetting chip for stopped heartbeat on rcs0
-   [  186.831040] i915 0000:00:02.0: [drm] *ERROR* failed to set rcs0 head to zero ctl 00000400 head 000014ac tail 00000000 start 00004000
-   [  186.831060] i915 0000:00:02.0: [drm] plasmashell[442] context reset due to GPU hang
-   [  188.483850] ==================================================================
-   [  188.483855] BUG: KFENCE: use-after-free read in connector_bad_edid+0x51/0x170 [drm]
+.. warning::
 
-   [  188.483909] Use-after-free read at 0x00000000d55f9655 (in kfence-#242):
-   [  188.483912]  connector_bad_edid+0x51/0x170 [drm]
-   [  188.483949]  drm_do_get_edid.part.0+0x2b7/0x2d0 [drm]
-   [  188.483986]  drm_get_edid+0xa3/0x100 [drm]
-   [  188.484022]  intel_crt_get_edid+0x68/0x80 [i915]
-   [  188.484145]  intel_crt_get_modes+0x43/0xd0 [i915]
-   [  188.484241]  drm_helper_probe_single_connector_modes+0x1d0/0x860 [drm_kms_helper]
-   [  188.484272]  drm_mode_getconnector+0x405/0x460 [drm]
-   [  188.484310]  drm_ioctl_kernel+0xb2/0x100 [drm]
-   [  188.484343]  drm_ioctl+0x22a/0x3d0 [drm]
-   [  188.484377]  __x64_sys_ioctl+0x82/0xb0
-   [  188.484382]  do_syscall_64+0x5c/0x80
-   [  188.484386]  entry_SYSCALL_64_after_hwframe+0x44/0xae
+   | youtube-dl does not support external-downloader
+   | mpv does not complain
+   | make sure :pkg:`community/yt-dlp` is installed and :pkg:`community/youtube-dl` is NOT installed 
 
-   [  188.484390] kfence-#242 [0x00000000dc45c87a-0x00000000a62458c6, size=64, cache=kmalloc-64] allocated by task 0:
-   [  188.484396]  hid_report_raw_event+0x179/0x480
-   [  188.484400]  hid_input_report+0xed/0x160
-   [  188.484402]  logi_dj_recv_forward_input_report+0xba/0xf0 [hid_logitech_dj]
-   [  188.484408]  logi_dj_raw_event+0x18b/0x230 [hid_logitech_dj]
-   [  188.484411]  hid_input_report+0x145/0x160
-   [  188.484413]  hid_irq_in+0x169/0x190 [usbhid]
-   [  188.484419]  __usb_hcd_giveback_urb+0x9c/0x110
-   [  188.484424]  uhci_giveback_urb+0xbc/0x250
-   [  188.484426]  uhci_scan_schedule.part.0+0x7f2/0xad0
-   [  188.484428]  uhci_irq+0xb6/0xf0
-   [  188.484430]  usb_hcd_irq+0x28/0x40
-   [  188.484433]  __handle_irq_event_percpu+0x3d/0x190
-   [  188.484437]  handle_irq_event+0x58/0xb0
-   [  188.484439]  handle_fasteoi_irq+0x8a/0x1f0
-   [  188.484442]  __common_interrupt+0x41/0xa0
-   [  188.484445]  common_interrupt+0x7e/0xa0
-   [  188.484447]  asm_common_interrupt+0x1e/0x40
-   [  188.484450]  cpuidle_enter_state+0xc7/0x380
-   [  188.484453]  cpuidle_enter+0x29/0x40
-   [  188.484456]  do_idle+0x1e1/0x270
-   [  188.484459]  cpu_startup_entry+0x19/0x20
-   [  188.484461]  start_kernel+0x9ab/0x9d0
-   [  188.484465]  secondary_startup_64_no_verify+0xc2/0xcb
-   [  188.484468]
-                  freed by task 0:
-   [  188.484471]  hid_report_raw_event+0x263/0x480
-   [  188.484473]  hid_input_report+0xed/0x160
-   [  188.484475]  logi_dj_recv_forward_input_report+0xba/0xf0 [hid_logitech_dj]
-   [  188.484479]  logi_dj_raw_event+0x18b/0x230 [hid_logitech_dj]
-   [  188.484483]  hid_input_report+0x145/0x160
-   [  188.484484]  hid_irq_in+0x169/0x190 [usbhid]
-   [  188.484489]  __usb_hcd_giveback_urb+0x9c/0x110
-   [  188.484492]  uhci_giveback_urb+0xbc/0x250
-   [  188.484494]  uhci_scan_schedule.part.0+0x7f2/0xad0
-   [  188.484496]  uhci_irq+0xb6/0xf0
-   [  188.484498]  usb_hcd_irq+0x28/0x40
-   [  188.484501]  __handle_irq_event_percpu+0x3d/0x190
-   [  188.484504]  handle_irq_event+0x58/0xb0
-   [  188.484506]  handle_fasteoi_irq+0x8a/0x1f0
-   [  188.484508]  __common_interrupt+0x41/0xa0
-   [  188.484511]  common_interrupt+0x7e/0xa0
-   [  188.484513]  asm_common_interrupt+0x1e/0x40
-   [  188.484516]  cpuidle_enter_state+0xc7/0x380
-   [  188.484519]  cpuidle_enter+0x29/0x40
-   [  188.484521]  do_idle+0x1e1/0x270
-   [  188.484524]  cpu_startup_entry+0x19/0x20
-   [  188.484526]  start_kernel+0x9ab/0x9d0
-   [  188.484529]  secondary_startup_64_no_verify+0xc2/0xcb
+x200 ::
 
-   [  188.484533] CPU: 1 PID: 326 Comm: Xorg Tainted: G    BU            5.14.10-arch1-1 #1 9d06838ba786d7d1e14e02d8bce81a060de955d0
-   [  188.484537] Hardware name: LENOVO 745533A/745533A, BIOS CBET4000 20210522 05/22/2021
-   [  188.484538] ==================================================================
-   [  195.689804] i915 0000:00:02.0: [drm] GPU HANG: ecode 4:1:f3ffffff, in Xorg [326]
-   [  195.689973] i915 0000:00:02.0: [drm] Resetting chip for stopped heartbeat on rcs0
-   [  195.791044] i915 0000:00:02.0: [drm] *ERROR* failed to set rcs0 head to zero ctl 00000400 head 000037ac tail 00000000 start 00004000
-   [  195.791063] i915 0000:00:02.0: [drm] Xorg[326] context reset due to GPU hang
-   [  203.585012] i915 0000:00:02.0: [drm] GPU HANG: ecode 4:1:f3ffffff, in chromium [780]
-   [  203.588966] i915 0000:00:02.0: [drm] Resetting chip for stopped heartbeat on rcs0
-   [  203.691791] i915 0000:00:02.0: [drm] *ERROR* failed to set rcs0 head to zero ctl 00000400 head 0120315c tail 00000000 start 00004000
-   [  203.691812] i915 0000:00:02.0: [drm] chromium[780] context reset due to GPU hang
-   [  206.781951] i915 0000:00:02.0: [drm] GPU HANG: ecode 4:0:00000000
-   [  206.782066] i915 0000:00:02.0: [drm] Resetting chip for stopped heartbeat on rcs0
-   [  206.884755] i915 0000:00:02.0: [drm] *ERROR* failed to set rcs0 head to zero ctl 00000400 head 000037bc tail 00000000 start 00004000
-   [  207.759108] ==================================================================
-   [  207.759113] BUG: KFENCE: invalid read in connector_bad_edid+0x51/0x170 [drm]
+   # /usr/local/bin/mpv.sh
 
-   [  207.759165] Invalid read at 0x000000007a94557a:
-   [  207.759168]  connector_bad_edid+0x51/0x170 [drm]
-   [  207.759205]  drm_do_get_edid.part.0+0x2b7/0x2d0 [drm]
-   [  207.759241]  drm_get_edid+0xa3/0x100 [drm]
-   [  207.759277]  intel_crt_get_edid+0x68/0x80 [i915]
-   [  207.759396]  intel_crt_get_modes+0x43/0xd0 [i915]
-   [  207.759492]  drm_helper_probe_single_connector_modes+0x1d0/0x860 [drm_kms_helper]
-   [  207.759522]  drm_mode_getconnector+0x405/0x460 [drm]
-   [  207.759560]  drm_ioctl_kernel+0xb2/0x100 [drm]
-   [  207.759593]  drm_ioctl+0x22a/0x3d0 [drm]
-   [  207.759626]  __x64_sys_ioctl+0x82/0xb0
-   [  207.759631]  do_syscall_64+0x5c/0x80
-   [  207.759636]  entry_SYSCALL_64_after_hwframe+0x44/0xae
+820g3 ::
 
-   [  207.759640] CPU: 0 PID: 326 Comm: Xorg Tainted: G    BU            5.14.10-arch1-1 #1 9d06838ba786d7d1e14e02d8bce81a060de955d0
-   [  207.759645] Hardware name: LENOVO 745533A/745533A, BIOS CBET4000 20210522 05/22/2021
-   [  207.759646] ==================================================================
-   [  215.744698] i915 0000:00:02.0: [drm] GPU HANG: ecode 4:1:f3ffffff, in chromium [780]
-   [  215.744824] i915 0000:00:02.0: [drm] Resetting chip for stopped heartbeat on rcs0
-   [  215.846906] i915 0000:00:02.0: [drm] *ERROR* failed to set rcs0 head to zero ctl 00000400 head 00201634 tail 00000000 start 00004000
-   [  215.846927] i915 0000:00:02.0: [drm] chromium[780] context reset due to GPU hang
-   [  218.727218] i915 0000:00:02.0: [drm] GPU HANG: ecode 4:1:f3ffffff, in Xorg [326]
-   [  218.727332] i915 0000:00:02.0: [drm] Resetting chip for stopped heartbeat on rcs0
-   [  218.829039] i915 0000:00:02.0: [drm] *ERROR* failed to set rcs0 head to zero ctl 00000400 head 00001afc tail 00000000 start 00004000
-   [  218.829064] i915 0000:00:02.0: [drm] Xorg[326] context reset due to GPU hang
-   [  224.700573] i915 0000:00:02.0: [drm] GPU HANG: ecode 4:1:f3ffffff, in Xorg [326]
-   [  224.700738] i915 0000:00:02.0: [drm] Resetting chip for stopped heartbeat on rcs0
-   [  224.803674] i915 0000:00:02.0: [drm] *ERROR* failed to set rcs0 head to zero ctl 00000400 head 00002c7c tail 00000000 start 00004000
-   [  224.803694] i915 0000:00:02.0: [drm] Xorg[326] context reset due to GPU hang
-   [  225.041844] kauditd_printk_skb: 15 callbacks suppressed
+   {
+      source ~/proxy.bashrc
+      EXT="external-downloader=aria2c,external-downloader-args=-j3 -c -x3 -k1M -s3"
+      mpv \
+        --pause \
+        --ytdl-format="140+160" \
+        --ytdl-raw-options="$EXT" \
+        --fs \
+        --demuxer-max-bytes=64M \
+        --no-resume-playback \
+        "https://www.youtube.com/watch?v=b18tiLlgPDs"
+   }
 
-:raw-html:`</details>`
+yt-dlp `<pick 1 out of 3 <https://www.reddit.com/r/mpv/comments/q759xc/comment/hhbva8j/>`__ ::
+
+   mpv --demuxer-max-bytes=32m --script-opts=ytdl_hook-ytdl_path=yt-dlp 'ytdl://8Jvtl9KG9aY'
+
+TVBS ``V0WxUakDV7M``
+
+:aw:`streamlink` - `cli <https://streamlink.github.io/cli.html>`__
+`enable caching in your player <https://streamlink.github.io/issues.html#streams-are-buffering-lagging>`__
+
+x200 ::
+
+   # /usr/local/bin/mpv.sh
+
+| 820g3
+| WikiChip - `HD520 <https://en.wikichip.org/wiki/intel/hd_graphics/520>`__
+
+::
+
+   streamlink \
+      --http-proxy "socks5h://127.0.0.1:1080" \
+      -p "mpv" \
+      -a "--vo=gpu --hwdec=vaapi --pause --cache=yes --demuxer-max-bytes=128M" \
+      --stream-segment-threads 2 \
+      'https://www.youtube.com/watch?v=b18tiLlgPDs' \
+      144p
 
 
 :aw:`KDE`
@@ -327,6 +211,11 @@ aw\:\ :aw:`KDE`
 
 KDE :pr:`UBW` `UserBase Wiki <https://userbase.kde.org/Welcome_to_KDE_UserBase>`__
 
+| IM
+| |b| `kimpanel <https://userbase.kde.org/Tutorials/Kimpanel>`__
+| |b| `ibus x KDE <https://wiki.archlinux.org/title/IBus#Integration>`__
+| |b| `kkc <https://wiki.archlinux.org/title/Localization/Japanese#libkkc>`__
+| |b| `skk tutorial <https://gist.github.com/akirak/e93876855f8b1d295c2cd0ff2370af8d>`__
 
 :wp:`PCIe`
 ==========
@@ -353,8 +242,9 @@ send :pkg:`community/clash` configs ::
 
    ssh darren@x200 rm -rf /{home/darren,tmp}/{clash,yacd-gh-pages}; \
    scp -r /tmp/clash          darren@x200:/home/darren/clash; \
-   scp -r /tmp/yacd-gh-pages/ darren@x200:/home/darren/yacd-gh-pages/; \
-   ssh darren@x200 ln -sv /{home/darren,tmp}/clash; \
-   ssh darren@x200 ln -sv /{home/darren,tmp}/yacd-gh-pages
+   scp -r /tmp/yacd-gh-pages/ darren@x200:/home/darren/yacd-gh-pages/
+
+   # ssh darren@x200 ln -sv /{home/darren,tmp}/clash; \
+   # ssh darren@x200 ln -sv /{home/darren,tmp}/yacd-gh-pages
 
 edit remote file with :file:`/usr/local/bin/subr`

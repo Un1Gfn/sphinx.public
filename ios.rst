@@ -27,10 +27,24 @@ AirPlay
 :pkg:`AUR/futurerestore-git`
 
 
+Backup
+======
+
+back up these things before erasing a device
+
+`google authenticator <https://apps.apple.com/us/app/google-authenticator/id388497605>`__
+:menuselection:`... --> Export accounts`
+
+
+
 `checkra1n`__
 =============
 
 .. __: https://checkra.in/
+
+.. tip::
+
+   Perform an idevicepair if checkra1n cannot put j96ap to recovery mode
 
 checksum ::
 
@@ -332,10 +346,10 @@ Paths
             cd "$i"
             # https://remarkablemark.org/blog/2017/10/12/check-git-dirty/
             {
-               # --staged is a synonym of --cached
+               # [ -z "$(/usr/bin/git status -s)" ] # False positive - untracked files
+               [ x"$(ls -A1)" != x".git" ] &&
                /usr/bin/git diff --cached --exit-code --quiet &&
                /usr/bin/git diff          --exit-code --quiet;
-               # [ -z "$(/usr/bin/git status -s)" ] # Untracked files!
             } || return
             /usr/bin/git pull || return
          else
@@ -346,18 +360,27 @@ Paths
          makepkg --verifysource || return
          popd
       done
+      printf "\e[32m%s\e[0m\n" "done"
    }
 
 ::
 
+   for i in /aur/*; do
+      [ -d "$i" ] && git -C "$i" checkout .
+   done
    get \
+      futurerestore-marijuanarm-git \
       idevicerestore-git \
+      img4tool-git \
+      libfragmentzip-git \
+      libgeneral-git \
       libimobiledevice-git \
       libimobiledevice-glue-git \
       libirecovery-git \
       libplist-git \
       libusb-git \
       libusbmuxd-git \
+      lzfse-git \
       usbmuxd-git \
    ;
 
@@ -384,6 +407,12 @@ Paths
       sweep
       pacman -Syuu
       if (($#==2)); then
+         PATCH=1
+      else
+         unset -v PATCH
+      fi
+      rm -rf *-*-*-x86_64.pkg.* src/ pkg/
+      if [ x"$PATCH" = x1 ]; then
          printf "\e[34m%s\e[0m\n" "git-apply:"
          { /usr/bin/git diff --cached --exit-code --quiet && /usr/bin/git diff --exit-code --quiet; } || {
             printf "\e[1;31m%s\e[0m%s\n" "error: " "not clean"
@@ -391,9 +420,11 @@ Paths
          }
          /usr/bin/git apply -v /aur/"$PKG".patch
       fi
-      rm -rf *-*-*-x86_64.pkg.* src/ pkg/
       sudo -udarren /usr/bin/time --format="\n  wall clock time - %E\n" \
          makepkg -s -L --holdver
+      if [ x"$PATCH" = x1 ]; then
+         git checkout .
+      fi
       pacman -U *-*-*-x86_64.pkg.*
       if pacman -Syuu namcap; then
          printf "\e[34m%s\e[0m\n" "namcap:"
@@ -422,15 +453,60 @@ Paths
    mk    libusb-git
 
    # L3
-   mk -p libirecovery-git
    mk    libusbmuxd-git
+   mk    libgeneral-git
+   mk    lzfse-git
 
    # L4
    mk -p libimobiledevice-git
+   mk -p libirecovery-git
+   mk    libfragmentzip-git
+   mk    img4tool-git
 
    # L5
    mk usbmuxd-git
    mk idevicerestore-git
+   mk futurerestore-marijuanarm-git
+
+idevicerestore `usage <https://github.com/libimobiledevice/idevicerestore#usage>`__ ::
+
+   mkdir -p /ipsw
+   cd /ipsw
+   /usr/bin/time --format="\n  wall clock time - %E\n" \
+      idevicerestore --erase --latest
+
+| :manpage:`tmux(1)` - `write all tmux scrollback to a file <https://newbedev.com/write-all-tmux-scrollback-to-a-file>`__
+| :guilabel:`Ctrl-B` :guilabel:`:` ``capture-pane -E - -S -; save-buffer /tmp/tmux.txt``
+
+ipsw.me - `iPad5,1 <https://ipsw.me/iPad5,1>`__
+
+`tsssaver.1conan.com <https://tsssaver.1conan.com/v2/>`__ - ``$ ideviceinfo | grep UniqueChipID``
+
+::
+
+   # cd /ipsw
+   # /usr/bin/time --format="\n  wall clock time - %E\n" \
+   #    idevicerestore --erase -T *_iPad5,1_j96ap_14.8-18H17_3a8*.shsh2 iPad_64bit_TouchID_14.8_18H17_Restore.ipsw
+   # /usr/bin/time --format="\n  wall clock time - %E\n" \
+   #    idevicerestore --erase -T *_iPad5,1_j96ap_14.8-18H17_603*.shsh2 iPad_64bit_TouchID_14.8_18H17_Restore.ipsw
+
+::
+
+   # Get EDID with "idevicepair verify" or "ideviceinfo" under nomal mode
+   # Enter recovery mode
+   # ideviceenterrecovery <EDID>
+
+   cd /ipsw
+   source /proxy.bashrc
+   /usr/bin/time --format="\n  wall clock time - %E\n" futurerestore \
+      -t *_iPad5,1_j96ap_14.8-18H17_3a8*.shsh2 \
+      -t *_iPad5,1_j96ap_14.8-18H17_603*.shsh2 \
+      -w \
+      --latest-sep \
+      --no-baseband \
+      iPad_64bit_TouchID_14.8_18H17_Restore.ipsw
+
+
 
 
 `theos`__

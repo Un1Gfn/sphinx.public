@@ -70,6 +70,7 @@ ico
    820g3
    archiso
    bash
+   cangjie
    cheatsheet
    chrome
    framebuffer
@@ -77,7 +78,9 @@ ico
    holonews
    ios
    music
+   ncurses
    pkgmgmt
+   postmarketos
    recipe
    router
    todo

@@ -1,6 +1,46 @@
+.. include:: include/substitution.txt
+
 =====
 820G3
 =====
+
+Misc
+====
+
+| 4006103888 HP support service hotline
+| +8613510790885 retailer
+
+`service center <https://j.map.baidu.com/b5/0q_>`__ |vv| 0755-83261368 0755-83246625
+
+::
+
+   pastebin 820.txt
+
+   BIOS - Advanced - Boot Mode - UEFI Native (without CSM)
+
+   BIOS - Advanced - Device Configurations - Video memory size
+
+   BIOS - Security - Hard Drive Tools - Secure Erase
+
+   BIOS - Main - System Information
+   Product Name - HP EliteBook 820 G2
+   SKU Number - M5H94UP#B1L
+   Serial Number - 5CG544383Z
+   Current System BIOS Version - M71 Ver. 01.09
+   Current BIOS Release Date - 09/01/2015
+   Video Bios Revision - INTEL(R) VBIOS [5.5.1038]
+   Keyboard Controller Revision - 96.56
+
+   F2 System Diagnostics
+   F9 Boot Device Options
+   F10 BIOS Setup
+
+   Drivers
+   https://support.hp.com/us-en/drivers/selfservice/closure/7343192/model/7343198
+   sp102456.exe - BIOS
+   sp90250.exe - Intel Management Engine (ME) Firmware Component
+   sp91903.exe - HP Hotkey Support
+
 
 BIOS
 ====

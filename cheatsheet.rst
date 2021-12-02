@@ -568,14 +568,14 @@ misc (please split this blob) ::
 
    #!/dev/null
 
-   convert -size 4096x2048 xc:#0000AA Blue.png
+   magick convert -size 4096x2048 xc:#0000AA Blue.png
 
-   convert -size 4096x4096 -background 'rgb(0,0,170)' Emblem_of_the_Kuomintang.svg Emblem_of_the_Kuomintang.png
-   convert -size 1024x1024 -background 'rgb(0,0,170)' -blur 0x64 Emblem_of_the_Kuomintang.svg Emblem_of_the_Kuomintang.blurred.png
+   magick convert -size 4096x4096 -background 'rgb(0,0,170)' Emblem_of_the_Kuomintang.svg Emblem_of_the_Kuomintang.png
+   magick convert -size 1024x1024 -background 'rgb(0,0,170)' -blur 0x64 Emblem_of_the_Kuomintang.svg Emblem_of_the_Kuomintang.blurred.png
 
    cd /tmp
-   convert -size 1024x1024 -background 'rgb(255,255,255)' Network-e72c038278.svg Network-e72c038278.png
-   convert -size 1024x1024 -background 'rgb(255,255,255)' Network-8f37df9f10.svg Network-8f37df9f10.png
+   magick convert -size 1024x1024 -background 'rgb(255,255,255)' Network-e72c038278.svg Network-e72c038278.png
+   magick convert -size 1024x1024 -background 'rgb(255,255,255)' Network-8f37df9f10.svg Network-8f37df9f10.png
 
    rm -fv Emblem_of_Okinawa_County*
    P="Emblem_of_Okinawa_Prefecture"
@@ -711,6 +711,21 @@ recursively remove binary ::
 
 | `March 2020 <https://en.wikipedia.org/wiki/Wikipedia_talk:IP_block_exemption/log#March_10>`__ - 1OH2 IPBE
 | `User rights log <https://en.wikipedia.org/w/index.php?title=Special%3AUserRights&user=Un1Gfn>`__
+
+
+Tar
+===
+
+.. highlight:: bash
+
+`flatten entire archive <https://stackoverflow.com/a/14295908/>`__ ::
+
+   tar xzf archive.tgz --transform='s/.*\///'
+
+extract single file ::
+
+   tar -x -f /customrepo/libim*glue*.tar.zst usr/lib/libimobiledevice-glue-1.0.so.0.0.0 -v --xform='s,.*/,,'
+
 
 Verilog
 =======
