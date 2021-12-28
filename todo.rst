@@ -17,6 +17,11 @@ Todo |:memo:|
 
 ----
 
+wp:`Wikipedia:SVG_help#font-family_issues`
+|vv| :Aw:`microsoft fonts`
+|vv| :Aw:`fonts`
+|vv| :Aw:`font configuration`
+
 https://aur.archlinux.org/packages/sourcetrail/#comment-837412
 https://github.com/CoatiSoftware/Sourcetrail/issues/1180
 

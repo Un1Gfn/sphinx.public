@@ -40,6 +40,13 @@ ico
 
 .. toctree::
    :maxdepth: 0
+   :caption: CMU
+
+   cg
+   csapp
+
+.. toctree::
+   :maxdepth: 0
    :caption: X200
 
    x200
@@ -65,6 +72,13 @@ ico
 
 .. toctree::
    :maxdepth: 0
+   :caption: CONSOLE
+
+   kms
+   ncurses
+
+.. toctree::
+   :maxdepth: 0
    :caption: MISC
 
    820g3
@@ -73,18 +87,16 @@ ico
    cangjie
    cheatsheet
    chrome
-   framebuffer
+   gobject
    gpu_hang
    holonews
    ios
    music
-   ncurses
    pkgmgmt
    postmarketos
    recipe
    router
    todo
-
 
 Indices and tables
 ==================

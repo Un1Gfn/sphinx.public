@@ -4,11 +4,62 @@
 iOS
 ===
 
-todo: move everything from `Un1Gfn-obj/ios <https://github.com/Un1Gfn-obj/ios>`__
+Downgrade
+=========
+
+| sysupgrade ``pacman -Fy; pacman -Syuu``
+| force remove packages ``pacman -Rd``
+| install git packages with paru
+| depcheck ``pacman -Dk``
+
+`[Tutorial] downgrade from Ios 15 to 14.3 for A11 devices <https://www.reddit.com/r/jailbreak/comments/qri8w0/tutorial_downgrade_from_ios_15_to_143_for_a11/>`__
+
+`How to downgrade from iOS 15 to iOS 14 <https://gist.github.com/nyuszika7h/aac55c97f7925cddcf5ec3167f85dfe8>`__
+
+`Restoring with blobs using FutureRestore <https://ios.cfw.guide/futurerestore/>`__
+
+::
+
+   function L {
+      P=('|  '
+         ' \ '
+         '  |'
+         ' / ')
+      N="${#P[@]}"
+      for ((i=0;1;i++)); do
+         sleep 0.3
+         echo "${P[i%N]} $(lsusb | grep -i apple)"
+      done
+   }
+
+| :tiw:`Enter DFU mode - A9 and older devices <DFU_Mode#A9_and_older_devices_.28iPad_other_than_the_ones_listed_below.2C_iPhone_6s_and_below.2C_iPhone_SE_and_iPod_touch_6_and_below.29>`
+|    connect iPad
+|    unlock iPad
+|    run ``L``
+|       *L() shows* ``05ac:12ab Apple, Inc. iPad 4/Mini1``
+|          press & hold :guilabel:`Home`\ +\ :guilabel:`Lock`
+|       *L() stops*
+|          release :guilabel:`Lock` but keep holding :guilabel:`Home`
+|       *L() shows* ``05ac:1227 Apple, Inc. Mobile Device (DFU Mode)``
+|          release :guilabel:`Home`
+
+.. tip::
+
+   DFU times out in |asymp|\ 50 seconds then boots to SpringBoard
+
+\... (set nounce, futurerestore) ...
+
+| force remove git packages ``pacman -Rd``
+| put non-git packages back ``pacman -S --needed --asdeps``
+| depcheck again ``pacman -Dk``
 
 
 Misc
 ====
+
+todo: move everything from `Un1Gfn-obj/ios <https://github.com/Un1Gfn-obj/ios>`__
+
+https://github.com/Cryptiiiic/ipwndfu/archive/A11-patch-rom.tar.gz
 
 :aw:`archwiki <iOS>`
 

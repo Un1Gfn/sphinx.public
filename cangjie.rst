@@ -7,6 +7,13 @@ Cangjie 倉頡
 雜項 |:hourglass:|
 ==================
 
+`漢字の正しい書き順(筆順) <https://kakijun.jp/>`__
+`國字標準字體筆順學習網 <https://stroke-order.learningweb.moe.edu.tw/characters.do>`__
+
+`glyphwiki <https://glyphwiki.org/>`__ SVG 明朝体の漢字グリフ
+
+gitter - `rime <https://gitter.im/rime/home>`__
+
 開啓無痕式分頁，登入另一google賬號，使用 |:tw:| 區域檢索
 
 `筆順查詢 <https://stroke-order.learningweb.moe.edu.tw/characters.do>`__
@@ -22,12 +29,15 @@ Cangjie 倉頡
 |   `粵典 <https://words.hk/>`__
 |   `Pleco CC-Canto <http://cantonese.org/>`__
 
+`hkcards <https://www.hkcards.com/>`__ (拆字)
+
 | `維基教科書 <https://zh.wikibooks.org/wiki/倉頡輸入法>`__
 | |b| `取碼字形問題 <https://zh.wikibooks.org/wiki/倉頡輸入法/特別注意#字形問題>`__
 | |b| `進階知識 <https://zh.wikibooks.org/wiki/倉頡輸入法/進階知識>`__
       - `標點符號 <https://zh.wikibooks.org/wiki/倉頡輸入法/進階知識#標點符號輸入>`__
 | |b| `複合字 <https://zh.wikibooks.org/wiki/倉頡輸入法/例外字#複合字首>`__
 | |b| `輔助字形 <https://zh.wikibooks.org/wiki/倉頡輸入法/輔助字形>`__
+| |b| `例外字 <https://zh.wikibooks.org/wiki/倉頡輸入法/例外字>`__
 | |b| `版本差異#五代與三代的差異 <https://zh.wikibooks.org/wiki/倉頡輸入法/版本差異#五代與三代的差異>`__
 
 `朱邦復工作室 - 著作下載 <http://www.cbflabs.com/?id=5>`__
@@ -212,50 +222,6 @@ db key unordered, store keys to a separate fixed array for random picking
     gdbm_fetch() gdbm_store()    gdbm_fetch() gdbm_store()
    ============================ =========================================
 
-.. highlight:: bash
-
-::
-
-   function check {
-      grep -v -E -e '^.+'$'\t''[a-z]+$'
-      if [ $? -ne 1 ]; then
-         grep -v -E -e '^.+'$'\t''[a-z]+$' | cat -ET
-         return 1
-      else
-         return 0
-      fi
-   }
-   function build {
-      gcc -std=gnu11 -g -O0 -Wextra -Wall -Winline -Wshadow -fanalyzer -o serialize.out serialize.c -lgdbm
-   }
-
-::
-
-   T=Cangjie5_special
-   build && cat $T.txt | check && {
-      rm -fv $T.gdbm
-      cat $T.txt | ./serialize.out $T.gdbm
-   }
-
-::
-
-   T=Cangjie5
-   function strip {
-      tail -n +12 | sed -Ee 's,\t\[([OuUvV!]+|MARK|o|ou|\?)\]$,,g'
-   }
-   build && strip <$T.txt | check && {
-      rm -fv $T.gdbm
-      strip <$T.txt | ./serialize.out $T.gdbm
-   }
-
-::
-
-   gcc -std=gnu11 -g -O0 -Wextra -Wall -Winline -Wshadow -fanalyzer -Wno-analyzer-use-after-free $(pkg-config --cflags ncurses) -o key.out key.c $(pkg-config --libs ncurses) -lgdbm &&
-   read -rp "run? " &&
-   valgrind --log-file=valgrind.log -s ./key.out Cangjie5_special.gdbm
-   # valgrind --leak-check=full --show-leak-kinds=definite,indirect ./key.out Cangjie5_special.gdbm
-   # ./key.out Cangjie5_special.gdbm
-
 :manpage:`SLIST_ENTRY(3)` -
 :manpage:`SLIST_ENTRY(3bsd)` -
 singly linked list api
@@ -264,29 +230,57 @@ singly linked list api
 輔助字形練習器
 ==============
 
-| `pup <https://github.com/ericchiang/pup>`__
-| `htmlq <https://github.com/mgdm/htmlq>`__
-| `gumbo-parser <https://github.com/google/gumbo-parser>`__
+.. tip::
+
+   Use the same build system as the library it depends on (imagemagick)
+
+| svg bezier
+| `GeoGebra <https://www.geogebra.org/calculator>`__ Graphing mode
+| :menuselection:`Tools --> Slider --> t`
+| :menuselection:`Tools --> Point --> P0 P1 P2`
+
+::
+
+   B=(1-t)((1-t)P0+tP1)+t((1-t)P1+tP2)
+   loc1=Locus(B,t)
+
+| `<https://stackoverflow.com/questions/1527883/parse-html-using-c>`__
+| `pup <https://github.com/ericchiang/pup>`__ |vv|
+  `htmlq <https://github.com/mgdm/htmlq>`__ |vv|
+  `gumbo-parser <https://github.com/google/gumbo-parser>`__
 
 get html ::
 
-   curl 'https://zh.wikibooks.org/w/index.php?title=%E5%80%89%E9%A0%A1%E8%BC%B8%E5%85%A5%E6%B3%95%2F%E8%BC%94%E5%8A%A9%E5%AD%97%E5%BD%A2&variant=zh-tw' >|svg.html
+   rm -fv svg.html
+   curl -x socks5h://127.0.0.1:1080 'https://zh.wikibooks.org/w/index.php?title=%E5%80%89%E9%A0%A1%E8%BC%B8%E5%85%A5%E6%B3%95%2F%E8%BC%94%E5%8A%A9%E5%AD%97%E5%BD%A2&variant=zh-tw' >|svg.html
 
-download svg ::
+extract svg url ::
 
    # <img ... src="//upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Cjrm-a0.svg/30px-Cjrm-a0.svg.png" ...>
    # https://upload.wikimedia.org/wikipedia/commons/b/ba/Cjem-c2-2.svg
    # https://serverfault.com/a/631000
-   cd ~/cangjie/auxiliary_shapes/ && (
-      U="$(cat svg.html \
+   cd ~/cangjie/auxiliary_shapes/ && {
+      rm -fv paths.txt
+      cat svg.html \
          | htmlq 'table:nth-of-type(2)' \
          | htmlq 'td:nth-last-child(3),td:nth-last-child(2)' \
          | htmlq -a src img \
-         | cut -d'/' -f7-9)"
-      [ "$(wc -l <<<"$U")" -eq "$(sort <<<"$U" | uniq | wc -l)" ] || exit 1
-      echo "total: $(wc -l <<<"$U")"
+         | cut -d'/' -f7-9 \
+         >| paths.txt
+      [ "$(wc -l <paths.txt)" -eq "$(sort paths.txt | uniq | wc -l)" ] || echo err
+   }
+
+hard-code ::
+
+   # steal tmp.sh
+
+download svg ::
+
+   mkdir -p ~/cangjie/auxiliary_shapes/svg && cd "$_" && (
+      printf "total: "
+      wc -l ../paths.txt
       rm -I *.svg
-      echo "$U" \
+      cat ../paths.txt \
          | sed 's,^,https://upload.wikimedia.org/wikipedia/commons/,g' \
          | sponge \
          | parallel --bar -P 10 curl -x socks5h://127.0.0.1:1080 -O --retry-all-errors --retry 99 -s {}
@@ -294,32 +288,66 @@ download svg ::
       comm -3 <(echo "$U" | cut -d/ -f3 | sort) <(ls -1A | sort)
    )
 
-group (demo) ::
+`<https://stackoverflow.com/questions/7540901/scaling-vector-images-through-librsvg>`__
 
-   iprev=Cjem000
-   for i in $(cat svg.html \
-      | htmlq 'table:nth-of-type(2)' \
-      | htmlq 'td:nth-last-child(3),td:nth-last-child(2)' \
-      | htmlq -a src img \
-      | cut -d'/' -f9)
-   do
-      [ "${iprev:2:1}" = r ] && [ "${i:2:1}" = e ] && printf "\nEX"
-      [ "${iprev:2:1}" = e ] && [ "${i:2:1}" = r ] && printf "\n\nAUX"
-      printf "  %s" "$i"
-      iprev="$i"
-   done
-   echo
-   echo
+| ``日`` monochrome Cjrm-a0.svg
+| ``明`` duotone Cjem-a0-1.svg
 
-.. tip::
+`rsvg doc <file:///usr/share/gtk-doc/html/rsvg-2.0/index.html>`__
+`[progress] <file:///usr/share/gtk-doc/html/rsvg-2.0/ch03.html>`__
 
-   | :pkg:`extra/gdk-pixbuf2` |larr| standalone
-   | :pkg:`extra/cairo` |larr| :pkg:`extra/libx11`
+:abbr:`geometric translation (平移)`
 
-| svg2buf
-|    `rsvg+pixbuf <https://developer-old.gnome.org/rsvg/unstable/rsvg-Using-RSVG-with-GdkPixbuf.html>`__
-|    `MagickWand <https://imagemagick.org/script/magick-wand.php>`__ - NewMagickWand MagickReadImage DestroyMagickWand MagickWandTerminus
-|    `MagickCore <https://imagemagick.org/script/magick-core.php>`__ - `ImageToBlob <https://imagemagick.org/api/blob.php#ImageToBlob>`__
+::
 
-| buf2fb
-|    lvgl `images <https://docs.lvgl.io/latest/en/html/overview/image.html>`__
+   make
+   make run
+
+\
+
+   Cairo had a notion of "backends": it could render to RGBA buffers, or it could translate its drawing model commands into PDF or PostScript. In Cairo's terms, one creates a cairo_surface_t of a particular kind (in-memory image surface, PDF surface, EPS surface, etc.), and then a cairo_t context for the surface. The context is what makes the drawing commands available.
+
+      | rsvg_handle_get_pixbuf() |rarr|
+      | rsvg_handle_render_cairo(handle, cairo_t) |rarr|
+      | rsvg_handle_render_document()
+
+
+Cairo
+=====
+
+.. warning::
+
+   | Is is not possible to have cairo paint to framebuffer directly
+   | Framebuffer and cairo surface may have different strides
+
+:abbr:`opaque (non-transparent)`
+:abbr:`translucent(semitransparent)`
+transparent
+
+`CTM <https://www.cairographics.org/manual/cairo-Transformations.html#cairo-Transformations.description>`__
+
+| `docs <https://cairographics.org/documentation/>`__
+  |vv| `cookbook <https://cairographics.org/cookbook/>`__
+  |vv| `index <https://cairographics.org/manual/index-all.html>`__
+| `tutorial <https://cairographics.org/tutorial/>`__ (click images on the right side for source code)
+
+`index <https://cairographics.org/manual/index-all.html>`__
+
+| slow paths
+| |b| copy something back from the graphics server, do some operations on the CPU, and then reupload back to the server
+| |b| creating too many clipping regions (catch them with *the script surface* or */usr/bin/cairo-trace*)
+
+destination
+   | `surface <https://www.cairographics.org/manual/cairo-surfaces.html>`__
+   | PixelArray/SVG/PDF/etc.
+source
+   | |:art:| |:paintbrush:| paint/palette/pattern/`another surface <https://www.cairographics.org/FAQ/#paint_from_a_surface>`__
+   | opaque/translucent
+mask
+   controls where you apply the source to the destination
+path
+   |:arrow_up_down:| between mask and context
+context
+   | keeps track of everything that verbs affect
+   | source + destination + mask + helpervars ( line width/style font face/size ... ) + path
+   | the path it tracks turns into a mask with the next verb-drawing

@@ -141,7 +141,6 @@ GPU/Video
     live               96   mp4        1920x1080    :kbd:`*k , avc1.640028, 30.0fps, mp4a.40.2`
    ========= ============= ========== ============ =================================================================================
 
-
 | :manpage:`youtube-dl(1)`
 | `faq <https://github.com/ytdl-org/youtube-dl#faq>`__
 | `cookies <https://github.com/ytdl-org/youtube-dl#how-do-i-pass-cookies-to-youtube-dl>`__
@@ -152,56 +151,84 @@ GPU/Video
   `(a) <https://github.com/ytdl-org/youtube-dl/issues/15384#issuecomment-359654155>`__
   :aw:`(g) <youtube-dl#Faster_downloads>`
 
+``mpv --list-options | less``
+
+WikiChip - `HD520 <https://en.wikichip.org/wiki/intel/hd_graphics/520>`__
+
+`mpv call yt-dlp <https://www.reddit.com/r/mpv/comments/q759xc/comment/hhbva8j/>`__
+
+:aw:`streamlink` - `cli <https://streamlink.github.io/cli.html>`__
+`enable caching in your player <https://streamlink.github.io/issues.html#streams-are-buffering-lagging>`__
+
 .. warning::
 
    | youtube-dl does not support external-downloader
    | mpv does not complain
    | make sure :pkg:`community/yt-dlp` is installed and :pkg:`community/youtube-dl` is NOT installed 
 
-x200 ::
-
-   # /usr/local/bin/mpv.sh
+x200 - :kbd:`/usr/local/bin/mpv.sh`
 
 820g3 ::
 
    {
+      # 140 # aac
+      # 160 # 144p
+      # 299 # 1080p60 h264
+      # 303 # 1080p60 vp9
+      # 401 # 2160p
+      #
+      # xset dpms 0 0 1000
+      #
+      MPV_STANDALONE=(
+         --cache-secs=120
+         --cache=yes
+         --demuxer-max-back-bytes=2G
+         --demuxer-max-bytes=2G
+         --demuxer-readahead-secs=120
+         --fs
+         --pause
+         --vo=gpu
+         --hwdec=vaapi
+         --no-resume-playback
+      )
+      MPV_YTDL=(
+         --ytdl-format="140+160"
+         --ytdl-raw-options="external-downloader=aria2c,external-downloader-args=-j3 -c -x3 -k1M -s3"
+      )
       source ~/proxy.bashrc
-      EXT="external-downloader=aria2c,external-downloader-args=-j3 -c -x3 -k1M -s3"
-      mpv \
-        --pause \
-        --ytdl-format="140+160" \
-        --ytdl-raw-options="$EXT" \
-        --fs \
-        --demuxer-max-bytes=64M \
-        --no-resume-playback \
-        "https://www.youtube.com/watch?v=b18tiLlgPDs"
+      # timeout 1h mpv "${MPV_STANDALONE[@]}" "${MPV_YTDL[@]}" 'https://www.youtube.com/watch?v=PlgaylNZb-s'
+      mpv "${MPV_STANDALONE[@]}" 'https://ipfs.io/ipfs/bafybeibheyhl37mdjbv3ygexgphcpcrhvtx3ahw6ulk7s3n7ld5ga4w7ga?filename=projektmelody-chaturbate-20211217T230500Z-source.mp4'
    }
 
-yt-dlp `<pick 1 out of 3 <https://www.reddit.com/r/mpv/comments/q759xc/comment/hhbva8j/>`__ ::
+x200 - :kbd:`/usr/local/bin/mpv.sh`
 
-   mpv --demuxer-max-bytes=32m --script-opts=ytdl_hook-ytdl_path=yt-dlp 'ytdl://8Jvtl9KG9aY'
+820g3 ::
 
-TVBS ``V0WxUakDV7M``
-
-:aw:`streamlink` - `cli <https://streamlink.github.io/cli.html>`__
-`enable caching in your player <https://streamlink.github.io/issues.html#streams-are-buffering-lagging>`__
-
-x200 ::
-
-   # /usr/local/bin/mpv.sh
-
-| 820g3
-| WikiChip - `HD520 <https://en.wikichip.org/wiki/intel/hd_graphics/520>`__
-
-::
-
+   MPV_STREAMLINK=(
+      #
+      --vo=gpu
+      --hwdec=vaapi
+      #
+      --cache=yes
+      --cache-secs=1
+      --demuxer-readahead-secs=1
+      --demuxer-max-back-bytes=1M
+      --demuxer-max-bytes=1M
+      #
+      --fs
+      --pause
+      --no-resume-playback
+      #
+   )
    streamlink \
       --http-proxy "socks5h://127.0.0.1:1080" \
       -p "mpv" \
-      -a "--vo=gpu --hwdec=vaapi --pause --cache=yes --demuxer-max-bytes=128M" \
+      -a "${MPV_STREAMLINK[*]}" \
+      -v \
       --stream-segment-threads 2 \
-      'https://www.youtube.com/watch?v=b18tiLlgPDs' \
-      144p
+      --ringbuffer-size 1M \
+      'https://www.youtube.com/watch?v=V03tgTLQcyE' \
+      1080p
 
 
 :aw:`KDE`

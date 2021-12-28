@@ -621,11 +621,37 @@ crop and resize ::
 Makefile
 ========
 
-.. highlight:: Makefile
-
 `Appendix A Quick Reference <https://www.gnu.org/software/make/manual/html_node/Quick-Reference.html>`__
 
 `Special Built-in Target Names <https://www.gnu.org/software/make/manual/html_node/Special-Targets.html>`__
+
+.. highlight:: bash
+
+see the full list of `default rules and variables <https://www.gnu.org/software/make/manual/html_node/Catalogue-of-Rules.html>`__::
+
+   make -p -f/dev/null >/tmp/default.Makefile
+
+.. highlight:: Makefile
+
+::
+
+   COMPILE.c = $(CC) $(CFLAGS) $(CPPFLAGS) $(TARGET_ARCH) -c
+   %.o: %.c
+      $(COMPILE.c) $(OUTPUT_OPTION) $<
+
+::
+
+   LINK.o = $(CC) $(LDFLAGS) $(TARGET_ARCH)
+   %: %.o
+      $(LINK.o) $^ $(LOADLIBES) $(LDLIBS) -o $@
+   .o:
+      $(LINK.o) $^ $(LOADLIBES) $(LDLIBS) -o $@
+
+::
+
+   LINK.c = $(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(TARGET_ARCH)
+   %: %.c
+      $(LINK.c) $^ $(LOADLIBES) $(LDLIBS) -o $@
 
 | `Automatic Variables <https://www.gnu.org/software/make/manual/html_node/Automatic-Variables.html>`__
 | \
@@ -689,28 +715,6 @@ recursively remove binary ::
    			-a -not -name "puml_utos.svg"              \
    		\)                                            \
    		-exec rm -v {} \;
-
-
-`MediaWiki`__
-=============
-
-.. No support for MediaWiki syntax in pygments
-.. highlight:: text
-
-.. __: https://www.mediawiki.org/
-
-`Manual:Date_formatting <https://www.mediawiki.org/wiki/Manual:Date_formatting>`__
-
-`{{cite web}} <https://en.wikipedia.org/wiki/Template:Cite_web>`__
-
-`zh_xx conversion <https://zh.wikipedia.org/wiki/Wikipedia:%E7%B9%81%E7%AE%80%E5%A4%84%E7%90%86>`__
-
-`force rename title <https://zh.wikipedia.org/wiki/Help:%E4%B8%AD%E6%96%87%E7%BB%B4%E5%9F%BA%E7%99%BE%E7%A7%91%E7%9A%84%E7%B9%81%E7%AE%80%E3%80%81%E5%9C%B0%E5%8C%BA%E8%AF%8D%E5%A4%84%E7%90%86#%E6%8E%A7%E5%88%B6%E8%87%AA%E5%8A%A8%E8%BD%AC%E6%8D%A2%E7%9A%84-{zh-cn:%E4%BB%A3%E7%A0%81;zh-tw:%E7%A8%8B%E5%BC%8F%E7%A2%BC}->`__ ::
-
-   -{T|New Title}-
-
-| `March 2020 <https://en.wikipedia.org/wiki/Wikipedia_talk:IP_block_exemption/log#March_10>`__ - 1OH2 IPBE
-| `User rights log <https://en.wikipedia.org/w/index.php?title=Special%3AUserRights&user=Un1Gfn>`__
 
 
 Tar
