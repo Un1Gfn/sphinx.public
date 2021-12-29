@@ -46,7 +46,13 @@ extensions = [
     'sphinxcontrib.youtube',        # /usr/lib/python3*/site-packages/sphinxcontrib/youtube/
     'sphinxemoji.sphinxemoji',
     'myextension',
+    'sphinx.ext.mathjax',
 ]
+
+# https://www.sphinx-doc.org/en/master/usage/extensions/math.html#module-sphinx.ext.mathjax
+# http://docs.mathjax.org/en/latest/web/components/combined.html
+# relative to the _static directory
+mathjax_path = 'mathjax/tex-mml-chtml.js'
 
 # https://www.sphinx-doc.org/en/master/usage/extensions/autosectionlabel.html
 autosectionlabel_prefix_document = True

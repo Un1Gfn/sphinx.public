@@ -51,7 +51,7 @@ entr:
 .SILENT: html
 html:
 %:
-	# sphinx-build -M $@ . "$(BUILDDIR)"
+# 	sphinx-build -M $@ . "$(BUILDDIR)"
 	sphinx-build -b $@ . $(BUILDDIR)
 	echo
 	:; \
@@ -65,6 +65,7 @@ html:
 		echo $$n pages reloaded;
 	echo
 	[ -e "$(BUILDDIR)/.nojekyll" ]
+	ln -s /usr/share/mathjax/ $(BUILDDIR)/_static/mathjax 2>/dev/null || true
 	echo "  file://$(BUILDDIR)/index.html"
 	echo "  $(URL)"
 	echo
