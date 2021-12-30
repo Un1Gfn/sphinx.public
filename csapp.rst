@@ -86,6 +86,23 @@ Chapter 1: A Tour of Computer Systems
 Chapter 2: Representing and Manipulating Information
 ====================================================
 
+decimal to hexadecimal
+
+.. math::
+
+   \begin{eqnarray}
+      D_{10} \div 16 &=& q_1 \cdots r_1 \\
+      q_1    \div 16 &=& q_2 \cdots r_2 \\
+      q_2    \div 16 &=& q_3 \cdots r_3 \\
+      q_3    \div 16 &=& q_4 \cdots r_4 \\
+      q_4    \div 16 &=& 0   \cdots r_5 \\
+      D_{10}         &=& \overline{r_5r_4r_3r_2r_1}_{16}
+   \end{eqnarray}
+
+
+
+----
+
 :raw-html:`<details open><summary>tracker</summary>`
 
 .. table::
@@ -95,8 +112,17 @@ Chapter 2: Representing and Manipulating Information
    ====================== ===============================================================
     |:heavy_check_mark:|   Part I: Program Structure and Execution Preface @ page 29(64)
     |:heavy_check_mark:|   TOC
-    |:hourglass:|          before 2.1
-    \                      2.1
+    |:heavy_check_mark:|   before 2.1
+    |:heavy_check_mark:|   2.1
+    |:heavy_check_mark:|   2.1.1
+    |:heavy_check_mark:|   2.1.2
+    |:hourglass:|          2.1.3
+    \                      2.1.4
+    \                      2.1.5
+    \                      2.1.6
+    \                      2.1.7
+    \                      2.1.8
+    \                      2.1.9
     \                      2.2
     \                      2.3
     \                      2.4
