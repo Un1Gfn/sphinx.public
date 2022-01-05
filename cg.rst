@@ -4,6 +4,11 @@
 CG
 ===
 
+Misc
+====
+
+:wp:`James Stewart <James Stewart (mathematician)>`
+
 `CMU CS <https://csd.cmu.edu/cs-and-related-undergraduate-courses>`__
 
 `15-462/662 Fall 2021 <http://15462.courses.cs.cmu.edu/>`__
@@ -33,9 +38,55 @@ ISBN-10 `1285741552 <https://www.amazon.com/dp/1285741552/>`__
 
    page n(n+32)
 
+`linux function plotting tools <https://www.ubuntupit.com/best-plotting-tools-for-linux-for-creating-scientific-graphs/>`__
 
-APPENDIXES
-==========
+
+0. Web, Preface and Appendices
+==============================
+
+| ancillaries /an·**si**·lr·eez/
+| logarithmic /laa·guh·**rith**·mik/
+| logarithm /**laa**·gr·i·thm/
+
+representations |vv| verbal |vv| numerical |vv| visual |vv| algebraic
+
+| :math:`\text{heat index: } T_{perceived} = f(T_{actual},RH)`
+| \
+  :wp:`HI <heat index>`
+  |vv| :wp:`WBT <wet-bulb temperature>`
+  |vv| :wp:`DBT <dry-bulb temperature>`
+  |vv| :wp:`RH <humidity#Relative_humidity>`
+
+| Some exercise numbers are printed in red (pink):
+  :raw-html:`<span style="color:red;">5.</span>`
+| This indicates that :emlink:`Homework Hints <https://www.stewartcalculus.com/media/17_inside_homework_hints.php>`
+  are available for the exercise
+
+| :wp:`CAS <computer algebra system>` (:wp:`list <list of computer algebra systems>`)
+| `WolframAlpha <https://www.wolframalpha.com/>`__
+| `Symbolab <https://www.symbolab.com/>`__
+| `Mathway <https://www.mathway.com/Algebra>`__
+
+:wp:`completing the square` :math:`\displaystyle{x^2+bx+c\,=\, \left(x+{\tfrac b 2 }\right)^2 + c - \tfrac{b^2}4 }`
+
+/kwaa·**dra**·tuhk/ :wp:`quadratic formula` :math:`\displaystyle{ x=\frac{-b\pm\sqrt{b^2-4ac}}{2a} }`
+
+| :math:`\displaystyle { a^3-b^3=(a-b)(a^2+ab+b^2) }`
+| :math:`\displaystyle { a^3+b^3=(a+b)(a^2-ab+b^2) }`
+
+| :math:`({\color{red}x_1},{\color{blue}y_1})` and :math:`({\color{blue}x_2},{\color{red}y_2})`
+| equation of the line that passes through is
+  :math:`\displaystyle (x-{\color{red}x_1}) (y-{\color{red}y_2}) = (y-{\color{blue}y_1}) (x-{\color{blue}x_2})`
+
+:abbr:`perpendicular bisector (a line which meets a segment at its midpoint perpendicularly)`
+
+:abbr:`y-intercept (a point where the graph intersects the y-axis of the coordinate system)`
+
+trigonometry /tri·guh·**naa**·muh·tree/
+
+----
+
+web `home <https://www.stewartcalculus.com/media/17_home.php>`__
 
 :raw-html:`<details open><summary>tracker</summary>`
 
@@ -43,23 +94,16 @@ APPENDIXES
    :align: left
    :widths: auto
 
-   ====================== ======
-    \                      A\.
-    \                      B\.
-    \                      C\.
-    \                      D\.
-    \                      E\.
-    \                      F\.
-    \                      G\.
-    \                      H\.
-    \                      I\.
-   ====================== ======
+   ============================ ===========================================================================
+    |:heavy_minus_sign:|         Review - Algebra (passed *A Diagnostic Test: Algebra*, no need to review)
+    \                            Review - Analytic Geometry
+    \                            Lies My Calculator and Computer Told Me
+    \                            Challenge Problems
+   ============================ ===========================================================================
 
 :raw-html:`</details>`
 
-
-0.
-===
+web `additional topics <https://www.stewartcalculus.com/media/17_inside_topics.php>`__
 
 :raw-html:`<details open><summary>tracker</summary>`
 
@@ -67,24 +111,63 @@ APPENDIXES
    :align: left
    :widths: auto
 
-   ====================== ====================================================
-    |:heavy_check_mark:|   Front Cover
-    |:heavy_check_mark:|   Title Page
-    |:heavy_check_mark:|   Copyright Page
-    |:heavy_check_mark:|   CONTENTS
-    |:hourglass:|          Preface.Preface
-    \                      Preface.AV
-    \                      Preface.WNitEE
-    \                      Preface.F
-    \                      Preface.C
-    \                      Preface.Anc
-    \                      Preface.Ack
-    \                      Preface.Anc.green
-    \                      To the Student
-    \                      Calculators, Computers, and Other Graphing Devices
-    \                      Diagnostic Tests
-    \                      A Preview of Calculus
-   ====================== ====================================================
+   ============================ ==================================================
+    \                            Fourier Series
+    \                            Formulas for the Remainder Term in Taylor Series
+    \                            Rotation of Axes
+   ============================ ==================================================
+
+:raw-html:`</details>`
+
+book preface
+
+:raw-html:`<details open><summary>tracker</summary>`
+
+.. table::
+   :align: left
+   :widths: auto
+
+   ============================ ====================================================
+    |:heavy_check_mark:|         Front Cover
+    |:heavy_check_mark:|         Title Page
+    |:heavy_check_mark:|         Copyright Page
+    |:heavy_check_mark:|         CONTENTS
+    |:heavy_check_mark:|         Preface.P..A..W..F..C..A..A..A..
+    |:heavy_check_mark:|         To the Student
+    |:heavy_check_mark:|         Calculators, Computers, and Other Graphing Devices
+    |:heavy_check_mark:|         A Diagnostic Test: Algebra
+    |:heavy_check_mark:|         B Diagnostic Test: Analytic Geometry
+    |:hourglass_flowing_sand:|   C Diagnostic Test: Functions
+    |:hourglass_flowing_sand:|   D Diagnostic Test: Trigonometry
+    \                            A Preview of Calculus
+   ============================ ====================================================
+
+:raw-html:`</details>`
+
+book appendices
+
+:raw-html:`<details open><summary>tracker</summary>`
+
+.. table::
+   :align: left
+   :widths: auto
+
+   ============================ =================================================
+    \                            A\. Numbers, Inequalities, and Absolute Numbers
+    \                            B\. Coordinate Geometry and Lines
+    \                            C\. Graphs of Second-Degree Equations
+    \                            D\. Trigonometry
+    |:hourglass_flowing_sand:|   |nbsp| \- Angles
+    \                            |nbsp| \- The Trigonometric Functions
+    \                            |nbsp| \- Trigonometric Identities
+    \                            |nbsp| \- Graphs of the Trigonometric Functions
+    \                            |nbsp| \- D Exercises
+    \                            E\. Sigma Notation
+    \                            F\. Proofs of Theorems
+    \                            G\. The Logarithm Defined as an Integral
+    \                            H\. Complex Numbers
+    \                            I\. ANSWERS to Odd-Numbered Exercises
+   ============================ =================================================
 
 :raw-html:`</details>`
 
@@ -98,14 +181,14 @@ APPENDIXES
    :align: left
    :widths: auto
 
-   ====================== ====================================================
-    \                      1.1
-    \                      1.2
-    \                      1.3
-    \                      1.4
-    \                      1.5
-    \                      Review
-   ====================== ====================================================
+   ============================ ====================================================
+    \                            1.1
+    \                            1.2
+    \                            1.3
+    \                            1.4
+    \                            1.5
+    \                            Review
+   ============================ ====================================================
 
 :raw-html:`</details>`
 

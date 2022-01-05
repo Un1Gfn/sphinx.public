@@ -28,3 +28,16 @@
 | |b| `管人痴.com <https://管人痴.com/>`__
 
 `free ss/trojan/vmess uri <https://github.com/freefq/free>`__
+
+
+clash_tun
+=========
+
+| `badvpn <https://github.com/ambrop72/badvpn>`__ ~2021-08-22 |:coffin:|
+| `go-tun2socks <https://github.com/eycorsican/go-tun2socks>`__ ~2020-11-08 |:coffin:|
+| `tun2socks <https://github.com/xjasonlyu/tun2socks>`__ ~2022-01-03~ |:white_check_mark:|
+
+applications |vv| minetest |vv| :pkg:`AUR/go-ipfs` `melody CB archive <https://futureporn.neocities.org/>`__ |vv|
+
+| :file:`/home/darren/clash/readme.md`
+| :file:`/home/darren/clash/clash_tun/readme.md`

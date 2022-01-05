@@ -99,8 +99,6 @@ decimal to hexadecimal
       D_{10}         &=& \overline{r_5r_4r_3r_2r_1}_{16}
    \end{eqnarray}
 
-
-
 ----
 
 :raw-html:`<details open><summary>tracker</summary>`
@@ -116,7 +114,7 @@ decimal to hexadecimal
     |:heavy_check_mark:|   2.1
     |:heavy_check_mark:|   2.1.1
     |:heavy_check_mark:|   2.1.2
-    |:hourglass:|          2.1.3
+    |:hourglass:|          2.1.3 Addressing and Byte Ordering
     \                      2.1.4
     \                      2.1.5
     \                      2.1.6
