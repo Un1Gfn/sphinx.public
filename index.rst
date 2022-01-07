@@ -40,10 +40,11 @@ ico
 
 .. toctree::
    :maxdepth: 0
-   :caption: CMU
+   :caption: BOOKS/CMU
 
    cg
    csapp
+   htwfaip
 
 .. toctree::
    :maxdepth: 0

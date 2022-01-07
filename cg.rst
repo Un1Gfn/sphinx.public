@@ -84,6 +84,22 @@ representations |vv| verbal |vv| numerical |vv| visual |vv| algebraic
 
 trigonometry /tri·guh·**naa**·muh·tree/
 
+:math:`-f(x)`
+   reflect about the :math:`x`-axis
+
+:math:`\mu f(x)`
+   stretch vertically by a factor of :math:`\mu`
+
+:math:`f(x)+h`
+   shift :math:`h` unit(s) upward
+
+:math:`f(x+\phi)+h`
+   shift :math:`\phi` unit(s) to the left
+
+| `mathjax units <https://math.meta.stackexchange.com/a/27212/>`__
+| :math:`360^\circ = 2\pi` :abbr:`rad (radian(s))`
+| :math:`1\ \mathrm{rad} \approx 57.3^\circ` |nbsp| :math:`1^\circ \approx 0.017\ \mathrm{rad}`
+
 ----
 
 web `home <https://www.stewartcalculus.com/media/17_home.php>`__
@@ -137,7 +153,7 @@ book preface
     |:heavy_check_mark:|         Calculators, Computers, and Other Graphing Devices
     |:heavy_check_mark:|         A Diagnostic Test: Algebra
     |:heavy_check_mark:|         B Diagnostic Test: Analytic Geometry
-    |:hourglass_flowing_sand:|   C Diagnostic Test: Functions
+    |:heavy_check_mark:|         C Diagnostic Test: Functions
     |:hourglass_flowing_sand:|   D Diagnostic Test: Trigonometry
     \                            A Preview of Calculus
    ============================ ====================================================
@@ -156,7 +172,7 @@ book appendices
     \                            A\. Numbers, Inequalities, and Absolute Numbers
     \                            B\. Coordinate Geometry and Lines
     \                            C\. Graphs of Second-Degree Equations
-    \                            D\. Trigonometry
+    |:hourglass_flowing_sand:|   D\. Trigonometry
     |:hourglass_flowing_sand:|   |nbsp| \- Angles
     \                            |nbsp| \- The Trigonometric Functions
     \                            |nbsp| \- Trigonometric Identities

@@ -1,0 +1,8 @@
+.. |BK| replace:: :raw-html:`<!--black-->   <span style="background-color:#000000;">&nbsp;&nbsp;&nbsp;&nbsp;</span>`
+.. |BU| replace:: :raw-html:`<!--blue-->    <span style="background-color:#0000FF;">&nbsp;&nbsp;&nbsp;&nbsp;</span>`
+.. |GN| replace:: :raw-html:`<!--green-->   <span style="background-color:#00FF00;">&nbsp;&nbsp;&nbsp;&nbsp;</span>`
+.. |CY| replace:: :raw-html:`<!--cyan-->    <span style="background-color:#00FFFF;">&nbsp;&nbsp;&nbsp;&nbsp;</span>`
+.. |RD| replace:: :raw-html:`<!--red-->     <span style="background-color:#FF0000;">&nbsp;&nbsp;&nbsp;&nbsp;</span>`
+.. |MG| replace:: :raw-html:`<!--magenta--> <span style="background-color:#FF00FF;">&nbsp;&nbsp;&nbsp;&nbsp;</span>`
+.. |YE| replace:: :raw-html:`<!--yellow-->  <span style="background-color:#FFFF00;">&nbsp;&nbsp;&nbsp;&nbsp;</span>`
+.. |WH| replace:: :raw-html:`<!--white-->   <span style="background-color:#FFFFFF;">&nbsp;&nbsp;&nbsp;&nbsp;</span>`
