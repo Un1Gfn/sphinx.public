@@ -47,6 +47,67 @@ book page offset :kbd:`n(n+35)`
 Chapter 0:
 ==========
 
+notes
+-----
+
+| the set of :wp:`integer`\ s form an integer :wp:`ring <ring (mathematics)#Illustration>`
+  :math:`\langle Z,+,\times,-,0,1 \rangle`
+| :math:`+,\times` are :wp:`associative <associative property>` and :wp:`commutative <commutative property>`
+| :math:`\times` is :wp:`distributive <distributive property>` over :math:`+`
+| :math:`0` is the additive :wp:`identity element` (:wp:`additive identity`)
+| :math:`1` is the multiplicative :wp:`identity element`
+| integer value :math:`x` has :wp:`additive inverse` :math:`-x` such that :math:`x+-x=0`
+
+| boolean algebra denoted :math:`\langle \{0,1\}, \mathbin{|}, \mathbin{\&}, \mathop{^\sim}, 0, 1 \rangle`
+| similar to a ring but **not a ring**
+| :math:`a \mathbin{^\wedge} a = 0`
+| :math:`(a \mathbin{^\wedge} b) \mathbin{^\wedge} a = b`
+| :math:`a \mathbin{\&} (b \mathbin{|}  c) = (a \mathbin{\&} b) \mathbin{|}  (a \mathbin{\&} c)` |nbsp|\ |nbsp|
+     :math:`\mathbin{\&}` is :wp:`distributive <distributive property>` over :math:`\mathbin{|}`
+| properties unique to rings w/o boolean algebra counterpart
+|   additive inverse:|nbsp| :math:`a+-a=0`
+| properties unique to boolean algebra w/o ring counterpart
+|   :math:`\mathbin{|}`  is :wp:`distributive <distributive property>` over :math:`\mathbin{\&}` as well
+|      :math:`a \mathbin{|}  (b \mathbin{\&} c) = (a \mathbin{|}  b) \mathbin{\&} (a \mathbin{|}  c)`
+|   complement
+|      :math:`a \mathbin{|}  \mathop{^\sim}a = 1`
+|      :math:`a \mathbin{\&} \mathop{^\sim}a = 0`
+|   :wp:`idempotent <idempotent relation>` /ai·duhm·**pow**·tnt/
+|      :math:`a \mathbin{\&} a = a`
+|      :math:`a \mathbin{|}  a = a`
+|   absorbtion
+|      :math:`a \mathbin{\&} (a \mathbin{|}  b) = a`
+|      :math:`a \mathbin{|}  (a \mathbin{\&} b) = a`
+|   De Morgan's laws
+|      :math:`\mathop{^\sim} (a \mathbin{\&} b) = \mathop{^\sim} a \mathbin{|}  \mathop{^\sim} b`
+|      :math:`\mathop{^\sim} (a \mathbin{|}  b) = \mathop{^\sim} a \mathbin{\&} \mathop{^\sim} b`
+
+| *boolean ring* denoted :math:`\langle \{0,1\}, \mathbin{^\wedge}, \mathbin{\&}, I, 0, 1 \rangle`
+| **not boolean algebra**
+| where :math:`I` is identity operation :math:`I(a)=a`
+| is in fact a modular arithmetic ring with modulo :math:`n=2`
+| additive inverse:|nbsp| :math:`a \mathop{^\wedge} I(a) = a \mathop{^\wedge} a = 0`
+| mathematical basis of :wp:`ECC <error correction code>` is a linear algebra based on *boolean rings*
+
+| general :wp:`modular arithmetic` ring
+| for modulus :math:`n`, algebra denoted :math:`\langle Z_n, \mathbf{\color{blue}+_n}, \mathbf{\color{green}\times_n}, \mathbf{\color{magenta}-_n}, 0, 1 \rangle`
+| with components defined as follows [#latexModSpace]_
+
+.. math::
+
+   \begin{eqnarray}
+      Z_n &=& \{0,1,\dotsc\} \\
+      a \mathbin{\mathbf{\color{blue}        +_n}} b &=& ( a +      b ) \;\bmod\; n \\
+      a \mathbin{\mathbf{\color{green}  \times_n}} b &=& ( a \times b ) \;\bmod\; n \\
+      \mathop   {\mathbf{\color{magenta}     -_n}} a &=& \begin{cases}
+         0,&   a = 0 \\
+         n-a,& a > 0
+      \end{cases}
+   \end{eqnarray}
+
+trackers
+--------
+
 `student site <http://csapp.cs.cmu.edu/3e/students.html>`__
 |rarr| `labs for self-study students (without solutions) <http://csapp.cs.cmu.edu/3e/labs.html>`__
 
@@ -80,8 +141,8 @@ Chapter 0:
    :align: left
    :widths: auto
 
-   ============================ ============================
-    |:hourglass_flowing_sand:|   DATA\:BOOL
+   ============================ =======================================================================
+    |:hourglass_flowing_sand:|   DATA\:BOOL - progress - 4 General forms of Boolean Algebras and Rings
     \                            DATA\:TMIN
     \                            DATA\:TNEG
     \                            ASM\:IA32
@@ -90,7 +151,7 @@ Chapter 0:
     \                            ARCH\:HCL
     \                            OPT\:SIMD
     \                            MEM\:BLOCKING
-   ============================ ============================
+   ============================ =======================================================================
 
 :raw-html:`</details>`
 
@@ -115,6 +176,9 @@ book
 Chapter 1: A Tour of Computer Systems
 ======================================
 
+notes
+-----
+
 | *Bus interface* is a part of CPU.
 | *System bus* connects *bus interface* to *I/O bridge*.
 | *Memory bus* connects *I/O bridge* to RAM.
@@ -135,7 +199,8 @@ Chapter 1: A Tour of Computer Systems
 | |b| multiple copies of some of the CPU hardware (ProgramCounter/RegisterFile/...) in one CPU
 | |b| only single copies of other parts of the hardware (FPU/...) in one CPU
 
-----
+trackers
+--------
 
 |:heavy_check_mark:| 100%
 :raw-html:`<details close><summary>tracker</summary>`
@@ -167,6 +232,9 @@ Chapter 1: A Tour of Computer Systems
 Chapter 2: Representing and Manipulating Information
 ====================================================
 
+notes
+-----
+
 decimal to hexadecimal
 
 .. math::
@@ -179,7 +247,6 @@ decimal to hexadecimal
       q_4    \div 16 &=& 0   \cdots r_5 \\
       D_{10}         &=& \overline{r_5r_4r_3r_2r_1}_{16}
    \end{eqnarray}
-
 
 | byte ordering/:wp:`endianness`
 | :abbr:`big-endian (store the MSB of a word at the smallest address and the LSB at the largest)`
@@ -244,24 +311,17 @@ decimal to hexadecimal
    :align: left
    :widths: auto
 
-   ========================== ======================= ====================== ===================== ===========================
-    \                          NOT                     AND                    OR                    XOR
-    boolean operator           :math:`\neg`            :math:`\land \wedge`   :math:`\lor \vee`     :math:`\oplus`
-    logical/bitwise operator   :math:`\mathop{\sim}`   :math:`\mathbin{\&}`   :math:`\mathbin{|}`   :math:`\mathbin{^\wedge}`
-   ========================== ======================= ====================== ===================== ===========================
+   ========================== ====================================== ====================== ===================== ===========================
+    [#latexBitwise]_           NOT                                    AND                    OR                    XOR (exclusive-OR)
+    boolean operator           :math:`\neg`                           :math:`\land \wedge`   :math:`\lor \vee`     :math:`\oplus`
+    logical/bitwise operator   :math:`\mathop{^\sim} \mathop{\sim}`   :math:`\mathbin{\&}`   :math:`\mathbin{|}`   :math:`\mathbin{^\wedge}`
+   ========================== ====================================== ====================== ===================== ===========================
 
 :math:`a \mathbin{^\wedge} b = \mathop{\sim} (a\mathbin{\&}b) \mathbin{\&} (a\mathbin{|}b) = (\mathbin{\sim}a\mathbin{|}\mathbin{\sim}b) \mathbin{\&} (a\mathbin{|}b)`
-[#latexBitwise]_
 
 | *bit vector*
 | strings of zeros and ones of some fixed length :math:`w`
 | :math:`[a_{w-1},a_{w-2},\dotsc,a_0]` [#latexDots]_
-
-| boolean algebra :math:`\thicksim` integer arithmetic
-| *boolean ring*
-| integer value :math:`x` has *additive inverse* :math:`-x` such that :math:`x+-x=0`
-| :math:`a \mathbin{^\wedge} a = 0`
-| :math:`(a \mathbin{^\wedge} b) \mathbin{^\wedge} a = b`
 | encode subsets of a a finite set with bit vectors
 
 .. include:: include/color.txt
@@ -271,28 +331,27 @@ decimal to hexadecimal
    :widths: auto
 
    ============ ============== =============== ============
-    RGB          color          ~color          ~RGB       
+    RGB          color          ~color          ~RGB
    ============ ============== =============== ============
-    :kbd:`000`   |BK| black      |WH| white     :kbd:`111` 
-    :kbd:`001`   |BU| blue       |YE| yellow    :kbd:`110` 
-    :kbd:`010`   |GN| green      |MG| magenta   :kbd:`101` 
-    :kbd:`011`   |CY| cyan       |RD| red       :kbd:`100` 
-    :kbd:`100`   |RD| red        |CY| cyan      :kbd:`011` 
-    :kbd:`101`   |MG| magenta    |GN| green     :kbd:`010` 
-    :kbd:`110`   |YE| yellow     |BU| blue      :kbd:`001` 
-    :kbd:`111`   |WH| white      |BK| black     :kbd:`000` 
+    :kbd:`000`   |BK| black      |WH| white     :kbd:`111`
+    :kbd:`001`   |BU| blue       |YE| yellow    :kbd:`110`
+    :kbd:`010`   |GN| green      |MG| magenta   :kbd:`101`
+    :kbd:`011`   |CY| cyan       |RD| red       :kbd:`100`
+    :kbd:`100`   |RD| red        |CY| cyan      :kbd:`011`
+    :kbd:`101`   |MG| magenta    |GN| green     :kbd:`010`
+    :kbd:`110`   |YE| yellow     |BU| blue      :kbd:`001`
+    :kbd:`111`   |WH| white      |BK| black     :kbd:`000`
    ============ ============== =============== ============
 
-
-
-----
+trackers
+--------
 
 :raw-html:`<details open><summary>tracker</summary>`
 
 .. table::
    :align: left
    :widths: auto
-   
+
    ============================ ===============================================================
     |:heavy_check_mark:|         Part I: Program Structure and Execution Preface @ page 29(64)
     |:heavy_check_mark:|         TOC
@@ -319,6 +378,11 @@ decimal to hexadecimal
 Chapter 3: Machine-Level Representation of Programs
 ===================================================
 
+notes
+-----
+
+trackers
+--------
 
 Footnotes
 =========
@@ -335,3 +399,5 @@ Footnotes
    | `oeis <https://oeis.org/wiki/List_of_LaTeX_mathematical_symbols>`__
 
 .. [#latexDots] se/tex/`1176 <https://tex.stackexchange.com/questions/1176>`__
+
+.. [#latexModSpace] `mod space <https://tex.stackexchange.com/questions/137073>`__
