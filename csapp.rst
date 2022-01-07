@@ -90,7 +90,8 @@ notes
 | mathematical basis of :wp:`ECC <error correction code>` is a linear algebra based on *boolean rings*
 
 | general :wp:`modular arithmetic` ring
-| for modulus :math:`n`, algebra denoted :math:`\langle Z_n, \mathbf{\color{blue}+_n}, \mathbf{\color{green}\times_n}, \mathbf{\color{magenta}-_n}, 0, 1 \rangle`
+| for modulus :math:`n`, algebra denoted
+     :math:`\langle Z_n, \mathbf{\color{blue}+_n}, \mathbf{\color{green}\times_n}, \mathbf{\color{magenta}-_n}, 0, 1 \rangle`
 | with components defined as follows [#latexModSpace]_
 
 .. math::
@@ -105,8 +106,74 @@ notes
       \end{cases}
    \end{eqnarray}
 
+| (each value of :math:`w` defines two different ones)
+| bit vector boolean algebras :math:`\langle \{0,1\}^w, \mathbin{|},       \mathbin{\&}, \mathop{^\sim}, 0^w, 1^w \rangle`
+| bit vector boolean rings    :math:`\langle \{0,1\}^w, \mathbin{^\wedge}, \mathbin{\&}, I,              0^w, 1^w \rangle`
+| :math:`\{0,1\}^w`: |nbsp| :math:`\overline{x_1x_2 \dots x_w}` where :math:`x_1,x_2,\dots,x_w \in \{0,1\}` [#latexSpace]_
+| :math:`a^w`:       |nbsp| :math:`\underbrace{\overline{aaa \dots a}}_{w \  a\text{'s} }` |nbsp| [#latexHCB]_
+| with :math:`w = 1`, bit vector boolean ring
+     :math:`\langle \{0,1\}, \mathbin{^\wedge}, \mathbin{\&}, I, 0, 1 \rangle`
+  is identical to ring of integers modulo two
+     :math:`\langle Z_2, \mathbf{\color{blue}+_2}, \mathbf{\color{green}\times_2}, \mathbf{\color{magenta}-_2}, 0, 1 \rangle`
+| but :math:`w \ge 2` yields a very different ring from modular arithmetic
+
+| :math:`\langle \mathcal{P}(S), \cup, \cap, \overline{\phantom{A}}, \varnothing, S \rangle`\ [#latexFont]_ forms a boolean algebra
+| where :math:`S` is a set
+| and :math:`\mathcal{P}(S)` denotes the set of all subsets of :math:`S`
+
+algebra *summary*
+
+.. table::
+   :align: left
+   :widths: auto
+
+   ================= ======================== ===================== ====================== ================================ ============================================= =================================================== =================
+    \                 set                      add                   multiply               complement                       :wp:`ID ele <identity element>` of addition   :wp:`ID ele <identity element>` of multiplication
+    :math:`\langle`   :math:`\{0,1\}`          :math:`\mathbin{|}`   :math:`\mathbin{\&}`   :math:`\mathop{^\sim}`           :math:`0`                                     :math:`1`                                           :math:`\rangle`
+    :math:`\langle`   :math:`\mathcal{P}(S)`   :math:`\cup`          :math:`\cap`           :math:`\overline{\phantom{A}}`   :math:`\varnothing`                           :math:`S`                                           :math:`\rangle`
+   ================= ======================== ===================== ====================== ================================ ============================================= =================================================== =================
+
 trackers
 --------
+
+book
+
+:raw-html:`<details open><summary>tracker</summary>`
+
+.. table::
+   :align: left
+   :widths: auto
+
+   ============================ ============================
+    |:heavy_check_mark:|         Front Cover
+    |:heavy_check_mark:|         Preface
+    |:heavy_check_mark:|         Table of Contents
+    \                            Appendix A: Error Handling
+   ============================ ============================
+
+:raw-html:`</details>`
+
+`web asides <http://csapp.cs.cmu.edu/3e/waside.html>`__
+
+:raw-html:`<details open><summary>tracker</summary>`
+
+.. table::
+   :align: left
+   :widths: auto
+
+   ============================ =======================================================================
+    |:heavy_check_mark:|         DATA\:BOOL
+    \                            DATA\:TMIN
+    \                            DATA\:TNEG
+    \                            ASM\:IA32
+    \                            ASM\:EASM
+    \                            ARCH\:VLOG
+    \                            ARCH\:HCL
+    \                            OPT\:SIMD
+    \                            MEM\:BLOCKING
+   ============================ =======================================================================
+
+:raw-html:`</details>`
 
 `student site <http://csapp.cs.cmu.edu/3e/students.html>`__
 |rarr| `labs for self-study students (without solutions) <http://csapp.cs.cmu.edu/3e/labs.html>`__
@@ -129,45 +196,6 @@ trackers
     \                            Shell Lab
     \                            Malloc Lab
     \                            Proxy Lab
-   ============================ ============================
-
-:raw-html:`</details>`
-
-`web asides <http://csapp.cs.cmu.edu/3e/waside.html>`__
-
-:raw-html:`<details open><summary>tracker</summary>`
-
-.. table::
-   :align: left
-   :widths: auto
-
-   ============================ =======================================================================
-    |:hourglass_flowing_sand:|   DATA\:BOOL - progress - 4 General forms of Boolean Algebras and Rings
-    \                            DATA\:TMIN
-    \                            DATA\:TNEG
-    \                            ASM\:IA32
-    \                            ASM\:EASM
-    \                            ARCH\:VLOG
-    \                            ARCH\:HCL
-    \                            OPT\:SIMD
-    \                            MEM\:BLOCKING
-   ============================ =======================================================================
-
-:raw-html:`</details>`
-
-book
-
-:raw-html:`<details open><summary>tracker</summary>`
-
-.. table::
-   :align: left
-   :widths: auto
-
-   ============================ ============================
-    |:heavy_check_mark:|         Front Cover
-    |:heavy_check_mark:|         Preface
-    |:heavy_check_mark:|         Table of Contents
-    \                            Appendix A: Error Handling
    ============================ ============================
 
 :raw-html:`</details>`
@@ -362,8 +390,8 @@ trackers
     |:heavy_check_mark:|         |nbsp| - 2.1.3 Addressing and Byte Ordering
     |:heavy_check_mark:|         |nbsp| - 2.1.4 Representing Strings
     |:heavy_check_mark:|         |nbsp| - 2.1.5 Representing Code
-    |:heavy_check_mark:|         |nbsp| - 2.1.6 Introduction to Boolean Algebra - page 50(85)
-    |:hourglass_flowing_sand:|   |nbsp| - 2.1.7 Bit-Level Operations in C
+    |:heavy_check_mark:|         |nbsp| - 2.1.6 Introduction to Boolean Algebra
+    |:hourglass_flowing_sand:|   |nbsp| - 2.1.7 Bit-Level Operations in C **[54(89)]**
     \                            |nbsp| - 2.1.8 Logical Operations in C
     \                            |nbsp| - 2.1.9 Shift Operations in C
     \                            2.2 Integer Representations
@@ -387,17 +415,26 @@ trackers
 Footnotes
 =========
 
+latex
+-----
+
 .. [#preqof] `key points <http://csapp.cs.cmu.edu/3e/perspective.html#:~:text=At%20Carnegie%20Mellon%2C%20our%20Introduction%20to%20Computer%20Systems%20course%20has%20become%20a%20prequisite%20for%20courses%20in%20both%20CS%20and%20ECE%20covering%3A%20operating%20systems%2C%20networking%2C%20compilers%2C%20computer%20graphics%2C%20computer%20architecture%2C%20and%20embedded%20system%20design>`__
 
 .. [#latexBitwise]
-   | se/tex/
-         `14227 <https://tex.stackexchange.com/questions/14227>`__
-         `77646 <https://tex.stackexchange.com/questions/77646>`__
-        `361862 <https://tex.stackexchange.com/questions/361862>`__
-   | wikibooks/latex/`mathematics <https://en.wikibooks.org/wiki/LaTeX/Mathematics>`__
+   | SE/
+     `14227  <https://tex.stackexchange.com/questions/14227>`__
+     `77646  <https://tex.stackexchange.com/questions/77646>`__
+     `361862 <https://tex.stackexchange.com/questions/361862>`__
+   | wikibooks/`mathematics <https://en.wikibooks.org/wiki/LaTeX/Mathematics>`__
    | wikipedia/:wp:`list of logic symbols`
    | `oeis <https://oeis.org/wiki/List_of_LaTeX_mathematical_symbols>`__
 
-.. [#latexDots] se/tex/`1176 <https://tex.stackexchange.com/questions/1176>`__
+.. [#latexDots] SE/`1176 <https://tex.stackexchange.com/questions/1176>`__
 
-.. [#latexModSpace] `mod space <https://tex.stackexchange.com/questions/137073>`__
+.. [#latexModSpace] `mod spacing <https://tex.stackexchange.com/questions/137073>`__
+
+.. [#latexHCB] `horizontal curly braces <https://tex.stackexchange.com/questions/46268>`__
+
+.. [#latexSpace] `math spacing <https://www.overleaf.com/learn/latex/Spacing_in_math_mode>`__
+
+.. [#latexFont] /ka·luh·**gra**·fuhk/ calligraphic `fonts <https://www.overleaf.com/learn/latex/Mathematical_fonts>`__
