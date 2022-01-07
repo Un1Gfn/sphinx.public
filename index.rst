@@ -56,13 +56,14 @@ ico
 
 .. toctree::
    :maxdepth: 0
-   :caption: BBGW
+   :caption: EMBEDDED
 
    hardware
    software
    u-boot
    installalarm
    alarm
+   postmarketos
 
 .. toctree::
    :maxdepth: 0
@@ -94,7 +95,6 @@ ico
    ios
    music
    pkgmgmt
-   postmarketos
    recipe
    router
    todo

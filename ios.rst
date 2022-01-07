@@ -20,7 +20,7 @@ Downgrade
 
 ::
 
-   function L {
+   function L_apple {
       P=('|  '
          ' \ '
          '  |'
