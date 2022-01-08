@@ -4,6 +4,10 @@
 postmarketOS
 ============
 
+.. math::
+
+   \mathit{The\ best\ way\ to\ predict\ the\ future\ is\ to\ invent\ it.} - \href{https://www.ted.com/speakers/alan_kay}{\text{Alan Kay}}
+
 | qdl edl firehorse msm8916 postmarketos
 | qualcomm boot chain
   |vv| `lineage <https://lineageos.org/engineering/Qualcomm-Firmware/>`__ 

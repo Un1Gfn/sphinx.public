@@ -40,9 +40,42 @@ ISBN-10 `1285741552 <https://www.amazon.com/dp/1285741552/>`__
 
 `linux function plotting tools <https://www.ubuntupit.com/best-plotting-tools-for-linux-for-creating-scientific-graphs/>`__
 
+| :kbd:`rlwrap -a /usr/bin/bc -l`
+| :math:`\pi` is ``4*a(1)`` (arctan)
+| :math:`\tan x` is ``s(x)/c(x)``
+
+| :wp:`PGF/TikZ` (`github <https://github.com/pgf-tikz/pgf>`__)
+| :pkg:`community/qtikz`
+| :pkg:`AUR/tikzit`
+
+:doc:`tex.rst <tex>`
+
+`sphinxcontrib.programoutput <https://sphinxcontrib-programoutput.readthedocs.io/>`__
+track exercises - ``$ ./cg.py <SUBSECTION>``
+
+
+CAS
+===
+
+| :wp:`CAS <computer algebra system>` (:wp:`list <list of computer algebra systems>`)
+| :aw:`list of applications#Mathematics`
+
+| `WolframAlpha <https://www.wolframalpha.com/>`__
+| `Symbolab <https://www.symbolab.com/>`__
+| `Mathway <https://www.mathway.com/Algebra>`__
+
+::
+
+   /usr/bin/calc <<<'cot(pi()/6);exit;'
+   /usr/bin/qalc <<<$'cot(pi/6)\nexit'
+   /usr/bin/qalc <<<'cot(pi/6)'
+
 
 0. Web, Preface and Appendices
 ==============================
+
+notes
+-----
 
 | ancillaries /an·**si**·lr·eez/
 | logarithmic /laa·guh·**rith**·mik/
@@ -61,11 +94,6 @@ representations |vv| verbal |vv| numerical |vv| visual |vv| algebraic
   :raw-html:`<span style="color:red;">5.</span>`
 | This indicates that :emlink:`Homework Hints <https://www.stewartcalculus.com/media/17_inside_homework_hints.php>`
   are available for the exercise
-
-| :wp:`CAS <computer algebra system>` (:wp:`list <list of computer algebra systems>`)
-| `WolframAlpha <https://www.wolframalpha.com/>`__
-| `Symbolab <https://www.symbolab.com/>`__
-| `Mathway <https://www.mathway.com/Algebra>`__
 
 :wp:`completing the square` :math:`\displaystyle{x^2+bx+c\,=\, \left(x+{\tfrac b 2 }\right)^2 + c - \tfrac{b^2}4 }`
 
@@ -100,7 +128,91 @@ trigonometry /tri·guh·**naa**·muh·tree/
 | :math:`360^\circ = 2\pi` :abbr:`rad (radian(s))`
 | :math:`1\ \mathrm{rad} \approx 57.3^\circ` |nbsp| :math:`1^\circ \approx 0.017\ \mathrm{rad}`
 
-----
+| :wp:`perimeter` /pr·**i**·muh·tr/
+| :wp:`circumference` /sr·**kuhm**·fr·uhns/ (:math:`2 \pi r`)
+
+| standard position of an angle
+| place its *vertex* at the origin of a coordinate system (:math:`O`)
+| place its *initial side* on the positive :math:`x`-axis
+| different angles can have the same *terminal side*
+
+| or\ **tho**\ gonal /or·**thaa**·guh·nuhl/
+| perpen\ **di**\ cular /pur·puhn·**di**·kyuh·lr/
+
+.. table::
+   :align: left
+   :widths: auto
+
+   ======================================================================= ========================================================================================================
+                    :math:`\displaystyle \theta = 0`                        zero :wp:`angle <angle#Individual_angles>`
+                :math:`\displaystyle 0 < \theta < \frac \pi 2`              acute (sharp) angle
+                    :math:`\displaystyle \theta = \frac \pi 2`              right angle / :wp:`normal <normal (geometry)>` / :wp:`orthogonal <rthogonality>` / :wp:`perpendicular`
+    :math:`\displaystyle \frac{\pi}{2} < \theta < \pi`                      obtuse (blunt) angle
+                    :math:`\displaystyle \theta = \pi`                      straight angle
+              :math:`\displaystyle \pi < \theta < 2\pi`                     reflex angle
+                    :math:`\displaystyle \theta = 2\pi`                     full/complete/round angle, perigon
+                    :math:`\displaystyle \theta \neq k\cdot{\frac \pi 2}`   oblique angle
+   ======================================================================= ========================================================================================================
+
+| :wp:`trigonometric functions`
+| hypotenuse/hai·**paa**·tuh·noos/
+| cosine/**kow**·sine/
+| cosecant/kow·**see**·knt/ secant/**see**·kant/ cotangent/kow·**tan**·jnt/
+
+acute :math:`\displaystyle 0 < \theta < \frac \pi 2` only:
+
+.. math::
+
+   \displaystyle\begin{array}{rlrl}
+         \text{sine:} & \sin\theta=\frac{\mathrm{opposite}}{\mathrm{hypotenuse}} \qquad &  \text{cosecant:} & \csc\theta=\frac{\mathrm{hypotenuse}}{\mathrm{opposite}} \\
+       \text{cosine:} & \cos\theta=\frac{\mathrm{adjacent}}{\mathrm{hypotenuse}} \qquad &    \text{secant:} & \sec\theta=\frac{\mathrm{hypotenuse}}{\mathrm{adjacent}} \\
+      \text{tangent:} & \tan\theta=\frac{\mathrm{opposite}}{\mathrm{adjacent}}   \qquad & \text{cotangent:} & \cot\theta=\frac{\mathrm{adjacent}}{\mathrm{opposite}}
+   \end{array}
+
+| generic :math:`\theta\in\mathbb{R}`, including obtuse and negative:
+| let :math:`P(x,y)` be any point on the terminal side of :math:`\theta`
+| let :math:`r` be the distance :math:`|OP|`
+|    *unit circle\:* put :math:`r=1` and the coordinates of :math:`P` becomes :math:`(\cos\theta,\sin\theta)`
+
+.. math::
+
+   \displaystyle\begin{array}{rlrl}
+      %%%%%%%%%%%%%%%%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% %%%%%%%%%%%%%%%%%%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+          \text{sine:} & \sin\theta = \frac y r                           \qquad &  \text{cosecant:} & \csc\theta=\frac r y \; {\color{green}(y\neq0)} \\
+        \text{cosine:} & \cos\theta = \frac x r                           \qquad &    \text{secant:} & \sec\theta=\frac r x \; {\color{blue} (x\neq0)} \\
+       \text{tangent:} & \tan\theta = \frac y x \; {\color{blue}(x\neq0)} \qquad & \text{cotangent:} & \cot\theta=\frac x y \; {\color{green}(y\neq0)}
+   \end{array}
+
+| py\ **tha**\ gorean :wp:`theorem <pythagorean theorem>` /pai·**tha**·gr·ee·uhn/
+| :math:`\displaystyle \mathrm{adjacent}^2+\mathrm{opposite}^2=\mathrm{hypotenuse}^2`
+
+| :abbr:`trigonometric identity (relationship among the trigonometric functions)`
+| :math:`\tan^2\theta+1=\sec^2\theta`
+| :math:`1+\cot^2\theta=\csc^2\theta`
+| :math:`\sin(-\theta)=-\sin\theta` |nbsp| (sine   is an odd function)
+| :math:`\cos(-\theta)= \cos\theta` |nbsp| (cosine is an even function)
+| periodic with period :math:`2\pi`
+
+.. program-output:: /usr/bin/python3 ./cg.py appendixD
+
+| addition formulas
+|    :math:`x`
+|    :math:`x`
+| subtraction formulas
+|    :math:`x`
+|    :math:`x`
+| double-angle formulas
+|    :math:`x`
+|    :math:`x`
+| half-angle formulas
+|    :math:`x`
+|    :math:`x`
+| product formulas
+|    :math:`x`
+|    :math:`x`
+
+trackers
+--------
 
 web `home <https://www.stewartcalculus.com/media/17_home.php>`__
 
@@ -172,12 +284,7 @@ book appendices
     \                            A\. Numbers, Inequalities, and Absolute Numbers
     \                            B\. Coordinate Geometry and Lines
     \                            C\. Graphs of Second-Degree Equations
-    |:hourglass_flowing_sand:|   D\. Trigonometry
-    |:hourglass_flowing_sand:|   |nbsp| \- Angles
-    \                            |nbsp| \- The Trigonometric Functions
-    \                            |nbsp| \- Trigonometric Identities
-    \                            |nbsp| \- Graphs of the Trigonometric Functions
-    \                            |nbsp| \- D Exercises
+    |:hourglass_flowing_sand:|   D\. Trigonometry - [A28(1242)]
     \                            E\. Sigma Notation
     \                            F\. Proofs of Theorems
     \                            G\. The Logarithm Defined as an Integral
@@ -190,6 +297,12 @@ book appendices
 
 1. Functions and Models
 =======================
+
+notes
+-----
+
+trackers
+--------
 
 :raw-html:`<details><summary>tracker</summary>`
 
@@ -212,8 +325,7 @@ book appendices
 2. Limits and Derivatives
 =========================
 
-:aw:`asymptote` /**a**·suhm·towt/
+notes
+-----
 
-
-3. Differentiation Rules
-========================
+:wp:`asymptote` /**a**·suhm·towt/

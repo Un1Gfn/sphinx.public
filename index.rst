@@ -45,6 +45,7 @@ ico
    cg
    csapp
    htwfaip
+   tex
 
 .. toctree::
    :maxdepth: 0

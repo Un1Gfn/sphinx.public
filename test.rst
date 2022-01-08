@@ -5,7 +5,6 @@
 |ico| Test
 ==========
 
-
 Test
 ====
 
@@ -26,6 +25,19 @@ Test
 
 |today|
 
+.. math::
+
+   \text{mathcal:}    \qquad \mathcal   {R \quad P \quad r} \\
+   \text{mathfrak:}   \qquad \mathfrak  {R \quad P \quad r} \\
+   \text{mathnormal:} \qquad \mathnormal{R \quad P \quad r} \\
+                                        {R \quad P \quad r} \\
+   \text{mathbb:}     \qquad \mathbb    {R \quad P \quad r} \\
+   \text{mathbf:}     \qquad \mathbf    {R \quad P \quad r} \\
+   \text{mathit:}     \qquad \mathit    {R \quad P \quad r} \\
+   \text{mathrm:}     \qquad \mathrm    {R \quad P \quad r} \\
+   \text{mathsf:}     \qquad \mathsf    {R \quad P \quad r} \\
+   \text{mathtt:}     \qquad \mathtt    {R \quad P \quad r} \\
+   \text{text:}       \qquad \text      {R       P       r}
 
 Tmp
 ===

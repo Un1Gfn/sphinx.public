@@ -17,6 +17,8 @@ Todo |:memo:|
 
 ----
 
+`<https://www.ted.com/talks/jimmy_wales_the_birth_of_wikipedia>`__
+
 wp:`Wikipedia:SVG_help#font-family_issues`
 |vv| :Aw:`microsoft fonts`
 |vv| :Aw:`fonts`

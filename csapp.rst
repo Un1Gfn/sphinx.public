@@ -9,6 +9,10 @@ CS:APP
 Misc
 ====
 
+.. note::
+
+   |:pencil:| squeeze :kbd:`/home/darren/csapp` !
+
 `Slides <https://www.cs.cmu.edu/~213/schedule.html>`__
 
 `Instructor Site <http://csapp.cs.cmu.edu/3e/instructors.html>`__
@@ -28,8 +32,6 @@ Misc
 |    computer graphics
 |    computer architecture :emphasis:`- 18-447 Introduction to Computer Architecture`
 |    embedded system design
-
-:kbd:`/home/darren/csapp`
 
 | BookSite
 | `Code Examples <http://csapp.cs.cmu.edu/3e/code.html>`__
