@@ -44,3 +44,15 @@ groff+\ `mom <http://www.schaffter.ca/mom/>`__
 | `CTAN <https://ctan.org/pkg/pgf>`__
 |    `unofficial minimal introduction to TikZ <https://cremeronline.com/LaTeX/minimaltikz.pdf>`__
 |    `TiKZ & PGF manual <https://ftp.kaist.ac.kr/tex-archive/graphics/pgf/base/doc/pgfmanual.pdf>`__
+
+`colors <https://en.wikibooks.org/wiki/LaTeX/Colors>`__
+
+| `incorrect spacing <https://tex.stackexchange.com/questions/21598>`__
+| :math:`\sin(x+k\pi)=-\sin x  \quad correct`
+| :math:`\sin(x+k\pi)=-\sin{x} \quad correct`
+| :math:`\sin(x+k\pi)=-\sin{}x \quad incorrect`
+| :math:`\sin(x+k\pi)=-{\sin}x \quad incorrect`
+| :math:`\sin(x+k\pi)={-\sin}x \quad incorrect`
+
+| `Spacing in math mode         <https://www.overleaf.com/learn/latex/Spacing_in_math_mode>`__
+| `Line breaks and blank spaces <https://www.overleaf.com/learn/latex/Line_breaks_and_blank_spaces>`__

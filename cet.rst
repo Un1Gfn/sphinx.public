@@ -1,11 +1,13 @@
 .. include:: include/substitution.txt
 
-===
-CG
-===
+==========================================
+CALCULUS Early Transcendentals 8th Edition
+==========================================
 
 Misc
 ====
+
+repo ``~/cet``
 
 :wp:`James Stewart <James Stewart (mathematician)>`
 
@@ -23,7 +25,7 @@ Misc
 
 `youtube <https://www.youtube.com/playlist?list=PL9_jI1bdZmz2emSh0UQ5iOdT2xRHFHL7E>`__
 
-| `Stewart Calculus Textbooks and Online Course Materials <https://www.stewartcalculus.com/>`__
+| book site - `Stewart Calculus Textbooks and Online Course Materials <https://www.stewartcalculus.com/>`__
 | ch12 - Vectors Geometry and of the Space
 
 `Pauls Online Math Notes <https://tutorial.math.lamar.edu/>`__
@@ -50,8 +52,8 @@ ISBN-10 `1285741552 <https://www.amazon.com/dp/1285741552/>`__
 
 :doc:`tex.rst <tex>`
 
-`sphinxcontrib.programoutput <https://sphinxcontrib-programoutput.readthedocs.io/>`__
-track exercises - ``$ ./cg.py <SUBSECTION>``
+.. `sphinxcontrib.programoutput <https://sphinxcontrib-programoutput.readthedocs.io/>`__
+.. track exercises - ``$ ./cg.py <SUBSECTION>``
 
 
 CAS
@@ -76,6 +78,8 @@ CAS
 
 notes
 -----
+
+:wp:`asymptote` /**a**·suhm·towt/
 
 | ancillaries /an·**si**·lr·eez/
 | logarithmic /laa·guh·**rith**·mik/
@@ -187,29 +191,54 @@ acute :math:`\displaystyle 0 < \theta < \frac \pi 2` only:
 | :math:`\displaystyle \mathrm{adjacent}^2+\mathrm{opposite}^2=\mathrm{hypotenuse}^2`
 
 | :abbr:`trigonometric identity (relationship among the trigonometric functions)`
-| :math:`\tan^2\theta+1=\sec^2\theta`
-| :math:`1+\cot^2\theta=\csc^2\theta`
-| :math:`\sin(-\theta)=-\sin\theta` |nbsp| (sine   is an odd function)
-| :math:`\cos(-\theta)= \cos\theta` |nbsp| (cosine is an even function)
+|    :math:`\tan^2\theta+1=\sec^2\theta` :guilabel:`8`
+|    :math:`1+\cot^2\theta=\csc^2\theta` :guilabel:`9`
+|    :math:`\sin(-\theta)=-\sin\theta` |nbsp| (sine   is an odd function)  :guilabel:`10a`
+|    :math:`\cos(-\theta)= \cos\theta` |nbsp| (cosine is an even function) :guilabel:`10b`
 | periodic with period :math:`2\pi`
 
-.. program-output:: /usr/bin/python3 ./cg.py appendixD
+.. \.. program-output:: /usr/bin/python3 ./cg.py appendixD
 
-| addition formulas
-|    :math:`x`
-|    :math:`x`
+| addition formulas - all of identities 13-18 can be deduced from these two
+|    :math:`\sin(x+y)=\sin{x}\cos{y}+\cos{x}\sin{y}` :guilabel:`12a`
+|    :math:`\cos(x+y)=\cos{x}\cos{y}-\sin{x}\sin{y}` :guilabel:`12b`
 | subtraction formulas
-|    :math:`x`
-|    :math:`x`
+|    :math:`\sin(x-y)=\sin{x}\cos{y}-\cos{x}\sin{y}` :guilabel:`13a`
+|    :math:`\cos(x-y)=\cos{x}\cos{y}+\sin{x}\sin{y}` :guilabel:`13b`
+| :math:`\Rightarrow`
+|    :math:`\displaystyle \tan(x\mathbf{\color{blue}   +}y)=\frac{\tan{x}\mathbf{\color{blue}   +}\tan{y}}{1\mathbf{\color{magenta}-}\tan{x}\tan{y}} \quad \textit{where } (x\mathbf{\color{blue}   +}y)\notin\set{ k\pi+\pi/2 \mid k\in\mathbb{Z} }` :guilabel:`14a`
+|    :math:`\displaystyle \tan(x\mathbf{\color{magenta}-}y)=\frac{\tan{x}\mathbf{\color{magenta}-}\tan{y}}{1\mathbf{\color{blue}   +}\tan{x}\tan{y}} \quad \textit{where } (x\mathbf{\color{magenta}-}y)\notin\set{ k\pi+\pi/2 \mid k\in\mathbb{Z} }` :guilabel:`14b`
 | double-angle formulas
-|    :math:`x`
-|    :math:`x`
+|    :math:`\color{gray} \sin{2x} = 2\sin{x}\cos{x}` :guilabel:`15a`
+|    :math:`\cos{2x} = \cos^2{x}-\sin^2{x}` :guilabel:`15b`
+|    :math:`\cos{2x} = 2\cos^2{x}-1` :guilabel:`16a`
+|    :math:`\cos{2x} = 1-2\sin^2{x}` :guilabel:`16b`
 | half-angle formulas
-|    :math:`x`
-|    :math:`x`
+|    :math:`\displaystyle \cos^2{x} = \frac{1\mathbf{\color{blue}   +}\cos{2x}}{2}` :guilabel:`17a`
+|    :math:`\displaystyle \sin^2{x} = \frac{1\mathbf{\color{magenta}-}\cos{2x}}{2}` :guilabel:`17b`
 | product formulas
-|    :math:`x`
-|    :math:`x`
+|    :math:`{} {\color{Emerald}\sin x \color{purple}\cos y}=\frac{1}{2}[{\color{Emerald}\sin(x-y)}+{\color{Emerald}\sin(x+y)}] \; _{\mathcal{\frac{1}{2}[13a+12a]}}` :guilabel:`18a`
+|    :math:`{} {\color{purple} \cos x \color{purple}\cos y}=\frac{1}{2}[{\color{purple} \cos(x-y)}+{\color{purple} \cos(x+y)}] \; _{\mathcal{\frac{1}{2}[13b+12b]}}` :guilabel:`18b`
+|    :math:`{}  \color{gray}   \sin x               \sin y=\frac{1}{2}[\cos(x-y)-\cos(x+y)]                                    \; _{\mathcal{\frac{1}{2}[13b-12b]}}` :guilabel:`18c`
+
+| :math:`\sin(x+k\pi)=-\sin{x} \quad k\in\mathbb{Z}`
+| :math:`\cos(x+k\pi)=-\cos{x} \quad k\in\mathbb{Z}`
+
+| :math:`{}                                  \sin    (x                                +   \frac{\pi}{2}) = \phantom{+} \cos x \quad _{\textcolor{magenta}{0}\text{ change}}`
+| :math:`{}                                  \sin    (x \mathop{\mathbf{\color{magenta}-}} \frac{\pi}{2}) =          -  \cos x \quad _{\textcolor{magenta}{1}\text{ change, negate}}`
+| :math:`\mathop{\mathbf{\textcolor{magenta}{\cos}}} (x                                +   \frac{\pi}{2}) =          -  \sin x \quad _{\textcolor{magenta}{1}\text{ change, negate}}`
+| :math:`\mathop{\mathbf{\textcolor{magenta}{\cos}}} (x \mathop{\mathbf{\color{magenta}-}} \frac{\pi}{2}) = \phantom{+} \sin x \quad _{\textcolor{magenta}{2}\text{ changes}}`
+
+`graphs of the trigonometric functions <https://www.desmos.com/calculator/nlfjfdf3kp>`__
+
+:math:`\cot(\frac{\pi}{2}-x)=\tan{x}`
+
+| graphs of :math:`\csc{x}` and :math:`\sec{x}`
+|    let :math:`f(x)=\sin{x},\ g(x)=\csc{x}`
+|    or  :math:`f(x)=\cos{x},\ g(x)=\sec{x}`
+| :wp:`contacts <contact (mathematics)>` between :math:`f(x)` and :math:`g(x)` are :math:`\set{ (x,y) \mid (y=1 \vee y=-1) \wedge f(x)=y}`
+| asymptotes of :math:`g(x)` are :math:`\set{ x=\varphi \mid f(\varphi)=0}`
+| range of :math:`g(x)` is :math:`(-\inf,-1]\cup[1,+\inf)`
 
 trackers
 --------
@@ -328,4 +357,5 @@ trackers
 notes
 -----
 
-:wp:`asymptote` /**a**·suhm·towt/
+trackers
+--------

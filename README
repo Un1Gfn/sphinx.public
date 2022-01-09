@@ -1,0 +1,8 @@
+https://github.com/Un1Gfn/sphinx.public/blob/master/Makefile
+
+requirements:
+   https://aur.archlinux.org/packages/python-sphinxemoji
+
+requirements to be phase out:
+   https://aur.archlinux.org/packages/python-sphinxcontrib-programoutput
+   https://aur.archlinux.org/packages/python-sphinxcontrib-youtube-git

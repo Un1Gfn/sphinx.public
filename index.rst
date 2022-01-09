@@ -42,7 +42,7 @@ ico
    :maxdepth: 0
    :caption: BOOKS/CMU
 
-   cg
+   cet
    csapp
    htwfaip
    tex

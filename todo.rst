@@ -17,15 +17,10 @@ Todo |:memo:|
 
 ----
 
-`<https://www.ted.com/talks/jimmy_wales_the_birth_of_wikipedia>`__
-
 wp:`Wikipedia:SVG_help#font-family_issues`
 |vv| :Aw:`microsoft fonts`
 |vv| :Aw:`fonts`
 |vv| :Aw:`font configuration`
-
-https://aur.archlinux.org/packages/sourcetrail/#comment-837412
-https://github.com/CoatiSoftware/Sourcetrail/issues/1180
 
 | ``xrandr --output DP-2 --mode 1680x1050 --left-of eDP-1``
 | `<https://i3wm.org/docs/userguide.html#_changing_named_workspaces_moving_to_workspaces>`__
