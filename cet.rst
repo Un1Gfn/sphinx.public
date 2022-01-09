@@ -209,10 +209,15 @@ acute :math:`\displaystyle 0 < \theta < \frac \pi 2` only:
 |    :math:`\displaystyle \tan(x\mathbf{\color{blue}   +}y)=\frac{\tan{x}\mathbf{\color{blue}   +}\tan{y}}{1\mathbf{\color{magenta}-}\tan{x}\tan{y}} \quad \textit{where } (x\mathbf{\color{blue}   +}y)\notin\set{ k\pi+\pi/2 \mid k\in\mathbb{Z} }` :guilabel:`14a`
 |    :math:`\displaystyle \tan(x\mathbf{\color{magenta}-}y)=\frac{\tan{x}\mathbf{\color{magenta}-}\tan{y}}{1\mathbf{\color{blue}   +}\tan{x}\tan{y}} \quad \textit{where } (x\mathbf{\color{magenta}-}y)\notin\set{ k\pi+\pi/2 \mid k\in\mathbb{Z} }` :guilabel:`14b`
 | double-angle formulas
-|    :math:`\color{gray} \sin{2x} = 2\sin{x}\cos{x}` :guilabel:`15a`
+|    :math:`\color{gray}  \sin{2x} =           2\sin{x}\cos{x}` :guilabel:`15a`
+|    :math:`\color{gray}  \csc{2t} = \frac{1}{2}\sec{t}\csc{t}` :guilabel:`exercise50`
 |    :math:`\cos{2x} = \cos^2{x}-\sin^2{x}` :guilabel:`15b`
 |    :math:`\cos{2x} = 2\cos^2{x}-1` :guilabel:`16a`
 |    :math:`\cos{2x} = 1-2\sin^2{x}` :guilabel:`16b`
+|    :math:`\displaystyle \tan{2\theta}=\frac{2\tan\theta}{1-\tan^2\theta}` :guilabel:`exercise51`
+| :math:`\Rightarrow` triple
+|    :math:`\sin{3\theta}=3\sin\theta-4\sin^3\theta` :guilabel:`exercise57`
+|    :math:`\cos{3\theta}=4\cos^3\theta-3\cos\theta`          :guilabel:`exercise58`
 | half-angle formulas
 |    :math:`\displaystyle \cos^2{x} = \frac{1\mathbf{\color{blue}   +}\cos{2x}}{2}` :guilabel:`17a`
 |    :math:`\displaystyle \sin^2{x} = \frac{1\mathbf{\color{magenta}-}\cos{2x}}{2}` :guilabel:`17b`
@@ -239,6 +244,27 @@ acute :math:`\displaystyle 0 < \theta < \frac \pi 2` only:
 | :wp:`contacts <contact (mathematics)>` between :math:`f(x)` and :math:`g(x)` are :math:`\set{ (x,y) \mid (y=1 \vee y=-1) \wedge f(x)=y}`
 | asymptotes of :math:`g(x)` are :math:`\set{ x=\varphi \mid f(\varphi)=0}`
 | range of :math:`g(x)` is :math:`(-\inf,-1]\cup[1,+\inf)`
+
+| :math:`(\sin{x}+\cos{x})^2=1+\sin{2x}` :guilabel:`exercise44`
+
+.. tip::
+
+   | For proof of trigonometric equations,
+   | try eliminating :pr:`tan()` :pr:`csc()` :pr:`set()` :pr:`cot()` and converting to :kbd:`sin(),cos()`-only,
+   | which makes :math:`\sin^2+cos^2` easy to find or construct.
+
+.. tip:: To sketch :math:`f(x)={A}sin(\omega{x}+\varphi)+h` with the least repeat work
+
+   1. Draw (dotted) auxiliary lines :math:`y=h`, :math:`y=h+A` and :math:`y=h-A`
+   #. Draw the :math:`x`-axis
+   #. Sketch 2 :math:`\sin` curves, one in between the auxiliary lines and one standalone
+   #. Label :math:`x`-coordinates of key points of the standalone curve as raw :math:`y=sin(x)`
+   #. Label :math:`x`-coordinates of key points of the auxed curve onto the :math:`x`-axis, applying :math:`-\varphi` offset
+   #. Calculate :math:`f(0)`, draw the :math:`y`-axis and :math:`O`
+   #. Done
+
+| :wp:`law of cosines`
+|    :math:`|BC|^2 = |AB|^2 + |AC|^2 - 2\cdot|AB|\cdot|AC|\cdot\cos\angle{ABC}` :guilabel:`exercise83`
 
 trackers
 --------
@@ -295,8 +321,8 @@ book preface
     |:heavy_check_mark:|         A Diagnostic Test: Algebra
     |:heavy_check_mark:|         B Diagnostic Test: Analytic Geometry
     |:heavy_check_mark:|         C Diagnostic Test: Functions
-    |:hourglass_flowing_sand:|   D Diagnostic Test: Trigonometry
-    \                            A Preview of Calculus
+    |:heavy_check_mark:|         D Diagnostic Test: Trigonometry
+    |:hourglass_flowing_sand:|   A Preview of Calculus
    ============================ ====================================================
 
 :raw-html:`</details>`
@@ -313,7 +339,7 @@ book appendices
     \                            A\. Numbers, Inequalities, and Absolute Numbers
     \                            B\. Coordinate Geometry and Lines
     \                            C\. Graphs of Second-Degree Equations
-    |:hourglass_flowing_sand:|   D\. Trigonometry - [A28(1242)]
+    |:heavy_check_mark:|         D\. Trigonometry - [A28(1242)]
     \                            E\. Sigma Notation
     \                            F\. Proofs of Theorems
     \                            G\. The Logarithm Defined as an Integral
