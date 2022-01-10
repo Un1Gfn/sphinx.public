@@ -1,4 +1,5 @@
 .. include:: include/substitution.txt
+.. highlight:: text
 
 ============
 postmarketOS
@@ -8,7 +9,32 @@ postmarketOS
 
    \mathit{The\ best\ way\ to\ predict\ the\ future\ is\ to\ invent\ it.} - \href{https://www.ted.com/speakers/alan_kay}{\text{Alan Kay}}
 
-| qdl edl firehorse msm8916 postmarketos
+
+Misc
+====
+
+blobs at ``~/pmos``
+
+| pmOS wiki
+|    `User:Un1Gfn <https://wiki.postmarketos.org/wiki/User:Un1Gfn>`__
+|    `wt88047 <https://wiki.postmarketos.org/wiki/Xiaomi_Redmi_2_(xiaomi-wt88047)>`__
+|    `MSM8916 <https://wiki.postmarketos.org/wiki/Qualcomm_Snapdragon_410/412_(MSM8916)>`__
+
+| :abbr:`PBL (Primary Boot Loader, in SoC ROM)` in Qualcomm :abbr:`MSM (Mobile Station Modem)` implements :abbr:`EDL (Emergency Download Mode)` mode
+| EDL mode implements the Qualcomm Sahara Protocol
+| Sahara Protocol accepts an OEM-digitally-signed programmer (\*.mbn file) over USB
+| the programmer implements Firehose Protocol
+| host PC sends commands over Firehose Protocol to write into the onboard storage (eMMC, UFS)
+
+qualcomm/`Secure Boot and Image Authentication <https://www.qualcomm.com/media/documents/files/secure-boot-and-image-authentication-technical-overview-v2-0.pdf>`__
+lineage/`Qualcomm’s Chain of Trust <https://lineageos.org/engineering/Qualcomm-Firmware/>`__
+quarkslab/`Analysis of Qualcomm Secure Boot Chains <https://blog.quarkslab.com/analysis-of-qualcomm-secure-boot-chains.html>`__
+
+
+QDL
+Sahara/fireho(r)se sahadra msm8916 postmarketos
+
+| alephsecurity/`firehorse <https://github.com/alephsecurity/firehorse>`__
 | qualcomm boot chain
   |vv| `lineage <https://lineageos.org/engineering/Qualcomm-Firmware/>`__ 
   |vv| `quarkslab <https://blog.quarkslab.com/analysis-of-qualcomm-secure-boot-chains.html>`__
@@ -18,9 +44,8 @@ postmarketOS
 | `bkerler/Loaders <https://github.com/bkerler/Loaders>`__
 | `bkerler/edl <https://github.com/bkerler/edl>`__
 | `OneLabsTools/Programmers <https://github.com/OneLabsTools/Programmers/>`__
-| `list of MSM8916 devices <https://wiki.postmarketos.org/wiki/Qualcomm_Snapdragon_410/412_(MSM8916)>`__
-| `vanilla unsigned db410c edl payload <https://matrix.to/#/!zpvMifoucHSiUsVFgl:postmarketos.org/$2r0b_U-yVEidj-uQndqm3fWQ-i0hqMVGBsNMZ87iRyY?via=matrix.org&via=kde.org&via=tchncs.de>`__
-| caveat - `they "forgot" to enable secure-boot <https://matrix.to/#/!zpvMifoucHSiUsVFgl:postmarketos.org/$48I-w09LH54XYFviXAzxeYS8xa33foG63GCpa7U_P44?via=matrix.org&via=kde.org&via=tchncs.de>`__
+| :mt:`vanilla unsigned db410c edl payload <#main:postmarketos.org/$2r0b_U-yVEidj-uQndqm3fWQ-i0hqMVGBsNMZ87iRyY>`
+| caveat - :mt:`they "forgot" to enable secure-boot <#main:postmarketos.org/$lIMqnR5BXu8zjQKhJhwvK44VFGuPLtSYihjYsATfOsc>`
 | caveat - short circuit force kick edl test point
 | :file:`~/pmos/`
 | `redmi2(1/8) redmi2(2/16) redmi2pro(2/16) redmi2prime(2/16) <https://en.wikipedia.org/wiki/Redmi#Redmi_Series>`__
@@ -32,8 +57,8 @@ postmarketOS
 | :wp:`qualcomm codecs <Qualcomm Hexagon#Hardware_codec_supported>`
 
 
-EDL/QDL/9008
-============
+EDL/QDL
+=======
 
 | screws
 | ``+`` CR-V + 1.0
@@ -41,21 +66,18 @@ EDL/QDL/9008
 
 ::
 
-   (hymen ;P)
-        |
-        v
-        +                   +
-               CAMERA        
-        +             +     +
-                             
-        +                    
-              +           +  
-                             
-                             
-        +                   +
-                             
-                             
-        +                   +
+   +                   +
+          CAMERA        
+   +             +     +
+                        
+   +                    
+         +           +  
+                        
+                        
+   +                   +
+                        
+                        
+   +                   +
 
 ::
 
@@ -74,7 +96,7 @@ EDL/QDL/9008
 1. |:warning:|\ |:zap:| :kbd:`keep tweezer safe & insulated`
 #. poweroff, unplug, remove battery, teardown |:warning:|\ |:zap:| :kbd:`keep battery safe & insulated, away from tweezer`
 #. put phone to a tilted position with the microUSB side higher than the audioJACK side
-#. SSH into a remote PC and execute [|alpha|]
+#. SSH into a remote PC and execute /home/darren/pmos/lsusb.sh
 #. connect microUSB port to the remote PC
 #. grab the battery with your L hand
 #. begin shorting test points with a tweezer and your R hand |:warning:|\ |:zap:| :kbd:`make no contact with anything other than the test points`
@@ -84,25 +106,10 @@ EDL/QDL/9008
 #. lift tweezer |:warning:|\ |:zap:| :kbd:`keep tweezer safe & insulated`
 #. keep clear from the remote PC
 
-[|alpha|] ::
+::
 
-   function L_qualcomm {
-      P=('|  '
-         ' \ '
-         '  |'
-         ' / ')
-      N="${#P[@]}"
-      for ((i=0;1;i++)); do
-         sleep 0.3
-         echo "${P[i%N]} $(lsusb | grep -v \
-            -e 1d6b:0003 \
-            -e 05c8:0383 \
-            -e 138a:003f \
-            -e 8087:0a2b \
-            -e 1d6b:0002 \
-         )"
-      done
-   }
+   pbl                         # Dump primary bootloader to filename (index out of range)
+   qfp                         # Dump QFPROM fuses to filename
 
 
 Boot Modes
@@ -134,7 +141,7 @@ Boot Modes
 | unplug, :guilabel:`VolDown`\ +\ :guilabel:`PWR`
 |    ``18d1:d00d Google Inc. Xiaomi Mi/Redmi 2 (fastboot)``
 |    ``676c67a1 fastboot`` :sub:`# fastboot devices`
-|  / |beta| |rarr| [Download]
+| tweezer / |beta| |rarr| [Download]
 |    ``05c6:9008 Qualcomm, Inc. Gobi Wireless Modem (QDL mode)``
      |:japanese_goblin:|
      |:japanese_ogre:|
@@ -149,6 +156,41 @@ Device Info
 | adb shell - busybox uname -a
 |    ``Linux localhost 3.10.28-gff13db4 #1 SMP PREEMPT Thu Nov 16 00:53:24 CST 2017 armv7l GNU/Linux``
 
+fastbot getvar
+
+:menuselection:`Settings --> About phone`
+
+.. table::
+   :align: left
+   :widths: auto
+
+   ============================== =================================================
+    Device name                    Redmi
+    Model number                   2014811
+    Android version                4.4.4 KTU84P
+    Android security patch level   2016-10-01
+    MIUI version                   MIUI 9.7.11.16 | Beta
+    CPU                            Quad-core Max 1.2 GHz
+    RAM                            2.00GB
+    Internal storage               11.75GB available 16.00 GB total
+    Baseband version               MPSS.DPM.1.0.c7.18-00023-M8916EAAAANUZM-1-all16
+    Kernel version                 3.10.28-gff13db4
+   ============================== =================================================
+
+:menuselection:`Settings --> About phone --> Status`
+
+.. table::
+   :align: left
+   :widths: auto
+
+   =================== ========================
+    IMEI                8676220282766650
+    IMEI SV             08
+    WLAN MAC address    20\:82\:c0\:c6\:de\:cb
+    Bluetooth address   20\:82\:C0\:C6\:DE\:CA
+    Serial number       676c67a1
+   =================== ========================
+
 :menuselection:`Settings --> About phone --> Kernel version (tap 5 times) --> CIT --> SW add HW version`
 
 .. table::
@@ -158,10 +200,10 @@ Device Info
    ================== ============================
     software version   SW_S88047A1_V061_M22_MP_XM
     hardware version   M22
-    PCBA SN            2W60 3W23 0920
-    Phone SN           1122 5406 6336 9
-    IMEI(1)            8676 2202 8276 650
-    IMEI(2)            8676 2202 8276 650
+    PCBA SN            2W603W230920
+    Phone SN           1122540663369
+    IMEI(1)            867622028276650
+    IMEI(2)            867622028276650
    ================== ============================
 
 :menuselection:`Settings --> About phone --> Kernel version (tap 5 times) --> CIT --> Device View`
@@ -223,3 +265,148 @@ Device Info
     psensor cali
     gyro sensor cali
    =================== ==============================
+
+
+| AOSP doc - `partitions <https://source.android.com/devices/bootloader/partitions>`__
+| :kbd:`edl printgpt`
+
+:raw-html:`<details open><summary>short a-z</summary>`
+
+::
+
+   aboot
+   abootbak
+   boot
+   cache
+   config
+   DDR
+   fsc
+   fsg
+   hyp
+   hypbak
+   keystore
+   misc
+   modem
+   modemst1
+   modemst2
+   oem
+   pad
+   persist
+   recovery
+   rpm
+   rpmbak
+   sbl1
+   sbl1bak
+   sec
+   splash
+   ssd
+   system
+   tz
+   tzbak
+   userdata
+
+:raw-html:`</details>`
+
+:raw-html:`<details><summary>full</summary>`
+
+::
+
+   Qualcomm Sahara / Firehose Client V3.53 (c) B.Kerler 2018-2021.
+   main - Trying with no loader given ...
+   main - Waiting for the device
+   main - Device detected :)
+   main - Mode detected: firehose
+   firehose_client
+   firehose_client - [LIB]: No --memory option set, we assume "eMMC" as default ..., if it fails, try using "--memory" with "UFS","NAND" or "spinor" instead !
+   firehose - TargetName=MSM8916
+   firehose - MemoryName=eMMC
+   firehose - Version=1
+   firehose_client - Supported functions:
+   -----------------
+
+   Parsing Lun 0:
+
+   GPT Table:
+   -------------
+   modem:               Offset 0x0000000004000000, Length 0x0000000004000000, Flags 0x1000000000000000, UUID 0198b9fe-60eb-e7fa-bd89-d65fb5fa3952, Type EFI_BASIC_DATA
+   sbl1:                Offset 0x0000000008000000, Length 0x0000000000080000, Flags         0x00000000, UUID 1c2d2a12-bf4a-366b-8022-212a77c2e65f, Type 0xdea0ba2c
+   sbl1bak:             Offset 0x0000000008080000, Length 0x0000000000080000, Flags         0x00000000, UUID 37011c91-6d94-e9b7-8382-6fd5543c1019, Type EFI_BASIC_DATA
+   aboot:               Offset 0x0000000008100000, Length 0x0000000000100000, Flags         0x00000000, UUID 349f9d39-ce88-5ed8-0019-9eca6a759b1b, Type 0x400ffdcd
+   abootbak:            Offset 0x0000000008200000, Length 0x0000000000100000, Flags         0x00000000, UUID b2e21aed-6e86-0d2e-5865-1e3e3a34a32f, Type EFI_BASIC_DATA
+   rpm:                 Offset 0x0000000008300000, Length 0x0000000000080000, Flags         0x00000000, UUID e6e2b0b2-5aba-3a1b-0b63-bb57c54ff292, Type 0x98df793
+   rpmbak:              Offset 0x0000000008380000, Length 0x0000000000080000, Flags         0x00000000, UUID 880efbd1-c626-115f-c2f2-c694659f5a2e, Type EFI_BASIC_DATA
+   tz:                  Offset 0x0000000008400000, Length 0x0000000000080000, Flags         0x00000000, UUID e16cfecd-0dda-8a7e-dc63-b8a2935b7209, Type 0xa053aa7f
+   tzbak:               Offset 0x0000000008480000, Length 0x0000000000080000, Flags         0x00000000, UUID 83fc0ab6-bad0-1e9b-f141-134b059305d8, Type EFI_BASIC_DATA
+   hyp:                 Offset 0x0000000008500000, Length 0x0000000000080000, Flags         0x00000000, UUID 34ffcdbd-9741-eb71-4c43-cdccd0a32263, Type 0xe1a6a689
+   hypbak:              Offset 0x0000000008580000, Length 0x0000000000080000, Flags         0x00000000, UUID 86981a8c-6223-a3ec-ee79-65ebf71e6283, Type EFI_BASIC_DATA
+   pad:                 Offset 0x0000000008600000, Length 0x0000000000100000, Flags         0x00000000, UUID 369ac60c-78ed-0171-6fac-de32fc135fe9, Type EFI_BASIC_DATA
+   modemst1:            Offset 0x0000000008700000, Length 0x0000000000180000, Flags         0x00000000, UUID 38937cf1-ded8-184f-ee1b-3e39243e9343, Type 0xebbeadaf
+   modemst2:            Offset 0x0000000008880000, Length 0x0000000000180000, Flags         0x00000000, UUID 6f99e571-3e80-e29a-1629-4c8f2d0b6fa2, Type 0xa288b1f
+   misc:                Offset 0x0000000008a00000, Length 0x0000000000100000, Flags         0x00000000, UUID 08240ee5-a91d-25bd-91a0-7b1e671a981e, Type 0x20117f86
+   fsc:                 Offset 0x0000000008b00000, Length 0x0000000000000400, Flags         0x00000000, UUID a0e0e088-8660-6090-b480-5ad85476e3b9, Type 0x57b90a16
+   ssd:                 Offset 0x0000000008b00400, Length 0x0000000000002000, Flags         0x00000000, UUID ad4fe898-d886-7b78-6482-709419c2e5f1, Type 0x2c86e742
+   splash:              Offset 0x0000000008b02400, Length 0x0000000000a00000, Flags         0x00000000, UUID 618366ad-7ebb-b23e-d156-5b8d1145cbf2, Type 0x20117f86
+   DDR:                 Offset 0x000000000c000000, Length 0x0000000000008000, Flags 0x1000000000000000, UUID 55b9b2f2-7e53-09d2-cfe4-1bf89b5f2de1, Type 0x20a0c19c
+   fsg:                 Offset 0x000000000c008000, Length 0x0000000000180000, Flags 0x1000000000000000, UUID bf6ae34e-6657-ae3d-ab8b-263133e07714, Type 0x638ff8e2
+   sec:                 Offset 0x000000000c188000, Length 0x0000000000004000, Flags 0x1000000000000000, UUID 685601a2-b7b2-a249-7212-06d883c0c434, Type 0x303e6ac3
+   boot:                Offset 0x000000000c18c000, Length 0x0000000002000000, Flags 0x1000000000000000, UUID 94459b6e-b964-7fbf-ead5-c69d9c4a84d3, Type 0x20117f86
+   system:              Offset 0x000000000e18c000, Length 0x0000000040000000, Flags 0x1000000000000000, UUID 6a983232-087b-72fb-c073-b1209e7082c0, Type EFI_BASIC_DATA
+   cache:               Offset 0x000000004e18c000, Length 0x0000000014000000, Flags 0x1000000000000000, UUID 99bf6a49-b5c2-9cd3-37ce-f1570e24aa9a, Type EFI_BASIC_DATA
+   persist:             Offset 0x000000006218c000, Length 0x0000000002000000, Flags 0x1000000000000000, UUID 9a88e4d7-1fae-ef99-c66c-4471908c423d, Type EFI_BASIC_DATA
+   recovery:            Offset 0x000000006418c000, Length 0x0000000002000000, Flags 0x1000000000000000, UUID a76ecf95-9dc4-656a-9970-19c11a44c11a, Type 0x20117f86
+   keystore:            Offset 0x0000000068000000, Length 0x0000000000080000, Flags         0x00000000, UUID 823da879-cdc1-4c6e-891d-873377e59190, Type 0xde7d4029
+   config:              Offset 0x0000000068080000, Length 0x0000000000008000, Flags         0x00000000, UUID 8abadafa-7588-ad86-d829-b4f50756b6b6, Type 0x91b72d4d
+   oem:                 Offset 0x0000000068088000, Length 0x0000000004000000, Flags         0x00000000, UUID f31e8f71-eef7-240f-c2f4-0389c205a45e, Type 0x7db6ac55
+   userdata:            Offset 0x0000000070000000, Length 0x000000033b3fbe00, Flags 0x1000000000000000, UUID 521979fe-1576-040b-34e8-b438c3c066e0, Type EFI_BASIC_DATA
+
+   Total disk size:0x00000003ab400000, sectors:0x0000000001d5a000
+
+:raw-html:`</details>`
+
+
+Backup
+======
+
+.. include:: include/escalate.txt
+
+.. highlight:: bash
+
+execute **step by step** ::
+
+   mkdir -pv /home/darren/pmos/bak{1,2}
+
+   # cd /home/darren/pmos/bak2
+   cd /home/darren/pmos/bak1 && {
+
+      # send programmer (*.mbn)
+      edl
+      # Terminate with ^C when the following message appears - "Done |---| 0.0% Read (Sector 0x0 of 0x2) 0.00 MB/s"
+
+      # inspect
+      edl getstorageinfo
+      edl printgpt
+      edl secureboot
+
+      # small
+      cd /home/darren/pmos
+      edl pbl pbl.img
+      edl qfp qfp.img
+      edl gpt --genxml
+
+      # medium
+      edl rl dumps --skip=userdata --genxml
+
+      # large
+      cd /home/darren/pmos
+      edl rf flash.bin
+      edl reset
+
+   }
+
+
+.. warning::
+
+   | To avoid rebooting to android:
+   | 1\. :guilabel:`VolUp`\ +\ :guilabel:`PWR` into 05c6\:9091 mode
+   | 2\. Detach cable
+   | 3\. Click :guilabel:`Power Off`

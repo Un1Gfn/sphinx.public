@@ -82,6 +82,8 @@ extlinks = {
     'tw':  ('https://www.thinkwiki.org/wiki/%s',               '%s',),
     'tiw': ('https://www.theiphonewiki.com/wiki/%s',           '%s',),
 
+    'mt': ('https://app.element.io/#/room/%s', '%s',),
+
 }
 
 # https://www.sphinx-doc.org/en/master/usage/extensions/todo.html#configuration
