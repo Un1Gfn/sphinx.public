@@ -9,6 +9,11 @@ postmarketOS
 
    \mathit{The\ best\ way\ to\ predict\ the\ future\ is\ to\ invent\ it.} - \href{https://www.ted.com/speakers/alan_kay}{\text{Alan Kay}}
 
+.. note:: Todo
+
+   | inspect mountpoint of each partition in both recovery and system
+   |    adb shell busybox cat /proc/mounts
+
 
 Misc
 ====
@@ -45,6 +50,8 @@ Sahara/fireho(r)se sahadra msm8916 postmarketos
 | `bkerler/edl <https://github.com/bkerler/edl>`__
 | `OneLabsTools/Programmers <https://github.com/OneLabsTools/Programmers/>`__
 | :mt:`vanilla unsigned db410c edl payload <#main:postmarketos.org/$2r0b_U-yVEidj-uQndqm3fWQ-i0hqMVGBsNMZ87iRyY>`
+|    `linux-board-support-package-r1034.2.1.zip <https://releases.linaro.org/96boards/dragonboard410c/qualcomm/firmware/linux-board-support-package-r1034.2.1.zip>`__//linux-board-support-package-r1034.2.1/loaders/prog_emmc_firehose_8916.mbn
+|    sha1 9fbfc85368a3def9b936a17662d848b4769dc131
 | caveat - :mt:`they "forgot" to enable secure-boot <#main:postmarketos.org/$lIMqnR5BXu8zjQKhJhwvK44VFGuPLtSYihjYsATfOsc>`
 | caveat - short circuit force kick edl test point
 | :file:`~/pmos/`
@@ -55,6 +62,13 @@ Sahara/fireho(r)se sahadra msm8916 postmarketos
   - `all <https://wiki.postmarketos.org/wiki/Mainlining#Supported_SoCs>`__
 | :wp:`qualcomm cpu-soc chart <list of Qualcomm Snapdragon processors>`
 | :wp:`qualcomm codecs <Qualcomm Hexagon#Hardware_codec_supported>`
+
+Contacts
+========
+
+| main:postmarketos.org
+|    travmurav
+|    minecrell
 
 
 EDL/QDL
@@ -106,11 +120,6 @@ EDL/QDL
 #. lift tweezer |:warning:|\ |:zap:| :kbd:`keep tweezer safe & insulated`
 #. keep clear from the remote PC
 
-::
-
-   pbl                         # Dump primary bootloader to filename (index out of range)
-   qfp                         # Dump QFPROM fuses to filename
-
 
 Boot Modes
 ==========
@@ -132,7 +141,7 @@ Boot Modes
 | android system, adb enabled
 |    ``2717:ff68 Xiaomi Inc. Mi-4c``
 |    ``676c67a1 device`` :sub:`$ adb devices`
-| adb reboot recovery / |beta| |rarr| [recovery]
+| unplug, :guilabel:`VolUp`\ +\ :guilabel:`VolDown`\ +\ :guilabel:`PWR` / adb reboot recovery / |beta| |rarr| [recovery]
 |    ``18d1:d001 Google Inc. Nexus 4 (fastboot)`` |:warning:| misleading - this is not fastboot
 |    ``676c67a1 unauthorized`` :sub:`$ adb devices`
 | unplug, :guilabel:`VolUp`\ +\ :guilabel:`PWR` (|beta|)
@@ -150,8 +159,12 @@ Boot Modes
      |:space_invader:|
 
 
-Device Info
-===========
+Spec/Device Info
+================
+
+system.bin//`build.prop <https://pocketnow.com/build-prop-tweaks>`__ ::
+
+   ?
 
 | adb shell - busybox uname -a
 |    ``Linux localhost 3.10.28-gff13db4 #1 SMP PREEMPT Thu Nov 16 00:53:24 CST 2017 armv7l GNU/Linux``
@@ -266,9 +279,9 @@ fastbot getvar
     gyro sensor cali
    =================== ==============================
 
-
+| :command:`edl printgpt`
 | AOSP doc - `partitions <https://source.android.com/devices/bootloader/partitions>`__
-| :kbd:`edl printgpt`
+| *total: 30*
 
 :raw-html:`<details open><summary>short a-z</summary>`
 
@@ -375,37 +388,88 @@ execute **step by step** ::
 
    mkdir -pv /home/darren/pmos/bak{1,2}
 
-   # cd /home/darren/pmos/bak2
-   cd /home/darren/pmos/bak1 && {
+   # cd /home/darren/pmos/bak1
+   cd /home/darren/pmos/bak2 && {
+
+      # /home/darren/pmos/prog_emmc_firehose_8916.mbn
+
+      exa -alT
+
+      alias EDL='edl --loader=/home/darren/pmos/prog_emmc_firehose_8916.mbn --memory=eMMC'
 
       # send programmer (*.mbn)
-      edl
+      EDL
       # Terminate with ^C when the following message appears - "Done |---| 0.0% Read (Sector 0x0 of 0x2) 0.00 MB/s"
 
       # inspect
-      edl getstorageinfo
-      edl printgpt
+      # EDL getstorageinfo # firehose - [LIB]: GetStorageInfo command isn't supported.
       edl secureboot
+      EDL printgpt
 
       # small
-      cd /home/darren/pmos
-      edl pbl pbl.img
+      # EDL pbl pbl.img # IndexError: list index out of range
       edl qfp qfp.img
-      edl gpt --genxml
-
-      # medium
-      edl rl dumps --skip=userdata --genxml
+      mkdir gpt; EDL gpt gpt/ --genxml
 
       # large
-      cd /home/darren/pmos
-      edl rf flash.bin
-      edl reset
+      mkdir rl; EDL rl rl/ --skip=userdata --genxml # userdata isn't skipped
+
+      # large
+      EDL rf flash.bin
 
    }
 
+.. note::
+
+   | 1\. Reboot PC
+   | 2\. Download 410c mbn programmer
+   | 3\. Backup again with 410c programmer to :kbd:`/home/darren/pmos/bak2`
+   | 4\. Compare
+
+::
+
+   # make accessible
+   sudo chown -Rv darren:darren /home/darren/pmos
+
+   # verify each dump
+   diff -u <(cd /home/darren/pmos/bak1; tree -aC) <(cd /home/darren/pmos/bak2; tree -aC)
+   # cd /home/darren/pmos/bak1; find . -type f \( -not -name "sha1sum.txt" \) -exec sha1sum {} \; | tee -a sha1sum.txt; echo
+   # cd /home/darren/pmos/bak2; find . -type f \( -not -name "sha1sum.txt" \) -exec sha1sum {} \; | tee -a sha1sum.txt; echo
+   cd /home/darren/pmos/bak1; sha1sum -c sha1sum.txt --strict -w; echo
+   cd /home/darren/pmos/bak2; sha1sum -c sha1sum.txt --strict -w; echo
+
+   # difference between two dumps
+   diff -u /home/darren/pmos/bak{1,2}/sha1sum.txt
+
+   # file type
+   cd /home/darren/pmos/bak1
+   file * | sort -t: -k2 | less -RM +F # -S
+
+   # android boot img
+   # unpack_bootimg --boot_img /home/darren/pmos/bak1/rl/boot.bin --out OUT --format info
+   # boot.bin:        Android bootimg, kernel, ramdisk, page size: 2048, cmdline (ramoops_memreserve=2M androidboot.hardware=qcom user_debug=31 msm_rtb.filter=0x3F ehci-hcd.park=3 androidboot.bootdevice=782490)
+   # recovery.bin:    Android bootimg, kernel, ramdisk, page size: 2048, cmdline (ramoops_memreserve=2M androidboot.hardware=qcom user_debug=31 msm_rtb.filter=0x3F ehci-hcd.park=3 androidboot.bootdevice=782490)
+
+   # interactively inspect fs image
+   # sudo mount -v -o ro /home/darren/pmos/bak1/rl/userdata.bin /mnt; sh; sudo umount -v /mnt
+   # inspect /mnt; then exit sh
+   # modem.bin:       ... FAT (16 bit)
+   # cache.bin:       ... ext4 ...
+   # system.bin:      ... ext4 ...
+   # persist.bin:     ... ext4 ...
+   # userdata.bin:    ... ext4 ...
+
+   # inspect emmc dump
+   # sudo losetup -f --show -P -r /home/darren/pmos/bak1/flash.bin
+   # lsblk -f
+   # sudo mount -v -o ro /dev/loop0p1 /mnt; sudo exa -alT /mnt; sudo umount -v /mnt
+   # sudo losetup -D; sudo losetup -l
+
+`should back up userdata as well <https://github.com/bkerler/edl/issues/217#issuecomment-1009069582>`__
 
 .. warning::
 
+   | |:no_entry_sign:| :pr:`edl reset` |:no_entry_sign:|
    | To avoid rebooting to android:
    | 1\. :guilabel:`VolUp`\ +\ :guilabel:`PWR` into 05c6\:9091 mode
    | 2\. Detach cable
