@@ -71,17 +71,19 @@ extlinks = {
     'eol':      ('https://download.lenovo.com/ibmdl/pub/pc/pccbbs/mobiles/%s',  '%s',),
 
     # extension/define.py:wikiprepend_dict
-    'aw':  ('https://wiki.archlinux.org/title/%s',             '%s',),
-    'dw':  ('https://wiki.debian.org/%s',                      '%s',),
-    'el':  ('https://elinux.org/%s',                           '%s',),
-    'gw':  ('https://wiki.gentoo.org/wiki/%s',                 '%s',),
-    'wp':  ('https://en.wikipedia.org/wiki/%s',                '%s',),
-    'ja':  ('https://ja.wikipedia.org/wiki/%s',                '%s',),
-    'zh':  ('https://zh.wikipedia.org/wiki/%s',                '%s',),
-    'egw': ('https://emulation.gametechwiki.com/index.php/%s', '%s',),
-    'tw':  ('https://www.thinkwiki.org/wiki/%s',               '%s',),
-    'tiw': ('https://www.theiphonewiki.com/wiki/%s',           '%s',),
+    'aw':   ('https://wiki.archlinux.org/title/%s',             '%s',),
+    'dw':   ('https://wiki.debian.org/%s',                      '%s',),
+    'el':   ('https://elinux.org/%s',                           '%s',),
+    'gw':   ('https://wiki.gentoo.org/wiki/%s',                 '%s',),
+    'wp':   ('https://en.wikipedia.org/wiki/%s',                '%s',),
+    'ja':   ('https://ja.wikipedia.org/wiki/%s',                '%s',),
+    'zh':   ('https://zh.wikipedia.org/wiki/%s',                '%s',),
+    'egw':  ('https://emulation.gametechwiki.com/index.php/%s', '%s',),
+    'tw':   ('https://www.thinkwiki.org/wiki/%s',               '%s',),
+    'tiw':  ('https://www.theiphonewiki.com/wiki/%s',           '%s',),
+    'pmos': ('https://wiki.postmarketos.org/wiki/%s',           '%s',),
 
+    # element/matrix
     'mt': ('https://app.element.io/#/room/%s', '%s',),
 
 }

@@ -212,9 +212,19 @@ unicode to hex escape ``\x??`` ::
      -mtime -30 \
      |& fgrep -v '’: Permission denied'
 
+| :pmos:`to run applications in i3 from console, set up your environment similar to the environment in which i3 is running <Plasma Mobile#Running_Apps_from_SSH_session>`
+| not only ``DISPLAY``
+
+::
+
+   [ "1" = "$(pidof i3 | wc -w)" ] && {
+      export $(cat /proc/$(pidof i3)/environ | tr '\0' '\n')
+      alacritty
+   }
+
 
 C
-=
+===
 
 .. highlight:: C
 

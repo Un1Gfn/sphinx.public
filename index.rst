@@ -82,6 +82,14 @@ ico
 
 .. toctree::
    :maxdepth: 0
+   :caption: OBJ
+
+   gobject
+   gtk4
+   fahigkeit
+
+.. toctree::
+   :maxdepth: 0
    :caption: MISC
 
    820g3
@@ -90,7 +98,6 @@ ico
    cangjie
    cheatsheet
    chrome
-   gobject
    gpu_hang
    holonews
    ios

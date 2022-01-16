@@ -55,6 +55,8 @@ ISBN-10 `1285741552 <https://www.amazon.com/dp/1285741552/>`__
 .. `sphinxcontrib.programoutput <https://sphinxcontrib-programoutput.readthedocs.io/>`__
 .. track exercises - ``$ ./cg.py <SUBSECTION>``
 
+`<https://learnopengl.com/>`__
+
 
 CAS
 ===
