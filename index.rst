@@ -77,8 +77,9 @@ ico
    :maxdepth: 0
    :caption: CONSOLE
 
-   kms
    ncurses
+   kms
+   fahigkeit
 
 .. toctree::
    :maxdepth: 0
@@ -86,7 +87,6 @@ ico
 
    gobject
    gtk4
-   fahigkeit
 
 .. toctree::
    :maxdepth: 0

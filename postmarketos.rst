@@ -39,16 +39,17 @@ Misc
 |    nemo |larr| :mt:`nncwmonx <#main:postmarketos.org/$L45lsgKLQ7jc3IriQXTtkUnViwcCmmD1E8IZ2tsGaG0>`
 |    oFono/ModemManager
 |    :wp:`maliit` (virtual keyboard)
-|    
 
 | `<https://postmarketos.org/source-code/>`__
 | postmarketos 21.12 wt88047 :download:`images <https://images.postmarketos.org/bpo/v21.12/xiaomi-wt88047/>`
-| mirror
-  |vv| `ustc <https://mirrors.ustc.edu.cn/postmarketos/>`__
-  |vv| `tuna <https://mirrors.tuna.tsinghua.edu.cn/postmarketOS/>`__
-  |vv| `aliyun <https://mirrors.aliyun.com/postmarketOS/>`__
+| :pmos:`mirrors`
+  |vv| `mirrors.py <https://gitlab.com/postmarketOS/postmarketos.org/-/blob/master/config/mirrors.py>`__
 
-`redmi2(1/8) redmi2(2/16) redmi2pro(2/16) redmi2prime(2/16) <https://en.wikipedia.org/wiki/Redmi#Redmi_Series>`__
+.. \|vv| `ustc <https://mirrors.ustc.edu.cn/postmarketos/>`__
+.. \|vv| `tuna <https://mirrors.tuna.tsinghua.edu.cn/postmarketOS/>`__
+.. \|vv| `aliyun <https://mirrors.aliyun.com/postmarketOS/>`__
+
+:wp:`redmi2(1/8) redmi2(2/16) redmi2pro(2/16) redmi2prime(2/16) <Redmi#Redmi_Series>`
 
 | only msm8916 has mainline modem
 | :pmos:`Qualcomm mainline porting`
@@ -58,14 +59,10 @@ Misc
 
 `DeepSec 2010: All your baseband are belong to us by Ralf Philipp Weinmann <https://www.youtube.com/watch?v=fQqv0v14KKY>`__
 
-| official MIUI rom
-| `<https://c.mi.com/global/miuidownload/>`__
-| `<https://c.mi.com/forum.php?mod=viewthread&tid=829348&extra=page%3D1>`__
-
 | fastboot `documentation <https://android.googlesource.com/platform/system/core/+/master/fastboot/README.md>`__
 | `fastbootd <https://source.android.com/devices/bootloader/fastbootd>`__
 
-| `walleye edl <https://www.reddit.com/r/GooglePixel/comments/pfpmaj>`__
+| :r:`walleye edl <GooglePixel/comments/pfpmaj>`
 | cable issue?
 | try build a smaller twrp.img to fit in boot partition?
 | `A/B <https://source.android.com/devices/tech/ota/ab>`__
@@ -97,6 +94,35 @@ unofficial wayland `protocols explorer <https://wayland.app/protocols/>`__
 
 | qcdt or not?
 | or, get device tree :mt:`from /sys/firmware/fdt <#main:postmarketos.org/$jWc9LQ0iz4-_VsLfIAcv7zMfJ6WuDJJlXm0muVvpxBs>`
+
+:abbr:`ACK (Android Common Kernel)`
+:abbr:`GKI (Generic Kernel Image)`
+:abbr:`KMI (Kernel Module Interface)`
+[#GKI]_
+
+:abbr:`V4L (Video4Linux)`
+:abbr:`msm-uartdm (Qualcomm UART Data Mover mode)`
+:abbr:`qmi (Qualcomm Modem Interface. The internal interface inside Qualcomm SoCs that connect the modem and the application processor.)`
+:abbr:`slpi (Sensor Low Power Interface. The interface that connect sensors like the accelerometer to the application processor in Qualcomm SoCs)`
+[#Glossary]_
+
+`One Year of postmarketOS: Mainline Calling! <https://postmarketos.org/blog/2018/06/09/one-year/>`__
+
+`Alpine_Linux:Glossary <https://wiki.alpinelinux.org/wiki/Alpine_Linux:Glossary>`__
+
+| :pmos:`making good photos`
+| :pmos:`preparing videos for blog posts`
+
+| artwork
+| `latex beamer (slides) template <https://gitlab.com/postmarketOS/artwork/-/tree/c8b7378e8a71147c0579848754a21a9c65e3d0a9/presentation/latex>`__
+| `midi <https://gitlab.com/postmarketOS/artwork/-/tree/7f0fe16c77f674725d2860157393bcc465610bff/tones>`__
+| `wallpaper <https://gitlab.com/postmarketOS/artwork/-/tree/2b39e6081c7a676ae1be3fc036ccbfef3052072c/wallpapers>`__
+| `blender3d <https://gitlab.com/postmarketOS/artwork/-/tree/028b40914c75c17c084cf6b2358e56948df12a85/src>`__
+| `svg <https://gitlab.com/postmarketOS/artwork/-/tree/028b40914c75c17c084cf6b2358e56948df12a85/logo>`__
+
+`GNSS Share <https://gitlab.com/postmarketOS/gnss-share>`__
+
+`Breaking updates in edge <https://postmarketos.org/edge/>`__
 
 
 bak.specs
@@ -224,6 +250,34 @@ fastbot getvar
     gyro sensor cali
    =================== ==============================
 
+adb shell busybox mount | sort -t' ' -k5 | column -tl6 ::
+
+   none                                    on  /dev/cpuctl             type  cgroup      (rw,relatime,cpu)
+   none                                    on  /acct                   type  cgroup      (rw,relatime,cpuacct)
+   none                                    on  /dev/cpuset             type  cgroup      (rw,relatime,cpuset,noprefix,release_agent=/sbin/cpuset_release_agent)
+   none                                    on  /sys/fs/cgroup/freezer  type  cgroup      (rw,relatime,freezer)
+   debugfs                                 on  /sys/kernel/debug       type  debugfs     (rw,relatime)
+   devpts                                  on  /dev/pts                type  devpts      (rw,seclabel,relatime,mode=600)
+   /dev/block/bootdevice/by-name/system    on  /system                 type  ext4        (ro,seclabel,relatime,discard,data=ordered)
+   /dev/block/bootdevice/by-name/cache     on  /cache                  type  ext4        (rw,seclabel,nosuid,nodev,relatime,data=ordered)
+   /dev/block/bootdevice/by-name/persist   on  /persist                type  ext4        (rw,seclabel,nosuid,nodev,relatime,data=ordered)
+   /dev/block/bootdevice/by-name/userdata  on  /data                   type  ext4        (rw,seclabel,nosuid,nodev,relatime,discard,noauto_da_alloc,data=ordered)
+   adb                                     on  /dev/usb-ffs/adb        type  functionfs  (rw,relatime)
+   /dev/fuse                               on  /mnt/shell/emulated/0   type  fuse        (rw,nosuid,nodev,noexec,relatime,user_id=1023,group_id=1023,default_permissions,allow_other)
+   /dev/fuse                               on  /mnt/shell/emulated     type  fuse        (rw,nosuid,nodev,noexec,relatime,user_id=1023,group_id=1023,default_permissions,allow_other)
+   /dev/fuse                               on  /storage/uicc0          type  fuse        (rw,nosuid,nodev,noexec,relatime,user_id=1023,group_id=1023,default_permissions,allow_other)
+   proc                                    on  /proc                   type  proc        (rw,relatime)
+   rootfs                                  on  /                       type  rootfs      (ro,relatime)
+   selinuxfs                               on  /sys/fs/selinux         type  selinuxfs   (rw,relatime)
+   sysfs                                   on  /sys                    type  sysfs       (rw,seclabel,relatime)
+   tmpfs                                   on  /dev                    type  tmpfs       (rw,seclabel,nosuid,relatime,size=968392k,nr_inodes=154469,mode=755)
+   none                                    on  /sys/fs/cgroup          type  tmpfs       (rw,seclabel,relatime,size=968392k,nr_inodes=154469,mode=750,gid=1000)
+   none                                    on  /sys/fs/cgroup          type  tmpfs       (rw,seclabel,relatime,size=968392k,nr_inodes=154469,mode=750,gid=1000)
+   tmpfs                                   on  /mnt/asec               type  tmpfs       (rw,seclabel,relatime,size=968392k,nr_inodes=154469,mode=755,gid=1000)
+   tmpfs                                   on  /mnt/obb                type  tmpfs       (rw,seclabel,relatime,size=968392k,nr_inodes=154469,mode=755,gid=1000)
+   none                                    on  /var                    type  tmpfs       (rw,seclabel,relatime,size=968392k,nr_inodes=154469,mode=770,gid=1000)
+   /dev/block/bootdevice/by-name/modem     on  /firmware               type  vfat        (ro,context=u:object_r:firmware_file:s0,relatime,uid=1000,gid=1000,fmask=0337,dmask=0227,codepage=437,iocharset=iso8859-1,shortname=lower,errors=remount-ro)
+
 
 bak.boot_modes
 ==============
@@ -251,6 +305,9 @@ bak.boot_modes
 | unplug, :guilabel:`VolDown`\ +\ :guilabel:`PWR`
 |    ``18d1:d00d Google Inc. Xiaomi Mi/Redmi 2 (fastboot)``
 |    ``676c67a1 fastboot`` :sub:`# fastboot devices`
+| :guilabel:`PWR` |rarr| :strong:`viberate` *don't release PWR* |rarr| :guilabel:`VolDown` [#lk2ndUsage]_
+|    ``18d1:d00d Google Inc. Xiaomi Mi/Redmi 2 (fastboot)``
+|    ``676c67a1 fastboot`` :sub:`# fastboot devices`
 | tweezer / |beta| |rarr| [Download] / ``fastboot oem edl`` / ``fastboot reboot-edl`` / ``fastboot reboot edl``
 |    ``05c6:9008 Qualcomm, Inc. Gobi Wireless Modem (QDL mode)``
      |:japanese_goblin:|
@@ -258,7 +315,6 @@ bak.boot_modes
      |:skull:|
      |:smiling_imp:|
      |:space_invader:|
-
 
 bak.EDL
 =======
@@ -335,13 +391,13 @@ bak.backup
 
 execute **step by step** ::
 
-   mkdir -pv /home/darren/pmos/bak{1,2}
-   # cd /home/darren/pmos/bak1
-   cd /home/darren/pmos/bak2 && {
+   mkdir /home/darren/pmos/bak3 && cd /home/darren/pmos/bak3 && {
+
+      tmux attach || tmux
 
       exa -alT
 
-      alias EDL='edl --loader=/home/darren/pmos/prog_emmc_firehose_8916.mbn --memory=eMMC'
+      alias EDL='/usr/bin/edl --loader=/home/darren/pmos/prog_emmc_firehose_8916.mbn --memory=eMMC'
 
       # send programmer
       EDL
@@ -374,18 +430,26 @@ execute **step by step** ::
    # make accessible
    sudo chown -Rv darren:darren /home/darren/pmos
 
-   # verify each dump
-   diff -u <(cd /home/darren/pmos/bak1; tree -aC) <(cd /home/darren/pmos/bak2; tree -aC)
-   # cd /home/darren/pmos/bak1; find . -type f \( -not -name "sha1sum.txt" \) -exec sha1sum {} \; | tee -a sha1sum.txt; echo
-   # cd /home/darren/pmos/bak2; find . -type f \( -not -name "sha1sum.txt" \) -exec sha1sum {} \; | tee -a sha1sum.txt; echo
-   cd /home/darren/pmos/bak1; sha1sum -c sha1sum.txt --strict -w; echo
-   cd /home/darren/pmos/bak2; sha1sum -c sha1sum.txt --strict -w; echo
+   # check for missing files
+   meld <(cd /home/darren/pmos/bak1; find | sort) <(cd /home/darren/pmos/bak3; find | sort)
+
+   # compute checksum (overwritten!)
+   # cd /home/darren/pmos/bak3; find . -type f \( -not -name "sha1sum.txt" \) -exec sha1sum {} \; | tee -a sha1sum.txt; echo
+
+   # verify checksum
+   cd /home/darren/pmos/bak3; sha1sum -c sha1sum.txt --strict -w; echo
 
    # difference between two dumps
-   diff -u /home/darren/pmos/bak{1,2}/sha1sum.txt
+   meld /home/darren/pmos/bak{1,2,3}/sha1sum.txt
+
+   # ?
+   # meld \
+   #    <(tune2fs -l /home/darren/pmos/bak1/rl/persist.bin) \
+   #    <(tune2fs -l /home/darren/pmos/bak2/rl/persist.bin) \
+   #    <(tune2fs -l /home/darren/pmos/bak3/rl/persist.bin)
 
    # file type
-   cd /home/darren/pmos/bak1
+   cd /home/darren/pmos/bak3
    file * | sort -t: -k2 | less -RM +F # -S
 
    # android boot img
@@ -406,9 +470,29 @@ execute **step by step** ::
    | 2\. Detach cable
    | 3\. Click :guilabel:`Power Off`
 
+:aw:`optical disc drive#Making_an_ISO_image_from_existing_files_on_hard_disk` ::
 
-Chain
-=====
+   # execute step-by-step!
+   cd /home/darren/pmos/bak1
+   sha1sum -c sha1sum.txt --strict -w; echo
+   # mkisofs(8) - /^\s+(-[VoJR]( |$)|-iso-level)
+   mkisofs \
+      -iso-level 3 \
+      -J \
+      -o ../WT88047_EDL_BAK1.ISO \
+      -R \
+      -V "WT88047_EDL_BAK1" \
+      .
+   iso-info -i ~/pmos/WT88047_EDL_BAK1.ISO -l
+   isoinfo  -i ~/pmos/WT88047_EDL_BAK1.ISO -l
+   sudo mount -vo ro ~/pmos/WT88047_EDL_BAK1.ISO /mnt; bash --init-file <(echo 'echo; PS1="(\W)\$ "; cd /mnt; pwd; df -h; echo; exa -alT; echo'); sudo umount -v /mnt;
+      sha1sum -c sha1sum.txt --strict -w; echo
+      exit
+   touch ~/pmos/WT88047_EDL_BAK1.ISO.sha1."$(sha1sum ~/pmos/WT88047_EDL_BAK1.ISO | cut -d' ' -f1)"
+
+
+inspect.chain
+=============
 
 | :abbr:`RPMB (Rollback Protection Memory Block)` [#RPMB]_
 | |b| write protected region on eMMC/UFS
@@ -449,8 +533,8 @@ sectools from Arrow Electronics or Qualcomm blows the fuse bits
 | replace phy with `qhypstub <https://github.com/msm8916-mainline/qhypstub>`__+`qtestsign <https://github.com/msm8916-mainline/qtestsign>`__
 
 | replace hyp and tz?
-| `<https://wiki.postmarketos.org/wiki/Huawei_Ascend_G7_(huawei-g7)>`__
-| `<https://wiki.postmarketos.org/wiki/Huawei_Y635_(huawei-y635)>`__
+| `Huawei Ascend G7 (huawei-g7)>`
+| `Huawei Y635 (huawei-y635)>`
 
 | typical :abbr:`EL (Exception Level)` usage model
 
@@ -490,8 +574,8 @@ sectools from Arrow Electronics or Qualcomm blows the fuse bits
 |    |b| *no* system control resources
 
 
-Inspect Images
-==============
+inspect.img
+===========
 
 PabloCastellano/`extract-dtb <https://github.com/PabloCastellano/extract-dtb>`__
 
@@ -624,6 +708,298 @@ recovery.bin//CPIO//etc/recovery.fstab ::
    /dev/block/bootdevice/by-name/splash       /splash         emmc    defaults                                                        defaults
 
 
+install.0.updateFW
+==================
+
+| `<https://c.mi.com/global/miuidownload/>`__
+| `<https://c.mi.com/forum.php?mod=viewthread&tid=829348&extra=page%3D1>`__
+| `<https://wiki.lineageos.org/devices/wt88047/install#updating-firmware>`__
+
+inspect firmwares ::
+
+   cd ~/pmos/
+
+   meld \
+      <(cd \[C.MI\]_4.4; find | sort) \
+      <(cd \[C.MI\]_5.1; find | sort)
+   # result: differences in flash scripts and a dummy text dev.img
+
+   meld \
+      <(gdisk -l bak1/gpt/gpt_main0.bin) \
+      <(gdisk -l \[C.MI\]_5.1/images/gpt_both0.bin)
+   # result: userdata partition being the only difference
+
+   meld \
+      <(cd \[C.MI\]_5.1/images;             sha1sum emmc_appsboot.mbn hyp.mbn NON-HLOS.bin rpm.mbn sbl1.mbn tz.mbn) \
+      <(cd \[LINEAGE\]_fw/firmware-update/; sha1sum emmc_appsboot.mbn hyp.mbn NON-HLOS.bin rpm.mbn sbl1.mbn tz.mbn) \
+      <(cd \[C.MI\]_4.4/images;             sha1sum emmc_appsboot.mbn hyp.mbn NON-HLOS.bin rpm.mbn sbl1.mbn tz.mbn) \
+      ;
+   # result: lineage firmware are taken from 5.1 but not 4.4
+
+:raw-html:`<details><summary>upstream gpt utterly broken, fixing attempt fails, use bak1</summary>`
+
+::
+
+   # execute STEP-BY-STEP!!!
+   cd "/home/darren/pmos/[C.MI]_5.1/images"
+   rm -v gpt_main0_copygrow.bin gpt_main0_modified.bin gpt_main0_modified_tailed.bin # don't use dangerous glob "*"!!!
+   cat <(head -c$((16#200)) /dev/zero) gpt_main0.bin >gpt_main0_copygrow.bin
+   cp -v gpt_main0.bin gpt_main0_copygrow.bin
+   truncate -cs $((16#3ab400000)) gpt_main0_copygrow.bin
+   ls -alh gpt_main0*
+
+   # parted gpt_main0_copygrow.bin
+   gdisk gpt_main0_copygrow.bin
+   x
+   s
+   128
+   m
+   d
+   30
+   n
+   30
+   3670016
+   30777310
+   0700
+   c
+   30
+   userdata
+   b
+   gpt_main0_modified.bin
+   q
+   ls -lh gpt_main0*
+   hexdump -C gpt_main0.bin
+   tail -c +$((16#200)) gpt_main0_modified.bin >|gpt_main0_modified_tailed.bin
+
+:raw-html:`</details>`
+
+minimum requirements for a warking fastboot ::
+
+   A=()
+   A+=(
+     config
+     DDR
+     fsc
+     fsg
+     keystore
+     misc
+     modemst1
+     modemst2
+     oem
+     pad
+     ssd
+   )
+   A+=(
+     sbl1
+     aboot
+     hyp
+     rpm
+     tz
+     splash
+   )
+
+   EDL="--loader=/home/darren/pmos/prog_emmc_firehose_8916.mbn --memory=eMMC"
+
+   edl $EDL # load programmer
+
+   /bin/edl w gpt '/home/darren/pmos/bak1/gpt/gpt_main0.bin' $EDL
+   # /bin/edl w gpt '/home/darren/pmos/[C.MI]_5.1/images/gpt_main0.bin' $EDL # boot fail, EDL loop
+
+   for i in "${A[@]}"; do
+     file "/home/darren/pmos/bak1/rl/$i.bin" || break
+   done
+   echo "${#A[@]}"
+
+   echo; for i in "${A[@]}"; do
+     read -rp ": write $i? "
+     /bin/edl w "$i" "/home/darren/pmos/bak1/rl/$i.bin" $EDL
+     echo
+   done
+
+   edl reset
+
+
+install.1.boot
+==============
+
+:pmos:`QCDT`
+
+.. table::
+   :align: left
+   :widths: auto
+
+   +------------------------------------+
+   |              bootimg               |
+   +-------------------+----------+-----+
+   |         zImage    |          |     |
+   +-------------+-----+ initcpio | dtb |
+   | selfextract | elf |          |     |
+   +-------------+-----+----------+-----+
+
+non-QCDT
+
+.. table::
+   :align: left
+   :widths: auto
+
+   +------------------------------------+
+   |                     bootimg        |
+   +-------------------------+----------+
+   |         zImage          |          |
+   +-------------+-----+-----+ initcpio |
+   | selfextract | elf | dtb |          |
+   +-------------+-----+-----+----------+
+
+| have a taste of all three GUI shells in :pmos:`QEMU <QEMU amd64 (qemu-amd64)>` before writing to emmc /system /userdata
+| size:
+  `plasma-mobile <https://images.postmarketos.org/bpo/v21.12/xiaomi-wt88047/plasma-mobile/20220112-1123/>`__
+  \>
+  `phosh         <https://images.postmarketos.org/bpo/v21.12/xiaomi-wt88047/phosh/20220112-1116/>`__
+  \>
+  `sxmo-de-sway  <https://images.postmarketos.org/bpo/v21.12/xiaomi-wt88047/sxmo-de-sway/20220112-1133/>`__
+
+| install lk2nd
+  |vv| :pmos:`pmoswiki <Qualcomm Snapdragon 410/412 (MSM8916)#Installation>`
+  |vv| `github <https://github.com/msm8916-mainline/lk2nd#installation>`__
+| check for new lk2nd releases before upgrading kernel (already on github watchlist)
+| `get log file <https://github.com/msm8916-mainline/lk2nd#troubleshooting>`__ from lk2nd
+
+| :pmos:`pmbootstrap`
+| :pkg:`AUR/pmbootstrap` |vv| :pkg:`AUR/pmbootstrap-git`
+| :pkg:`community/python-argcomplete` ``sudo activate-global-python-argcomplete``
+| :pmos:`deviceinfo_flash_methods`
+
+pmbootstrap `usage <https://gitlab.com/postmarketOS/pmbootstrap#basics>`__
+
+.. danger::
+
+   | |:radioactive:| Make sure there are no mount points in it before removing the work path |:radioactive:|
+   | \
+     ``pmbootstrap shutdown``
+     ``sudo mount | grep -i -e home -e market # check for dangling mount points``
+   | ``sudo find /home/darren/.local/var/pmbootstrap # sanity``
+   | ``sudo find /home/darren/.local/var/pmbootstrap -type l -exec file {} \; # check for escaping links``
+   | ``pmbootstrap zap -hc -d -p -m -o -r``
+
+list of v21.12 aarch64 `initramfs hooks <http://pkgs.postmarketos.org/packages?name=postmarketos-mkinitfs-hook*&branch=v21.12&repo=postmarketos&arch=aarch64>`__
+(hover on package name for description)
+
+build
+:pmos:`customized installation <Qualcomm Snapdragon 410/412 (MSM8916)#Installation_using_pmbootstrap>`
+with pmbootstrap
+(initfs only)
+
+::
+
+   # execute step-by-step and selectively!!!
+
+   tmux attach || tmux
+
+   source ~/proxy.bashrc
+
+   # pmbootstrap <COMMAND> -h
+
+   pmbootstrap --version
+
+   pmbootstrap init
+   # Work path: [/home/darren/.local/var/pmbootstrap]
+   # Config:    [~/.config/pmbootstrap.cfg]
+   # mirror:    https://mirrors.tuna.tsinghua.edu.cn/postmarketOS/
+   # Locale:    en_US.UTF-8
+   # Hostname:  wt88047
+   # CopySSH:   y
+   # BuildPkg:  n
+
+   # execute in another terminal
+   alacrittytitle.sh "(pmbootstrap) log"; pmbootstrap log
+
+   pmbootstrap config work
+   pmbootstrap status --details
+   pmbootstrap pull
+
+   proxy_off
+
+   # assemble bootimg with debug shell
+   pmbootstrap initfs hook_add debug-shell
+   pmbootstrap initfs hook_add verbose-initfs
+   pmbootstrap initfs hook_ls
+   pmbootstrap initfs build # force rebuild
+   sudo exa -alT /home/darren/.local/var/pmbootstrap/chroot_rootfs_xiaomi-wt88047/boot/
+   file /home/darren/.local/var/pmbootstrap/chroot_rootfs_xiaomi-wt88047/boot/boot.img
+   pmbootstrap bootimg_analyze /home/darren/.local/var/pmbootstrap/chroot_rootfs_xiaomi-wt88047/boot/boot.img
+   pmbootstrap shutdown # safety measure in case of dangling mounts
+
+try debug shell without installing anything to emmc ::
+
+   : manually enter vendor fastboot
+
+   # vendor fastboot -> lk2nd
+   fastboot boot ~/pmos/lk2nd-msm8916_0.11.0_sha1_030aff45c70905fbf3ec069bdb8cbef7a0170719.img
+
+   # lk2nd -> initcpio
+   fastboot boot /home/darren/.local/var/pmbootstrap/chroot_rootfs_xiaomi-wt88047/boot/boot.img
+
+   : wait with patience
+
+| :pmos:`boot process`
+| :pmos:`partition layout <Partition Layout>`
+
+.. tip::
+
+   Wait patiently after ``fastboot boot`` completes.
+
+| :pmos:`USB Network`
+| :pmos:`debug shell <inspecting the initramfs>`
+| :pmos:`SSH`
+| :pmos:`netboot`
+
+.. table::
+   :align: left
+   :widths: auto
+
+   ============================= ==================== ============= ===============
+    default account [#SSHpass]_   address              username      password
+    \                             :kbd:`172.16.42.1`   :kbd:`user`   :kbd:`147147`
+   ============================= ==================== ============= ===============
+
+play ::
+
+   echo
+   ip l
+   echo
+   sudo ip link set enp0s20f0u2 up
+   sudo ip addr flush dev enp0s20f0u2
+   sudo ip addr add 172.16.42.223/8 dev enp0s20f0u2
+   sudo ip addr show dev enp0s20f0u2
+   echo
+
+   ping 172.16.42.1
+   telnet 172.16.42.1
+
+   # ...
+
+   # nohup
+   # 1>/dev/null prevents nohup.out file
+   # ( busybox nohup busybox ash -c "rm -f /garbage; busybox sleep 5; echo sldjflwkjelfjlsjdklfjslkd >/garbage" 1>/dev/null & )
+
+   # ps -o help
+   # ps | head -2
+   # pid 1 (init) is "{init} /bin/sh /init PMOS_NO_OUTPUT_REDIRECT"
+   # therefore we have to "Force" (don't go through init)
+   ( busybox nohup busybox ash -c "busybox poweroff -d 7 -f" 1>/dev/null & )
+   : detatch microUSB immediately
+
+| :pmos:`troubleshooting:boot`
+| :pmos:`troubleshooting:display`
+| :pmos:`troubleshooting:boot:initfshooks`
+
+
+install.2.rootfs
+================
+
+\...
+
+
 Footnotes
 =========
 
@@ -644,3 +1020,11 @@ Footnotes
                |    |rarr| Extras |rarr| Build Folder |rarr| .. |rarr| .. |rarr| firmware |rarr| linux-board-support-package-\*.zip
 
 .. [#ndec] `ndec <https://discuss.96boards.org/t/documentation-on-db410c-bootloader-files/2124/2>`__
+
+.. [#GKI] `Generic Kernel Image | Android Open Source Project <https://source.android.com/devices/architecture/kernel/generic-kernel-image>`__
+
+.. [#Glossary] :pmos:`Glossary`
+
+.. [#SSHpass] :pmos:`SSH`
+
+.. [#lk2ndUsage] lk2nd `usage <https://github.com/msm8916-mainline/lk2nd#usage>`__
