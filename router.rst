@@ -8,8 +8,8 @@ Router
 Contacts
 ========
 
-| `r/HomeNetworking <https://www.reddit.com/r/HomeNetworking/>`__
-| `r/openwrt        <https://www.reddit.com/r/openwrt/>`__
+| :r:`HomeNetworking`
+| :r:`openwrt`
 
 | `t.me/ctcgfw_openwrt_discuss <https://t.me/ctcgfw_openwrt_discuss>`__
 | `t.me/pdcn2                  <https://t.me/pdcn2>`__
@@ -132,8 +132,8 @@ The Unbrickable
 | `netfilter <https://netfilter.org/>`__ - :wp:`wikipedia <netfilter>`
 | http://linuxwireless.sipsolutions.net/en/developers/Documentation/cfg80211/
 | https://alamot.github.io/nl80211/
-| https://en.wikipedia.org/wiki/Comparison_of_open-source_wireless_drivers
-| https://en.wikipedia.org/wiki/Wireless_network_interface_controller#FullMAC_and_SoftMAC_devices
+| :wp:`comparison of open-source wireless drivers`
+| :wp:`wireless network interface controller#FullMAC_and_SoftMAC_devices`
 | https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/include/uapi/linux/nl80211.h
 | https://stackoverflow.com/questions/21456235/how-nl80211-library-cfg80211-work
 | https://wireless.wiki.kernel.org/en/developers/documentation/glossary

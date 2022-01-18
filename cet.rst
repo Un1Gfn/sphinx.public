@@ -30,7 +30,7 @@ repo ``~/cet``
 
 `Pauls Online Math Notes <https://tutorial.math.lamar.edu/>`__
 
-`r/calculus <https://www.reddit.com/r/calculus/>`__
+:r:`calculus`
 
 amazon set delivery to US zip code for US edition
 

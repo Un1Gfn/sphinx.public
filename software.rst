@@ -116,10 +116,9 @@ standalone app
    # 1055MiB
    virt-make-fs -s 1280M -F raw -t ext2 -v ArchLinuxARM-am33x-latest.tar.gz ArchLinuxARM-am33x-latest.ext2.img
 
-`Binfmt`__
-----------
 
-.. __: https://en.wikipedia.org/wiki/Binfmt_misc
+:wp:`Binfmt <binfmt_misc>`
+--------------------------
 
 :gw:`qemu-wrapper.c <Embedded_Handbook/General/Compiling_with_qemu_user_chroot#Setup_chroot>`
 

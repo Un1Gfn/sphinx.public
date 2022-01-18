@@ -124,13 +124,13 @@ CPU
 
 
 `AM3358 <https://www.ti.com/product/AM3358>`__ =
-`Cortex-A8 <https://en.wikipedia.org/wiki/ARM_Cortex-A8>`__ =
-`ARMv7-A <https://en.wikipedia.org/wiki/Comparison_of_ARMv7-A_cores>`__ =
+:wp:`ARM Cortex-A8` =
+:wp:`ARMv7-A <comparison of ARMv7-A cores>` =
 32-bit w/ FPU =
 :dw:`gnueabihf <Multiarch/Tuples#armhf>`
 
 `Sitara AM3358 <http://www.ti.com/product/AM3358>`__ ~
-`Arm Cortex-A8 <https://en.wikipedia.org/wiki/ARM_Cortex-A8>`__ ~
+:wp:`Arm Cortex-A8` ~
 32-bit :dw:`armhf <ArmHardFloatPort#Supported_devices>` ~
 :dw:`ArmEabiPort <ArmEabiPort>` ~
 :dw:`arm-linux-gnueabihf- <ArmHardFloatPort#Rationale>`\ [#w]_
@@ -242,7 +242,7 @@ Wi-Fi
 
 .. Footnotes
 
-.. [#u] https://en.wikipedia.org/wiki/Ethernet_over_USB
+.. [#u] :wp:`Ethernet over USB`
 .. [#p] https://www.pengutronix.de/en/software/barebox.html
 .. [#b] https://www.barebox.org/
 .. [#g_ether] https://github.com/techniq/wiki/wiki/Linux-USB-Gadget-API#network-g_ether

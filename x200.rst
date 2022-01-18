@@ -5,7 +5,7 @@ X200
 ====
 
 | `<https://forums.debian.net/viewtopic.php?t=128102>`__
-| `<https://wiki.archlinux.org/title/General_recommendations#Sound_system>`__
+| :aw:`general recommendations#Sound_system`
 
 
 Misc
@@ -66,7 +66,7 @@ GPU/Video
 
 | EDID
 | |b| :aw:`kernel mode setting#Forcing_modes_and_EDID`
-| |b| `reddit <https://www.reddit.com/r/archlinux/comments/oujnxs/>`__
+| |b| `reddit <archlinux/comments/oujnxs/>`
 
 :taobao:`LVDS to HDMI adapter <525562175840>`
 
@@ -155,7 +155,7 @@ GPU/Video
 
 WikiChip - `HD520 <https://en.wikichip.org/wiki/intel/hd_graphics/520>`__
 
-`mpv call yt-dlp <https://www.reddit.com/r/mpv/comments/q759xc/comment/hhbva8j/>`__
+:r:`mpv call yt-dlp <mpv/comments/q759xc/comment/hhbva8j/>`
 
 :aw:`streamlink` - `cli <https://streamlink.github.io/cli.html>`__
 `enable caching in your player <https://streamlink.github.io/issues.html#streams-are-buffering-lagging>`__
@@ -241,8 +241,8 @@ KDE :pr:`UBW` `UserBase Wiki <https://userbase.kde.org/Welcome_to_KDE_UserBase>`
 
 | IM
 | |b| `kimpanel <https://userbase.kde.org/Tutorials/Kimpanel>`__
-| |b| `ibus x KDE <https://wiki.archlinux.org/title/IBus#Integration>`__
-| |b| `kkc <https://wiki.archlinux.org/title/Localization/Japanese#libkkc>`__
+| |b| :aw:`ibus x KDE <iBus#Integration>`
+| |b| :aw:`kkc <localization/Japanese#libkkc>`
 | |b| `skk tutorial <https://gist.github.com/akirak/e93876855f8b1d295c2cd0ff2370af8d>`__
 
 :wp:`PCIe`

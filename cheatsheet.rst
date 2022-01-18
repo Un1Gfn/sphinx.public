@@ -450,7 +450,7 @@ Filter-Repo
 .. warning::
 
    | Once ``git filter-repo`` is run, any matched files are removed forever |dumpster_fire|
-   | For backing up locally, modify is easily and catastrophically `confused with <https://www.reddit.com/r/grammar/comments/39yc0i/>`__ orig,
+   | For backing up locally, modify is easily and catastrophically `confused with <grammar/comments/39yc0i/>` orig,
    |  |:o:| ``rm -rf modify; cp -a orig   modify``
    |  |:x:| ``rm -rf orig;   cp -a modify orig`` |:radioactive:| |:boom:|
    | Recommended SOP

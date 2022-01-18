@@ -23,8 +23,8 @@ in i3 scratchpad git terminal ::
       ~/holonews/download.sh
 
 | filter by flair
-| |b| `EN Issue  <https://www.reddit.com/r/HoloNews/?f=flair_name:"EN%20Issue">`__
-| |b| `News Post <https://www.reddit.com/r/HoloNews/?f=flair_name:"News%20Post">`__
+| |b| :r:`EN Issue  <HoloNews/?f=flair_name:"EN%20Issue">`
+| |b| :r:`News Post <HoloNews/?f=flair_name:"News%20Post">`
 
 | :manpage:`tree(1)`
 | :manpage:`vidir(1)`
@@ -115,7 +115,7 @@ Manually
 ========
 
 | for   2021\_0802\_0808_\ **p1pn6c**
-| visit https://www.reddit.com/r/HoloNews/comments/p1pn6c
+| visit :r:`HoloNews/comments/p1pn6c`
 
 | PDF link
 | |b| `raw.githubusercontent.com/:owner/:repo/:branch/path/to/file <https://raw.githubusercontent.com/Un1Gfn/holonews/master/2021_0802_0808_p1pn6c/2021_0802_0808_p1pn6c.pdf>`__

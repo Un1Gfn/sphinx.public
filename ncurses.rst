@@ -22,7 +22,7 @@ ncurses
 | `<https://stackoverflow.com/questions/13707137/resizing-glitch-with-ncurses>`__
 | `<https://forums.justlinux.com/showthread.php?137431-ncurses-detect-when-the-terminal-has-been-resized>`__
 | `<https://unix.stackexchange.com/questions/489491/resize-window-in-multi-thread-ncurses-program>`__
-| `<https://www.reddit.com/r/C_Programming/comments/b6gv0g/ncurses_window_resize_trigger/>`__
+| :r:`C_Programming/comments/b6gv0g/ncurses_window_resize_trigger`
 | `<https://invisible-island.net/ncurses/ncurses.faq.html#handle_resize>`__
 
 list of ncurses `routines <https://man.archlinux.org/man/ncurses.3x#Routine_Name_Index>`__

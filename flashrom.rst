@@ -5,11 +5,11 @@
 Flashrom |:zap:|
 ================
 
-| `<https://en.wikipedia.org/wiki/Chipset>`__
-| `<https://en.wikipedia.org/wiki/I/O_Controller_Hub>`__
-| `<https://en.wikipedia.org/wiki/Northbridge_(computing)>`__
-| `<https://en.wikipedia.org/wiki/Platform_Controller_Hub>`__
-| `<https://en.wikipedia.org/wiki/Southbridge_(computing)>`__
+| :wp:`Chipset`
+| :wp:`I/O Controller Hub`
+| :wp:`Northbridge (computing)`
+| :wp:`Platform Controller Hub`
+| :wp:`Southbridge (computing)`
 
 
 Misc

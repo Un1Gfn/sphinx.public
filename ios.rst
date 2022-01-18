@@ -12,7 +12,7 @@ Downgrade
 | install git packages with paru
 | depcheck ``pacman -Dk``
 
-`[Tutorial] downgrade from Ios 15 to 14.3 for A11 devices <https://www.reddit.com/r/jailbreak/comments/qri8w0/tutorial_downgrade_from_ios_15_to_143_for_a11/>`__
+:r:`[Tutorial] downgrade from Ios 15 to 14.3 for A11 devices <jailbreak/comments/qri8w0/>`
 
 `How to downgrade from iOS 15 to iOS 14 <https://gist.github.com/nyuszika7h/aac55c97f7925cddcf5ec3167f85dfe8>`__
 
@@ -290,9 +290,9 @@ YouTube
 `RebornAgain <https://altcatalog.meghrathod.tech/>`__
 
 version
-- `1.5   <https://www.reddit.com/r/sideloaded/comments/p9ml5f/>`__
-- `1.6.1 <https://www.reddit.com/r/sideloaded/comments/pfgxpd/>`__
-- `1.7   <https://www.reddit.com/r/sideloaded/comments/pjttfj/>`__
+- :r:`1.5   <sideloaded/comments/p9ml5f/>`
+- :r:`1.6.1 <sideloaded/comments/pfgxpd/>`
+- :r:`1.7   <sideloaded/comments/pjttfj/>`
 
 :`uYou <https://www.reddit.com/user/MiRO92/posts/>`__:
    (`readme <https://github.com/MiRO92/uYou-for-YouTube>`__)

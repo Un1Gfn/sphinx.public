@@ -37,7 +37,7 @@ Misc
 
 | `coreboot <https://www.coreboot.org/>`__
   - :wp:`wp:coreboot <coreboot>`
-  - `r/coreboot <https://www.reddit.com/r/coreboot/>`__
+  - :r:`coreboot`
   - `aur/\*coreboot\* <https://aur.archlinux.org/packages/?O=0&SeB=nd&K=coreboot>`__
 | |b| `payloads <https://doc.coreboot.org/payloads.html>`__
 | |b| `releases <https://doc.coreboot.org/releases/index.html>`__
@@ -46,7 +46,7 @@ Misc
 
 | `Libreboot <https://libreboot.org/>`__
   - :wp:`wp:Libreboot <Libreboot>`
-  - `r/libreboot <https://www.reddit.com/r/libreboot/>`__
+  - :r:`libreboot`
   - `aur/\*libreboot\* <https://aur.archlinux.org/packages/?O=0&SeB=nd&K=libreboot>`__
 | |b| `version history <https://libreboot.org/news/>`__
 | |b| `downloads <https://libreboot.org/download.html>`__ - `roms <https://mirrors.mit.edu/libreboot/testing/20210522/roms/>`__
@@ -309,7 +309,7 @@ binwalk ::
 
 | get HSH FL1 FL2 w/o windows
 |    1\. :pkg:`AUR/geteltorito`
-|    `BIOS_Upgrade#Using_UEFI use geteltorito.pl <https://www.thinkwiki.org/wiki/BIOS_Upgrade#Using_UEFI>`__
+|    refer to geteltorito.pl command in :tw:`BIOS Upgrade#Using_UEFI`
 
 ::
 
@@ -467,7 +467,7 @@ BIOS UI
    | Black screen of death |:skull:|
    | Applying external light source does not reveal anything either
 
-reddit `comment <https://www.reddit.com/r/libreboot/comments/o2ygo1/comment/hf7r4z1/>`__
+reddit :r:`comment <libreboot/comments/o2ygo1/comment/hf7r4z1/>`
 by `Broccoli-Smooth <https://www.reddit.com/u/Broccoli-Smooth/>`__
 
 

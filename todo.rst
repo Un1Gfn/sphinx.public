@@ -86,7 +86,7 @@ optimize xorg-video-intel gm45 `<https://forums.debian.net/viewtopic.php?t=12810
 |    `<https://superuser.com/questions/393969/what-does-clocksource-tsc-unstable-mean>`__
 |    `<https://www.spinics.net/lists/kernel/msg2291589.html>`__
 |    2 photos in telegram saved messages
-| `<https://wiki.postmarketos.org/wiki/Mainlining_FAQ#Writing_dmesg_to_RAM_and_reading_it_out_after_reboot>`__
+| :pmos:`<Mainlining FAQ#Writing_dmesg_to_RAM_and_reading_it_out_after_reboot>`
 
 | submit patch to man-pages
 | `slist.3 <https://git.kernel.org/pub/scm/docs/man-pages/man-pages.git/tree/man3/slist.3#n92>`__
@@ -125,9 +125,9 @@ ReFirmLabs/binwalk firmware analysis tool
 
 `U-boot on x86 <https://www.denx.de/wiki/U-Boot/X86>`_
 
-`LVDS <https://en.wikipedia.org/wiki/Low-voltage_differential_signaling>`__ - `FPD-Link <https://en.wikipedia.org/wiki/FPD-Link>`__
+:wp:`LVDS <Low-voltage_differential_signaling>` - :wp:`FPD-Link`
 
-royalty-free `DisplayPort <https://en.wikipedia.org/wiki/DisplayPort>`__ cap for BBGW
+royalty-free :wp:`DisplayPort` cap for BBGW
 
 `barebox on am335x <https://www.barebox.org/doc/latest/boards/am335x.html>`__
 

@@ -479,7 +479,7 @@ PC TFTP
   E:  Ad=81(I) Atr=03(Int.) MxPS=   8 Ivl=11ms
   E:  Ad=82(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
 
-| make `FIT image <https://elinux.org/images/f/f4/Elc2013_Fernandes.pdf>`__
+| make :el:`FIT image <images/f/f4/Elc2013_Fernandes.pdf>`
   with :manpage:`mkimage(1)`
   from :pkg:`community/uboot-tools`
 | |b| `uImage.FIT/howto.txt <https://github.com/u-boot/u-boot/blob/master/doc/uImage.FIT/howto.txt>`__
@@ -526,7 +526,7 @@ client |rarr| ``mount`` |rarr| server |rarr| ``rpcbind`` |rarr| ``nfsd`` |rarr| 
 
 .. include:: include/escalate.txt
 
-`append to /etc/exports <https://wiki.archlinux.org/title/Diskless_system#NFS>`__ ::
+:aw:`append to /etc/exports <diskless system#NFS>` ::
 
    F=/etc/exports
    BAK="$F.pacnew"
@@ -817,7 +817,7 @@ make sure no container is running ::
   - `NFS <https://www.kernel.org/doc/html/latest/admin-guide/nfs/index.html>`__
   - `nfsroot <https://www.kernel.org/doc/html/latest/admin-guide/nfs/nfsroot.html>`__
   (`txt <https://www.kernel.org/doc/Documentation/filesystems/nfs/nfsroot.txt>`__)
-| ArchWiki - `cmdline <https://wiki.archlinux.org/title/Kernel_parameters#Parameter_list>`__
+| ArchWiki - :aw:`cmdline <kernel parameters#Parameter_list>`
 | DULG - `LinuxNfsRoot <https://www.denx.de/wiki/DULG/LinuxNfsRoot>`__
 
 | setenv `bootargs <https://www.denx.de/wiki/view/DULG/LinuxKernelArgs>`__

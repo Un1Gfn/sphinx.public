@@ -1163,8 +1163,8 @@ Footnotes
 .. [#] MLO = **M**\ MC **lo**\ ader
 .. [#] http://lifeonubuntu.com/tar-errors-ignoring-unknown-extended-header-keyword/
 .. [#vb] `no need for verified boot, use configs/am335x_evm_defconfig instead <https://lists.denx.de/pipermail/u-boot/2021-May/449518.html>`__
-.. [#gSR] https://wiki.archlinux.org/title/GnuPG#Searching_and_receiving_keys
-.. [#gV] https://wiki.archlinux.org/title/GnuPG#Verify_a_signature
+.. [#gSR] :aw:`GnuPG#Searching_and_receiving_keys`
+.. [#gV]  :aw:`GnuPG#Verify_a_signature`
 
 .. [#]  https://superuser.com/questions/332252/how-to-create-and-format-a-partition-using-a-bash-script
 .. [#]  https://www.thegeekstuff.com/2017/05/sfdisk-examples/
