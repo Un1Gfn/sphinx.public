@@ -7,6 +7,24 @@ PkgMgmt
 arch linux package management
 
 
+Fix pacman-key
+==============
+
+.. warning::
+
+   Dangerous!
+
+[#key]_ ::
+
+   rm -r /etc/pacman.d/gnupg
+   rm -r /root/.gnupg
+   dirmngr </dev/null
+
+   pacman-key --init
+   pacman-key --populate archlinux
+   pacman-key --refresh-keys
+
+
 AUR
 ===
 
@@ -283,6 +301,8 @@ initialize empty :aw:`custom local repository <pacman/Tips and tricks#Custom_loc
 
 log in with root:root
 
-----
 
-.. include:: include/link.txt
+Footnotes
+=========
+
+.. [#key] https://bbs.archlinux.org/viewtopic.php?pid=1573233#p1573233

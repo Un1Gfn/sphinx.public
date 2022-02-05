@@ -83,8 +83,9 @@ extlinks = {
     'tiw':  ('https://www.theiphonewiki.com/wiki/%s',           '%s',),
     'pmos': ('https://wiki.postmarketos.org/wiki/%s',           '%s',),
 
-    # element/matrix
-    'mt': ('https://app.element.io/#/room/%s', '%s',),
+    'mt': ('https://app.element.io/#/room/%s', '%s',), # element/matrix
+
+    'ly': ('https://lilypond.org/doc/v2.22/Documentation/%s', '%s',),
 
 }
 

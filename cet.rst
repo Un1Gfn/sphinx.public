@@ -9,36 +9,30 @@ Misc
 
 repo ``~/cet``
 
-:wp:`James Stewart <James Stewart (mathematician)>`
 
-`CMU CS <https://csd.cmu.edu/cs-and-related-undergraduate-courses>`__
+| CMU CS `courses <https://csd.cmu.edu/cs-and-related-undergraduate-courses>`__
+  |rarr| `15-462/662 <http://15462.courses.cs.cmu.edu/>`__ Computer Graphics Spring 2022
+  |rarr| prerequisites
+|    :pr:`21-240`
+|    :pr:`21-241`
+|    :pr:`18-202`
+|    `15-213/14-513/15-513 <https://www.cs.cmu.edu/~213/>`__ Introduction to Computer Systems (ICS)
+|    `21-259 <https://www.math.cmu.edu/~handron/21_259/index.html>`__ Calculus in Three Dimensions
 
-`15-462/662 Fall 2021 <http://15462.courses.cs.cmu.edu/>`__
-
-| preqs
-| 15-213/18-213/18-613 - CSAPP
-| :pr:`21-240`
-| :pr:`21-241`
-| :pr:`18-202`
-
-`21-259 Calculus in Three Dimensions <https://www.math.cmu.edu/~handron/21_259/index.html>`__
-
-`youtube <https://www.youtube.com/playlist?list=PL9_jI1bdZmz2emSh0UQ5iOdT2xRHFHL7E>`__
+15-462/662 `youtube <https://www.youtube.com/playlist?list=PL9_jI1bdZmz2emSh0UQ5iOdT2xRHFHL7E>`__
 
 | book site - `Stewart Calculus Textbooks and Online Course Materials <https://www.stewartcalculus.com/>`__
+| ISBN-10 `1285741552 <https://www.amazon.com/dp/1285741552/>`__ [#amazonus]_
+| libgen md5 ``7D475D8B3A0A1A8F1002A68EF2E8FAD7``
 | ch12 - Vectors Geometry and of the Space
-
-`Pauls Online Math Notes <https://tutorial.math.lamar.edu/>`__
-
-:r:`calculus`
-
-amazon set delivery to US zip code for US edition
-
-ISBN-10 `1285741552 <https://www.amazon.com/dp/1285741552/>`__
 
 ::
 
    page n(n+32)
+
+`Pauls Online Math Notes <https://tutorial.math.lamar.edu/>`__
+
+:r:`calculus`
 
 `linux function plotting tools <https://www.ubuntupit.com/best-plotting-tools-for-linux-for-creating-scientific-graphs/>`__
 
@@ -268,8 +262,40 @@ acute :math:`\displaystyle 0 < \theta < \frac \pi 2` only:
 | :wp:`law of cosines`
 |    :math:`|BC|^2 = |AB|^2 + |AC|^2 - 2\cdot|AB|\cdot|AC|\cdot\cos\angle{ABC}` :guilabel:`exercise83`
 
+| :wp:`tangential polygon` /tan·**jen**·chl/
+| :wp:`circumscribed circle` /**sur**·kuhm·skribed/
+
+| calculus
+|    integral calculus (ancient Greeks)
+|    differential calculus (17\ :sup:`th` century)
+
 trackers
 --------
+
+book preface
+
+:raw-html:`<details close><summary>tracker</summary>`
+
+.. table::
+   :align: left
+   :widths: auto
+
+   ============================ ====================================================
+    |:heavy_check_mark:|         Front Cover
+    |:heavy_check_mark:|         Title Page
+    |:heavy_check_mark:|         Copyright Page
+    |:heavy_check_mark:|         CONTENTS
+    |:heavy_check_mark:|         Preface.P..A..W..F..C..A..A..A..
+    |:heavy_check_mark:|         To the Student
+    |:heavy_check_mark:|         Calculators, Computers, and Other Graphing Devices
+    |:heavy_check_mark:|         A Diagnostic Test: Algebra
+    |:heavy_check_mark:|         B Diagnostic Test: Analytic Geometry
+    |:heavy_check_mark:|         C Diagnostic Test: Functions
+    |:heavy_check_mark:|         D Diagnostic Test: Trigonometry
+    |:heavy_check_mark:|         A Preview of Calculus [3(35)]
+   ============================ ====================================================
+
+:raw-html:`</details>`
 
 web `home <https://www.stewartcalculus.com/media/17_home.php>`__
 
@@ -304,31 +330,6 @@ web `additional topics <https://www.stewartcalculus.com/media/17_inside_topics.p
 
 :raw-html:`</details>`
 
-book preface
-
-:raw-html:`<details open><summary>tracker</summary>`
-
-.. table::
-   :align: left
-   :widths: auto
-
-   ============================ ====================================================
-    |:heavy_check_mark:|         Front Cover
-    |:heavy_check_mark:|         Title Page
-    |:heavy_check_mark:|         Copyright Page
-    |:heavy_check_mark:|         CONTENTS
-    |:heavy_check_mark:|         Preface.P..A..W..F..C..A..A..A..
-    |:heavy_check_mark:|         To the Student
-    |:heavy_check_mark:|         Calculators, Computers, and Other Graphing Devices
-    |:heavy_check_mark:|         A Diagnostic Test: Algebra
-    |:heavy_check_mark:|         B Diagnostic Test: Analytic Geometry
-    |:heavy_check_mark:|         C Diagnostic Test: Functions
-    |:heavy_check_mark:|         D Diagnostic Test: Trigonometry
-    |:hourglass_flowing_sand:|   A Preview of Calculus
-   ============================ ====================================================
-
-:raw-html:`</details>`
-
 book appendices
 
 :raw-html:`<details open><summary>tracker</summary>`
@@ -358,22 +359,61 @@ book appendices
 notes
 -----
 
+| :math:`f: x \rightarrow f(x),\; x \in D,\; f(x) \in E\; ( D\in\mathbb{R} \wedge E\in\mathbb{R} )`
+| :math:`y=f(x)`
+| :math:`x` is an independent variable
+| :math:`y` is a  dependent   variable
+
+| difference quotient :math:`\displaystyle \frac{f(a+h)-f(a)}{h}`
+| the average rate of change of :math:`f(x)` between :math:`x=a` and :math:`x=a+h`
+
+4 possible ways to represent functions
+
+.. table::
+   :align: left
+   :widths: auto
+
+   ===================== ===========================
+    **ver**\ bally         by a description in words
+    **num**\ erically      by a table of values
+    **vis**\ ually         by a graph
+    **alg**\ ebraically    by an explicit formula
+   ===================== ===========================
+
+mathematical model is a function with an explicit formula that approximates the behavior of a given function
+
+:wp:`amplitude`
+
+faucet /**faa**·suht/
+
+parabola /pr·**a**·buh·luh/
+
+
+
+
+
 trackers
 --------
 
-:raw-html:`<details><summary>tracker</summary>`
+:raw-html:`<details open><summary>tracker</summary>`
 
 .. table::
    :align: left
    :widths: auto
 
    ============================ ====================================================
-    \                            1.1
+    |:heavy_check_mark:|         1.1
+    |:hourglass_flowing_sand:|   1.1 EXERCISES
     \                            1.2
+    \                            1.2 EXERCISES
     \                            1.3
+    \                            1.3 EXERCISES
     \                            1.4
+    \                            1.4 EXERCISES
     \                            1.5
+    \                            1.5 EXERCISES
     \                            Review
+    \                            Princibles of Problem Solving
    ============================ ====================================================
 
 :raw-html:`</details>`
@@ -387,3 +427,9 @@ notes
 
 trackers
 --------
+
+
+Footnotes
+=========
+
+.. [#amazonus] To reveal US edition books, use US-based IP address, and set Amazon delivery to US zip code.

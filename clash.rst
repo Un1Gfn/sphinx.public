@@ -22,6 +22,7 @@
 
 | vendor
 | |b| `ntt-co-jp.club <https://ntt-co-jp.club/>`__
+| |b| `sgi.anycast.gay.com <https://sgi.anycast.gay/>`__
 | |b| `ユーザーパネル.ぜんにっぽんくうゆ.com <https://ユーザーパネル.ぜんにっぽんくうゆ.com/>`__
 | |b| `宛平南路600号.com <https://宛平南路600号.com/>`__
 | |b| `很有精神.com <https://很有精神.com/>`__

@@ -10,9 +10,7 @@
 Misc
 ====
 
-:aw:`ArchWiki <archiso>`
-
-`GitLab instance <https://gitlab.archlinux.org/archlinux/archiso/>`__
+:aw:`archwiki <Archiso>` |vv| `gitlab <https://gitlab.archlinux.org/archlinux/archiso/>`__
 
 `CHANGELOG.rst <https://gitlab.archlinux.org/archlinux/archiso/-/blob/master/CHANGELOG.rst>`__
 
@@ -48,15 +46,18 @@ Filelight
 
 ::
 
-   source ~/archiso/ignarr.bashrc
-   # https://stackoverflow.com/q/53839253
-   # builtin printf --help
-   builtin printf -v joined '%s,' "${IGNARR_FILELIGHT[@]}"
-   SCRIPT="$(printf 's|^skipList.*$|skipList[$e]=%s|g' "${joined%,}")"
-   echo "$SCRIPT"
-   # sudo sed    -e "$SCRIPT" /root/.config/filelightrc
-     sudo sed -i -e "$SCRIPT" /root/.config/filelightrc
-   unset -v IGNARR_FILELIGHT SCRIPT
+   {
+      source ~/archiso/ignarr.bashrc
+      # https://stackoverflow.com/q/53839253
+      # printf --help
+      printf -v joined '%s,' "${IGNARR_FILELIGHT[@]}"
+      unset -v SCRIPT
+      SCRIPT="$(printf 's|^skipList.*$|skipList[$e]=%s|g' "${joined%,}")"
+      echo "$SCRIPT"
+      # sudo sed    -e "$SCRIPT" /root/.config/filelightrc
+        sudo sed -i -e "$SCRIPT" /root/.config/filelightrc
+      unset -v IGNARR_FILELIGHT SCRIPT
+   }
 
 ::
 
@@ -112,7 +113,7 @@ vars ::
    BASELINEPKG="$BASELINE/packages.x86_64"
    RELENGPKG="$RELENG/packages.x86_64"
    ARCHLIVEPKG="$ARCHLIVE/packages.x86_64"
-   printf "\033]0;archiso\007"
+   alacrittytitle.sh "archiso"
 
 
 Packages
@@ -221,7 +222,7 @@ copytoram ::
 
 convenience mountpoints ::
 
-   mkdir -pv "$AIROOTFS"/mnt.{nvme,usb}
+   mkdir -pv "$AIROOTFS"/mnt.{nvme,usb,usb2}
 
 timezone ::
 
@@ -384,18 +385,16 @@ build the ISO as root ::
 
 checksum ::
 
-   sha512sum archlinux-????.??.??-"$(uname -m)".iso
+   sha1sum archlinux-????.??.??-"$(uname -m)".iso
 
 .. table::
    :align: left
    :widths: auto
 
-   ================================= ======================================================================================================================================
-    iso                               sha512sum
-    archlinux-2021.03.31-x86_64.iso   ``54439f4b052e5e0b2b317c6e5c644fc521fc58608033dbbc322fa0991a60d42869b05668013d617c434c69bc5017728b8736a9f2e4b0c430e5d931afe1992ec9``
-    archlinux-2021.08.26-x86_64.iso   ``3fa59b82908da25ed57d676a8b59bd000ea74b49d7e65e1520f61e202346f2787afa545fbbd2fc5fe6e0e5b622f7e5fb350b3e1a44cf8846e2366f6a24b71d32``
-    archlinux-2021.10.09-x86_64.iso   ``fca799e80f0e4d8fdd44e3eaffa56c18f89aff123351e064755e50550fe6bdd3b49caece0f2f787499ed0b5f8b54ea7c965339da17a2e647fd9e8e193777e089``
-   ================================= ======================================================================================================================================
+   ================================= =================================================
+    archlinux-2022.01.19-x86_64.iso   :kbd:`744b8d84bc1dae3cfee1427f2a6b9883dae70ad2`
+    archlinux-2021.10.09-x86_64.iso   :kbd:`31077a281a062ef51ee3ff3fbf565d05c213a9dc`
+   ================================= =================================================
 
 .. warning::
 
@@ -440,7 +439,7 @@ wipefs
 
    # wipefs -af /dev/sdXN
    # wipefs -af /dev/sdXN
-
+   # ...
    # wipefs -af /dev/sdX
 
 zerofill
@@ -478,11 +477,10 @@ reattach ::
 
 write ::
 
-   date
    cd ~darren/archiso
-   # Change "null" to the correct device
-   dd if=archlinux-$(date +%Y.%m.%d)-$(uname -m).iso of=/dev/null status=progress
    date
+   # Change "null" to the correct device
+   # dd if=archlinux-$(date +%Y.%m.%d)-$(uname -m).iso of=/dev/null status=progress
 
 sync ::
 
@@ -512,7 +510,7 @@ byte by byte compare
       date
       # diff -u --color "$F.sha256sum" <(head -c "$SZ" "$D" | sha256sum | cut -d' ' -f1)
       # cmp -l -n "$SZ" "$F" "$D"
-      cmp -l -n "$((SZ+1))" "$F" "$D"
+      cmp -l -n "$((SZ-1))" "$F" "$D"
       R="$?"
       date
       if [ 0 -eq "$R" ];

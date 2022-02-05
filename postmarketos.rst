@@ -25,8 +25,6 @@ Contacts
 Misc
 ====
 
-| |:dart:| |:dart:| |:dart:|
-| :mt:`initramfs with debug shell <#main:postmarketos.org/$R7GeB19FQN28ko33IaGgMS8ok5ZhyFW_NOkhxjhKQ54>`
 | :pmos:`SSH`
 
 ``~/pmos``
@@ -36,7 +34,7 @@ Misc
 | :pmos:`contributing` to pmos
 | :pmos:`applications by category`
 |    `portfolio-file-manager <https://flathub.org/apps/details/dev.tchx84.Portfolio>`__
-|    nemo |larr| :mt:`nncwmonx <#main:postmarketos.org/$L45lsgKLQ7jc3IriQXTtkUnViwcCmmD1E8IZ2tsGaG0>`
+|    nemo
 |    oFono/ModemManager
 |    :wp:`maliit` (virtual keyboard)
 
@@ -51,7 +49,6 @@ Misc
 
 :wp:`redmi2(1/8) redmi2(2/16) redmi2pro(2/16) redmi2prime(2/16) <Redmi#Redmi_Series>`
 
-| only msm8916 has mainline modem
 | :pmos:`Qualcomm mainline porting`
 | :pmos:`Mainlining#Supported_SoCs`
 | :wp:`Qualcomm CPU-SoC chart <list of Qualcomm Snapdragon processors>`
@@ -76,7 +73,7 @@ msdn - `sensor-orientation <https://docs.microsoft.com/en-us/windows/uwp/devices
 |    `MTK-bypass <https://github.com/MTK-bypass/>`__ (`tutorial <https://www.xda-developers.com/bypass-mediatek-sp-flash-tool-authentication-requirement/>`__)
 |    bkerler/`mtkclient <https://github.com/bkerler/mtkclient>`__
 
-repacck boot.img `cpio+mkbootimg <https://www.whitewinterwolf.com/posts/2016/08/11/how-to-unpack-and-edit-android-boot-img/#rebuild-to-get-the-new-new-bootimg-file>`__
+repack boot.img `cpio+mkbootimg <https://www.whitewinterwolf.com/posts/2016/08/11/how-to-unpack-and-edit-android-boot-img/#rebuild-to-get-the-new-new-bootimg-file>`__
 
 | `phosh <https://puri.sm/posts/phosh-overview/>`__
 | `plasma mobile <https://plasma-mobile.org/2021/12/07/plasma-mobile-gear-21-12/>`__
@@ -102,8 +99,8 @@ unofficial wayland `protocols explorer <https://wayland.app/protocols/>`__
 
 :abbr:`V4L (Video4Linux)`
 :abbr:`msm-uartdm (Qualcomm UART Data Mover mode)`
-:abbr:`qmi (Qualcomm Modem Interface. The internal interface inside Qualcomm SoCs that connect the modem and the application processor.)`
-:abbr:`slpi (Sensor Low Power Interface. The interface that connect sensors like the accelerometer to the application processor in Qualcomm SoCs)`
+:abbr:`QMI (Qualcomm Modem Interface. The internal interface inside Qualcomm SoCs that connect the modem and the application processor.)`
+:abbr:`SLPI (Sensor Low Power Interface. The interface that connect sensors like the accelerometer to the application processor in Qualcomm SoCs)`
 [#Glossary]_
 
 `One Year of postmarketOS: Mainline Calling! <https://postmarketos.org/blog/2018/06/09/one-year/>`__
@@ -124,6 +121,26 @@ unofficial wayland `protocols explorer <https://wayland.app/protocols/>`__
 
 `Breaking updates in edge <https://postmarketos.org/edge/>`__
 
+device-xiaomi-wt88047/`deviceinfo <https://gitlab.com/postmarketOS/pmaports/-/blob/master/device/community/device-xiaomi-wt88047/deviceinfo>`__
+
+| `GNU on a Smartphone          <https://cascardo.eti.br/blog/GNU_on_a_Smartphone/>`__
+| `GNU on Smartphones (part II) <https://cascardo.eti.br/blog/GNU_on_Smartphones_part_II/>`__
+
+`APKBUILD <https://wiki.alpinelinux.org/wiki/APKBUILD_Reference>`__
+
+heimdall `official site <https://glassechidna.com.au/heimdall/>`__
+
+:wp:`Osmocom`
+|vv| `redmine <https://osmocom.org/projects/baseband/repository>`__
+|vv| `cgit <https://git.osmocom.org/osmocom-bb>`__
+
+Qualcomm
+:wp:`REX OS`
+:abbr:`DMSS (Dual-Mode Subscriber Station)`
+:abbr:`AMSS (Advanced Mode Subscriber Software)`
+
+OSnews/`The second operating system hiding in every mobile phone <https://www.osnews.com/story/27416/the-second-operating-system-hiding-in-every-mobile-phone/>`__
+
 
 bak.specs
 =========
@@ -140,7 +157,7 @@ bak.specs
 | adb shell - busybox uname -a
 |    ``Linux localhost 3.10.28-gff13db4 #1 SMP PREEMPT Thu Nov 16 00:53:24 CST 2017 armv7l GNU/Linux``
 
-fastbot getvar
+fastboot getvar
 
 :menuselection:`Settings --> About phone`
 
@@ -171,7 +188,7 @@ fastbot getvar
     IMEI                8676220282766650
     IMEI SV             08
     WLAN MAC address    20\:82\:c0\:c6\:de\:cb
-    Bluetooth address   20\:82\:C0\:C6\:DE\:CA
+    Bluetooth address   20\:82\:c0\:c6\:de\:ca
     Serial number       676c67a1
    =================== ========================
 
@@ -524,17 +541,17 @@ sectools from Arrow Electronics or Qualcomm blows the fuse bits
 
 1. :abbr:`PBL (Primary Boot Loader (bootROM))` initializes Cortex-A53's SRAM and loads the 1\ :sup:`st` segment of :abbr:`sbl1 (1st stage Secondary Boot Loader)`/:abbr:`xbl (eXtended Boot Loader)` to it [|alpha|]
 #. PBL loads the 2\ :sup:`nd` segment of sbl1 to :abbr:`RPM (Resource Power Manager)` memory [|beta|]
-#. [|alpha|] initializes DDR, authenticates tz (:abbr:`QSEE (Qualcomm Secure Execution Environment)`/:abbr:`QTEE (Qualcomm Trusted Execution Environment)`) and hyp (:abbr:`QHEE (Qualcomm Hypervisor Execution Environment )`), partitions DDR into Secure :abbr:`TEE (Trusted Execution Environment)` and Non-secure :abbr:`REE (Rich Execution Environment)`
+#. [|alpha|] initializes DDR, authenticates tz (:abbr:`QSEE (Qualcomm Secure Execution Environment)`/:abbr:`QTEE (Qualcomm Trusted Execution Environment)`) and hyp (:abbr:`QHEE (Qualcomm Hypervisor Execution Environment )`), then partitions DDR into Secure :abbr:`TEE (Trusted Execution Environment)` and Non-secure :abbr:`REE (Rich Execution Environment)`
 #. [|beta|]  loads rpm to RPM memory
 #. [|alpha|] loads aboot (:abbr:`ABL/APPSBL (Android Boot Loader / Application Boot Loader, the first open source component in the boot stack, LK/U-Boot/UEFI based)`), which implements the :wp:`fastboot` interface
 #. [|alpha|]'s job finishes, tz and hyp take over, RPM released from reset [#flow]_ [#ndec]_
 
-| `chart <https://github.com/msm8916-mainline/qhypstub#boot-flow>`__
-| replace phy with `qhypstub <https://github.com/msm8916-mainline/qhypstub>`__+`qtestsign <https://github.com/msm8916-mainline/qtestsign>`__
+| boot flow `chart <https://github.com/msm8916-mainline/qhypstub#boot-flow>`__
+| replace phy with `qhypstub <https://github.com/msm8916-mainline/qhypstub>`__\ +\ `qtestsign <https://github.com/msm8916-mainline/qtestsign>`__
 
 | replace hyp and tz?
-| `Huawei Ascend G7 (huawei-g7)>`
-| `Huawei Y635 (huawei-y635)>`
+| :pmos:`Huawei Ascend G7 (huawei-g7)`
+| :pmos:`Huawei Y635 (huawei-y635)`
 
 | typical :abbr:`EL (Exception Level)` usage model
 
@@ -547,14 +564,14 @@ sectools from Arrow Electronics or Qualcomm blows the fuse bits
    :align: left
    :widths: auto
 
-   ======= ========================= ============================ =====================================  ====================== ====================================================================================================
-    \       hardware implementation   AArch32                      AArch64                                what runs    
-   ======= ========================= ============================ =====================================  ====================== ====================================================================================================
-    |EL0|   mandatory                 |:heavy_check_mark:|         only when |EL1|\ |br|\ uses AArch64    Applications           Unprivileged Execution, the lowest software execution privilege)      
+   ======= ========================= ============================ =====================================  ====================== ===================================================================================
+    \       hardware implementation   AArch32                      AArch64                                what runs
+   ======= ========================= ============================ =====================================  ====================== ===================================================================================
+    |EL0|   mandatory                 |:heavy_check_mark:|         only when |EL1|\ |br|\ uses AArch64    Applications           unprivileged execution, the lowest software execution privilege
     |EL1|   mandatory                 |:heavy_check_mark:|         only when |EL2|\ |br|\ uses AArch64    (Rich) OS kernel          
     |EL2|   optional                  |:heavy_check_mark:|         |:heavy_check_mark:|                   Hypervisor             processor virtualization        
-    |EL3|   optional                  |:heavy_multiplication_x:|   |:heavy_check_mark:|                   Secure Monitor (SMC)    the only level where security state associated with the execution can be changed (tz?) (firmware?)        
-   ======= ========================= ============================ =====================================  ====================== ====================================================================================================
+    |EL3|   optional                  |:heavy_multiplication_x:|   |:heavy_check_mark:|                   Secure Monitor (SMC)    the only level where security state associated with the execution can be changed
+   ======= ========================= ============================ =====================================  ====================== ===================================================================================
 
 |    EL0/EL1 share the same MMU configuration
 |    each EL has its own :abbr:`AArch64 and AArch32 (execution states)`
@@ -822,6 +839,11 @@ minimum requirements for a warking fastboot ::
 install.1.boot
 ==============
 
+.. warning::
+
+   | lk1st is broken
+   | Writing l2nd to aboot will get stuck to ``05c6:9006 HSUSB BULK``
+
 :pmos:`QCDT`
 
 .. table::
@@ -884,10 +906,14 @@ pmbootstrap `usage <https://gitlab.com/postmarketOS/pmbootstrap#basics>`__
 list of v21.12 aarch64 `initramfs hooks <http://pkgs.postmarketos.org/packages?name=postmarketos-mkinitfs-hook*&branch=v21.12&repo=postmarketos&arch=aarch64>`__
 (hover on package name for description)
 
-build
-:pmos:`customized installation <Qualcomm Snapdragon 410/412 (MSM8916)#Installation_using_pmbootstrap>`
-with pmbootstrap
+installation guide
+|vv| :pmos:`general <installation guide>`
+|vv| :pmos:`msm8916.pmbootstrap <Qualcomm Snapdragon 410/412 (MSM8916)#Installation_using_pmbootstrap>`
+|vv| :pmos:`msm8916.prebuiltimg <Qualcomm Snapdragon 410/412 (MSM8916)#Installation_from_pre-built_image>`
+
 (initfs only)
+
+:dw:`QemuUserEmulation`
 
 ::
 
@@ -951,7 +977,9 @@ try debug shell without installing anything to emmc ::
 | :pmos:`USB Network`
 | :pmos:`debug shell <inspecting the initramfs>`
 | :pmos:`SSH`
+
 | :pmos:`netboot`
+| `You can now live-boot postmarketOS on Android phones <https://tuxphones.com/postmarketos-linux-live-usb-fastboot-network-boot/>`__
 
 .. table::
    :align: left
@@ -974,7 +1002,7 @@ play ::
    echo
 
    ping 172.16.42.1
-   telnet 172.16.42.1
+   busybox telnet 172.16.42.1
 
    # ...
 
@@ -992,12 +1020,34 @@ play ::
 | :pmos:`troubleshooting:boot`
 | :pmos:`troubleshooting:display`
 | :pmos:`troubleshooting:boot:initfshooks`
+| :pmos:`troubleshooting:kernel`
+|    specify kernel cmdline with ``fastboot boot -c "console=ttyHSL0,115200,n8..."``
 
 
 install.2.rootfs
 ================
 
 \...
+
+
+Whishlist |:memo:|
+==================
+
+| pmbootstrap no encryption at all
+| :pr:`/dev/mapper/mmcblk0p30p2`
+| :pr:`/dev/dm-0`
+
+disable animations
+
+fix DNS
+
+switch to tsinghua alpine and pmos mirror
+
+set up SSH
+
+`PlasmaTube <https://apps.kde.org/plasmatube/>`__
+
+use physical touch key
 
 
 Footnotes
