@@ -17,6 +17,7 @@
 .. |nbsp|      unicode:: U+A0   .. https://en.wikipedia.org/wiki/Non-breaking_space
 .. |equiv|     unicode:: U+2261
 .. |vv|        unicode:: U+1C1  .. https://en.wikipedia.org/wiki/Vertical_bar#Unicode_code_points
+.. |sect|      unicode:: U+00A7 .. https://en.wikipedia.org/wiki/Section_sign
 
 .. Emojis not included in /usr/lib/python3.9/site-packages/sphinxemoji/codes.json
 .. |:coin:| unicode:: U+1FA99 .. 🪙

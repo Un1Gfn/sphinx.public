@@ -13,37 +13,48 @@ Misc
 
    |:pencil:| squeeze :kbd:`/home/darren/csapp` !
 
-`Slides <https://www.cs.cmu.edu/~213/schedule.html>`__
 
-`Instructor Site <http://csapp.cs.cmu.edu/3e/instructors.html>`__
 
-| CourseSite
-| `CMU CS <https://csd.cmu.edu/cs-and-related-undergraduate-courses>`__
-| `15-213/14-513/15-513 Introduction to Computer Systems (ICS) <https://www.cs.cmu.edu/~213/>`__
-| `resources <https://www.cs.cmu.edu/~213/resources.html>`__
+| list of CMU CS `courses <https://csd.cmu.edu/cs-and-related-undergraduate-courses>`__
+|    `15-213/14-513/15-513 Introduction to Computer Systems (ICS) <https://www.cs.cmu.edu/~213/>`__
+|       `resources <https://www.cs.cmu.edu/~213/resources.html>`__
+|       `slides <https://www.cs.cmu.edu/~213/schedule.html>`__
 
 | prerequisites of 15-213
 |  *(clear)*
 
 | 15-213 is prerequisite of [#preqof]_
-|    operating systems :emphasis:`- 15-410 Operating System Design and Implementation`
-|    networking
 |    compilers
-|    computer graphics
 |    computer architecture :emphasis:`- 18-447 Introduction to Computer Architecture`
+|    computer graphics
 |    embedded system design
+|    networking
+|    operating systems :emphasis:`- 15-410 Operating System Design and Implementation`
 
 | BookSite
-| `Code Examples <http://csapp.cs.cmu.edu/3e/code.html>`__
-| `Errata <http://csapp.cs.cmu.edu/3e/errata.html>`__
-| `Student Site <http://csapp.cs.cmu.edu/3e/students.html>`__ ... GDB ... x86-64 ISA doc ... Y86-64 tools ... simulator guide ... prof ... memperf ... proxy
-
-| `about <http://csapp.cs.cmu.edu/3e/about.html>`__
-| North American edition:
-| ISBN-10: 013409266X
-| ISBN-13: 978-0134092669
+|    `Instructor Site <http://csapp.cs.cmu.edu/3e/instructors.html>`__
+|    `Code Examples <http://csapp.cs.cmu.edu/3e/code.html>`__
+|    `Errata <http://csapp.cs.cmu.edu/3e/errata.html>`__
+|    `Student Site <http://csapp.cs.cmu.edu/3e/students.html>`__ ... GDB ... x86-64 ISA doc ... Y86-64 tools ... simulator guide ... prof ... memperf ... proxy
+|       Online GDB Materials - Quick Guide to GDB
+|       Chapter 4: Processor Architecture - Y86-64 tools and documentation - Source distribution - hcl2v
+|       `Implicit Variables <https://www.gnu.org/software/make/manual/html_node/Implicit-Variables.html#Implicit-Variables>`__
+|       `Implicit Rules <https://www.gnu.org/software/make/manual/html_node/Catalogue-of-Rules.html#Catalogue-of-Rules>`__
+|    `about <http://csapp.cs.cmu.edu/3e/about.html>`__
+|       North American edition:
+|       ISBN-10: 013409266X
+|       ISBN-13: 978-0134092669
+|       libgen.rs md5 ``33DC73067D7512A7D970CEC5FE8870DB``
 
 book page offset :kbd:`n(n+35)`
+
+`Shared Libraries: Understanding Dynamic Loading <https://amir.rachum.com/blog/2016/09/17/shared-libraries/>`__
+
+::
+
+   sh -c 'exec busybox pmap $$'\
+   ldd $(which pmap) - `libprocps.so.8 => /usr/lib/libprocps.so.8 (0x00007fabcfe99000)`\
+   /usr/include/proc/
 
 
 Chapter 0:
@@ -52,7 +63,12 @@ Chapter 0:
 notes
 -----
 
-| the set of :wp:`integer`\ s form an integer :wp:`ring <ring (mathematics)#Illustration>`
+| addative /**a**·duh·tiv/
+| commutative /kuh·**myoo**·tuh·tuhv/
+| multiplicative /muhl·tuh·**pli**·kuh·tuhv/
+| addition /uh·**di**·shn/
+
+| the set of :wp:`integers <integer>` form an integer :wp:`ring <ring (mathematics)#Illustration>`
   :math:`\langle Z,+,\times,-,0,1 \rangle`
 | :math:`+,\times` are :wp:`associative <associative property>` and :wp:`commutative <commutative property>`
 | :math:`\times` is :wp:`distributive <distributive property>` over :math:`+`
@@ -60,16 +76,20 @@ notes
 | :math:`1` is the multiplicative :wp:`identity element`
 | integer value :math:`x` has :wp:`additive inverse` :math:`-x` such that :math:`x+-x=0`
 
-| boolean algebra denoted :math:`\langle \{0,1\}, \mathbin{|}, \mathbin{\&}, \mathop{^\sim}, 0, 1 \rangle`
-| similar to a ring but **not a ring**
+| xor /**sor**/
+
+| boolean *algebra* denoted :math:`\langle \{0,1\}, \mathbin{|}, \mathbin{\&}, \mathop{^\sim}, 0, 1 \rangle`
+  :sub:`not to be confused with boolean ring`
 | :math:`a \mathbin{^\wedge} a = 0`
 | :math:`(a \mathbin{^\wedge} b) \mathbin{^\wedge} a = b`
 | :math:`a \mathbin{\&} (b \mathbin{|}  c) = (a \mathbin{\&} b) \mathbin{|}  (a \mathbin{\&} c)` |nbsp|\ |nbsp|
      :math:`\mathbin{\&}` is :wp:`distributive <distributive property>` over :math:`\mathbin{|}`
-| properties unique to rings w/o boolean algebra counterpart
+| properties unique to *rings* without *boolean algebra* counterpart
 |   additive inverse:|nbsp| :math:`a+-a=0`
-| properties unique to boolean algebra w/o ring counterpart
-|   :math:`\mathbin{|}`  is :wp:`distributive <distributive property>` over :math:`\mathbin{\&}` as well
+| properties unique to *boolean algebra* without *ring* counterpart
+|   \
+    :math:`\mathbin{\&}` and :math:`\mathbin{|}` mutually distributive
+    ( :math:`\mathbin{|}` is :wp:`distributive <distributive property>` over :math:`\mathbin{\&}` as well )
 |      :math:`a \mathbin{|}  (b \mathbin{\&} c) = (a \mathbin{|}  b) \mathbin{\&} (a \mathbin{|}  c)`
 |   complement
 |      :math:`a \mathbin{|}  \mathop{^\sim}a = 1`
@@ -84,17 +104,22 @@ notes
 |      :math:`\mathop{^\sim} (a \mathbin{\&} b) = \mathop{^\sim} a \mathbin{|}  \mathop{^\sim} b`
 |      :math:`\mathop{^\sim} (a \mathbin{|}  b) = \mathop{^\sim} a \mathbin{\&} \mathop{^\sim} b`
 
-| *boolean ring* denoted :math:`\langle \{0,1\}, \mathbin{^\wedge}, \mathbin{\&}, I, 0, 1 \rangle`
-| **not boolean algebra**
-| where :math:`I` is identity operation :math:`I(a)=a`
-| is in fact a modular arithmetic ring with modulo :math:`n=2`
+| boolean /**boo**·lee·uhn/
+| modular /**maa**·juh·lr/
+| modulo /**maa**·duh·low/
+
+| boolean *ring* denoted :math:`\langle \{0,1\}, \mathbin{^\wedge}, \mathbin{\&}, I, 0, 1 \rangle`
+  :sub:`not to be confused with boolean algebra`
+|    where :math:`I` is the identity operation :math:`I(a)=a`
+| equivalent to a modular arithmetic ring with modulo :math:`n=2`
 | additive inverse:|nbsp| :math:`a \mathop{^\wedge} I(a) = a \mathop{^\wedge} a = 0`
 | mathematical basis of :wp:`ECC <error correction code>` is a linear algebra based on *boolean rings*
 
-| general :wp:`modular arithmetic` ring
-| for modulus :math:`n`, algebra denoted
-     :math:`\langle Z_n, \mathbf{\color{blue}+_n}, \mathbf{\color{green}\times_n}, \mathbf{\color{magenta}-_n}, 0, 1 \rangle`
-| with components defined as follows [#latexModSpace]_
+|:dart:|
+
+| general :wp:`modular arithmetic` ring for modulus :math:`n` with its algebra denoted
+  :math:`\langle Z_n, \mathbf{\color{blue}+_n}, \mathbf{\color{green}\times_n}, \mathbf{\color{magenta}-_n}, 0, 1 \rangle`
+| where components are defined as follows [#latexModSpace]_
 
 .. math::
 
@@ -108,22 +133,22 @@ notes
       \end{cases}
    \end{eqnarray}
 
-| (each value of :math:`w` defines two different ones)
-| bit vector boolean algebras :math:`\langle \{0,1\}^w, \mathbin{|},       \mathbin{\&}, \mathop{^\sim}, 0^w, 1^w \rangle`
-| bit vector boolean rings    :math:`\langle \{0,1\}^w, \mathbin{^\wedge}, \mathbin{\&}, I,              0^w, 1^w \rangle`
-| :math:`\{0,1\}^w`: |nbsp| :math:`\overline{x_1x_2 \dots x_w}` where :math:`x_1,x_2,\dots,x_w \in \{0,1\}` [#latexSpace]_
-| :math:`a^w`:       |nbsp| :math:`\underbrace{\overline{aaa \dots a}}_{w \  a\text{'s} }` |nbsp| [#latexHCB]_
+| for each value of :math:`w`, there is
+|    a bit vector boolean algebras :math:`\langle \{0,1\}^w, \mathbin{|},       \mathbin{\&}, \mathop{^\sim}, 0^w, 1^w \rangle`
+|    a bit vector boolean rings    :math:`\langle \{0,1\}^w, \mathbin{^\wedge}, \mathbin{\&}, I,              0^w, 1^w \rangle`
+| where :math:`\{0,1\}^w: \overline{x_1x_2 \dots x_w} \left( x_1,x_2,\dots,x_w \in \{0,1\} \right)` [#latexSpace]_
+| and :math:`a^w: \underbrace{\overline{aaa \dots a}}_{w \  a\text{'s} }` |nbsp| [#latexHCB]_
 | with :math:`w = 1`, bit vector boolean ring
      :math:`\langle \{0,1\}, \mathbin{^\wedge}, \mathbin{\&}, I, 0, 1 \rangle`
   is identical to ring of integers modulo two
      :math:`\langle Z_2, \mathbf{\color{blue}+_2}, \mathbf{\color{green}\times_2}, \mathbf{\color{magenta}-_2}, 0, 1 \rangle`
-| but :math:`w \ge 2` yields a very different ring from modular arithmetic
+| but :math:`w \ge 2` yields rings very different from modular arithmetic
 
 | :math:`\langle \mathcal{P}(S), \cup, \cap, \overline{\phantom{A}}, \varnothing, S \rangle`\ [#latexFont]_ forms a boolean algebra
-| where :math:`S` is a set
-| and :math:`\mathcal{P}(S)` denotes the set of all subsets of :math:`S`
+|    :math:`S` is a set
+|    :math:`\mathcal{P}(S)` denotes the set of all subsets of :math:`S`
 
-algebra *summary*
+*algebra* summary
 
 .. table::
    :align: left
@@ -163,17 +188,17 @@ book
    :align: left
    :widths: auto
 
-   ============================ =======================================================================
-    |:heavy_check_mark:|         DATA\:BOOL
-    \                            DATA\:TMIN
-    \                            DATA\:TNEG
-    \                            ASM\:IA32
-    \                            ASM\:EASM
-    \                            ARCH\:VLOG
-    \                            ARCH\:HCL
-    \                            OPT\:SIMD
-    \                            MEM\:BLOCKING
-   ============================ =======================================================================
+   ============================ ===========================
+    |:heavy_check_mark:|         :kbd:`DATA:BOOL`
+    \                            :kbd:`DATA:TMIN`
+    \                            :kbd:`DATA:TNEG`
+    \                            :kbd:`ASM:IA32`
+    \                            :kbd:`ASM:EASM`
+    \                            :kbd:`ARCH:VLOG` [#vlog]_
+    \                            :kbd:`ARCH:HCL`
+    \                            :kbd:`OPT:SIMD`
+    \                            :kbd:`MEM:BLOCKING`
+   ============================ ===========================
 
 :raw-html:`</details>`
 
@@ -209,31 +234,39 @@ Chapter 1: A Tour of Computer Systems
 notes
 -----
 
-| *Bus interface* is a part of CPU.
-| *System bus* connects *bus interface* to *I/O bridge*.
-| *Memory bus* connects *I/O bridge* to RAM.
+::
+
+  +-------------------+
+  |        CPU        |
+  | +---------------+ |  System bus  +------------+  Memory bus  +-----+
+  | | Bus Interface +-+--------------+ I/O Bridge +--------------+ RAM |
+  | +---------------+ |              +------------+              +-----+
+  +-------------------+
 
 :abbr:`concurrency (The instructions of one process are interleaved with the instructions of another process.)`
 
-:wp:`Amdahl's law`
+| |sect|\ 1.9.1 :wp:`Amdahl's Law`
+| |b| original execution time :math:`T_{old}`
+| |b| part requires a fraction :math:`\alpha` of time
+| |b| improve part's performance by a factor of :math:`k`
 
 .. math::
 
+   \displaystyle
    \begin{eqnarray}
-           T_{new} &=& (1-\alpha) T_{old} + \alpha \frac{T_{old}}{k} \\
-                   &=& T_{old}[(1-\alpha)+\alpha/k]                  \\
-      speed\ up\ S &=& \frac{1}{(1-q)+\frac{\alpha}{k}}
+                T_{new} &=& (1-\alpha) T_{old} + \alpha \frac{T_{old}}{k} \\
+                        &=& T_{old}[(1-\alpha)+\alpha/k]                  \\
+      \text{speedup } S &=& \frac{T_{old}}{T_{new}} = \frac{1}{(1-\alpha)+\frac{\alpha}{k}}
    \end{eqnarray}
 
-| :wp:`SMT <simultaneous multithreading>`
+| :wp:`wp <simultaneous multithreading>`:\ :abbr:`SMT (Simultaneous MultiThreading)`
 | |b| multiple copies of some of the CPU hardware (ProgramCounter/RegisterFile/...) in one CPU
-| |b| only single copies of other parts of the hardware (FPU/...) in one CPU
+| |b| only a single copy of other parts of the hardware (FPU/...) in one CPU
 
 trackers
 --------
 
-|:heavy_check_mark:| 100%
-:raw-html:`<details close><summary>tracker</summary>`
+:raw-html:`<details close><summary>tracker (100% completed)</summary>`
 
 .. table::
    :align: left
@@ -440,3 +473,9 @@ latex
 .. [#latexSpace] `math spacing <https://www.overleaf.com/learn/latex/Spacing_in_math_mode>`__
 
 .. [#latexFont] /ka·luh·**gra**·fuhk/ calligraphic `fonts <https://www.overleaf.com/learn/latex/Mathematical_fonts>`__
+
+.. [#vlog] | no FPGA
+           | simulation only
+           | frontend - ncurses/motif/gtk
+           | backend  - C simulator
+           | backend  - iverilog+vpi

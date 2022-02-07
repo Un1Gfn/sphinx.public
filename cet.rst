@@ -1,11 +1,13 @@
 .. include:: include/substitution.txt
 
-==========================================
-CALCULUS Early Transcendentals 8th Edition
-==========================================
+===
+CET
+===
 
 Misc
 ====
+
+CALCULUS Early Transcendentals 8th Edition
 
 repo ``~/cet``
 
@@ -23,7 +25,7 @@ repo ``~/cet``
 
 | book site - `Stewart Calculus Textbooks and Online Course Materials <https://www.stewartcalculus.com/>`__
 | ISBN-10 `1285741552 <https://www.amazon.com/dp/1285741552/>`__ [#amazonus]_
-| libgen md5 ``7D475D8B3A0A1A8F1002A68EF2E8FAD7``
+| libgen.rs md5 ``7D475D8B3A0A1A8F1002A68EF2E8FAD7``
 | ch12 - Vectors Geometry and of the Space
 
 ::
@@ -50,6 +52,10 @@ repo ``~/cet``
 .. track exercises - ``$ ./cg.py <SUBSECTION>``
 
 `<https://learnopengl.com/>`__
+
+| gnuplot
+| `pdf documentation <http://www.gnuplot.info/documentation.html>`__
+| `spline <https://superuser.com/questions/709291/how-to-connect-points-with-curves-in-gnuplot/735865>`__
 
 
 CAS
@@ -274,7 +280,7 @@ trackers
 
 book preface
 
-:raw-html:`<details close><summary>tracker</summary>`
+:raw-html:`<details close><summary>tracker (100% completed)</summary>`
 
 .. table::
    :align: left
@@ -384,9 +390,19 @@ mathematical model is a function with an explicit formula that approximates the 
 
 :wp:`amplitude`
 
-faucet /**faa**·suht/
+| faucet /**faa**·suht/
+| parabola /pr·**a**·buh·luh/
+| :wp:`equilateral triangle` /ee·kwuh·**la**·tr·uhl/
 
-parabola /pr·**a**·buh·luh/
+.. table::
+   :align: left
+   :widths: auto
+
+   =============== ======================================================================================
+    even function   symmetric with respect to the :math:`y`-axis
+    odd function    symmetric about the origin (rotate a portition through :math:`180^\circ` about the origin)
+   =============== ======================================================================================
+
 
 
 
@@ -403,8 +419,8 @@ trackers
 
    ============================ ====================================================
     |:heavy_check_mark:|         1.1
-    |:hourglass_flowing_sand:|   1.1 EXERCISES
-    \                            1.2
+    |:heavy_check_mark:|         1.1 EXERCISES
+    |:hourglass_flowing_sand:|   1.2
     \                            1.2 EXERCISES
     \                            1.3
     \                            1.3 EXERCISES
