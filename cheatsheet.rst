@@ -117,7 +117,10 @@ reverse video time stamp ::
       bar
    }; exit
 
-test symbolic link ::
+| test symbolic link
+| python :file:`~/archiso/demo_dfel.py`
+
+::
 
    echo
    cd /tmp
@@ -226,6 +229,28 @@ xrandr ::
 
    # dell U2417H
    xrandr --output DP-1 --mode 1920x1080 --right-of eDP-1 --rotate left
+
+| :pr:`woeusb-ng`
+| woeusb 5.2.4
+
+::
+
+   
+   sudo woeusb \
+      --workaround-bios-boot-flag \
+      --tgt-fs FAT \
+      -d /home/darren/Downloads/en-us_windows_10_enterprise_ltsc_2021_x64_dvd_d289cf96.iso \
+      /dev/sda
+
+| :manpage:`sed(1)` append text after matched line
+| |b| Zero- or One- address commands |rarr| ``a \ text`` |rarr| Append text
+| |b| Addresses |rarr| ``/regexp/`` |rarr| Match lines matching the regular expression regexp
+| |rarr| `README.profile.rst <https://gitlab.archlinux.org/archlinux/archiso/-/blob/master/docs/README.profile.rst>`__ - #airootfs
+
+::
+
+   sed -e "/^file_permissions=(/a $APPEND" "$RELENG/profiledef.sh" >"$ARCHLIVE/profiledef.sh"
+
 
 C
 ===
@@ -524,11 +549,13 @@ analyze ::
 
 discard files from git history ::
 
-   git filter-repo --invert-paths \
-      --path-match Hentai.rst \
-      --path-match JLPT.rst \
-      --path-match Job.rst \
-      --use-base-name
+   CMD=(git filter-repo --invert-paths)
+   while IFS= read -r line; do
+      CMD+=(--path-match "$line")
+      # echo "#$line#"
+   done <.git/filter-repo/analysis/path-deleted-sizes.txt
+   CMD+=(--use-base-name)
+   "${CMD[@]}"
 
 view change logs ::
 

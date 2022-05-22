@@ -1,74 +1,30 @@
 .. include:: include/substitution.txt
 
-===========
-`Archiso`__
-===========
-
-.. __: https://github.com/Un1Gfn/archiso
-
+=============
+:aw:`Archiso`
+=============
 
 Misc
 ====
 
-:aw:`archwiki <Archiso>` |vv| `gitlab <https://gitlab.archlinux.org/archlinux/archiso/>`__
-
-`CHANGELOG.rst <https://gitlab.archlinux.org/archlinux/archiso/-/blob/master/CHANGELOG.rst>`__
-
-`README.profile.rst`_
+| gitlab.archlinux.org/archlinux/`archiso <https://gitlab.archlinux.org/archlinux/archiso/>`__
+|    `CHANGELOG.rst <https://gitlab.archlinux.org/archlinux/archiso/-/blob/master/CHANGELOG.rst>`__
+|    docs/`README.profile.rst <https://gitlab.archlinux.org/archlinux/archiso/-/blob/master/docs/README.profile.rst>`__
 
 list files ::
 
    cd ~/archiso
-   exa -T -a -s extension -I '.git|.gitignore|archlive'
+   exa -aT -s extension -I '.git|.gitignore|archlive'
 
-:aw:`Full_system_backup_with_SquashFS`
 
-Check mkfs timestamp of PaaFS (Partition-as-a-Filesystem) (mkfs.ext4 /dev/sdXN) ::
+check mkfs timestamp of PaaFS (Partition-as-a-Filesystem) (mkfs.ext4 /dev/sdXN) ::
 
-   sudo dumpe2fs /dev/sdXN
+   sudo dumpe2fs /dev/sdXN | head -70
 
-Check mkfs timestamp of DaaFS (Drive-as-a-Filesystem) (mksquashfs ... /dev/sdX) ::
+check mkfs timestamp of DaaFS (Drive-as-a-Filesystem) (mksquashfs ... /dev/sdX) ::
 
    sudo file -sL /dev/sda
    sudo unsquashfs -stat /dev/sdX
-
-
-Filelight
-=========
-
-| /root/.config/filelightrc
-| \
-  ``sudo filelight`` |rarr|
-  :file:`Settings` |rarr|
-  :file:`Configure Filelight...` |rarr|
-  :file:`Scanning` |rarr|
-  :file:`Do not scan these folders:`
-
-::
-
-   {
-      source ~/archiso/ignarr.bashrc
-      # https://stackoverflow.com/q/53839253
-      # printf --help
-      printf -v joined '%s,' "${IGNARR_FILELIGHT[@]}"
-      unset -v SCRIPT
-      SCRIPT="$(printf 's|^skipList.*$|skipList[$e]=%s|g' "${joined%,}")"
-      echo "$SCRIPT"
-      # sudo sed    -e "$SCRIPT" /root/.config/filelightrc
-        sudo sed -i -e "$SCRIPT" /root/.config/filelightrc
-      unset -v IGNARR_FILELIGHT SCRIPT
-   }
-
-::
-
-   sudo filelight
-
-Prepare
-=======
-
-.. warning::
-
-   | Don't escalate yet |:no_entry_sign:| su |:no_entry_sign:| sudo
 
 default umask in `etc/profile <https://github.com/archlinux/svntogit-packages/blob/ed2da51a91162eaa0916dc3d9725fb2b574fb901/trunk/profile#L4>`__
 (:pkg:`core/filesystem`) is ``022`` [#profilelog]_
@@ -78,340 +34,96 @@ default umask in `etc/profile <https://github.com/archlinux/svntogit-packages/bl
    :widths: auto
 
    =========== ========================== ============== ============================================================
-    type        permissions w/o mask       mask           permissions w mask
+    type        permissions w/o mask       mask           permissions w/ mask
    =========== ========================== ============== ============================================================
     file        :file:`0666 = rwxrwxrwx`   :file:`0022`   :file:`0666 - 0022 = 0644 = rw-r--r--`
     directory   :file:`0777 = rwxrwxrwx`   :file:`0022`   :file:`0777 - 0022 = 0755 = rwxr-xr-x`
    =========== ========================== ============== ============================================================
 
-upgrade ::
-
-   sudo pacman -Fy; sudo pacman -Syuu
-
-tmux ::
-
-   tmux attach || tmux
-
-check umask ::
-
-   {
-     [ "$(umask)" = "0022" ] &&
-     [ "$(umask -S)" = "u=rwx,g=rx,o=rx" ];
-   } || echo "error"
-
-.. warning::
-
-   Vars will be lost once you leave tmux 
-
-vars ::
-
-   BASELINE="/usr/share/archiso/configs/baseline"
-   RELENG="/usr/share/archiso/configs/releng"
-   PROJ="$HOME/archiso"
-   ARCHLIVE="$PROJ/archlive"
-   AIROOTFS="$ARCHLIVE/airootfs"
-   BASELINEPKG="$BASELINE/packages.x86_64"
-   RELENGPKG="$RELENG/packages.x86_64"
-   ARCHLIVEPKG="$ARCHLIVE/packages.x86_64"
-   alacrittytitle.sh "archiso"
-
-
-Packages
-========
-
-check bootstrap packages [#bootpkg]_ ::
-
-   BOOTPKG=arch-install-scripts$'\n'base$'\n'
-   if
-      cmp <(echo -n "$BOOTPKG") "$BASELINE/bootstrap_packages.x86_64" &&
-      cmp <(echo -n "$BOOTPKG") "$RELENG/bootstrap_packages.x86_64";
-   then
-      printf "\n\e[32m%s\e[0m\n\n" "  ok"
-   else
-      printf "\n\e[31m%s\e[0m\n\n" "  err"
-   fi
-   unset -v BOOTPKG
-
-check if releng and baseline are sorted and newline-terminated ::
-
-   # https://stackoverflow.com/q/38746/how-to-detect-file-ends-in-newline/25749716#25749716
-   for CONF in "$BASELINEPKG" "$RELENGPKG"; do
-      if [ "$(tail -c1 "$CONF" | wc -l)" -eq 1 ];
-      then printf "\n  %s \e[32m%s\e[0m\n\n" "$CONF"  "newline-terminated"
-      else printf "\n  %s \e[31m%s\e[0m\n\n" "$CONF"  "not newline-terminated"
-      fi
-      if cmp "$CONF" <(env LC_ALL=C sort "$CONF");
-      then printf "\n  %s \e[32m%s\e[0m\n\n" "$CONF"  "sorted"
-      else printf "\n  %s \e[31m%s\e[0m\n\n" "$CONF"  "not sorted"
-      fi
-   done
-
-make sure baseline is a strict subset of releng ::
-
-   if
-      [ -z "$(env LC_ALL=C comm    -2 -3 --check-order "$BASELINEPKG" "$RELENGPKG")" ] &&
-      [ -n "$(env LC_ALL=C comm -1    -3 --check-order "$BASELINEPKG" "$RELENGPKG")" ] &&
-      cmp "$BASELINEPKG" <(env LC_ALL=C comm -1 -2 --check-order "$BASELINEPKG" "$RELENGPKG");
-   then
-      printf "\n\e[32m%s\e[0m\n\n" "  ok"
-   else
-      printf "\n\e[31m%s\e[0m\n\n" "  err"
-   fi
-
-copy releng
-
-.. warning::
-
-   Previous customizations will be lost
-
-::
-
-   cd "$PROJ"
-   rm -rf "$ARCHLIVE"
-   cp -r "$RELENG" "$ARCHLIVE"
-
-write canonicalized package list
-
-:raw-html:`<details><summary>contents of pkgarr.bashrc</summary>`
-
-.. literalinclude:: ../archiso/pkgarr.bashrc
-
-:raw-html:`</details>`
-
-::
-
-   source "$PROJ/pkgarr.bashrc"
-   printf "%s\n" ${PKGARR[@]} | env LC_ALL=C sort | uniq >"$ARCHLIVEPKG"
-   unset -v PKGARR
-
-packages unique to releng (compared to archlive) ::
-
-   echo; env LC_ALL=C comm    -2 -3 "$RELENGPKG" "$ARCHLIVEPKG" | sed -e 's/^/- /g'; echo
-
-packages unique to archlive (compared to releng) ::
-
-   echo; env LC_ALL=C comm -1    -3 "$RELENGPKG" "$ARCHLIVEPKG" | sed -e 's/^/+ /g'; echo
-
-
-Files
-=====
-
-:raw-html:`<details><summary><s>change root password</s></summary>`
-
-| :aw:`Archiso#Users_and_passwords`
-| ``openssl passwd -6``
-
-:raw-html:`</details>`
-
-:raw-html:`<details><summary><s>copytoram (loader entry already provided)</s></summary>`
-
-| gitlab/archlinux/archiso             - `README.profile.rst`_  - #efiboot
-| gitlab/mkinitcpio/mkinitcpio-archiso - `README.bootparams`__
-
-.. __: https://gitlab.archlinux.org/mkinitcpio/mkinitcpio-archiso/-/blob/master/docs/README.bootparams
-
-copytoram ::
-
-   sed \
-     -e 's|^\(title.*\)$|\1 (copytoram)|g' \
-     -e 's|^\(options.*\)$|\1 copytoram=y copytoram_size=75%|g' \
-      "$ARCHLIVE/efiboot/loader/entries/archiso-x86_64-linux.conf" \
-     >"$ARCHLIVE/efiboot/loader/entries/archiso-x86_64-copytoram-linux.conf"
-
-:raw-html:`</details>`
-
-convenience mountpoints ::
-
-   mkdir -pv "$AIROOTFS"/mnt.{nvme,usb,usb2}
-
-timezone ::
-
-   rm -fv $AIROOTFS/etc/localtime
-   ln -sfv '/usr/share/zoneinfo/Asia/Makassar' $_
-   file $_
-
-:aw:`Archiso#Prepare_an_ISO_for_an_installation_via_SSH` ::
-
-   install -Dm600 -v ~/.ssh/id_rsa.pub $AIROOTFS/root/.ssh/authorized_keys
-
-mksquashfs.sh ::
-
-   install -Dm755 -v $PROJ/mksquashfs.sh $AIROOTFS/
-   ln -sfv '/mksquashfs.sh' $AIROOTFS/usr/local/bin/mksquashfs.sh
-
-:manpage:`motd(5)` :manpage:`issue(5)` ::
-
-   mv -v $AIROOTFS/etc/motd{.orig,}
-   cp -v "$AIROOTFS/etc/motd"{,.orig}
-   {
-      echo "/etc/motd"
-      echo
-      cat "$AIROOTFS/etc/motd"
-   } | sponge "$AIROOTFS/etc/motd"
-   echo
-   cat "$AIROOTFS/etc/motd"
-
-:file:`exclude_file` for :file:`mksquashfs.sh`
-
-:raw-html:`<details><summary>contents of ignarr.bashrc</summary>`
-
-.. literalinclude:: ../archiso/ignarr.bashrc
-
-:raw-html:`</details>`
-
-::
-
-   source "$PROJ/ignarr.bashrc"
-   builtin printf '%s\n' "${IGNARR_MKSQUASHFS[@]}" >"$AIROOTFS/exclude_file"
-   echo
-   cat "$AIROOTFS/exclude_file"
-   echo
-   unset -v IGNARR_MKSQUASHFS
-
-enable gpm ::
-
-   ln -sv '/usr/lib/systemd/system/gpm.service' $ARCHLIVE/airootfs/etc/systemd/system/multi-user.target.wants/gpm.service
-   exa -l $_
-
-no accidental suspend ::
-
-   if   [ -e "$AIROOTFS/etc/systemd/logind.conf" ];
-   then printf "\n\e[31m%s\e[0m\n\n" "  err"
-   else tee <<EOC >"$AIROOTFS/etc/systemd/logind.conf"
-   [Login]
-   HandlePowerKey=suspend
-   HandleSuspendKey=ignore
-   HandleHibernateKey=ignore
-   HandleLidSwitch=ignore
-   HandleLidSwitchExternalPower=ignore
-   HandleLidSwitchDocked=ignore
-   HandleRebootKey=ignore
-   IdleAction=ignore
-   EOC
-   fi
-
-| :pr:`kill da madafakin dhc*`
-| disable services
-
-::
-
-   # find "$ARCHLIVE" -iname '*udev*'
-   # rm -fv "$ARCHLIVE/airootfs/etc/udev/rules.d/81-dhcpcd.rules"
-
-   # Before
-   # env SYSTEMD_COLORS=1 systemctl --root="$AIROOTFS" --no-pager list-unit-files
-   # echo
-   # exa -aT "$AIROOTFS/etc/systemd/system"/*.wants
-   # echo
-
-   pushd "$AIROOTFS/etc/systemd/system/"
-     rm -rv cloud-init.target.wants
-     rm  -v multi-user.target.wants/choose-mirror.service
-     rm  -v multi-user.target.wants/iwd.service
-     rm  -v multi-user.target.wants/livecd-talk.service
-     rm  -v multi-user.target.wants/ModemManager.service
-     rm  -v multi-user.target.wants/reflector.service
-   # rm  -v multi-user.target.wants/sshd.service             # Vulnerable
-   # rm  -v multi-user.target.wants/systemd-networkd.service
-   # rm -rv network-online.target.wants
-   popd
-
-   # After
-   # env SYSTEMD_COLORS=1 systemctl --root="$AIROOTFS" --no-pager list-unit-files
-   echo
-   exa -aT "$AIROOTFS/etc/systemd/system"/*.wants
-   echo
-
-permissions
------------
-
-| `README.profile.rst <https://gitlab.archlinux.org/archlinux/archiso/-/blob/master/docs/README.profile.rst>`__ - #airootfs
-| :manpage:`sed(1)`
-| |b| Zero- or One- address commands |rarr| ``a \ text`` |rarr| Append text
-| |b| Addresses |rarr| ``/regexp/`` |rarr| Match  lines  matching  the regular expression regexp
-
-::
-
-   A=''
-   A+='\ \ #\n'
-   A+='\ \ ["/mksquashfs.sh"]="0:0:0755"\n'
-   A+='\ \ #\n'
-   A+='\ \ ["/root"]="0:0:0750"\n'
-   A+='\ \ ["/root/.ssh"]="0:0:0700"\n'
-   A+='\ \ ["/root/.ssh/authorized_keys"]="0:0:0600"\n'
-   A+='\ \ #\n'
-   A="${A%\\n}"
-   echo $A
-   sed -e "/^file_permissions=(/a $A" \
-      "$RELENG/profiledef.sh" \
-      >"$ARCHLIVE/profiledef.sh"
-   diff -u --color {"$RELENG","$ARCHLIVE"}/profiledef.sh
-   echo
+modify users ans groups ::
+
+   PASSWORD='SOME_PASSWORD'
+   function create_user {
+      # Users and passwords
+      # QUOTING & HISTORY EXPANSION '!''
+      set +H
+      # diff -u <(cat $AIROOTFS/etc/shadow) <(sudo grep root /etc/shadow)
+      # Groups
+      echo "darren:x:1000:"  >>"$AIROOTFS/etc/group"
+      echo   "root:!!::root" >>"$AIROOTFS/etc/gshadow"
+      echo "darren:!!::"     >>"$AIROOTFS/etc/gshadow"
+      # Users
+      echo  "darren:x:1000:1000:darren:/home/darren:/usr/bin/zsh"                      >>"$AIROOTFS/etc/passwd"
+      sed -i "s|root::14871::::::|root:$(openssl passwd -6 "$PASSWORD"):14871::::::|g"   "$AIROOTFS/etc/shadow"
+      echo                     "darren:$(openssl passwd -6 "$PASSWORD"):14871::::::"   >>"$AIROOTFS/etc/shadow"
+      #
+      diff -uN $AIROOTFS{0,}/etc/group
+      diff -uN $AIROOTFS{0,}/etc/gshadow
+      diff -uN $AIROOTFS{0,}/etc/passwd
+      diff -uN $AIROOTFS{0,}/etc/shadow
+   }
+
+syslinux serial ::
+
+   function syslinux_serial {
+      # https://wiki.archlinux.org/title/Talk:Archiso#Add_a_section_to_Tips_and_Tricks_to_build_an_ISO_for_installation_entirely_over_a_serial_console
+      # https://wiki.archlinux.org/index.php/Working_with_the_serial_console#Installing_Arch_Linux_using_the_serial_console
+      # https://wiki.archlinux.org/index.php/Syslinux#Kernel_parameters
+      # https://wiki.syslinux.org/wiki/index.php?title=Config#APPEND
+      sed -e '/APPEND/ s/$/ console=ttyS0,38400/' /root/archlive/syslinux/archiso_sys.cfg >tmp.cfg
+      diff -u /root/archlive/syslinux/archiso_sys.cfg tmp.cfg --color=always
+      mv -iv tmp.cfg /root/archlive/syslinux/archiso_sys.cfg # Press 'y' before Enter!
+   }
 
 
 Mkarchiso
 =========
 
-findmnt snapshot ::
+**run as unprivileged user**
 
-   sudo findmnt -A >/tmp/findmnt.before_mkarchiso
+tmux ::
 
-drop caches & discard ::
+   tmux new -s archiso
 
-   free -h
-   su -c 'builtin echo 3 >/proc/sys/vm/drop_caches'
-   sudo systemctl start fstrim.service
-   su -c 'builtin echo 3 >/proc/sys/vm/drop_caches'
-   free -h
+launch ::
 
-.. tip::
+   cd ~/archiso
+   ./archiso.py
 
-   Exit Chromium, Firefox and other apps to free up some RAM
-
-.. warning::
-
-   Do not clear screen or scrollback buffer before an ISO is successfully generated
-
-build the ISO as root ::
-
-   DM="$(date +%Y.%m.%d)-$(uname -m)"; \
-   sudo /usr/bin/time --format="\n  wall clock time - %E\n" mkarchiso \
-      -v \
-      -w /tmp/archiso-tmp/ \
-      -o "$PROJ" \
-      "$ARCHLIVE"; \
-   sudo chown -v darren:darren "$PROJ/archlinux-$DM.iso"; \
-   file "$PROJ/archlinux-$DM.iso"
-
-checksum ::
-
-   sha1sum archlinux-????.??.??-"$(uname -m)".iso
+sha1sum
 
 .. table::
    :align: left
    :widths: auto
 
    ================================= =================================================
+    iso                               sha1sum
+   ================================= =================================================
     archlinux-2022.01.19-x86_64.iso   :kbd:`744b8d84bc1dae3cfee1427f2a6b9883dae70ad2`
     archlinux-2021.10.09-x86_64.iso   :kbd:`31077a281a062ef51ee3ff3fbf565d05c213a9dc`
    ================================= =================================================
 
-.. warning::
-
-   Make sure there are no stray bind mounts before removing work directory ::
-
-      if su -c 'diff -u /tmp/findmnt.before_mkarchiso <(findmnt -A)'
-      then printf "\n\e[32m%s\e[0m\n\n" "  ok"
-      else printf "\n\e[31m%s\e[0m\n\n" "  err"
-      fi
-
-remove work directory ::
-
-   sudo rm -r /tmp/archiso-tmp
-   sudo sh -c 'echo 3 >/proc/sys/vm/drop_caches'
-   free -h
-
 qemu ::
+
+   # function my_run_archiso {
+   #   # -display gtk \
+   #   # -vga std \
+   #   # -vga qxl \
+   #   # -machine type=kvm64 \
+   #   # -cpu host \
+   #   qemu-system-x86_64 \
+   #     -accel kvm \
+   #     -boot order=d,menu=on,reboot-timeout=5000 \
+   #     -m size=3072,slots=0,maxmem=$((3072*1024*1024)) \
+   #     -k en \
+   #     -name archiso,process=archiso_0 \
+   #     -drive file=/home/darren/archlinux-2020.04.30-x86_64.iso,media=cdrom,readonly=on \
+   #     -display sdl \
+   #     -vga virtio \
+   #     -no-reboot \
+   #     -no-shutdown \
+   #     #
+   # }
 
    run_archiso -d -i "$PROJ/archlinux-$(date +%Y.%m.%d)-x86_64.iso" -u
       # Probing EDD (edd=off to disable)

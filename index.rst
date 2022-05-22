@@ -85,6 +85,7 @@ ico
    :maxdepth: 0
    :caption: OBJ
 
+   meson
    gobject
    gtk4
 

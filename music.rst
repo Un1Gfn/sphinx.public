@@ -275,10 +275,7 @@ mpv
 
 .. command-output:: file /tmp/un1gfn.github.io/current_sheet.pdf
 
-.. \| :download:`current_sheet.pdf </current_sheet.pdf>`
-
-| :download:`current_sheet.pdf <http://192.168.0.223:20688/current_sheet.pdf>`
-| `current_sheet.pdf </current_sheet.pdf>`__
+.. command-output:: qrencode -tUTF8 http://192.168.0.223:20688/current_sheet.pdf
 
 :wp:`Arpeggio` ``c e g c' g e``
 

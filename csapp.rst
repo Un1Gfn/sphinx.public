@@ -13,8 +13,6 @@ Misc
 
    |:pencil:| squeeze :kbd:`/home/darren/csapp` !
 
-
-
 | list of CMU CS `courses <https://csd.cmu.edu/cs-and-related-undergraduate-courses>`__
 |    `15-213/14-513/15-513 Introduction to Computer Systems (ICS) <https://www.cs.cmu.edu/~213/>`__
 |       `resources <https://www.cs.cmu.edu/~213/resources.html>`__
@@ -272,7 +270,7 @@ trackers
    :align: left
    :widths: auto
 
-   ====================== ======
+   ====================== =======
     |:heavy_check_mark:|   TOC
     |:heavy_check_mark:|   1.1
     |:heavy_check_mark:|   1.2
@@ -287,7 +285,7 @@ trackers
     |:heavy_check_mark:|   1.9.2
     |:heavy_check_mark:|   1.9.3
     |:heavy_check_mark:|   1.10
-   ====================== ======
+   ====================== =======
 
 :raw-html:`</details>`
 
@@ -308,7 +306,7 @@ decimal to hexadecimal
       q_2    \div 16 &=& q_3 \cdots r_3 \\
       q_3    \div 16 &=& q_4 \cdots r_4 \\
       q_4    \div 16 &=& 0   \cdots r_5 \\
-      D_{10}         &=& \overline{r_5r_4r_3r_2r_1}_{16}
+      D_{10}         &=& \left(\overline{r_5r_4r_3r_2r_1}\right)_{16}
    \end{eqnarray}
 
 | byte ordering/:wp:`endianness`
@@ -338,7 +336,7 @@ decimal to hexadecimal
 
 ::
 
-   gcc -x c -std=gnu11 -g -O0 -Wextra -Wall -Winline -Wshadow -fanalyzer -o a.out - <<"EOF"
+   gcc -x c -std=gnu11 -g -O0 -Wextra -Wall -Winline -Wshadow -fanalyzer -o /tmp/a.out - <<"EOF" && /tmp/a.out
    #include <stdio.h>
    int main(){
       puts("");
@@ -362,11 +360,29 @@ decimal to hexadecimal
    }
    EOF
 
+::
+
+   #  001#
+   #  010#
+   #  100#
+   # 1000#
+   #10000#
+   #100000#
+   #1000000#
+
+   #    1#
+   #   10#
+   #  100#
+   #  100#
+   #  100#
+   #  100#
+   #  100#
+
 :raw-html:`</details>`
 
 ::
 
-   (BE)
+   (BE)                                                     |<--   overlap   -->|
    decimal        3510593   -> 0x00359141 ->   0000000000 1 101011001000101000001
    floating-point 3510593.0 -> 0x4A564504 ->     01001010 0 101011001000101000001 00
 
@@ -380,12 +396,21 @@ decimal to hexadecimal
     logical/bitwise operator   :math:`\mathop{^\sim} \mathop{\sim}`   :math:`\mathbin{\&}`   :math:`\mathbin{|}`   :math:`\mathbin{^\wedge}`
    ========================== ====================================== ====================== ===================== ===========================
 
-:math:`a \mathbin{^\wedge} b = \mathop{\sim} (a\mathbin{\&}b) \mathbin{\&} (a\mathbin{|}b) = (\mathbin{\sim}a\mathbin{|}\mathbin{\sim}b) \mathbin{\&} (a\mathbin{|}b)`
+xor in and/or form
+
+.. math::
+
+   \displaystyle
+   \begin{eqnarray}
+      a \mathbin{^\wedge} b &=& (\mathop{\sim}(a\mathbin{\&}b)) \mathbin{\&} (a\mathbin{|}b) \\
+                            &=& (\mathbin{\sim}a\mathbin{|}\mathbin{\sim}b) \mathbin{\&} (a\mathbin{|}b) \\
+                            &=& ( x \mathbin{\&} \mathop{\sim}y ) \mathbin{|} ( \mathop{\sim}x \mathbin{\&} y ) \\
+   \end{eqnarray}
 
 | *bit vector*
 | strings of zeros and ones of some fixed length :math:`w`
 | :math:`[a_{w-1},a_{w-2},\dotsc,a_0]` [#latexDots]_
-| encode subsets of a a finite set with bit vectors
+| subsets of a a finite set can be encoded with bit vectors
 
 .. include:: include/color.txt
 
@@ -406,6 +431,20 @@ decimal to hexadecimal
     :kbd:`111`   |WH| white      |BK| black     :kbd:`000`
    ============ ============== =============== ============
 
+**in**\ tegral
+
+:wp:`XOR swap algorithm`
+
+| the expression ``~0`` will yield a mask of all ones
+|    regardless of the size of the data representation
+| the expression ``~0xFF`` creates a mask where the 8 least-significant bits equal 0 and the rest equal 1
+|    also, such a mask will be generated regardless of the word size
+
+| \
+  ``|`` NOT
+| \
+  ``~`` bitwise-NOT
+
 trackers
 --------
 
@@ -419,16 +458,7 @@ trackers
     |:heavy_check_mark:|         Part I: Program Structure and Execution Preface @ page 29(64)
     |:heavy_check_mark:|         TOC
     |:heavy_check_mark:|         before 2.1
-    |:heavy_check_mark:|         2.1   Information Storage
-    |:heavy_check_mark:|         |nbsp| - 2.1.1 Hexadecimal Notation
-    |:heavy_check_mark:|         |nbsp| - 2.1.2 Data Sizes
-    |:heavy_check_mark:|         |nbsp| - 2.1.3 Addressing and Byte Ordering
-    |:heavy_check_mark:|         |nbsp| - 2.1.4 Representing Strings
-    |:heavy_check_mark:|         |nbsp| - 2.1.5 Representing Code
-    |:heavy_check_mark:|         |nbsp| - 2.1.6 Introduction to Boolean Algebra
-    |:hourglass_flowing_sand:|   |nbsp| - 2.1.7 Bit-Level Operations in C **[54(89)]**
-    \                            |nbsp| - 2.1.8 Logical Operations in C
-    \                            |nbsp| - 2.1.9 Shift Operations in C
+    |:hourglass_flowing_sand:|   2.1 Information Storage [58(93)]
     \                            2.2 Integer Representations
     \                            2.3 Integer Arithmetic
     \                            2.4 Floating Point

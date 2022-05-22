@@ -5,13 +5,14 @@ BUILDDIR      := /tmp/un1gfn.github.io
 
 # [1024,65535] are unprivileged
 PORT          :=  $(shell \
-	HASH="$$(cksum <<<"$(shell basename $(BUILDDIR))" | cut -d' ' -f 1)"; \
+	HASH="$$(cksum -a crc <<<"$(shell basename $(BUILDDIR))" | cut -d' ' -f 1)"; \
 	echo $$((1024+HASH%(65535-1024+1))); \
 )
-IP := $(shell ip -4 addr show wlp2s0 | awk '/inet / {print $$2}' | cut -d/ -f1)
+IF := wlp2s0
+IP := $(shell ip -4 addr show $(IF) | awk '/inet / {print $$2}' | cut -d/ -f1)
 ifeq (x$(IP),x)
 	IP := $(shell \
-		HASH="$$(cksum <<<"$(PROJ)" | cut -d' ' -f 1)"; \
+		HASH="$$(cksum -a crc <<<"$(PROJ)" | cut -d' ' -f 1)"; \
 		RET="$$((HASH%254+1))"; \
 		((HASH=HASH/254)); RET="$${RET/#/$$((HASH%254+1)).}"; \
 		((HASH=HASH/254)); RET="$${RET/#/$$((HASH%254+1)).}"; \
@@ -74,13 +75,13 @@ html:
 httpd:
 	mkdir -pv $(BUILDDIR)
 	if ! sh -c "builtin echo >/dev/tcp/$(IP)/$(PORT)" 2>/dev/null; then \
-		( alacritty -t "httpd $(IP):$(PORT) ($(shell basename $(BUILDDIR)))" -e sh -c "\
+		( alacritty -t "httpd $(IF):$(PORT) ($(shell basename $(BUILDDIR)))" -e sh -c "\
 			echo; \
 			echo \ \ $(URL); \
 			echo; \
 			qrencode -tUTF8 $(URL); \
 			echo; \
 			set -x; \
-			busybox httpd -f -vv -p $(IP):$(PORT) -h $(BUILDDIR) -c /etc/httpd.conf; \
+			busybox httpd -f -v -p $(IP):$(PORT) -h $(BUILDDIR) -c /etc/httpd.conf; \
 		" & ); \
 	fi
