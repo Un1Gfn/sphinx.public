@@ -24,21 +24,12 @@ eLinux/:el:`Toolchains`
 | busybox :wp:`udhcpc <Udhcpc>`
 | busybox `ip <https://web.archive.org/web/https://www.busybox.net/downloads/BusyBox.html#ip>`__
 
-.. Eli the Computer Guy .. TCP/IP and Subnet Masking
-.. youtube:: EkNq4TrHP_U
-   :width: 100%
-   :height: 80
-
-|
+:yt:`Eli the Computer Guy .. TCP/IP and Subnet Masking <EkNq4TrHP_U>`
 
 `IPv4 Addressing - A Comprehensive Lesson <https://www.youtube.com/playlist?list=PLl9NdZbdtA0wK8OIgttkScKRxcMkvoev_>`__
 
-.. NexGenT .. IPv4 Addressing Lesson 1: Binary and the IP Address MADE EASY
-.. youtube:: ddM9AcreVqY
-   :width: 100%
-   :height: 80
+:yt:`NexGenT .. IPv4 Addressing Lesson 1: Binary and the IP Address MADE EASY <ddM9AcreVqY>`
 
-|
 
 libc
 ====

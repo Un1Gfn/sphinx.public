@@ -73,12 +73,7 @@ buildroot - `build beaglebone+am335x-evm image <https://git.busybox.net/buildroo
      NAND +
      :wp:`FTL <Flash_translation_layer_(FTL)_and_mapping>`
 
-.. Pentester Academy TV .. Embedded Linux Booting Process (Multi-Stage Bootloaders, Kernel, Filesystem)
-.. youtube:: DV5S_ZSdK0s
-   :height: 80
-   :width: 100%
-
-|
+:yt:`Pentester Academy TV .. Embedded Linux Booting Process (Multi-Stage Bootloaders, Kernel, Filesystem) <DV5S_ZSdK0s>`
 
 `local var space and globalenv var space are separated <https://www.denx.de/wiki/view/DULG/CommandLineParsing#Section_14.2.17.2.>`__
 
@@ -812,12 +807,7 @@ lists.denx.de - `minicom+kermit <https://lists.denx.de/pipermail/u-boot/2003-Jun
     Handshake   None
    =========== ========
 
-..  Fastbit Embedded Brain Academy .. Beaglebone Black Serial booting procedure ( UART BOOT )
-.. youtube:: 3y1LMNPoaJI
-   :height: 80
-   :width: 100%
-
-|
+:yt:`Fastbit Embedded Brain Academy .. Beaglebone Black Serial booting procedure ( UART BOOT ) <3y1LMNPoaJI>`
 
 .. warning::
    Make sure :pkg:`community/lrzsz` is installed.

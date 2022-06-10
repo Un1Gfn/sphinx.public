@@ -5,6 +5,11 @@
 postmarketOS
 ============
 
+.. attention::
+
+   | :file:`[BAK1]` moved to :file:`/NOBACKUP/wt88047_backup.d`
+   | :file:`[C.MI]_*_image_*.tgz` moved to :file:`/NOBACKUP/wt88047_*`
+
 .. math::
 
    \mathit{The\ best\ way\ to\ predict\ the\ future\ is\ to\ invent\ it.} - \href{https://www.ted.com/speakers/alan_kay}{\text{Alan Kay}}

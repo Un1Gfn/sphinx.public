@@ -1,8 +1,15 @@
 .. include:: include/substitution.txt
 
-===
-TeX
-===
+===============
+TeX Typesetting
+===============
+
+`TeX family tree with timeline <https://tex.stackexchange.com/questions/42594>`__
+
+| \
+   ``file -L $(pacman -Qql texlive-bin | grep -E '/usr/bin/.*tex.*') | grep -v 'POSIX shell script, ASCII text executable' | less -S``
+| :ctan:`tex` |rarr| :ctan:`ptex` |rarr| :ctan:`uptex`
+| `tectonic <https://tectonic-typesetting.github.io/>`__ (xelatex+rust)
 
 groff+\ `mom <http://www.schaffter.ca/mom/>`__
 
@@ -58,3 +65,39 @@ groff+\ `mom <http://www.schaffter.ca/mom/>`__
 | `Line breaks and blank spaces <https://www.overleaf.com/learn/latex/Line_breaks_and_blank_spaces>`__
 
 `mathematical fonts <https://www.overleaf.com/learn/latex/Mathematical_fonts>`__
+
+| :wp:`typographic unit`
+| 1 in is exactly 25.4 mm [#inch]_
+| 1 in is exactly 72.27 pt (:wp:`TeX point <point (typography)#American_points>`) [#overleafLengths]_
+
+| :wp:`MetaPost`
+| :wp:`PGF/TikZ` :wp:`CircuiTikZ`
+| :wp:`PSTricks`
+
+| :ctan:`xltxtra`
+| :ctan:`fontspec`
+| luatexja-fontspec
+
+`Introduction to LaTeX <https://www.ctan.org/tex-archive/info/lshort/>`__
+
+`lengths <https://www.overleaf.com/learn/latex/Lengths_in_LaTeX>`__
+
+| overleaf.`documentclass <https://www.overleaf.com/learn/latex/Creating_a_document_in_LaTeX>`__
+| wikibook.`documentclass <https://en.wikibooks.org/wiki/LaTeX/Document_Structure#Document_classes>`__
+
+| :wp:`EPUB`
+|    `tutorial <http://www.jedisaber.com/eBooks/Introduction.shtml>`__
+|    `specification <https://www.w3.org/publishing/epub32/>`__
+|    `Apple Books <https://apps.apple.com/us/app/id364709193>`__
+|    `Amazon Kindle <https://apps.apple.com/us/app/id302584613>`__
+
+
+
+Footnotes
+=========
+
+.. [#inch] https://en.wikipedia.org/wiki/Inch
+.. [#overleafLengths] https://www.overleaf.com/learn/latex/Lengths_in_LaTeX
+
+
+

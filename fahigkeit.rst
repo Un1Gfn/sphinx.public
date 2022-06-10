@@ -9,7 +9,8 @@ Misc
 
 | proj name ideas
 | |b| un1kuso
-| |b| osu --(LRinverse)--> kuso --(DE)--> scheisse
+| |b| osu --(RLinvert)--> kuso --(ja2de)--> scheisse
+| |b| osu --(ja2en)--> to push --(en2de) --> drücken
 | |b| poopcorn |:poop:| |:popcorn:|
 
 Un1Gfn-obj/`fahigkeit <https://github.com/Un1Gfn-obj/fahigkeit>`__/readme.md

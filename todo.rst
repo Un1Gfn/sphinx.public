@@ -18,13 +18,6 @@ Todo |:memo:|
 ----
 
 wp:`Wikipedia:SVG_help#font-family_issues`
-|vv| :Aw:`microsoft fonts`
-|vv| :Aw:`fonts`
-|vv| :Aw:`font configuration`
-
-| ``xrandr --output DP-2 --mode 1680x1050 --left-of eDP-1``
-| `<https://i3wm.org/docs/userguide.html#_changing_named_workspaces_moving_to_workspaces>`__
-| `<https://fedoramagazine.org/using-i3-with-multiple-monitors/>`__
 
 .. highlight:: text
 

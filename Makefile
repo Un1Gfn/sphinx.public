@@ -1,15 +1,16 @@
 MAKEFLAGS := $(MAKEFLAGS) --no-print-directory
 
-# https://serverfault.com/a/1042167
-BUILDDIR      := /tmp/un1gfn.github.io
+PROJ := sphinx.public
+SESSION_ENTR  := $(subst .,-,$(PROJ))-entr
+SESSION_HTTPD := $(subst .,-,$(PROJ))-httpd
 
-# [1024,65535] are unprivileged
-PORT          :=  $(shell \
-	HASH="$$(cksum -a crc <<<"$(shell basename $(BUILDDIR))" | cut -d' ' -f 1)"; \
-	echo $$((1024+HASH%(65535-1024+1))); \
-)
-IF := wlp2s0
-IP := $(shell ip -4 addr show $(IF) | awk '/inet / {print $$2}' | cut -d/ -f1)
+SRCDIR := /home/darren/$(PROJ)
+BUILDDIR := /tmp/un1gfn.github.io
+
+# /home/darren/sphinx.public/random_ip_port.py
+PORT := 62884
+# https://serverfault.com/a/1042167
+IP := $(shell ip -4 addr show wlp2s0 | awk '/inet / {print $$2}' | cut -d/ -f1)
 ifeq (x$(IP),x)
 	IP := $(shell \
 		HASH="$$(cksum -a crc <<<"$(PROJ)" | cut -d' ' -f 1)"; \
@@ -22,37 +23,38 @@ ifeq (x$(IP),x)
 endif
 URL := http://$(IP):$(PORT)/
 
-PROJ := $(shell basename $(shell pwd))
-
-# default_test:
-# 	@echo '$(IP)'
 
 # Don't run in parallel,
-# otherwise clean can remove newly-built pages because of race
 .NOTPARALLEL:
-default: clean httpd entr
+
+
+default: httpd entr
+
 
 # .SILENT: help
 # help:
 # 	sphinx-build -M help . "$(BUILDDIR)"
 
+
+.SILENT: clean
 clean:
-	if [ -f $(BUILDDIR)/index.html ]; then \
-		find $(BUILDDIR)/ -mindepth 1 -maxdepth 1 ! -name current_sheet.pdf | xargs rm -r; \
-	fi;
+	echo [$@]
+	tmux send -t $(SESSION_ENTR):0 "q" &>/dev/null || true
+	tmux send -t $(SESSION_HTTPD):0 "C-c" &>/dev/null || true
+	{ [ -f $(BUILDDIR)/index.html ] && find $(BUILDDIR)/ -mindepth 1 -maxdepth 1 ! -name current_sheet.pdf | xargs rm -r; } || true
+	echo "run 'tmux ls' to confirm termination"
+
 
 .SILENT: entr
 entr:
-	@printf "\e]0;%s\a" $(PROJ)
+	echo [$@]
+	tmux new -d -c $(SRCDIR) -s $(SESSION_ENTR) 'ls -d1 -- conf.py *.rst extension/* include/* static/* | entr $(MAKE) html' || echo
+	tmux ls
 	echo
-	ls -d1 -- conf.py *.rst extension/* include/* static/* | entr $(MAKE) html
 
-# Catch-all target: route all unknown targets to Sphinx using the new
-# "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
+
 .SILENT: html
 html:
-%:
-# 	sphinx-build -M $@ . "$(BUILDDIR)"
 	sphinx-build -b $@ . $(BUILDDIR)
 	echo
 	:; \
@@ -71,11 +73,15 @@ html:
 	echo "  $(URL)"
 	echo
 
+
 .SILENT: httpd
 httpd:
+	echo [$@]
 	mkdir -pv $(BUILDDIR)
-	if ! sh -c "builtin echo >/dev/tcp/$(IP)/$(PORT)" 2>/dev/null; then \
-		( alacritty -t "httpd $(IF):$(PORT) ($(shell basename $(BUILDDIR)))" -e sh -c "\
+	ln -s $(SRCDIR)/404.txt $(BUILDDIR)/ 2>/dev/null || true
+	tmux ls || true
+	sh -c "builtin echo >/dev/tcp/$(IP)/$(PORT)" 2>/dev/null || \
+		tmux new -d -c /tmp -s $(SESSION_HTTPD) " \
 			echo; \
 			echo \ \ $(URL); \
 			echo; \
@@ -83,5 +89,6 @@ httpd:
 			echo; \
 			set -x; \
 			busybox httpd -f -v -p $(IP):$(PORT) -h $(BUILDDIR) -c /etc/httpd.conf; \
-		" & ); \
-	fi
+		"
+	tmux ls
+	echo

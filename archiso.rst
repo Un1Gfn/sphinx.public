@@ -99,8 +99,7 @@ sha1sum
    ================================= =================================================
     iso                               sha1sum
    ================================= =================================================
-    archlinux-2022.01.19-x86_64.iso   :kbd:`744b8d84bc1dae3cfee1427f2a6b9883dae70ad2`
-    archlinux-2021.10.09-x86_64.iso   :kbd:`31077a281a062ef51ee3ff3fbf565d05c213a9dc`
+    archlinux-2022.05.26-x86_64.iso   :kbd:`3730fa4684db3b7919bda8866caf5591f81da834`
    ================================= =================================================
 
 qemu ::
@@ -127,6 +126,7 @@ qemu ::
 
    run_archiso -d -i "$PROJ/archlinux-$(date +%Y.%m.%d)-x86_64.iso" -u
       # Probing EDD (edd=off to disable)
+
 
 `Transfer`__
 ============
@@ -158,7 +158,7 @@ zerofill
 
 .. code:: shell-session
 
-   # head -c"$((10*1024*1024))" /dev/zero >/dev/sdX
+   dd count=20480 if=/dev/zero of=/dev/sdX
 
 sync ::
 
@@ -189,10 +189,8 @@ reattach ::
 
 write ::
 
-   cd ~darren/archiso
-   date
    # Change "null" to the correct device
-   # dd if=archlinux-$(date +%Y.%m.%d)-$(uname -m).iso of=/dev/null status=progress
+   # date; dd if=~darren/archiso/archlinux-$(date +%Y.%m.%d)-$(uname -m).iso of=/dev/null status=progress; date
 
 sync ::
 

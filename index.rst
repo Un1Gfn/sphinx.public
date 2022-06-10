@@ -15,10 +15,8 @@ ico
 
 .. \|:rofl:|
 
-.. hint::
-   Hooray!
-   There is no `Google Analytics`__
-   on any page! |:fire:|
+.. note::
+   No `Google Analytics`__ on any page |:fire:|
 
 .. __: https://sphinx-rtd-theme.readthedocs.io/en/latest/configuring.html#confval-analytics_id
 
@@ -45,7 +43,6 @@ ico
    cet
    csapp
    htwfaip
-   tex
 
 .. toctree::
    :maxdepth: 0
@@ -87,7 +84,15 @@ ico
 
    meson
    gobject
-   gtk4
+   gtk3
+
+.. toctree::
+   :maxdepth: 0
+   :caption: TEX
+
+   font
+   tex
+   texja
 
 .. toctree::
    :maxdepth: 0
@@ -100,10 +105,11 @@ ico
    cheatsheet
    chrome
    gpu_hang
-   holonews
+   hololive
    ios
    music
    pkgmgmt
+   python
    recipe
    router
    todo

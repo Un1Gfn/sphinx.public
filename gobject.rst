@@ -1,4 +1,5 @@
 .. include:: include/substitution.txt
+.. highlight:: text
 
 =======
 GObject
@@ -222,7 +223,31 @@ trackers
 
    rm -fv viewer{,_audio}_file.{h,c}; ./gen.sh --demo && meson compile -C builddir/ -v && ./builddir/demo
 
-|:hourglass_flowing_sand:| `chaining up <https://docs.gtk.org/gobject/tutorial.html#chaining-up>`__
+| chaining up
+|    parent class ``A`` has a non-pure virtual public method ``A.foo()``
+|    parent class ``A`` derives ``B``
+|    ``B.foo()`` re-implements ``A.foo()``
+|    ``B.foo()`` calls ("chains up to") ``A.foo()``
+| extend the behaviour of a class without modifying its code
+| :abbr:`Chain Of Responsibility (each object of the inheritance tree chains up to its parent (typically, at the beginning or the end of the method) to ensure that each handler is run in turn)` pattern
+
+| get a handle to the original parent class structure
+| access the original virtual function pointer with the handle and invoke it directly
+
+.. highlight:: C
+
+e.g. ::
+
+   G_DEFINE_TYPE(ViewerAudioFile, viewer_audio_file, VIEWER_TYPE_FILE)) // provides viewer_audio_file_parent_class
+
+   static void viewer_audio_file_method(ViewerAudioFile *obj, int param){
+     // do stuff before chaining up
+     VIEWER_FILE_CLASS(viewer_audio_file_parent_class)->method(obj, param);
+     // do stuff after chaining up
+   }
+
+|:hourglass_flowing_sand:|
+`How to define and implement interfaces <https://docs.gtk.org/gobject/tutorial.html#how-to-define-and-implement-interfaces>`__
 
 
 Footnotes

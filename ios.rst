@@ -63,11 +63,7 @@ https://github.com/Cryptiiiic/ipwndfu/archive/A11-patch-rom.tar.gz
 
 :aw:`archwiki <iOS>`
 
-.. youtube:: fOi1qMBMllE
-   :width: 100%
-   :height: 80
-
-|
+:yt:`[RESQ] MASTERWORK - iPHONE 6 RAM REPLACEMENT - HOW TO REPLACE THE A8 RAM - TUTORIAL <fOi1qMBMllE>`
 
 AirPlay
 |vv| :pkg:`AUR/uxplay`

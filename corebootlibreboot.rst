@@ -87,6 +87,8 @@ before removal)
    hexdump "$F" | less -SRM +%
    '00f5fa0'
 
+change seabios default `boot order <https://github.com/merge/skulls/issues/37#issuecomment-412852839>`__
+
 
 :wp:`BMP`
 =========
@@ -749,6 +751,8 @@ output ::
 =============
 
 .. __: https://libreboot.org/
+
+`osboot <https://osboot.org/docs/hardware/>`__ variant
 
 | `Where can I learn more about electronics <https://libreboot.org/faq.html#where-can-i-learn-more-about-electronics>`__
 | `ich9utils <https://libreboot.org/docs/install/ich9utils.html>`__

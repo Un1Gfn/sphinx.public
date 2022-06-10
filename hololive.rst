@@ -1,26 +1,13 @@
 .. include:: include/substitution.txt
 
-============
-`Holonews`__
-============
+========
+Hololive
+========
 
-.. __: https://github.com/Un1Gfn/holonews
+Holonews.Misc
+=============
 
-
-Misc
-====
-
-in a new terminal ::
-
-   make -C ~/sphinx.public/
-
-in i3 scratchpad git terminal ::
-
-   # source ~/git.bashrc
-   cd ~/holonews
-   subl \
-      ~/sphinx.public/Holonews.rst \
-      ~/holonews/download.sh
+:file:`~/holonews/download.sh`
 
 | filter by flair
 | |b| :r:`EN Issue  <HoloNews/?f=flair_name:"EN%20Issue">`
@@ -45,8 +32,8 @@ in i3 scratchpad git terminal ::
 | |b| `<https://git-scm.com/docs/gitattributes>`__
 
 
-Download
-========
+Holonews.Download
+=================
 
 `YouTube Metadata <https://mattw.io/youtube-metadata/>`__
 
@@ -81,8 +68,8 @@ Download
    ~/holonews/holonews.sh 20210822 20210823 pbkt4a Special-HoloCouncil-Debut
 
 
-Comment
-=======
+Holonews.Comment
+================
 
 reddit comment template
 
@@ -111,8 +98,8 @@ reddit comment template
    reddit_comment_template 2021 0816 0822 pant15
 
 
-Manually
-========
+Holobews.Manually
+=================
 
 | for   2021\_0802\_0808_\ **p1pn6c**
 | visit :r:`HoloNews/comments/p1pn6c`
@@ -131,6 +118,39 @@ To download images from reddit/twitter post
 6. Copy all URLs (extension?)
 7. Construct wget oneliners with text editor, and add output filename
 8. Copy, paste to terminal, and execute
+
+
+py.yt-data-v3
+=============
+
+`run code samples locally <https://developers.google.com/explorer-help/code-samples#run_code_samples_locally>`__
+
+`GCP <https://console.cloud.google.com/>`__
+|rarr| un1gfn-hololive
+|rarr| Navigation menu
+|rarr| APIs & Services
+|rarr| Liberary
+|rarr| YouTube Data API v3
+|rarr| ENABLE
+
+google-auth-oauthlib `docs <https://google-auth-oauthlib.readthedocs.io/en/latest/>`__
+
+`pydoc.writedoc(s) <https://stackoverflow.com/questions/35675316/python-save-help-output-to-formated-html-file>`__
+
+gen0
+
+
+cache-file
+==========
+
+| `<https://forum.videohelp.com/threads/403510-How-to-record-dash-livestream-with-yt-dlp>`__
+| `<https://stackoverflow.com/questions/71906912/is-there-any-command-in-specific-to-record-a-part-of-a-livestream-that-still-is>`__
+
+::
+
+   streamlink ... 1080p -o /tmp/tv.mkv
+   tail -f -c +0 /tmp/tv.mkv | mpv -
+   # mpv append:///tmp/tv.mkv
 
 
 Footnotes

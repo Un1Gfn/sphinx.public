@@ -43,7 +43,7 @@ extensions = [
     'sphinx.ext.todo',
     'sphinx_copybutton',            # https://sphinx-copybutton.readthedocs.io/en/latest/
     'sphinxcontrib.programoutput',  # https://pythonhosted.org/sphinxcontrib-programoutput/
-    'sphinxcontrib.youtube',        # /usr/lib/python3*/site-packages/sphinxcontrib/youtube/
+    # 'sphinxcontrib.youtube',        # /usr/lib/python3*/site-packages/sphinxcontrib/youtube/
     'sphinxemoji.sphinxemoji',
     'myextension',
     'sphinx.ext.mathjax',
@@ -61,14 +61,15 @@ autosectionlabel_maxdepth = 2
 # https://www.sphinx-doc.org/en/master/usage/extensions/extlinks.html#confval-extlinks
 extlinks = {
 
-    'tree':     ('https://github.com/Un1Gfn/' + project + '/tree/master/%s',    '%s',),
+    'amz':      ('https://www.amazon.com/s?k=%s',                              '%s',),
+    'ctan':     ('https://ctan.org/pkg/%s',                                    '%s',),
+    'eol':      ('https://download.lenovo.com/ibmdl/pub/pc/pccbbs/mobiles/%s', '%s',),
+    'r':        ('https://www.reddit.com/r/%s',                                'r/%s',),
     'rtdissue': ('https://github.com/readthedocs/sphinx_rtd_theme/issues/%s',  '#%s',),
-    'r':        ('https://www.reddit.com/r/%s',                               'r/%s',),
-    'amz':      ('https://www.amazon.com/s?k=%s',                               '%s',),
-    'taobao':   ('https://item.taobao.com/item.htm?id=%s',                      '%s',),
-    'tmall':    ('https://detail.tmall.com/item.htm?id=%s',                     '%s',),
-    'yt':       ('https://www.youtube.com/watch?v=%s',                          '%s',),
-    'eol':      ('https://download.lenovo.com/ibmdl/pub/pc/pccbbs/mobiles/%s',  '%s',),
+    'taobao':   ('https://item.taobao.com/item.htm?id=%s',                     '%s',),
+    'tmall':    ('https://detail.tmall.com/item.htm?id=%s',                    '%s',),
+    'tree':     ('https://github.com/Un1Gfn/'+project+'/tree/master/%s',       '%s',),
+    'yt':       ('https://www.youtube.com/watch?v=%s',                         '%s',),
 
     # extension/define.py:wikiprepend_dict
     'aw':   ('https://wiki.archlinux.org/title/%s',             '%s',),
@@ -165,7 +166,7 @@ highlight_language = 'bash'
 # -- Options for internationalization ----------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-internationalization
 
-language = None
+language = 'en'
 
 
 # -- Options for HTML output -------------------------------------------------

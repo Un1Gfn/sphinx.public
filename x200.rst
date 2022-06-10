@@ -15,22 +15,15 @@ Misc
 
    gpg --keyserver-options "auto-key-retrieve,http-proxy=http://127.0.0.1:8080" --verify signature.sig
 
-::
 
-   :: There are 8 providers available for ttf-font:
-   :: Repository extra
-      1) gnu-free-fonts  2) noto-fonts  3) ttf-bitstream-vera  4) ttf-croscore  5) ttf-dejavu
-   :: Repository community
-      6) ttf-droid  7) ttf-ibm-plex  8) ttf-liberation
+| essential packages
+| :pkg:`AUR/fake-hwclock`
+
+`<https://unix.stackexchange.com/questions/56531/how-to-get-fewer-ttys-with-systemd>`__
 
 
-Audio
-=====
-
-wikibooks - `configuring sound on linux <https://en.wikibooks.org/wiki/Configuring_Sound_on_Linux/Pulse_Audio/Testing>`__
-
-CPU
-===
+HW.Other
+========
 
 | :aw:`lm_sensors`
 | :aw:`fan speed control`
@@ -39,14 +32,16 @@ CPU
 
    cpupower frequency-set -g performance
 
+:amz:`mini pcie to pcie adapter` + :abbr:`low-profile (半高)` graphics card
 
-GPU/Video
-=========
+
+HW.GPU
+======
 
 .. tip::
 
-   | GM45 is \*\*very\*\* old
-   | Use :pkg:`extra/xf86-video-intel` instead of :aw:`KMS` (high intel_gpu_top usage & laggy)
+   | Xorg with :aw:`KMS` results in high intel_gpu_top usage and laggy
+   | Use xorg with :pkg:`extra/xf86-video-intel` instead
 
 .. tip::
 
@@ -66,9 +61,7 @@ GPU/Video
 
 | EDID
 | |b| :aw:`kernel mode setting#Forcing_modes_and_EDID`
-| |b| `reddit <archlinux/comments/oujnxs/>`
-
-:taobao:`LVDS to HDMI adapter <525562175840>`
+| |b| :r:`reddit <archlinux/comments/oujnxs/>`
 
 | `4-chipset-family-datasheet.pdf <https://www.intel.com/content/dam/www/public/us/en/documents/datasheets/4-chipset-family-datasheet.pdf>`__
   (`archive <https://web.archive.org/web/20210807102641/https://www.intel.com/content/dam/www/public/us/en/documents/datasheets/4-chipset-family-datasheet.pdf>`__)
@@ -121,6 +114,28 @@ GPU/Video
 
 `<https://www.coreboot.org/Board:lenovo/x200>`__
 
+WikiChip - `HD520 <https://en.wikichip.org/wiki/intel/hd_graphics/520>`__
+
+
+| list display output `without xorg <https://unix.stackexchange.com/questions/433916>`__
+| ``less -SRM +% /sys/kernel/debug/dri/0/i915_display_info``
+| ``find /sys/devices -iname "*edid*"``
+| `disable display output on boot (1) <https://superuser.com/questions/636617/>`__
+| `disable display output on boot (2) <https://unix.stackexchange.com/questions/526608>`__
+| :manpage:`kernel-command-line(7)`/`modedb <https://www.kernel.org/doc/html/v5.17/fb/modedb.html>`__
+
+
+Audio
+=====
+
+wikibooks - `configuring sound on linux <https://en.wikibooks.org/wiki/Configuring_Sound_on_Linux/Pulse_Audio/Testing>`__
+
+:aw:`jack2 <JACK Audio Connection Kit>`
+
+
+Video
+=====
+
 | :manpage:`mpv(1)` - `manual <https://mpv.io/manual/stable/>`__
 | `--ytdl-format --speed --af <https://www.rockyourcode.com/til-how-to-watch-youtube-videos-with-mpv-and-keyboard-shortcuts/>`__
 | `youtube-viewer <https://github.com/trizen/youtube-viewer>`__
@@ -152,8 +167,6 @@ GPU/Video
   :aw:`(g) <youtube-dl#Faster_downloads>`
 
 ``mpv --list-options | less``
-
-WikiChip - `HD520 <https://en.wikichip.org/wiki/intel/hd_graphics/520>`__
 
 :r:`mpv call yt-dlp <mpv/comments/q759xc/comment/hhbva8j/>`
 
@@ -245,11 +258,6 @@ KDE :pr:`UBW` `UserBase Wiki <https://userbase.kde.org/Welcome_to_KDE_UserBase>`
 | |b| :aw:`kkc <localization/Japanese#libkkc>`
 | |b| `skk tutorial <https://gist.github.com/akirak/e93876855f8b1d295c2cd0ff2370af8d>`__
 
-:wp:`PCIe`
-==========
-
-:amz:`mini pcie to pcie adapter` + low-profile (半高) graphics card
-
 
 SSH
 ===
@@ -268,9 +276,7 @@ make sure password auth is disabled ::
 
 send :pkg:`community/clash` configs ::
 
-   ssh darren@x200 rm -rf /{home/darren,tmp}/{clash,yacd-gh-pages}; \
-   scp -r /tmp/clash          darren@x200:/home/darren/clash; \
-   scp -r /tmp/yacd-gh-pages/ darren@x200:/home/darren/yacd-gh-pages/
+   ssh darren@x200 rm -rfv /{home/darren,tmp}/{clash,yacd-gh-pages}; scp -r /tmp/clash darren@x200:/home/darren/clash; scp -r /tmp/yacd-gh-pages/ darren@x200:/home/darren/yacd-gh-pages
 
    # ssh darren@x200 ln -sv /{home/darren,tmp}/clash; \
    # ssh darren@x200 ln -sv /{home/darren,tmp}/yacd-gh-pages
