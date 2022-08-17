@@ -72,17 +72,18 @@ extlinks = {
     'yt':       ('https://www.youtube.com/watch?v=%s',                         '%s',),
 
     # extension/define.py:wikiprepend_dict
-    'aw':   ('https://wiki.archlinux.org/title/%s',             '%s',),
-    'dw':   ('https://wiki.debian.org/%s',                      '%s',),
-    'el':   ('https://elinux.org/%s',                           '%s',),
-    'gw':   ('https://wiki.gentoo.org/wiki/%s',                 '%s',),
-    'wp':   ('https://en.wikipedia.org/wiki/%s',                '%s',),
-    'ja':   ('https://ja.wikipedia.org/wiki/%s',                '%s',),
-    'zh':   ('https://zh.wikipedia.org/wiki/%s',                '%s',),
-    'egw':  ('https://emulation.gametechwiki.com/index.php/%s', '%s',),
-    'tw':   ('https://www.thinkwiki.org/wiki/%s',               '%s',),
-    'tiw':  ('https://www.theiphonewiki.com/wiki/%s',           '%s',),
-    'pmos': ('https://wiki.postmarketos.org/wiki/%s',           '%s',),
+    'aw':     ('https://wiki.archlinux.org/title/%s',             '%s',),
+    'debian':     ('https://wiki.debian.org/%s',                      '%s',),
+    'el':     ('https://elinux.org/%s',                           '%s',),
+    'gentoo': ('https://wiki.gentoo.org/wiki/%s',                 '%s',),
+    'wp':     ('https://en.wikipedia.org/wiki/%s',                '%s',),
+    'ja':     ('https://ja.wikipedia.org/wiki/%s',                '%s',),
+    'zh':     ('https://zh.wikipedia.org/wiki/%s',                '%s',),
+    'egw':    ('https://emulation.gametechwiki.com/index.php/%s', '%s',),
+    'tw':     ('https://www.thinkwiki.org/wiki/%s',               '%s',),
+    'tiw':    ('https://www.theiphonewiki.com/wiki/%s',           '%s',),
+    'pmos':   ('https://wiki.postmarketos.org/wiki/%s',           '%s',),
+    'alpine': ('https://wiki.alpinelinux.org/wiki/%s',           '%s',),
 
     'mt': ('https://app.element.io/#/room/%s', '%s',), # element/matrix
 

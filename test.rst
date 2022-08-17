@@ -82,11 +82,9 @@ Extension Showcase
 | |b| :stlink:`example <https://example.org>`
 | |b| :ltlink:`example <https://example.org>`
 
-
 | wikilink.py
 | |b| :wp:`Wikipedia`
 | |b| :aw:`Archiso`
 | |b| :el:`Device Tree Reference`
-| |b| :dw:`DebianReleases`
-| |b| :gw:`Portage`
-
+| |b| :debian:`DebianReleases`
+| |b| :gentoo:`Portage`

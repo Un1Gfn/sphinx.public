@@ -153,7 +153,7 @@ The Unbrickable
 | :aw:`network bridge`
 | |b| `redhat <https://developers.redhat.com/blog/2018/10/22/introduction-to-linux-interfaces-for-virtual-networking#>`__
 | |b| :wp:`wikipedia <bridging (networking)>`
-| |b| :dw:`debianwiki <BridgeNetworkConnections>`
+| |b| :debian:`debianwiki <BridgeNetworkConnections>`
 | |b| `<https://geek-university.com/ccna/what-is-a-network-bridge/>`__
 | |b| `<https://www.lifewire.com/how-network-bridges-work-816357>`__
 

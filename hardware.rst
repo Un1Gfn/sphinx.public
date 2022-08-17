@@ -127,13 +127,13 @@ CPU
 :wp:`ARM Cortex-A8` =
 :wp:`ARMv7-A <comparison of ARMv7-A cores>` =
 32-bit w/ FPU =
-:dw:`gnueabihf <Multiarch/Tuples#armhf>`
+:debian:`gnueabihf <Multiarch/Tuples#armhf>`
 
 `Sitara AM3358 <http://www.ti.com/product/AM3358>`__ ~
 :wp:`Arm Cortex-A8` ~
-32-bit :dw:`armhf <ArmHardFloatPort#Supported_devices>` ~
-:dw:`ArmEabiPort <ArmEabiPort>` ~
-:dw:`arm-linux-gnueabihf- <ArmHardFloatPort#Rationale>`\ [#w]_
+32-bit :debian:`armhf <ArmHardFloatPort#Supported_devices>` ~
+:debian:`ArmEabiPort <ArmEabiPort>` ~
+:debian:`arm-linux-gnueabihf- <ArmHardFloatPort#Rationale>`\ [#w]_
 
 | `Functional Block Diagram <http://www.ti.com/data-sheets/diagram.tsp?genericPartNumber=AM3358&diagramId=SPRS717K>`__
 | Docs `latest rev <http://www.ti.com/product/AM3358/technicaldocuments>`__

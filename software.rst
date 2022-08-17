@@ -111,7 +111,7 @@ standalone app
 :wp:`Binfmt <binfmt_misc>`
 --------------------------
 
-:gw:`qemu-wrapper.c <Embedded_Handbook/General/Compiling_with_qemu_user_chroot#Setup_chroot>`
+:gentoo:`qemu-wrapper.c <Embedded_Handbook/General/Compiling_with_qemu_user_chroot#Setup_chroot>`
 
 abuse binfmt [#gobinfmt]_ [#itbinfmt]_ [#jpbinfmt]_ [#kdocbinfmt]_ [#kdocbinfmtjava]_
 

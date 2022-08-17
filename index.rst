@@ -54,14 +54,20 @@ ico
 
 .. toctree::
    :maxdepth: 0
-   :caption: EMBEDDED
+   :caption: BBGW
 
    hardware
    software
    u-boot
    installalarm
    alarm
+
+.. toctree::
+   :maxdepth: 0
+   :caption: WT88047
+
    postmarketos
+   lowlevel
 
 .. toctree::
    :maxdepth: 0
@@ -85,6 +91,7 @@ ico
    meson
    gobject
    gtk3
+   libadwaita
 
 .. toctree::
    :maxdepth: 0
@@ -101,6 +108,7 @@ ico
    820g3
    archiso
    bash
+   bible
    cangjie
    cheatsheet
    chrome

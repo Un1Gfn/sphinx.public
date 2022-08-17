@@ -217,8 +217,8 @@ Modify Initramfs
 | QEMU+chroot
 | |b| `Unix&Linux <https://unix.stackexchange.com/questions/41889/how-can-i-chroot-into-a-filesystem-with-a-different-architechture>`__
 | |b| :aw:`ArchWiki <QEMU#Chrooting_into_arm/arm64_environment_from_x86_64>`
-| |b| :dw:`Debian Wiki <QemuUserEmulation>`
-| |b| :gw:`Gentoo Wiki <Embedded_Handbook/General/Compiling_with_qemu_user_chroot>`
+| |b| :debian:`Debian Wiki <QemuUserEmulation>`
+| |b| :gentoo:`Gentoo Wiki <Embedded_Handbook/General/Compiling_with_qemu_user_chroot>`
 
 :aw:`systemd-nspawn` - `chroot on steriods`__
 

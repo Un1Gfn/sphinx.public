@@ -1,9 +1,9 @@
 .. include:: include/substitution.txt
 .. highlight:: text
 
-=======
-GObject
-=======
+============
+GObject/GLib
+============
 
 Misc
 ====
@@ -55,6 +55,11 @@ Misc
 
 \      ``G_OBJECT(o)``
 |larr| ``(G_TYPE_CHECK_INSTANCE_CAST(o,G_TYPE_OBJECT,GObject))``
+
+| refer to all 3 docs for full GType API
+| `macros <https://docs.gtk.org/gobject/#function_macros>`__ - GObject - GTK doc
+| `functions <https://docs.gtk.org/gobject/#functions>`__ - GObject - GTK doc
+| `Type Information <https://libsoup.org/gobject/gobject-Type-Information.html>`__ - GObject Reference Manual - libsoup
 
 
 GValue
@@ -201,7 +206,6 @@ trackers
 
 ::
 
-   
    readonly_viewer::audio_file
 
    ${NT}  READONLY_VIEWER_TYPE_AUDIO_FILE
@@ -250,8 +254,36 @@ e.g. ::
 `How to define and implement interfaces <https://docs.gtk.org/gobject/tutorial.html#how-to-define-and-implement-interfaces>`__
 
 
+GVariant
+========
+
+`nm_connection_replace_settings() <https://networkmanager.dev/docs/libnm/latest/NMConnection.html#nm-connection-replace-settings>`__
+
+| NM_VARIANT_TYPE_SETTING === G_VARIANT_TYPE_VARDICT
+| ``map { string => arr [ map { string => variant }``
+| NM_VARIANT_TYPE_CONNECTION
+| ``arr [ map { string => arr [ map { string => variant } ] ]``
+| ``"a{sa{sv}}",``
+
+| gtk `doc <https://docs.gtk.org/glib/index.html>`__
+|    `Variant <https://docs.gtk.org/glib/struct.Variant.html>`__
+|    search "variant" - 3 pages
+| libsoup `doc <https://libsoup.org/glib/>`__
+|    search "variant" - 4 pages
+
+| `GVariant <https://docs.gtk.org/glib/struct.Variant.html>`__
+| `GVariantType <https://docs.gtk.org/glib/struct.VariantType.html>`__
+
+.. table::
+   :align: left
+   :widths: auto
+
+   ============= ================== ================================================
+    serialize     ram2file ram2net   ``g_variant_get_size()`` ``g_variant_store()``
+    deserialize   file2ram net2ram   ``g_variant_new_from_data()``
+   ============= ================== ================================================
+
+
 Footnotes
 =========
-
-:pr:`[#fileproto] Manually paste file://... to address bar in case of browser Not allowed to load local resource: ...`
 

@@ -10,7 +10,7 @@ import sphinx
 import typing
 import util
 import define
-import archlinux
+import pkg
 
 
 def setup(app: sphinx.application.Sphinx):
@@ -25,8 +25,8 @@ def setup(app: sphinx.application.Sphinx):
 
     # ArchWiki :aw: is provided in wikilink.py, not here
     # Use :pkg:`AUR/package` instead of :aur:`package`
-    app.add_role(name='aur', role=archlinux.aur_nonexist_fn, override=False)
-    app.add_role(name='pkg', role=archlinux.pkg_fn,          override=False)
+    app.add_role(name='aur', role=pkg.aur_nonexist_fn, override=False)
+    app.add_role(name='pkg', role=pkg.pkg_fn,          override=False)
 
     for n in [
         'emlink',

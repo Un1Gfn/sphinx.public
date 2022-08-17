@@ -61,16 +61,29 @@ def pkg_fn(name, rawtext, text, lineno, inliner, options={}, content=[]):
     assert (pkg,)     == re.match(pattern=p, string=pkg, flags=re.M).groups()
     assert (pkg, pkg) == re.match(pattern=p, string=pkg, flags=re.M).group(0,1)
 
-
     # return [], []
+
+    # https://docs.python.org/3/reference/compound_stmts.html#the-match-statement
+    refuri='https://example.com/'
+    match repo:
+        case 'core'|'extra'|'community'|'multilib':
+            refuri=f'https://archlinux.org/packages/{repo}/x86_64/{pkg}/'
+        case 'AUR':
+            refuri=f'https://aur.archlinux.org/packages/{pkg}'
+        case 'alarm':
+            refuri=f'https://archlinuxarm.org/packages/armv7h/{pkg}'
+        # case 'alpine.main'|'alpine.repo':
+            # refuri=f'https://pkgs.alpinelinux.org/package/edge/{repo}/aarch64/{pkg}'
+        case _:
+            assert False
+
     return [
         docutils.nodes.reference(rawsource=pkg,
                                  text=pkg,
                                  internal=False,
                                  # https://docs.python.org/3/reference/expressions.html#conditional-expressions
-                                 refuri='https://aur.archlinux.org/packages/'+pkg       if repo == 'AUR'   else (
-                                        'https://archlinuxarm.org/packages/armv7h/'+pkg if repo == 'alarm' else (
-                                        'https://archlinux.org/packages/%s/x86_64/%s/'%(repo,pkg)))),
+                                 # refuri=''+pkg if repo == '' else ()
+                                 refuri=refuri),
         docutils.nodes.superscript(rawsource=repo,
                                    text=repo),
     ],[]
