@@ -22,7 +22,7 @@ sys.path.insert(0, os.path.abspath('extension'))
 # project = os.path.dirname(__file__)
 # project = os.path.basename(os.path.dirname(__file__))
 project = os.path.basename(os.getcwd())
-author = 'Darren Ng'
+author = 'Darren "Un1Gfn" Ng'
 copyright = time.strftime("%Y")
 assert str == type(copyright)
 assert copyright

@@ -43,6 +43,7 @@ ico
    cet
    csapp
    htwfaip
+   toefl
 
 .. toctree::
    :maxdepth: 0
@@ -108,13 +109,13 @@ ico
    820g3
    archiso
    bash
-   bible
    cangjie
    cheatsheet
    chrome
    gpu_hang
    hololive
    ios
+   miller
    music
    pkgmgmt
    python

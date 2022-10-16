@@ -282,8 +282,74 @@ mpv
 `break/jump <https://music.stackexchange.com/questions/12066/how-can-i-typeset-a-break-or-jump-in-my-scores>`__
 instead of relying on mpv resume
 
+2-up ::
+
+   pdfjam 04_ame.ly.pdf --nup 2x1 --suffix 2up --a3paper --landscape --frame true --trim '0mm 0mm 0mm 0mm' --outfile temp.pdf
+   # pdfbook2 -p a3paper -s -n 04_ame.ly.pdf
+   # pdfbook2 -p a3paper -n 04_ame.ly.pdf
+
 
 Piano
 =====
 
 Nahre Sol `Repeated Notes at the Piano <https://www.youtube.com/watch?v=3XcgoAl5WvI>`__
+
+
+Hangul
+======
+
+| :wp:`outline of Korean language`
+|    :wp:`Korean language#Phonology`
+|    :wp:`Korean phonology`
+
+| phonetics |vv| syllable
+|    :wp:`origin of Hangul`
+|    :wp:`Hangul consonant and vowel tables`
+|    :wp:`Korean language#Symbol_chart`
+|    :wp:`List of Hangul jamo`
+
+| :wp:`romanization of Korean`
+|    :wp:`MR <McCune–Reischauer>`
+|    :wp:`RR <Revised Romanization of Korean#Transcription_rules>` |:thumbup:|
+|    :wp:`YR <Yale romanization of Korean>`
+
+| :wp:`KS X 1001` |vv| :wp:`UHC <Unified Hangul Code>`/MS949/CP949 |vv| :wp:`IBM-949 <code page 949 (IBM)>`
+| :wp:`Hangul#Unicode`
+
+| :wp:`BMP <plane (Unicode)#Basic_Multilingual_Plane>` / :wp:`Hangul Syllables`
+| :wp:`Korean language and computers#Hangul_syllables_block`
+| ``[(initial) × 588 + (medial) × 28 + (final)] + 44032``
+
+| `SampleRz <https://princessoftea.wordpress.com/2012/07/30/why-%EC%9A%B4%EB%AA%85-fate-lyrics-full-house-ost-hangeul-romanization-translation/>`__
+  |larr| `운명/이경섭 <https://music.bugs.co.kr/track/80383075>`__
+| `SampleRz <https://genius.com/Genius-romanizations-shaun-way-back-home-romanized-lyrics>`__
+  |larr| `way back home/숀 (SHAUN) <https://music.bugs.co.kr/track/5262784>`__
+  |larr| `google <https://www.google.com/search?as_q=way+back+home+가사&as_epq=&as_eq=&as_filetype=&as_nhi=&as_nlo=&as_occt=any&as_oq=&as_qdr=all&as_sitesearch=&cr=countryKR&lr=lang_ko&safe=images&tbs=>`__
+| `새 <https://music.bugs.co.kr/track/61962>`__
+
+::
+
+   멈 CVC m_eo_m     ㅁㅓㅁ
+   춘 CVC ch(j)_u_n  ㅊㅜㄴ
+   .
+   시 CV  s_i        ㅅㅣ
+   간 CVC g_a_n      ㄱㅏㄴ
+   .
+   속 CVC s_o_k      ㅅㅗㄱ
+
+   Meom-chun si-gan sok
+
+::
+
+   사 CV  s_a      ㅅㅏ
+   랑 CVC r_a_ng   ㄹㅏㅇ
+   을 CVC ._eu_l   ㅇㅡㄹ
+   .
+   잘 CVC j_a_l    ㅈㅏㄹ
+   .
+   모 CV  m_o      ㅁㅗ
+   르 CV  r_eu     ㄹㅡ
+   겠 CVC g_e_t    ㄱㅔㅆ
+   어 CV  ss(.)_eo ㅇㅓ
+
+   Sa-rang-eul jal mo-reu-get-sseo

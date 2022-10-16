@@ -276,9 +276,19 @@ make sure password auth is disabled ::
 
 send :pkg:`community/clash` configs ::
 
-   ssh darren@x200 rm -rfv /{home/darren,tmp}/{clash,yacd-gh-pages}; scp -r /tmp/clash darren@x200:/home/darren/clash; scp -r /tmp/yacd-gh-pages/ darren@x200:/home/darren/yacd-gh-pages
-
-   # ssh darren@x200 ln -sv /{home/darren,tmp}/clash; \
-   # ssh darren@x200 ln -sv /{home/darren,tmp}/yacd-gh-pages
+   {
+      ssh darren@x200 rm -rfv /{home/darren,tmp}/{clash,yacd-gh-pages}
+      scp -r /tmp/clash darren@x200:/home/darren/clash
+      scp -r /tmp/yacd-gh-pages/ darren@x200:/home/darren/yacd-gh-pages
+      ssh darren@x200 ln -sv /{home/darren,tmp}/clash
+      ssh darren@x200 ln -sv /{home/darren,tmp}/yacd-gh-pages
+   }
+   # tmux new -s clash
+   # clash -d /tmp/clash
+   {
+      export HTTP_PROXY=http://127.0.0.1:8080
+      export HTTPS_PROXY=http://127.0.0.1:8080
+      mpv https://www.youtube.com/watch?v=EB4g7wecgTI
+   }
 
 edit remote file with :file:`/usr/local/bin/subr`

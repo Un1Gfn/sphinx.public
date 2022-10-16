@@ -7,6 +7,8 @@ Cangjie 倉頡
 雜項 |:hourglass:|
 ==================
 
+wikimediacommons/User:Cangjie6/`倉頡字母例字 <https://commons.wikimedia.org/wiki/User:Cangjie6#%E5%90%84%E4%BB%A3%E9%81%A9%E7%94%A8%EF%BC%88%E6%98%8E%E9%AB%94%EF%BC%89_2>`__
+
 `漢字の正しい書き順(筆順) <https://kakijun.jp/>`__
 `國字標準字體筆順學習網 <https://stroke-order.learningweb.moe.edu.tw/characters.do>`__
 

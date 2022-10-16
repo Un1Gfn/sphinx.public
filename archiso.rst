@@ -4,6 +4,11 @@
 :aw:`Archiso`
 =============
 
+.. note::
+
+   | There are modifications not included in current iso.
+   | Make a new one.
+
 Misc
 ====
 
@@ -100,6 +105,7 @@ sha1sum
     iso                               sha1sum
    ================================= =================================================
     archlinux-2022.05.26-x86_64.iso   :kbd:`3730fa4684db3b7919bda8866caf5591f81da834`
+    archlinux-2022.09.01-x86_64.iso   :kbd:`8af557b052b346936ec390465908a37619dbff34`
    ================================= =================================================
 
 qemu ::

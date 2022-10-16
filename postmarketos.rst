@@ -307,6 +307,39 @@ OpenRC
    sudo rc-status
 
 
+SMS
+===
+
+::
+
+   $ sqlite3 /home/user/.purple/chatty/db/chatty-history.db '.SCHEMA messages'
+   CREATE TABLE messages (
+      id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+      uid TEXT NOT NULL,
+      thread_id INTEGER NOT NULL REFERENCES threads(id) ON DELETE CASCADE,
+      sender_id INTEGER REFERENCES users(id),
+      user_alias TEXT,
+      body TEXT NOT NULL,
+      body_type INTEGER NOT NULL,
+      direction INTEGER NOT NULL,
+      time INTEGER NOT NULL,
+      status INTEGER,
+      encrypted INTEGER DEFAULT 0,
+      preview_id INTEGER REFERENCES files(id),
+      subject TEXT,
+      UNIQUE (
+         uid,
+         thread_id,
+         body,
+         time
+      )
+   );
+
+::
+
+   sqlite3 /home/user/.purple/chatty/db/chatty-history.db 'SELECT * FROM messages'
+   sqlite3 /home/user/.purple/chatty/db/chatty-history.db 'SELECT body FROM messages ORDER BY time ASC'
+
 
 Footnotes
 =========

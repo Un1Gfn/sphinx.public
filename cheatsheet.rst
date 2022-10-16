@@ -658,6 +658,12 @@ crop and resize ::
 | `view binary data as image <https://superuser.com/q/294270/>`__
 | |b| refer to corebootlibreboot\:\ :ref:`BMP <ref_label_imagemagick_bin2bmp_diff>`
 
+rotate ::
+
+   for i in IMG_????; do
+      magick convert -rotate 270 -quality 100 "${i}"{_ORIG,}.HEIC
+   done
+
 
 Makefile
 ========

@@ -47,6 +47,7 @@ BIOS
 
 (WIP move everything from `<https://github.com/Un1Gfn/820g3>`__)
 
+
 D surface screws
 ================
 
@@ -66,4 +67,27 @@ D surface screws
                 B              
                                
          1      2             3
+
+
+Power
+=====
+
+Cager 卡格爾 淘寶
+
+::
+
+   cd /sys/class/power_supply/BAT0
+   expr "$(< current_now)" \* "$(< voltage_now)"
+
+HP battery ``44.5Wh``
+
+| :wp:`Lithium-ion battery` nominal cell voltage (V)
+| 3.6 / 3.7 / 3.8 / 3.85
+| 3.2 (LiFePO4)
+| 2.3 (Li4Ti5O12)
+
+| weight ?
+| size ?
+| PDC65 vs PDC130 ?
+
 
