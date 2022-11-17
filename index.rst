@@ -65,10 +65,12 @@ ico
 
 .. toctree::
    :maxdepth: 0
-   :caption: WT88047
+   :caption: PHONE
 
+   wt88047
+   pinephone
    postmarketos
-   lowlevel
+   sm-a5360
 
 .. toctree::
    :maxdepth: 0

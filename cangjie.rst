@@ -16,8 +16,6 @@ wikimediacommons/User:Cangjie6/`倉頡字母例字 <https://commons.wikimedia.or
 
 gitter - `rime <https://gitter.im/rime/home>`__
 
-開啓無痕式分頁，登入另一google賬號，使用 |:tw:| 區域檢索
-
 `筆順查詢 <https://stroke-order.learningweb.moe.edu.tw/characters.do>`__
 
 | 五代字典
@@ -314,8 +312,8 @@ download svg ::
       | rsvg_handle_render_document()
 
 
-Cairo
-=====
+向量圖形繪圖 Cairo
+==================
 
 .. warning::
 
@@ -353,3 +351,61 @@ context
    | keeps track of everything that verbs affect
    | source + destination + mask + helpervars ( line width/style font face/size ... ) + path
    | the path it tracks turns into a mask with the next verb-drawing
+
+
+通用閘道器介面
+==============
+
+b:monolithic/`app.c5.srv <https://github.com/Un1Gfn/cangjie/tree/monolithic/app.c5.srv>`__/
+
+| :wp:`whatwg <WHATWG>` html spec :kbd:`~/pdf/whatwg-html-20221022.pdf`
+| `w3schools <https://www.w3schools.com/html/default.asp>`__
+|    html `forms <https://www.w3schools.com/html/html_forms.asp>`__
+
+| framework
+|    facil
+|    kore
+
+| CGI lib
+|    `libcgi <https://github.com/rafaelsteil/libcgi>`__
+|    `cgic <https://github.com/boutell/cgic>`__
+|    `kcgi <https://github.com/kristapsdz/kcgi>`__ (alpine package `info <https://pkgs.alpinelinux.org/package/edge/community/aarch64/kcgi>`__)
+|       apk/edge/`kcgi-static <https://dl-cdn.alpinelinux.org/alpine/edge/community/aarch64/kcgi-static-0.13.0-r1.apk>`__
+|       apk/edge/`kcgi-dev <https://dl-cdn.alpinelinux.org/alpine/edge/community/aarch64/kcgi-dev-0.13.0-r1.apk>`__
+
+| `kcgi <https://kristaps.bsd.lv/kcgi/>`__
+| |rarr| `mannav <https://kristaps.bsd.lv/kcgi/#mannav>`__
+| |rarr| `sample.c <https://kristaps.bsd.lv/kcgi/sample.c.html>`__ |rarr| 02-demo.c
+
+self-signed certificate
+`discu <https://discussions.apple.com/thread/253667401#:~:text=Open%20settings%20and%20use%20the,all%20roots%20for%20that%20profile.>`__
+`so37 <https://stackoverflow.com/a/37950928/>`__
+`so43 <https://stackoverflow.com/a/43833922/>`__
+`medium <https://medium.com/collaborne-engineering/self-signed-certificates-in-ios-apps-ff489bf8b96e>`__
+`sf10 <https://serverfault.com/questions/1060268/ssl-for-devices-in-local-network>`__
+
+| `BSD.lv project <https://www.bsd.lv/>`__
+| `learnBCHS <https://learnbchs.org/>`__ (`easy <https://learnbchs.org/easy.html>`__)
+|    `Secure CGI Applications in C on BSD <https://kristaps.bsd.lv/absdcon2016/>`__
+|    `Secure CGI <https://kristaps.bsd.lv/absdcon2017/>`__
+
+| http request methods
+  |vv| :wp:`wp <Hypertext Transfer Protocol#Request_methods>`
+  |vv| `mdn <https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods>`__
+| ``GET`` ``HEAD`` ``POST`` ``PUT`` ``OPTIONS`` ...
+
+``env MANPAGER="less -R +% -J -j.5 -p 'char \*ctype'" man khttp_parse.3``
+
+| `khttp_parse(3) <https://kristaps.bsd.lv/kcgi/khttp_parse.3.html>`__ documents the following
+| functions
+|    khttp_parse() khttp_parsex()
+| structs
+|    kreq kvalid kpair khttpauth khttpbasic khttpdigest kopts khead
+| extern variables
+|    kmimetypes[KMIME__MAX];
+|    khttps[KHTTP__MAX];
+|    kschemes[KSCHEME__MAX];
+|    kmethods[KMETHOD__MAX];
+|    ksuffixmap[];
+|    ksuffixes[KMIME__MAX];
+

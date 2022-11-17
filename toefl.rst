@@ -21,7 +21,9 @@ Misc
 
 ::
 
-   REALPAGE="$(gio info -a metadata::atril::page '/home/darren/pdf/Official Guide to the TOEFL iBT Test Sixth Edition.pdf' | tail -1 | cut -d ' ' -f 4)" ; echo '``?('"$REALPAGE"')/689(703)``'
+   PDF='/home/darren/pdf/ETS - The Official Guide to the TOEFL iBT Test - Sixth Edition with Audio Files-McGraw Hill (2020)/Official Guide to the TOEFL iBT Test Sixth Edition.pdf'; \
+   REALPAGE="$(gio info -a metadata::atril::page "$PDF" | tail -1 | cut -d ' ' -f 4)"; \
+   echo '``?('"$REALPAGE"')/689(703)``'
 
 | |:loudspeaker:| |:speaker:| |:sound:| |:loud_sound:| podcasts
 | `postmarketOS <https://cast.postmarketos.org/>`__
@@ -29,6 +31,15 @@ Misc
 | `this week in linux <https://tuxdigital.com/podcasts/this-week-in-linux/>`__
 | `embedded insiders <https://embeddedcomputing.com/podcasts>`__
 | `embedded.fm <https://embedded.fm/>`__
+| `linux unplugged <https://linuxunplugged.com>`__
+
+| TA
+|    :r:`recommended preparation materials <ToeflAdvice/comments/t112wv>`
+
+| A2C 
+|    :r:`FAQ <ApplyingToCollege/wiki/faq>`
+|    :r:`interview <ApplyingToCollege/comments/qotxxj>`
+|    :r:`AO 40+ apps a day <ApplyingToCollege/comments/wmrmes>`
 
 
 1 About the TOEFL iBT Test
@@ -271,9 +282,91 @@ Misc
 | |b| start a digression
 | |b| make a joke
 
-``137(151)/689(703)``
+
+4 Speaking Section
+==================
+
+``163(177)/689(703)``
+
+| responses are scored :abbr:`holistically (in a way that is characterized by comprehension of the parts of something as intimately interconnected and explicable only by reference to the whole)`
+| |b| delivery
+| |b| language use
+| |b| topic Development
+
+| Rating/Rubric.Speaking
+| |b| ``21(35)/689(703)``
+| |b| ``180(194)/689(703)``
+| Rating/Rubric.Writing
+| |b| ``22(36)/689(703)``
+| |b| ``193(207)/689(703)`` IntegratedWriting
+| |b| ``203(217)/689(703)`` IndependendWriting
+
+.. tip::
+
+   | Fully respond to all parts of the question
+
+.. tip::
+
+   | to support an answer
+   | |b| reasons
+   | |b| explanations
+   | |b| details
+   | |b| examples
+
+.. warning::
+
+   | Begin by stating opinion
+   | Always pick a side and stand firm
+   | Never argue both sides
+
+| SpeakingTask.IndependentTask.PairedChoice (1/4)
+|    whether someone should do A or do B
+|    whether something is good or bad
+|    whether a statement is correct or not
+| SpeakingTask.IntegratedTask.FitAndExplain (2/4)
+|    don't include your own opinion
+| SpeakingTask.IntegratedTask.General/Specific (3/4)
+| SpeakingTask.IntegratedTask.Summary (4/4)
+
+``185(199)``
+
+| FAQ
+| |b| avoid speaking at an unnaturally rapid pace to save time
+| |b| avoid repeating what has already been said
 
 
+5 Writing Section
+=================
+
+``187(201)``
+
+introduction
+
+| Writing.Integrated
+| lecture may challenge/support/strengthen by passage
+| passage will reappear when writing
+
+``192(???)``
+
+evaluation
+
+breakdown
+
+strategy
+
+``199(???)``
+
+| Writing.Independent
+| |b| avoid redundancy
+| |b| avoid digression
+| |b| avoid unclear connections
+| |b| syntactic variety
+
+``210(???)``
+
+TopicList
+
+?/39
 
 
 

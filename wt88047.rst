@@ -1,9 +1,9 @@
 .. include:: include/substitution.txt
 .. highlight:: text
 
-========
-lowlevel
-========
+=======
+wt88047
+=======
 
 .. attention::
 
@@ -98,7 +98,7 @@ bak.specs
 
 :raw-html:`<details><summary>system.bin//build.prop</summary>`
 
-.. literalinclude:: ../wt88047.lowlevel/system__build_prop
+.. literalinclude:: ../pmos.wt88047/system__build_prop
    :language: text
 
 :raw-html:`</details>`
@@ -628,7 +628,7 @@ mount \:\: hardcoded in rc \:\: recovery.img ::
 
 :raw-html:`<details><summary>edl printgpt (full)</summary>`
 
-.. literalinclude:: ../wt88047.lowlevel/edl_printgpt.txt
+.. literalinclude:: ../pmos.wt88047/edl_printgpt.txt
    :language: text
 
 :raw-html:`</details>`

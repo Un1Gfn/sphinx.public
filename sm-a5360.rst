@@ -1,0 +1,70 @@
+.. include:: include/substitution.txt
+
+==========
+Galaxy A53
+==========
+
+#MISC#
+======
+
+`管人痴.com <https://管人痴.com/user>`__ |rarr| qr |rarr| samsung camera |rarr| clipboard |rarr| shadowsocks-android
+
+dontkillmyapp/`samsung <https://dontkillmyapp.com/samsung>`__
+
+| GApps
+| lineage/`gapps <https://wiki.lineageos.org/gapps>`__
+| apkpure/`com.android.vending <https://apkpure.com/google-play-store/com.android.vending>`__
+| apkmirror/`google-inc <https://www.apkmirror.com/apk/google-inc/>`__/...
+
+| aw/:aw:`waydroid`
+| :file:`/storage/emulated/0` |larr| :file:`~/.local/share/waydroid/data/media/0`
+
+
+1.Build
+=======
+
+.. table::
+   :align: left
+   :widths: auto
+
+   ============== ============= ============= ============================================
+    API level 33   Android 13     One UI ?     ?
+    API level 32   Android 12L    \-           \-
+    API level 31   Android 12     One UI 4.1   build number SP1A.210812.016.A5360ZCU4AVI1
+   ============== ============= ============= ============================================
+
+:pkg:`AUR/android-sdk-build-tools-31.0.0`
+
+`ANDROID_HOME <https://developer.android.com/studio/command-line/variables#android_home>`__
+
+::
+
+   # /opt/android-sdk/tools/android create project
+   gradle build
+   gradle assembleDebug
+
+| gradle
+| `generate <https://docs.gradle.org/current/userguide/gradle_wrapper.html#sec:adding_wrapper>`__ gradlew
+| `configure <https://docs.gradle.org/7.5.1/userguide/build_environment.html#sec:configuring_jvm_memory>`__ JVM memory
+
+| `android robot <https://developer.android.com/distribute/marketing-tools/brand-guidelines#android_robot>`__
+| `adaptive icons <https://developer.android.com/develop/ui/views/launch/icon_design_adaptive>`__
+| `VectorDrawable <https://developer.android.com/develop/ui/views/graphics/vector-drawable-resources>`__
+
+
+2.ADB
+=====
+
+::
+
+   # https://stackoverflow.com/questions/53634246
+   adb --help
+   # adb shell pm list packages [-3|-f]
+   adb shell cmd package list packages | sort | less -SRM +%
+   adb uninstall [-k] com.example.app
+
+
+Footnotes
+=========
+
+

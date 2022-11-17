@@ -6,10 +6,17 @@
 
 .. __: https://mesonbuild.com/
 
+
 Misc
 ====
 
-:kbd:`/home/darren/gtk3/Makefile`
+| Makefile-wrapped meson.build example
+| \
+     ``sudo find ~darren -type f -name meson.build -exec stat -c "%Y %n" {} \; | sort -rh``
+| :kbd:`~/gtk3/...`
+| :kbd:`~/adwible/...`
+| :kbd:`~/music/hangul-rr/...`
+| :kbd:`~/cangjie/app.c5.srv/cgi-bin/...`
 
 static `sdl2 <https://mesonbuild.com/GuiTutorial.html>`__ from `wrapdb <https://mesonbuild.com/Wrapdb-projects.html>`__
 
@@ -94,4 +101,13 @@ Install
    meson install -C builddir --destdir "$(realpath pkg)"; find pkg | sort
    # ninja -C builddir uninstall; find pkg | sort # requires builddir/meson-logs/install-log.txt
 
+::
 
+   chromium http://192.168.0.223:62884/meson.html#meson-build
+   chromium https://github.com/mesonbuild/meson/blob/master/test%20cases/linuxlike/3%20linker%20script/meson.build
+   chromium https://mesonbuild.com/Syntax.html
+   chromium https://mesonbuild.com/Reference-manual_elementary.html
+   chromium https://mesonbuild.com/FAQ.html
+   chromium https://mesonbuild.com/Subprojects.html
+   chromium https://mesonbuild.com/howtox.html
+   chromium https://mesonbuild.com/Wrap-best-practices-and-tips.html

@@ -12,8 +12,8 @@ postmarketOS
 :file:`~/wt88047.?`
 
 
-Contacts
-========
+#contacts#
+==========
 
 :alpine:`Alpine Linux:IRC`
 
@@ -27,8 +27,8 @@ Contacts
 |    swiftgeek
 
 
-Misc
-====
+#misc#
+======
 
 | Alpine Linux `packages <https://pkgs.alpinelinux.org/packages>`__
 | postmarketOS `packages <https://pkgs.postmarketos.org/packages>`__
@@ -95,6 +95,22 @@ unofficial wayland `protocols explorer <https://wayland.app/protocols/>`__
 `gdb in qemu <https://qemu-project.gitlab.io/qemu/system/gdb.html>`__
 
 
+alarm
+=====
+
+| `rtcwake <https://askubuntu.com/a/511804/>`__
+| aosp/platform/frameworks/base//data/`sounds <https://android.googlesource.com/platform/frameworks/base.git/+/refs/heads/master/data/sounds>`__
+  |rarr| `tgz <https://android.googlesource.com/platform/frameworks/base.git/+archive/refs/heads/master/data/sounds.tar.gz>`__
+  |rarr| ~/pmos.pinephone/base.git-refs_heads_master-data-sounds.tar.gz
+| postmarketos-tweaks//settings/`sound.yml <https://gitlab.com/postmarketOS/postmarketos-tweaks/-/blob/master/settings/sound.yml>`__
+
+::
+
+   find -type f -name '*.wav' -exec stat -c '%s %n' {} \; | sort -rh | less
+   scp ~/pmos.pinephone/sounds/ringtones/wav/Themos.wav user@pinephoneusb:/home/user/.local/share/sounds/__custom/alarm-clock-elapsed.wav
+   scp ~/pmos.pinephone/sounds/ringtones/wav/Sceptrum.wav user@pinephoneusb:/home/user/.local/share/sounds/__custom/alarm-clock-elapsed.wav
+
+
 APKBUILD
 ========
 
@@ -149,11 +165,14 @@ init ::
 set up chroot ::
 
    pmbootstrap status
-   pmbootstrap chroot --add alpine-sdk,elogind-dev,meson,networkmanager-dev,networkmanager-wifi -b aarch64
+   # pmbootstrap chroot --add meson,alpine-sdk,elogind-dev,meson,networkmanager-dev,networkmanager-wifi -b aarch64
+   pmbootstrap chroot --add gcc,make,meson -b aarch64
    # pmbootstrap netboot
    # pmbootstrap install
    # adduser -u 1000 darren
-   # echo 'nameserver 127.0.0.53' >/etc/resolv.conf
+
+   # execute outside chroot
+   # sudo cp -v /etc/resolv.conf /home/darren/wt88047.pmbootstrap/chroot_buildroot_aarch64/etc/resolv.conf
 
 build in chroot ::
 
@@ -163,7 +182,92 @@ build in chroot ::
    # cd coldspot.bindmount
 
 
-Bluetooth
+backup
+======
+
+:pmos:`backup and restore your data`
+
+noatime ::
+
+   mount -o remount,rw,noatime /dev/mapper/mmcblk0p30p2
+
+sort packages by size (bash) [#NOPIPEMAP]_ ::
+
+   # readarray is nothing but an alias of mapfile
+   {
+      NFO="$(/sbin/apk info -e -s \*)"
+      unset -v PKG; readarray -t PKG < <(awk NR%3==1 <<<"$NFO" | cut -d ' ' -f 1) # declare -p PKG
+      unset -v SIZ; readarray -t SIZ < <(awk NR%3==2 <<<"$NFO" | tr -d ' ')       # declare -p SIZ
+      N="${#PKG[@]}"
+      echo "$N ${#SIZ[@]} 0~$((N-1))"
+      {
+         for i in $(seq 0 $((N-1))); do
+            busybox printf "%8s %s\n" "${SIZ[$i]}" "${PKG[$i]}"
+         done
+      } | /usr/bin/sort -bh | uniq >/tmp/pkg.lst
+   }
+   sed 's/^/|/g' /tmp/pkg.lst | /usr/bin/less -SRM +%
+
+   # pkgcleanup.installer
+   rm -v /var/cache/apk/*-*-r*.????????.apk
+   # pkgcleanup.package
+   # apk del -ir ...
+
+
+.. nencrypted plain nfs over usbnet (`unudhcpd <https://pkgs.alpinelinux.org/package/v3.16/community/aarch64/unudhcpd>`__)
+.. installalarm\:\ :ref:`installalarm:PC NFS`
+.. # nfs.client
+.. showmount -e 172.16.42.2
+.. mount -v 172.16.42.2:/home/darren/pmos.backup /mnt.pmos.backup
+
+nbd.server ::
+
+   # drop runlevel
+   # rc-service tinydm stop
+   rc-update add sshd boot; openrc boot
+
+   # tmpfs for tmux
+   : manually clean up /tmp, move out valuable files
+   mount -vt tmpfs tmpfs /tmp
+   tmux new -s nbd
+
+   # ro
+   echo 3 | tee /proc/sys/vm/drop_caches
+   sync
+   cd /tmp
+   mount -vo remount,ro,noatime /
+   findmnt /
+   fstrim -v /
+   fsck.ext4 -fvn /dev/dm-1; echo '$?='$?
+   # fsck.ext4 -Dfv /dev/dm-1; echo '$?='$?
+
+   # nbd
+   modprobe -v nbd
+   cat <<EOF | sed 's/^\s*//g' | tee /tmp/config
+      [generic]
+         allowlist = true
+         listenaddr = 172.16.42.1
+         oldstype = false
+      [vuf7p0]
+         exportname = /dev/dm-1
+         readonly = true
+   EOF
+   nbd-server -C /tmp/config -d
+
+e2image qcow2 (820g3) (tmux) (superuser) ::
+
+   modprobe -v nbd
+   nbd-client 172.16.42.1 -l
+   nbd-client 172.16.42.1 /dev/nbd0 -name vuf7p0
+   nbd-client -c /dev/nbd0; echo '$?='$?
+   file -sL /dev/nbd0; date; e2image -aQ /dev/nbd0 /home/darren/pmos.backup/pmOS_root.e2i.qcow2; date
+   file /home/darren/pmos.backup/pmOS_root.e2i.qcow2
+   nbd-client -d /dev/nbd0
+   rmmod -v nbd
+
+
+
+bluetooth
 =========
 
 | :wp:`list of Bluetooth protocols#Radio_frequency_communication_(RFCOMM)`
@@ -176,7 +280,7 @@ https://askubuntu.com/questions/248817/how-to-i-connect-a-raw-serial-terminal-to
 https://blog.habets.se/2022/02/SSH-over-Bluetooth-cleanly.html
 https://hacks.mozilla.org/2017/02/headless-raspberry-pi-configuration-over-bluetooth/
 
-Camera
+camera
 ======
 
 | `ov8865.c <https://github.com/torvalds/linux/blob/master/drivers/media/i2c/ov8865.c>`__
@@ -201,7 +305,7 @@ HID
 :wp:`Human interface device`
 :pmos:`troubleshooting:HID_buttons`
 
-Hotspot
+hotspot
 =======
 
 | `<https://developer-old.gnome.org/NetworkManager/stable/settings-802-11-wireless.html>`__
@@ -254,7 +358,7 @@ C libnm/dbus `examples <https://gitlab.freedesktop.org/NetworkManager/NetworkMan
 |    nm_client_activate_connection_async()
 
 
-Location.GNSS
+location.GNSS
 =============
 
 :wp:`Assisted GNSS` |vv| A-GNSS |vv| AGPS
@@ -276,11 +380,11 @@ Location.GNSS
    sudo qmicli -pd qrtr://0:18 --client-cid=1 --loc-follow-nmea | gpsd -bnN /dev/stdin
 
 
-Location.GPS
+location.GPS
 ============
 
 
-Modem
+modem
 =====
 
 | :pmos:`Dual-Sim QMI draft <User:TravMurav/Dual-Sim_QMI_draft>`
@@ -345,3 +449,4 @@ Footnotes
 =========
 
 .. [#RMTFS] :mt:`#main:postmarketos.org/$AZBbV9jdhw1u7uRQE_6Yq-XCT0ywmd941mSlrCUXUuU`
+.. [#NOPIPEMAP] `cannot pipe into a command which takes a varname as an arg <https://superuser.com/a/1348950/>`__ (readarray/mapfile)

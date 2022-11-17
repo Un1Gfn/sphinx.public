@@ -515,8 +515,10 @@ submit to ArchWiki :aw:`BusyBox` and link from :aw:`TFTP#Server`
    busybox udpsvd -E -l 820g3 10.0.0.89 69 tftpd -r -l "$PWD"
 
 
-PC :wp:`NFS<Network_File_System>`
-=================================
+PC NFS
+======
+
+|:link:| postmarketos\:\ :ref:`postmarketos:backup`
 
 | ArchWiki
 | |b| :aw:`Diskless_system#Server_configuration`
@@ -528,77 +530,35 @@ client |rarr| ``mount`` |rarr| server |rarr| ``rpcbind`` |rarr| ``nfsd`` |rarr| 
 
 :aw:`append to /etc/exports <diskless system#NFS>` ::
 
-   F=/etc/exports
-   BAK="$F.pacnew"
-
-   S="$(sha256sum $F | cut -d' ' -f 1)"
-   S0="$(zcat /var/lib/pacman/local/nfs-utils-2.5.4-1/mtree \
-      | grep "^\.$F " \
-      | cut -d' ' -f5- \
-      | cut -d'=' -f2
-   )"
-
-   function M {
-   echo >>"$F"
-   cat  >>"$F" <<EOF
-   /srv                               *(rw,no_root_squash,no_subtree_check)
-   /home/darren/beaglebone/alarm_root *(rw,no_root_squash,no_subtree_check)
-   EOF
-   }
-
-   if [ "$S0" == "$S" ]; then
-      cp -vi "$F" "$BAK"
-      M
-      diff -u --color=always "$BAK" "$F"
-   else
-      echo
-      printf "\e[31m  %s\e[0m\n" "err"
-      printf "\e[31m  %s\e[0m\n" "$F already modified"
-      printf "\e[31m  %s\e[0m\n" "$BAK is a backup"
-      echo
-   fi
-
-   unset -v F BAK S S0
-   unset -f M
+   # https://wiki.archlinux.org/title/Diskless_system#NFS
 
 | |:warning:| :aw:`NFS#Restricting_NFS_to_interfaces/IPs`
 | :manpage:`rpc.nfsd(8)`
 
 ::
 
-   mv -fv /etc/nfs.conf{.pacnew,} 2>/dev/null
-   # [nfsd]
-   sed -i.pacnew -e 's|^# host=$|host=10.0.0.89,10.0.0.64|g' /etc/nfs.conf # lo test
-   diff -u --color /etc/nfs.conf{.pacnew,}
-   systemctl restart nfs-server.service
+   # https://wiki.archlinux.org/title/NFS#Restricting_NFS_to_interfaces/IPs
 
 | make sure kernel ip forwarding is disabled for security
 | kernel doc - `ip sysctl <https://www.kernel.org/doc/html/latest/networking/ip-sysctl.html>`__
 
 ::
 
-   if
-      [ 0 -eq "$(sysctl -n net.ipv4.ip_forward)" ] &&
-      [ 0 -eq "$(sysctl -n sysctl -n net.ipv6.conf.all.forwarding)" ];
-   then
-      printf "\n\e[32m  %s\e[0m\n\n" "ok"
-   else
-      printf "\n\e[31m  %s\e[0m\n\n" "err"
-   fi
+   sudo sysctl -n net.ipv4.ip_forward
+   sudo sysctl -n net.ipv6.conf.all.forwarding
+   # expect two '0's
 
 start nfs ::
 
-   # ln -sfv "$(realpath ~darren/beaglebone/alarm_root)" /srv/alarm
-   echo
-   exportfs -arv
-   echo
-   systemctl start rngd.service # (B)
-   systemctl start nfs-idmapd.service # (C)
-   systemctl start nfs-mountd.service # (D)
-   systemctl start nfs-server.service # (E)
+   # start
+   sudo exportfs -arv
+   # sudo systemctl start rngd.service # (B)
+   sudo systemctl start nfs-idmapd.service # (C)
+   sudo systemctl start nfs-mountd.service # (D)
+   sudo systemctl start nfsv4-server.service # (?)
+   sudo systemctl start nfs-server.service # (E)
 
-::
-
+   # check
    echo
    exportfs -v
    echo

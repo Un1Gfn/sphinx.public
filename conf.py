@@ -73,7 +73,7 @@ extlinks = {
 
     # extension/define.py:wikiprepend_dict
     'aw':     ('https://wiki.archlinux.org/title/%s',             '%s',),
-    'debian':     ('https://wiki.debian.org/%s',                      '%s',),
+    'debian': ('https://wiki.debian.org/%s',                      '%s',),
     'el':     ('https://elinux.org/%s',                           '%s',),
     'gentoo': ('https://wiki.gentoo.org/wiki/%s',                 '%s',),
     'wp':     ('https://en.wikipedia.org/wiki/%s',                '%s',),
@@ -83,7 +83,10 @@ extlinks = {
     'tw':     ('https://www.thinkwiki.org/wiki/%s',               '%s',),
     'tiw':    ('https://www.theiphonewiki.com/wiki/%s',           '%s',),
     'pmos':   ('https://wiki.postmarketos.org/wiki/%s',           '%s',),
-    'alpine': ('https://wiki.alpinelinux.org/wiki/%s',           '%s',),
+    'alpine': ('https://wiki.alpinelinux.org/wiki/%s',            '%s',),
+    'sunxi':  ('https://linux-sunxi.org/%s',                      '%s',),
+    'pine64': ('https://wiki.pine64.org/index.php/%s',            '%s',),
+    'osdev':  ('https://wiki.osdev.org/%s',                       '%s',),
 
     'mt': ('https://app.element.io/#/room/%s', '%s',), # element/matrix
 

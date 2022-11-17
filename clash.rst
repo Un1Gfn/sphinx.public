@@ -27,6 +27,7 @@
 | |b| `宛平南路600号.com <https://宛平南路600号.com/>`__
 | |b| `很有精神.com <https://很有精神.com/>`__
 | |b| `管人痴.com <https://管人痴.com/>`__
+| |b| `リコリス・リコイル.com <https://リコリス・リコイル.com/>`__
 
 `free ss/trojan/vmess uri <https://github.com/freefq/free>`__
 

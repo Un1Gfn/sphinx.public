@@ -8,19 +8,21 @@ SRCDIR := /home/darren/$(PROJ)
 BUILDDIR := /tmp/un1gfn.github.io
 
 # /home/darren/sphinx.public/random_ip_port.py
-PORT := 62884
+PORT := 58250
+IP := 127.240.9.239
+# TODO: serve at both $(IP) and $(IP_PUB)
 # https://serverfault.com/a/1042167
-IP := $(shell ip -4 addr show wlp2s0 | awk '/inet / {print $$2}' | cut -d/ -f1)
-ifeq (x$(IP),x)
-	IP := $(shell \
-		HASH="$$(cksum -a crc <<<"$(PROJ)" | cut -d' ' -f 1)"; \
-		RET="$$((HASH%254+1))"; \
-		((HASH=HASH/254)); RET="$${RET/#/$$((HASH%254+1)).}"; \
-		((HASH=HASH/254)); RET="$${RET/#/$$((HASH%254+1)).}"; \
-		RET="$${RET/#/127.}"; \
-		echo $${RET}; \
-	)
-endif
+# IP_PUB := $(shell ip -4 addr show wlp2s0 | awk '/inet / {print $$2}' | cut -d/ -f1)
+# ifeq (x$(IP_PUB),x)
+# 	IP_PUB := $(shell \
+# 		HASH="$$(cksum -a crc <<<"$(PROJ)" | cut -d' ' -f 1)"; \
+# 		RET="$$((HASH%254+1))"; \
+# 		((HASH=HASH/254)); RET="$${RET/#/$$((HASH%254+1)).}"; \
+# 		((HASH=HASH/254)); RET="$${RET/#/$$((HASH%254+1)).}"; \
+# 		RET="$${RET/#/127.}"; \
+# 		echo $${RET}; \
+# 	)
+# endif
 URL := http://$(IP):$(PORT)/
 
 
