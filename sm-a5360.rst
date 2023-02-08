@@ -51,6 +51,28 @@ dontkillmyapp/`samsung <https://dontkillmyapp.com/samsung>`__
 | `adaptive icons <https://developer.android.com/develop/ui/views/launch/icon_design_adaptive>`__
 | `VectorDrawable <https://developer.android.com/develop/ui/views/graphics/vector-drawable-resources>`__
 
+`Location and Context APIs <https://developers.google.com/location-context/>`__
+`FusedLocationProviderClient <https://developers.google.com/android/reference/com/google/android/gms/location/FusedLocationProviderClient>`__
+`FusedLocationProviderApi <https://developers.google.com/android/reference/com/google/android/gms/location/FusedLocationProviderApi>`__
+
+| app components
+| |b| `android.app.Activity <https://developer.android.com/reference/android/app/Activity>`__
+|        `activities <https://developer.android.com/guide/components/activities/intro-activities>`__
+| |b| `android.app.Service <https://developer.android.com/reference/android/app/Service>`__ foreground/background/bound
+|        `services <https://developer.android.com/guide/components/services>`__ 
+| |b| `android.content.BroadcastReceiver <https://developer.android.com/reference/android/content/BroadcastReceiver>`__
+|        `broadcasts <https://developer.android.com/guide/components/broadcasts>`__
+| |b| `android.content.ContentProvider <https://developer.android.com/reference/android/content/ContentProvider>`__
+|        `content providers <https://developer.android.com/guide/topics/providers/content-providers>`__
+
+`Manifest.permission_group <https://developer.android.com/reference/android/Manifest.permission_group>`__
+
+app |rarr| content provider `android.provider.ContactsContract.Data <https://developer.android.com/reference/android/provider/ContactsContract.Data>`__ |rarr| read/write contacts
+
+|:hourglass_flowing_sand:|
+`Activating components <https://developer.android.com/guide/components/fundamentals#ActivatingComponents>`__
+|:hourglass_flowing_sand:|
+
 
 2.ADB
 =====

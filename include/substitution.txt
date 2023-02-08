@@ -62,3 +62,9 @@
 .. http://xahlee.info/comp/unicode_computing_symbols.html
 .. |enter| replace:: :guilabel:`↵`
 .. |bksp|  replace:: :guilabel:`⟵`
+
+.. https://www.compart.com/en/unicode/block/U+1D100
+.. |bar|  unicode:: U+1D100
+.. |fin|  unicode:: U+1D102
+.. |lRep| unicode:: U+1D106
+.. |rRep| unicode:: U+1D107

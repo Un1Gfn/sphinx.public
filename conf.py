@@ -23,11 +23,7 @@ sys.path.insert(0, os.path.abspath('extension'))
 # project = os.path.basename(os.path.dirname(__file__))
 project = os.path.basename(os.getcwd())
 author = 'Darren "Un1Gfn" Ng'
-copyright = time.strftime("%Y")
-assert str == type(copyright)
-assert copyright
-copyright += ', '
-copyright += author
+copyright = f'{time.strftime("%Y")}, {author}'
 
 
 # -- General configuration ---------------------------------------------------
@@ -90,7 +86,8 @@ extlinks = {
 
     'mt': ('https://app.element.io/#/room/%s', '%s',), # element/matrix
 
-    'ly': ('https://lilypond.org/doc/v2.22/Documentation/%s', '%s',),
+    # v2.22
+    'ly': ('https://lilypond.org/doc/v2.24/Documentation/%s', '%s',),
 
 }
 

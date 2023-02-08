@@ -389,6 +389,104 @@ awesome-c
 |vv| `mazurov <https://notabug.org/mazurov/awesome-c>`__
 
 
+FFmpeg
+======
+
+bannerbear/`adding soft subtitles <https://www.bannerbear.com/blog/how-to-add-subtitles-to-a-video-file-using-ffmpeg/#adding-soft-subtitles>`__ ::
+
+   ffmpeg -i <Vin> -i <SRT> -c copy -c:s mov_text -metadata:s:s:0 language=eng <Vout>
+
+| bannerbear/`adding hard subtitles <https://www.bannerbear.com/blog/how-to-add-subtitles-to-a-video-file-using-ffmpeg/#adding-hard-subtitles>`__
+| ffmpegwiki/`burn text subtitles <https://trac.ffmpeg.org/wiki/HowToBurnSubtitlesIntoVideo>`__
+
+::
+
+   ffmpeg -i <Vin> -vf subtitles=<SRT> <Vout>
+
+| ffmpegwiki/`map <https://trac.ffmpeg.org/wiki/Map>`__
+| \
+      take y0\ :sup:`th` stream from x0\ :sup:`th` file, ...,
+  and take yN\ :sup:`th` stream from xN\ :sup:`th` file,
+  then merge them into Vout
+
+::
+
+   ffmpeg \
+      -i <Vin0> ... -i <VinM> \
+      -map x0:y0 -c copy ... -map xN:yN -c copy \
+      <Vout>
+
+convert mkv subtitles (subrip srt) to mp4 subtitles (mov_text) ::
+
+   ffmpeg -i <IN.MKV> -c copy -map 0:0 -map 0:1 va.mp4
+   ffmpeg -i <IN.MKV> -map 0:10 tmp.srt
+   ffmpeg -i va.mp4 -i tmp.srt -c:v copy -c:a copy -c:s mov_text <OUT.MP4>
+
+| video/audio sync
+| ffmpegwiki/`-itsoffset <https://trac.ffmpeg.org/wiki/UnderstandingItsoffset>`__
+
+::
+
+   yt-dlp -f137 -o v.mp4 "https://www.youtube.com/watch?v=EVAckHD9o0Y"
+   yt-dlp -f140 -o a.m4a "https://www.youtube.com/watch?v=np42odaM8jw"
+
+   # ffmpeg -i v.mp4 -i a.m4a -c copy mismatch.mp4
+
+   # Checkpoints
+   # A 00:42
+   # A 02:25
+
+   # org.openshot.OpenShot
+   : [Menu Bar] -- [View] -- [Views] -- [Advanced View]
+   : [Menu Bar] -- [File] -- [Import Files...] -- a.m4a
+   : [Menu Bar] -- [File] -- [Import Files...] -- v.mp4
+   : drag v.mp4 from [Project Files] to [Timeline] -- [Track...]
+   : drag a.m4a from [Project Files] to [Timeline] -- [Track...]
+   : drag [Video Preview] panel to [OpenShot Video Editor] title bar, then move it to a new wm workspace
+   : [Timeline] -- [Track...] -- v.mp4 -- Mouse.RightClick -- [Properties] -- Position=5.30
+   : [Video Preview] -- play
+
+   # apply
+   ffmpeg \
+      -i v.mp4 \
+      -itsoffset -5.30 -i a.m4a \
+      -c copy va.mp4
+
+   scp va.mp4 x200:/NOBACKUP/Do.You.Know.Hip.Hop.너희가.힙합을.아느냐.mp4
+
+youtube subtitles vtt2srt ::
+
+   export HTTP_PROXY=192.168.0.223:8080 HTTPS_PROXY=192.168.0.223:8080
+
+   yt-dlp --skip-download --list-subs ...
+
+   CMD=(
+     yt-dlp
+     https://youtu.be/wlyRGXUwjVA
+     -f140+137
+     --write-subs --sub-format vtt --sub-langs id
+     -o orig
+   )
+
+   "${CMD[@]}"
+
+   ffmpeg -i orig.id.vtt -c:s srt orig.srt
+
+   /usr/local/bin/subtitles3.sh orig.srt >3.srt
+
+   ffmpeg \
+      -i orig.mp4 -i 3.srt \
+      -c copy \
+      -metadata:s:1 language=ind \
+      -metadata:s:2 language=ind \
+      Bebas3.mkv
+
+/usr/local/bin/subtitles3.sh
+
+
+
+
+
 GDB
 ===
 
@@ -663,6 +761,12 @@ rotate ::
    for i in IMG_????; do
       magick convert -rotate 270 -quality 100 "${i}"{_ORIG,}.HEIC
    done
+
+`square and pad with transparency <https://stackoverflow.com/a/34992414/>`__ ::
+
+   magick convert -background none -gravity center /tmp/spcl_logo.png -resize 172x172 -extent 172x172 /tmp/o.png
+
+
 
 
 Makefile

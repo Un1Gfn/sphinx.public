@@ -53,6 +53,8 @@ entr:
 	tmux new -d -c $(SRCDIR) -s $(SESSION_ENTR) 'ls -d1 -- conf.py *.rst extension/* include/* static/* | entr $(MAKE) html' || echo
 	tmux ls
 	echo
+	$(MAKE) hinturl
+	echo
 
 
 .SILENT: html
@@ -71,8 +73,7 @@ html:
 	echo
 	[ -e "$(BUILDDIR)/.nojekyll" ]
 	ln -s /usr/share/mathjax/ $(BUILDDIR)/_static/mathjax 2>/dev/null || true
-	echo "  file://$(BUILDDIR)/index.html"
-	echo "  $(URL)"
+	$(MAKE) hinturl
 	echo
 
 
@@ -94,3 +95,9 @@ httpd:
 		"
 	tmux ls
 	echo
+
+
+.SILENT: hinturl
+hinturl:
+	echo "  file://$(BUILDDIR)/index.html"
+	echo "  $(URL)"

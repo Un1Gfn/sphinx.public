@@ -39,33 +39,27 @@ Test
    \text{mathtt:}     \qquad \mathtt    {R \quad P \quad r} \\
    \text{text:}       \qquad \text      {R       P       r}
 
-Tmp
-===
+`list table <https://docutils.sourceforge.io/docs/ref/rst/directives.html#list-table>`__
 
-::
+.. list-table::
+   :align: left
+   :header-rows: 0
+   :stub-columns: 0
+   :widths: auto
 
-   sudo rm -rf /tmp/alarm_root &&
-   # mkdir -pv "$_" &&
-   # cd "$_" &&
-   # bsdtar -x --no-same-permissions -f ~/beaglebone/ArchLinuxARM-am33x-latest.tar.gz
-   sudo mkdir -pv "$_" &&
-   cd "$_" &&
-   sudo bsdtar -xpf ~/beaglebone/ArchLinuxARM-am33x-latest.tar.gz -p
-
-::
-
-   # error: chroot to '/tmp/alarm_root' failed: (Operation not permitted)
-   # PACMAN="fakeroot /usr/bin/pacman --sysroot /tmp/alarm_root"
-     PACMAN="sudo /usr/bin/pacman --sysroot /tmp/alarm_root"
-   $PACMAN -Q  | tee ~/beaglebone/alarm_pacman_Q
-   $PACMAN -Qq | tee ~/beaglebone/alarm_pacman_Qq
-   $PACMAN -Rsc --color auto $($PACMAN -Qq)
-
-::
-
-   sudo tree -a -I 'ca-certificates|certs' -F -C
-
-:raw-html:`<br /><br />`
+   * - Treat
+     - Quantity
+     - Description
+   * - Albatross
+     - 2.99
+     - On a stick!
+   * - Crunchy Frog
+     - 1.49
+     - If we took the bones out, it wouldn't be
+       crunchy, now would it?
+   * - Gannet Ripple
+     - 1.99
+     - On a stick!
 
 
 Extension Showcase

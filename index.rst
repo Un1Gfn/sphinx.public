@@ -114,6 +114,7 @@ ico
    cangjie
    cheatsheet
    chrome
+   circleci
    gpu_hang
    hololive
    ios
