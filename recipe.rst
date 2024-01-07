@@ -4,6 +4,18 @@
 Recipe |:fork_knife_plate:|
 ===========================
 
+Misc
+====
+
+| ``/home/darren/tex/20230412.gqcts9``
+| recipes
+| 01.cookie
+| 02.cookie
+
+| ``/home/darren/tex/20230414.vrpvz8``
+| production date lable
+
+
 Sandwich |:sandwich:|
 =====================
 

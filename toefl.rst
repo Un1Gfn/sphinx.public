@@ -41,6 +41,10 @@ Misc
 |    :r:`interview <ApplyingToCollege/comments/qotxxj>`
 |    :r:`AO 40+ apps a day <ApplyingToCollege/comments/wmrmes>`
 
+| crossword puzzle
+|    `WP <https://www.washingtonpost.com/crossword-puzzles/daily/>`__
+|    `nytimes <https://nationalpost.com/nyt-puzzle/>`__
+
 
 1 About the TOEFL iBT Test
 ==========================
@@ -374,83 +378,53 @@ TopicList
    # word count
    ~/toefl/000.wordcounter.sh
 
-.. table::
+.. list-table::
    :align: left
+   :header-rows: 0
+   :stub-columns: 0
    :widths: auto
 
-  ===== ====== ===========================
-   \            ``210(224)``
-   1     1      give up
-   2     2      dangerous
-   3     3      son daughter
-   4     4      work
-   5     5      try new
-   6     6      subject
-   \            ``211(225)``
-   7     1      grades
-   8     2      computers
-   9     3      statue monument
-   10    4      custom
-   11    5      technology
-   12    6      advertisement
-   13    7      single world culture
-   14    8      visitor
-   15    9      go back
-   16    10     discovery
-   17    11     dancing
-   18    12     meet
-   19    13     ask
-   20    14     assignment
-   \            ``212(226)``
-   21    1      movie
-   22    2      greed
-   23    3      leader
-   24    4      education
-   25    5      business
-   26    6      athlete
-   27    7      media
-   28    8      teacher
-   29    9      possessions
-   30    10     holidays
-   \            ``213(227)``
-   31    1      transportation
-   32    2      work hours
-   33    3      misunderstandings
-   34    4      international news
-   35    5      listen
-   36    6      limits
-   37    7      television
-   38    8      the second time
-   39    9      physical exercise
-  ===== ====== ===========================
-
-.. table::
-   :align: left
-   :widths: auto
-
-   ====================================================== ==========================
-    fulfilled                                              :pr:`fullfilled`
-    indispensable
-    diplomatic                                             :pr:`diplomatical`
-    knowledge                                              :pr:`knowledges`
-    changes **in** his attitude
-    knowledge **of** history
-    put effort\ **s** **into** grasping
-    domestic food price\ **s**
-    med\ **al**
-    can't ... let alone walk
-    never ... let alone be successful
-    p\ **u**\ rsue                                          :pr:`persue`
-    indispens\ **a**\ ble                                   :pr:`indispensible`
-   ====================================================== ==========================
+   * - fulfilled
+     - :pr:`fullfilled`
+   * - indispensable
+     -
+   * - diplomatic
+     - :pr:`diplomatical`
+   * - knowledge
+     - :pr:`knowledges`
+   * - changes **in** his attitude
+     -
+   * - knowledge **of** history
+     -
+   * - put effort\ **s** **into** grasping
+     -
+   * - domestic food price\ **s**
+     -
+   * - med\ **al**
+     -
+   * - can't ... let alone walk
+     -
+   * - never ... let alone be successful
+     -
+   * - p\ **u**\ rsue
+     - :pr:`persue`
+   * - indispens\ **a**\ ble
+     - :pr:`indispensible`
+   * - possibility **of** losing
+     - :pr:`possibility to lose`
 
 ::
 
    git diff --word-diff=plain
 
+`ProWritingAid <https://app.prowritingaid.com/>`__
+`HemingwayEditor <https://hemingwayapp.com/>`__
 
+`thesaurus.com <https://www.thesaurus.com/>`__
 
-
+| paraphrasing
+| |b| `standoutessay <https://www.standoutessay.com/study-tools/free-paraphrasing-tool>`__
+| |b| `QuillBot <https://quillbot.com/>`__
 
 
 

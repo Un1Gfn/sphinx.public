@@ -130,6 +130,10 @@ A3 outline ::
       ln -sfv $(realpath *) ~/cgi/cgi-tmp/
    }
 
+| `<https://typing.tw/>`__
+| `速度練習 <https://msk30.tripod.com/pct_d_8.html>`__
+| `10FastFingers <https://10fastfingers.com/>`__
+
 
 字典檔 |:books:|
 ================

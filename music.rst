@@ -278,14 +278,8 @@ Terms
 | |b| staccato /stuh·**kaa**·tow/
 
 
-`Lilypond`__
-============
-
-.. __: http://lilypond.org/
-
-:ly:`front ends <web/easier-editing>`
-
-| :ly:`music-glossary/clef` - Bass/Alto/Treble
+Lilypond.MISC
+=============
 
 | :ly:`learning/multiple-notes-at-once`
 | :ly:`learning/real-music-example`
@@ -293,19 +287,12 @@ Terms
 | :ly:`fingering <learning/within_002dstaff-objects#fingering>`
 
 | :ly:`usage/common-errors`
-| :ly:`usage/troubleshooting`
 
 | :ly:`notation/common-notation-for-keyboards`
 | :ly:`notation/creating-and-referencing-contexts#index-_005cnew`
-| :ly:`notation/creating-midi-output`
 | :ly:`notation/displaying-pitches#clef`
 | :ly:`notation/keeping-contexts-alive`
-| :ly:`notation/keeping-contexts-alive`
-| :ly:`notation/lilypond-index`
 | :ly:`notation/piano#piano-pedals`
-| :ly:`notation/piano`
-| :ly:`notation/simultaneous-notes`
-| :ly:`notation/displaying-chords`
 | :ly:`notation/chord-name-chart`
 
 | :ly:`manuals <web/manuals.html>`
@@ -322,17 +309,7 @@ Terms
 :wp:`General MIDI`
 - `list of instruments <https://soundprogramming.net/file-formats/general-midi-instrument-list/>`__
 
-::
-
-   source ~/music/ly.misc/lilypond.bashrc
-   help2
-   file /tmp/un1gfn.github.io/current_sheet.pdf
-   qrencode -tUTF8 http://192.168.0.223:20688/current_sheet.pdf
-
 :wp:`Arpeggio` ``c e g c' g e``
-
-`break/jump <https://music.stackexchange.com/questions/12066/how-can-i-typeset-a-break-or-jump-in-my-scores>`__
-instead of relying on mpv resume
 
 :ly:`notation/bars.en.html#rehearsal-marks`
 
@@ -346,13 +323,101 @@ instead of relying on mpv resume
 
 random id ::
 
-   ~/music/genid.sh
+   ~/music/ly.genid.sh
+
+| `flying_czx <https://blog.csdn.net/baidu_41147116/article/details/111496640>`__
+| :ly:`learning/songs`
+| :ly:`notation/vocal-music`
+| :ly:`notation/choral`
+| :ly:`notation/common-notation-for-vocal-music`
+| :ly:`notation/techniques-specific-to-lyrics`
+
+| :ly:`learning/properties-found-in-interfaces`
+| :ly:`notation/the-override-command`
+| :ly:`internals/lyrictext`
+
+| :ly:`notation/long-repeats#segno-repeat-structure`
+
+Lilypond.Workflow
+=================
+
+| A\. on smartphone
+|    1\. clean up :file:`~/storage/shared/Pictures/WeChat/`
+|    2\. download :abbr:`nmn (numbered musical notation)` images from wechat
+|    3\. launch telegram
+|    4\. select nmn images from :file:`~/storage/shared/Pictures/WeChat/` and send
+| B\. on 820g3
+|    5\. clean up :file:`~/telegram`
+|    6\. pull nmn images from telegram
+|    7\. rename images in :file:`~/telegram` with vidir
+|    8\. move nmn images from :file:`~/telegram` to :file:`~/bible/scores.img.d`
+|    9\. modify and run :file:`/music/ly.script.pack.sh`
+|    10\. ``cd /tmp/l9h9hz``
+|    11\. print nmn
+| C\. bring nmn sheets to library
+|    12\. circle out repeated sections with pencil
+|    13\. craft staff/stave now!
 
 
-Piano
-=====
+Lilypond.Management
+===================
 
-Nahre Sol `Repeated Notes at the Piano <https://www.youtube.com/watch?v=3XcgoAl5WvI>`__
+| ~/music
+| |b| modify ly.mk instead of individual Makefiles
+| |b| contribute & make comments to these 3 files
+|    example.Makefile
+|    example.main.ly
+|    example.more.ly
+| |b| look for existing scores with ly.sort.排序及標題檢索.sh
+| |b| make notes in ly.journal.txt
+| |b| check journal coverage with ly.journal.sh
+
+
+Guitar
+======
+
+dreadnought D型吉他
+jumbo
+parlor
+3/4
+1/2
+
+scale length
+nut width
+
+cutaway
+
+tonewoods / top wood
+spruce
+mahogany
+rosewood
+maple
+ebony
+urban ash
+cocobolo
+
+construction techniques
+
+glue
+
+overall construction of the wood itself
+solid wood (fragile to humidity/temperature changes)
+laminate (less susceptible to humidity/temperature changes)
+
+torrefaction
+
+bracing
+
+https://www.youtube.com/watch?v=wrB1oNqRBbU
+scale length
+fingerboard radius
+:abbr:`action (弦距)`
+
+`body sizes <https://www.soundpure.com/a/expert-advice/guitars/acoustic-guitar-body-sizes-explained/>`__
+
+| https://newt.phys.unsw.edu.au/jw/strings.html#music
+| :math:`F=4{f_1}^2LM`
+| :math:`\textrm{string.tension}=4 * {\textrm{frequency}_1}^2 * \textrm{string.length} * \textrm{string.mass}`
 
 
 Hangul

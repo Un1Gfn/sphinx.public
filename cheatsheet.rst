@@ -583,7 +583,7 @@ Filter-Repo
    | Recommended SOP
    |  1\. sync all branches, make sure local and remote are at the exact same state
    |  2\. (remote) move repo to :file:`repo.private.archived`
-   |  3\. (remote) recreate blank repo
+   |  3\. (remote) recreate blank repog
    |  4\. (local) do the housekeeping
    |  5\. (local) push to the recreated blank remote
    |  6\. leave :file:`repo.private.archived` unattended for a sufficient period of time
@@ -623,7 +623,7 @@ local fresh clone ::
 
    cd /tmp
    git clone --no-local PATH_TO_ORIG_REPO /tmp/REPO.filter
-   cd REPO.filter
+   cd REPO.filter/
 
 remove leftovers ::
 

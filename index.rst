@@ -120,6 +120,7 @@ ico
    ios
    miller
    music
+   osxkvm
    pkgmgmt
    python
    recipe
